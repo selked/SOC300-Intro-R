@@ -22,5 +22,11 @@
   },
   "factors.qmd": {
     "factors.html": "905e157e"
+  },
+  "getting_started.qmd": {
+    "getting_started.html": "ee449490"
+  },
+  "packages_and_tidy.qmd": {
+    "packages_and_tidy.html": "5283a66e"
   }
 }
