@@ -10,9 +10,6 @@ book:
     search: true
     title: " "
     logo: cover.jpg
-  cover-image: cat.png
-  cover-image-alt: A Russian Blue cat on a blanket
-  
 
   chapters:
     - index.qmd
