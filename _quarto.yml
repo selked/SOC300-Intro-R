@@ -10,6 +10,7 @@ book:
     search: true
     title: " "
     logo: cover.jpg
+  cover-image: cover2.jpg
 
   chapters:
     - index.qmd
@@ -19,7 +20,6 @@ book:
         - vectors_and_data.qmd
         - data_frames.qmd
         - factors.qmd
-        - references.qmd
     - part: Day 2
 
 
