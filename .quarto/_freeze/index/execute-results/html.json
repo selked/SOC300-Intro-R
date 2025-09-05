@@ -1,0 +1,15 @@
+{
+  "hash": "7f0cddea8d0ac3a76637b656af7ea510",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# Preface {.unnumbered}\n\nWelcome to this introductory R tutorial for SOC 300. \n\n\n\n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 2\n```\n\n\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
