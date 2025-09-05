@@ -20,6 +20,7 @@ book:
         - packages_and_tidy.qmd
     - part: "Day 2: Survey Data and Univariate Analysis"
     - part: "Day 3: Bivariate Analysis with the GSS"
+    - part: "Day 4: Multivariable Analysis and Elaboration"
 
 
 bibliography: references.bib
