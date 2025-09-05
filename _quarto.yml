@@ -3,7 +3,8 @@ project:
   output-dir: docs
 
 book:
-  title: "SOC 300: Introduction to R"
+  title: "Introduction to R"
+  subtitle: "SOC 300: Social Research Methods"
   author: "Daulton Selke"
   date: "9/5/2025"
   sidebar:
