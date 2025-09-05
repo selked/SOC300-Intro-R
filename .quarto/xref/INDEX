@@ -10,5 +10,17 @@
   },
   "references.qmd": {
     "references.html": "58466d5d"
+  },
+  "objects_and_operations.qmd": {
+    "objects_and_operations.html": "1dbf7c3f"
+  },
+  "vectors_and_data.qmd": {
+    "vectors_and_data.html": "98fc9bc9"
+  },
+  "data_frames.qmd": {
+    "data_frames.html": "a05a0aa5"
+  },
+  "factors.qmd": {
+    "factors.html": "905e157e"
   }
 }

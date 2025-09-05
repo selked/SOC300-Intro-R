@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daulton Selke">
-<meta name="dcterms.date" content="2025-09-05">
 
-<title>SOC 300: Introduction to R</title>
+<title>3&nbsp; Data Frames – SOC 300: Introduction to R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,7 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./objects_and_operations.html" rel="next">
+<link href="./factors.html" rel="next">
+<link href="./vectors_and_data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./objects_and_operations.html">Day 1</a></li><li class="breadcrumb-item"><a href="./data_frames.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Frames</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -112,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -139,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data_frames.html" class="sidebar-item-text sidebar-link">
+  <a href="./data_frames.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Frames</span></span></a>
   </div>
 </li>
@@ -166,40 +199,22 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./objects_and_operations.html">Day 1</a></li><li class="breadcrumb-item"><a href="./data_frames.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Frames</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">SOC 300: Introduction to R</h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Frames</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Daulton Selke </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 5, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -209,12 +224,104 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>Welcome to this introductory R tutorial for SOC 300.</p>
+<p>For the most part, we will be working with data frames. These are collections of data organized in rows and columns. In data science, it’s generally preferable for data to take a particular shape wherein each row indicates a single observation, and each column represents a unique variable. This is called the ‘tidy’ data format.</p>
+<p>Let’s use the vectors we created above to mock up a little data frame. We will imagine some variables that those vectors could represent. First, let’s make one more vector to use as a participant ID for hypothetical people in our data set. So, each of ours rows will represent variables measured for one person.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>p_id_vec<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"p1"</span>, <span class="st">"p2"</span>, <span class="st">"p3"</span>, <span class="st">"p4"</span>, <span class="st">"p5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, let’s use a base R function to create a data frame and assign it to a new object</p>
+<p>As its input, data.frame() takes a list of vectors that must have the same number of items in them. These vectors will become our variables, where each item within them reflects a value for a different observation.</p>
+<p>The function and its input will take the form: data.frame(variable1_name = input_vector1, variable2_name = input_vector2, […])</p>
+<p>We will make a data frame with 5 variables, and each variable column will be made up of the vectors that we just created in the last section.</p>
+<p>We’ll go ahead and imagine building a small data frame of dog owners.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_id =</span> p_id_vec, <span class="co"># a participant ID variable for each dog owner</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_dogs =</span> ordinal_vec, <span class="co"># a variable for the number of dogs each participant has</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">side_of_town =</span> nominal_vec, <span class="co"># the side of town each participant lives in</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">food_per_day =</span> interval_ratio_vec, <span class="co"># daily dog food amount in ounces</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">has_a_labrador =</span> logical_vec <span class="co"># a variable indicating whether a participant has a lab or not</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As a slight tangent, note that we can use line breaks to our advantage with longer strings of code. The above command is identical to the one below but is a little more intuitively readable. It’s most important that your code works, so you don’t have to organize it like that, but know that’s an option</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>our_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">p_id =</span> p_id_vec, <span class="at">num_dogs =</span> ordinal_vec, <span class="at">side_of_town =</span> nominal_vec, <span class="at">food_per_day =</span> interval_ratio_vec, <span class="at">has_a_labrador =</span> logical_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Take a look at our new data frame by clicking on the object in our Environment window at the upper right, or by running the command View(our_df). I’ll call the str() function to show a preview of the data’s <strong>str</strong>ucture</p>
+<p>Once we have created a data frame, we can refer to individual variables with the $ operator in R</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>food_per_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.2 3.4 5.6 7.1 2.8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(our_df<span class="sc">$</span>food_per_day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.02</code></pre>
+</div>
+</div>
+<p>Note that we can also use a bracket-based notation to access elements of an object. For data frames, the basic R syntax goes like this: data_frame[rows, columns]. Let’s look at a couple examples.</p>
+<p>This will give us the value in the cell of the 3rd row, in the 2nd column. In other words, this will target the 3rd participant (3rd row) and tell us the number of dogs they own (2nd variable column).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>our_df[<span class="dv">3</span>,<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1-2"</code></pre>
+</div>
+</div>
+<p>We can also leave one of the entries blank, which will tell R that we want to keep all the values of that type (row or column)</p>
+<p>Take the 2nd row but keep all columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>our_df[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  p_id  num_dogs side_of_town food_per_day has_a_labrador
+2   p2 5 or more         west          3.4          FALSE</code></pre>
+</div>
+</div>
+<p>Take the 3rd column but keep all rows</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>our_df[,<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "east"  "west"  "south" "south" "north"</code></pre>
+</div>
+</div>
+<p>To tie it together, note that the following two commands do exactly the same thing. With R, there are often a number of different ways to accomplish the same task, and learning to recognize these symmetries will help you become fluent in R over the long haul.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(our_df<span class="sc">$</span>food_per_day) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.02</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(our_df[,<span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.02</code></pre>
+</div>
+</div>
+<p>We can look at some basic characteristics of the data frame with the summary() function. Note that it will return different information depending on the data type of the variable</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     p_id             num_dogs         side_of_town        food_per_day 
+ Length:5           Length:5           Length:5           Min.   :1.20  
+ Class :character   Class :character   Class :character   1st Qu.:2.80  
+ Mode  :character   Mode  :character   Mode  :character   Median :3.40  
+                                                          Mean   :4.02  
+                                                          3rd Qu.:5.60  
+                                                          Max.   :7.10  
+ has_a_labrador 
+ Mode :logical  
+ FALSE:3        
+ TRUE :2        
+                
+                
+                </code></pre>
+</div>
+</div>
+<p>Let’s think about these for a second.</p>
+<p>The summary of has_a_labrador makes sense. It’s recognized as a logical vector and tells us the number of TRUEs and FALSEs</p>
+<p>food_per_day works as well. We’re dealing with a continuous variable that allows for decimal places, so it makes sense to take the mean and look at the range and distribution.</p>
+<p>But how about side_of_town? We don’t really want these values to be treated as 5 unrelated character strings. In this case, we have a nominal variable, where there’s no mathematical relationship between categories (interval-ratio), and there’s no meaningful order otherwise (ordinal).</p>
+<p>In other words, when we have two entries of “south”, we want those responses to be grouped together and not treated as unique entries.</p>
+<p>For this, we will want another key R data type.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -636,10 +743,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./vectors_and_data.html" class="pagination-link" aria-label="Vectors and R Data Types">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Vectors and R Data Types</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./objects_and_operations.html" class="pagination-link" aria-label="Objects and Simple Operations">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Objects and Simple Operations</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./factors.html" class="pagination-link" aria-label="Factors">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Factors</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

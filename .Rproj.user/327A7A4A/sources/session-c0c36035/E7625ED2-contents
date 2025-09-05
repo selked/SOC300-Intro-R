@@ -1,7 +1,0 @@
-# Preface {.unnumbered}
-
-Welcome to this introductory R tutorial for SOC 300. 
-
-```{r}
-1 + 1
-```
