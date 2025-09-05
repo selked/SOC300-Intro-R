@@ -13,13 +13,14 @@ book:
 
   chapters:
     - index.qmd
-    - part: Day 1
+    - part: "Day 1: R Fundamentals"
       chapters: 
         - objects_and_operations.qmd
         - vectors_and_data.qmd
         - data_frames.qmd
         - factors.qmd
-    - part: Day 2
+    - part: "Day 2: Survey Data and Univariate Analysis"
+    - part: "Day 3: Bivariate Analysis with the GSS"
 
 
 bibliography: references.bib
