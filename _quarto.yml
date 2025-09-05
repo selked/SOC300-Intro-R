@@ -10,7 +10,6 @@ book:
     search: true
     title: " "
     logo: cover.jpg
-  cover-image: cover2.jpg
 
   chapters:
     - index.qmd
