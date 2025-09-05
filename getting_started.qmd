@@ -141,35 +141,6 @@ our_df$food_per_day
 mean(our_df$food_per_day)
 ```
 
-Note that we can also use a bracket-based notation to access elements of an object. For data frames, the basic R syntax goes like this: data_frame\[rows, columns\]. Let's look at a couple examples.
-
-This will give us the value in the cell of the 3rd row, in the 2nd column. In other words, this will target the 3rd participant (3rd row) and tell us the number of dogs they own (2nd variable column).
-
-```{r}
-our_df[3,2]
-```
-
-We can also leave one of the entries blank, which will tell R that we want to keep all the values of that type (row or column)
-
-Take the 2nd row but keep all columns
-
-```{r}
-our_df[2,]
-```
-
-Take the 3rd column but keep all rows
-
-```{r}
-our_df[,3]
-```
-
-To tie it together, note that the following two commands do exactly the same thing. With R, there are often a number of different ways to accomplish the same task, and learning to recognize these symmetries will help you become fluent in R over the long haul.
-
-```{r}
-mean(our_df$food_per_day) 
-mean(our_df[,4])
-```
-
 We can look at some basic characteristics of the data frame with the summary() function. Note that it will return different information depending on the data type of the variable 
 ```{r}
 summary(our_df)

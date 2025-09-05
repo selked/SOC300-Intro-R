@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; R Fundamentals – SOC 300: Introduction to R</title>
+<title>1&nbsp; R Fundamentals – Introduction to R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -360,44 +360,9 @@ returning NA</code></pre>
 <pre><code>[1] 4.02</code></pre>
 </div>
 </div>
-<p>Note that we can also use a bracket-based notation to access elements of an object. For data frames, the basic R syntax goes like this: data_frame[rows, columns]. Let’s look at a couple examples.</p>
-<p>This will give us the value in the cell of the 3rd row, in the 2nd column. In other words, this will target the 3rd participant (3rd row) and tell us the number of dogs they own (2nd variable column).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>our_df[<span class="dv">3</span>,<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "1-2"</code></pre>
-</div>
-</div>
-<p>We can also leave one of the entries blank, which will tell R that we want to keep all the values of that type (row or column)</p>
-<p>Take the 2nd row but keep all columns</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>our_df[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  p_id  num_dogs side_of_town food_per_day has_a_labrador
-2   p2 5 or more         west          3.4          FALSE</code></pre>
-</div>
-</div>
-<p>Take the 3rd column but keep all rows</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>our_df[,<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "east"  "west"  "south" "south" "north"</code></pre>
-</div>
-</div>
-<p>To tie it together, note that the following two commands do exactly the same thing. With R, there are often a number of different ways to accomplish the same task, and learning to recognize these symmetries will help you become fluent in R over the long haul.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(our_df<span class="sc">$</span>food_per_day) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.02</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(our_df[,<span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.02</code></pre>
-</div>
-</div>
 <p>We can look at some basic characteristics of the data frame with the summary() function. Note that it will return different information depending on the data type of the variable</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     p_id             num_dogs         side_of_town        food_per_day 
  Length:5           Length:5           Length:5           Min.   :1.20  
@@ -427,11 +392,11 @@ returning NA</code></pre>
 <p>Factors are often the best way to treat categorical variables (nominal or ordinal) in R. Factors are a certain kind of vector that can only contain a number of pre-defined values. Each of these pre-defined values is considered a ‘level’ of the factor. So, we want side_of_town to be a factor variable with 4 levels: east, west, south, and north.</p>
 <p>We can turn this variable into a factor variable with base R’s as.factor() function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>side_of_town <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(our_df<span class="sc">$</span>side_of_town)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>side_of_town <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(our_df<span class="sc">$</span>side_of_town)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Check the summary() output again and notice how the output is reported now</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     p_id             num_dogs         side_of_town  food_per_day 
  Length:5           Length:5           east :1      Min.   :1.20  
@@ -452,15 +417,15 @@ returning NA</code></pre>
 <p>Now, let’s think about num_dogs. This should clearly be a factor variable as well. But, unlike food_per_day, the levels of this variable have a very clear order, from 1-2 to 5 or more.</p>
 <p>The factor() function allows us to turn a vector into a factor, as well as manually specify the levels. Additionally, we can activate a process in the function letting it know that we want the order to matter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>num_dogs <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  our_df<span class="sc">$</span>num_dogs, <span class="co"># the first input is the vector we are turning into a factor</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"1-2"</span>, <span class="st">"3-4"</span>, <span class="st">"5 or more"</span>), <span class="co"># then we indicate the levels in the order that makes sense</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ordered =</span> <span class="cn">TRUE</span> <span class="co"># and lastly we turn on a process that tells R that this order is important</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>num_dogs <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  our_df<span class="sc">$</span>num_dogs, <span class="co"># the first input is the vector we are turning into a factor</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"1-2"</span>, <span class="st">"3-4"</span>, <span class="st">"5 or more"</span>), <span class="co"># then we indicate the levels in the order that makes sense</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ordered =</span> <span class="cn">TRUE</span> <span class="co"># and lastly we turn on a process that tells R that this order is important</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Take a look back at the summary. Now, instead of 5 separate character strings, we can see the breakdown of how many people own a certain number of dogs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     p_id                num_dogs side_of_town  food_per_day  has_a_labrador 
  Length:5           1-2      :2   east :1      Min.   :1.20   Mode :logical  
@@ -474,7 +439,7 @@ returning NA</code></pre>
 <p>Note that the str() command is also useful for quickly gleaning the various data types of variable columns within a data frame. It will show us our variable names, the data types, and then a preview of the first several values in each variable column.</p>
 <p>We can also verify that num_dogs has been successfully re-coded as an ordered factor.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   5 obs. of  5 variables:
  $ p_id          : chr  "p1" "p2" "p3" "p4" ...
