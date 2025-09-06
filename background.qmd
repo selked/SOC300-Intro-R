@@ -15,7 +15,7 @@ We are going to pair R with the software R Studio, which is what's known as an I
 The best way to think about R Studio's relationship to R is by framing it as an analogy with a desktop computer. R Studio is to R as a monitor is to a computer. R is the thing that's doing all the heavy lifting computationally, and R Studio is the thing that allows us to view and interact with R in a way that's simple and straightforward. 
 
 ## Acquiring R and R Studio
-All of the CHASS computers (and likely most NC State computers) come with R, so you do not need to download it, but you may find it convenient to work on R assignments using your own personal device, so please refer to the directions below in that case. 
+All of the CHASS computers (and likely most NC State computers) come with R and R Studio, so you do not need to download them, but you may find it convenient to work on R assignments using your own personal device, so I've provided some instructions below. 
 
 Note that you will want to install R first,
 
