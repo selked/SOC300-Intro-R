@@ -424,7 +424,7 @@ Tip
 <p>Let’s think about these for a second.</p>
 <p>The summary of <code>has_a_labrador</code> makes sense. It’s recognized as a logical vector and tells us the number of TRUEs and FALSEs</p>
 <p><code>food_per_day</code> works as well. We’re dealing with a continuous variable that allows for decimal places, so it makes sense to take the mean and look at the range and distribution.</p>
-<p>But how about <code>side_of_town?</code> We don’t really want these values to be treated as 5 unrelated character strings. What that summary tells us is that this variable is a character type (or class). ‘Length’ refers to the size of the vector. So, a vector with 5 items in it would be a vector of length 5. But does it make sense for us to treat the <code>side_of_town</code> variable as 5 totally separate strings of characters?</p>
+<p>But how about <code>side_of_town</code>? We don’t really want these values to be treated as 5 unrelated character strings. What that summary tells us is that this variable is a character type (or class). ‘Length’ refers to the size of the vector. So, a vector with 5 items in it would be a vector of length 5. But does it make sense for us to treat the <code>side_of_town</code> variable as 5 totally separate strings of characters?</p>
 <p>Not quite. When we have two entries of “south”, for example, we want those responses to be grouped together and not treated as unique entries.</p>
 <p>For this, we will want another key R data type.</p>
 </section>

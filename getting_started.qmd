@@ -166,7 +166,7 @@ The summary of `has_a_labrador` makes sense. It's recognized as a logical vector
 
 `food_per_day` works as well. We're dealing with a continuous variable that allows for decimal places, so it makes sense to take the mean and look at the range and distribution.
 
-But how about `side_of_town?` We don't really want these values to be treated as 5 unrelated character strings. What that summary tells us is that this variable is a character type (or class). 'Length' refers to the size of the vector. So, a vector with 5 items in it would be a vector of length 5. But does it make sense for us to treat the `side_of_town` variable as 5 totally separate strings of characters?
+But how about `side_of_town`? We don't really want these values to be treated as 5 unrelated character strings. What that summary tells us is that this variable is a character type (or class). 'Length' refers to the size of the vector. So, a vector with 5 items in it would be a vector of length 5. But does it make sense for us to treat the `side_of_town` variable as 5 totally separate strings of characters?
 
 Not quite. When we have two entries of "south", for example, we want those responses to be grouped together and not treated as unique entries.
 
