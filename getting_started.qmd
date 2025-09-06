@@ -193,9 +193,9 @@ The `factor()` function allows us to turn a vector into a factor, as well as man
 
 ```{r}
 our_df$dog_size <- factor(
-  our_df$dog_size, # the first input is the vector we are turning into a factor
-  levels=c("small", "medium", "large"), # then we indicate the levels in the order that makes sense
-  ordered = TRUE # and lastly we turn on a process that tells R that this order is important
+  our_df$dog_size, 
+  levels=c("small", "medium", "large"),
+  ordered = TRUE 
   )
 ```
 
