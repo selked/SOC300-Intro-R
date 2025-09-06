@@ -54,11 +54,11 @@ logical_vec <- c(TRUE, FALSE, TRUE, FALSE, FALSE)
 
 Let's talk a bit about what we have here. Each of these vectors represents a **data type** in R, or, in other words, one of the basic ways in which R stores data. There are some more data types out there that we may encounter, but these are the most most relevant for us.
 
-***Numeric Data:*** As the name suggests, this is the typical fashion in which numbers are stored in R. Numeric data encompasses both *continuous* values and *discrete* values. These are essentially numbers that can have decimal places vs. integers (whole numbers).
+- ***Numeric Data:*** As the name suggests, this is the typical fashion in which numbers are stored in R. Numeric data encompasses both *continuous* values and *discrete* values. These are essentially numbers that can have decimal places vs. integers (whole numbers).
 
-***Character Data:*** Character here refers to the idea of character strings. This is typically how R stores text data---as distinct strings of text. Note that, while numbers are typically processed as numeric by R, numbers can also become character data if you place them between quotation marks. Some wonky things can occasionally happen when you are importing data in from various source file types as well (e.g. .CSV, .XLSX, etc.)
+- ***Character Data:*** Character here refers to the idea of character strings. This is typically how R stores text data---as distinct strings of text. Note that, while numbers are typically processed as numeric by R, numbers can also become character data if you place them between quotation marks. Some wonky things can occasionally happen when you are importing data in from various source file types as well (e.g. .CSV, .XLSX, etc.)
 
-***Logical Data:*** In R syntax, upper-case 'true' and 'false' have fixed values in R and, when used without quotes, will refer to these pre-defined logical values. We probably won't use this data type much for analyses, but we will run into them in other places. They can be useful for sorting and searching through subsets of data, and we will also use logical values to turn certain procedures on or off in some functions.
+- ***Logical Data:*** In R syntax, upper-case 'true' and 'false' have fixed values in R and, when used without quotes, will refer to these pre-defined logical values. We probably won't use this data type much for analyses, but we will run into them in other places. They can be useful for sorting and searching through subsets of data, and we will also use logical values to turn certain procedures on or off in some functions.
 
 Many R functions will respond differently to different data types, so it's important to keep these in mind when you need to troubleshoot errors.
 
@@ -129,7 +129,7 @@ As a slight tangent, note that we can use line breaks to our advantage with long
 our_df <- data.frame(p_id = p_id_vec, dog_size = ordinal_vec, side_of_town = character_vec, food_per_day = num_vec, has_a_labrador = logical_vec)
 ```
 
-Take a look at our new data frame by clicking on the object in our Environment window at the upper right, or by running the command `View(our_df)`. I'll call the `str()` function to show a preview of the data's **str**ucture
+Take a look at our new data frame by clicking on the object in our Environment window at the upper right, or by running the command `View(our_df)`.
 
 Once we have created a data frame, we can refer to individual variable vectors with the `$` operator in R
 
@@ -159,6 +159,7 @@ For this, we will want another key R data type.
 
 ## Factors
 
+### Unorderd Factors
 Factors are often the best way to treat categorical variables (nominal or ordinal) in R. Factors are a certain kind of vector that can only contain a number of pre-defined values. Each of these pre-defined values is considered a 'level' of the factor. So, we want `side_of_town` to be a factor variable with 4 levels: east, west, south, and north.
 
 We can turn this variable into a factor variable with base R's `as.factor()` function.
@@ -173,6 +174,7 @@ Check the `summary()` output again and notice how the output is reported now. In
 summary(our_df)
 ```
 
+### Ordered Factors
 Now, let's think about `dog_size`. This should clearly be a factor variable as well. But, unlike `food_per_day`, the levels of this variable have an apparent order, from small to large.
 
 The `factor()` function allows us to turn a vector into a factor, as well as manually specify the levels. Additionally, we can activate a process in the function letting it know that we want the order to matter.

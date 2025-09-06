@@ -209,7 +209,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#a-note-on-functions" id="toc-a-note-on-functions" class="nav-link" data-scroll-target="#a-note-on-functions"><span class="header-section-number">2.3</span> A Note on Functions</a></li>
   <li><a href="#vectors-and-r-data-types" id="toc-vectors-and-r-data-types" class="nav-link" data-scroll-target="#vectors-and-r-data-types"><span class="header-section-number">2.4</span> Vectors and R Data Types</a></li>
   <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="header-section-number">2.5</span> Data Frames</a></li>
-  <li><a href="#factors" id="toc-factors" class="nav-link" data-scroll-target="#factors"><span class="header-section-number">2.6</span> Factors</a></li>
+  <li><a href="#factors" id="toc-factors" class="nav-link" data-scroll-target="#factors"><span class="header-section-number">2.6</span> Factors</a>
+  <ul class="collapse">
+  <li><a href="#unorderd-factors" id="toc-unorderd-factors" class="nav-link" data-scroll-target="#unorderd-factors"><span class="header-section-number">2.6.1</span> Unorderd Factors</a></li>
+  <li><a href="#ordered-factors" id="toc-ordered-factors" class="nav-link" data-scroll-target="#ordered-factors"><span class="header-section-number">2.6.2</span> Ordered Factors</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -287,9 +291,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>logical_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s talk a bit about what we have here. Each of these vectors represents a <strong>data type</strong> in R, or, in other words, one of the basic ways in which R stores data. There are some more data types out there that we may encounter, but these are the most most relevant for us.</p>
-<p><strong><em>Numeric Data:</em></strong> As the name suggests, this is the typical fashion in which numbers are stored in R. Numeric data encompasses both <em>continuous</em> values and <em>discrete</em> values. These are essentially numbers that can have decimal places vs.&nbsp;integers (whole numbers).</p>
-<p><strong><em>Character Data:</em></strong> Character here refers to the idea of character strings. This is typically how R stores text data—as distinct strings of text. Note that, while numbers are typically processed as numeric by R, numbers can also become character data if you place them between quotation marks. Some wonky things can occasionally happen when you are importing data in from various source file types as well (e.g.&nbsp;.CSV, .XLSX, etc.)</p>
-<p><strong><em>Logical Data:</em></strong> In R syntax, upper-case ‘true’ and ‘false’ have fixed values in R and, when used without quotes, will refer to these pre-defined logical values. We probably won’t use this data type much for analyses, but we will run into them in other places. They can be useful for sorting and searching through subsets of data, and we will also use logical values to turn certain procedures on or off in some functions.</p>
+<ul>
+<li><p><strong><em>Numeric Data:</em></strong> As the name suggests, this is the typical fashion in which numbers are stored in R. Numeric data encompasses both <em>continuous</em> values and <em>discrete</em> values. These are essentially numbers that can have decimal places vs.&nbsp;integers (whole numbers).</p></li>
+<li><p><strong><em>Character Data:</em></strong> Character here refers to the idea of character strings. This is typically how R stores text data—as distinct strings of text. Note that, while numbers are typically processed as numeric by R, numbers can also become character data if you place them between quotation marks. Some wonky things can occasionally happen when you are importing data in from various source file types as well (e.g.&nbsp;.CSV, .XLSX, etc.)</p></li>
+<li><p><strong><em>Logical Data:</em></strong> In R syntax, upper-case ‘true’ and ‘false’ have fixed values in R and, when used without quotes, will refer to these pre-defined logical values. We probably won’t use this data type much for analyses, but we will run into them in other places. They can be useful for sorting and searching through subsets of data, and we will also use logical values to turn certain procedures on or off in some functions.</p></li>
+</ul>
 <p>Many R functions will respond differently to different data types, so it’s important to keep these in mind when you need to troubleshoot errors.</p>
 <p>Take the <code>mean()</code> function, for example. As the name implies, this function will return the arithmetic mean of a numeric vector. Let’s give it the one we just made above:</p>
 <div class="cell">
@@ -357,7 +363,7 @@ returning NA</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>our_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">p_id =</span> p_id_vec, <span class="at">dog_size =</span> ordinal_vec, <span class="at">side_of_town =</span> character_vec, <span class="at">food_per_day =</span> num_vec, <span class="at">has_a_labrador =</span> logical_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Take a look at our new data frame by clicking on the object in our Environment window at the upper right, or by running the command <code>View(our_df)</code>. I’ll call the <code>str()</code> function to show a preview of the data’s <strong>str</strong>ucture</p>
+<p>Take a look at our new data frame by clicking on the object in our Environment window at the upper right, or by running the command <code>View(our_df)</code>.</p>
 <p>Once we have created a data frame, we can refer to individual variable vectors with the <code>$</code> operator in R</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>food_per_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -398,6 +404,8 @@ returning NA</code></pre>
 </section>
 <section id="factors" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="factors"><span class="header-section-number">2.6</span> Factors</h2>
+<section id="unorderd-factors" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="unorderd-factors"><span class="header-section-number">2.6.1</span> Unorderd Factors</h3>
 <p>Factors are often the best way to treat categorical variables (nominal or ordinal) in R. Factors are a certain kind of vector that can only contain a number of pre-defined values. Each of these pre-defined values is considered a ‘level’ of the factor. So, we want <code>side_of_town</code> to be a factor variable with 4 levels: east, west, south, and north.</p>
 <p>We can turn this variable into a factor variable with base R’s <code>as.factor()</code> function.</p>
 <div class="cell">
@@ -423,6 +431,9 @@ returning NA</code></pre>
                 </code></pre>
 </div>
 </div>
+</section>
+<section id="ordered-factors" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="ordered-factors"><span class="header-section-number">2.6.2</span> Ordered Factors</h3>
 <p>Now, let’s think about <code>dog_size</code>. This should clearly be a factor variable as well. But, unlike <code>food_per_day</code>, the levels of this variable have an apparent order, from small to large.</p>
 <p>The <code>factor()</code> function allows us to turn a vector into a factor, as well as manually specify the levels. Additionally, we can activate a process in the function letting it know that we want the order to matter.</p>
 <div class="cell">
@@ -470,6 +481,7 @@ returning NA</code></pre>
 <p>For our last bit, let’s learn a little about working with functions that don’t come included in base R.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
