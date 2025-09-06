@@ -113,6 +113,10 @@ or we can specify new variable names and use the `=` sign to associate them with
 
 We'll go ahead and imagine building a small data frame of dog owners and rename our vectors accordingly.
 
+:::{.callout-note}
+Remember that when you see the `#` symbol in R, that indicates the following text should be treated as a comment for us rather than something for R to process. Note that I use some descriptive comments below to help explain what the code is doing
+:::
+
 ```{r}
 our_df<-data.frame(
   p_id = p_id_vec, # a participant ID variable for each dog owner
