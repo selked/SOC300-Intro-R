@@ -210,7 +210,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#vectors-and-r-data-types" id="toc-vectors-and-r-data-types" class="nav-link" data-scroll-target="#vectors-and-r-data-types"><span class="header-section-number">2.4</span> Vectors and R Data Types</a></li>
   <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="header-section-number">2.5</span> Data Frames</a>
   <ul class="collapse">
-  <li><a href="#examining-our-data-frame" id="toc-examining-our-data-frame" class="nav-link" data-scroll-target="#examining-our-data-frame"><span class="header-section-number">2.5.1</span> Examining our Data Frame</a></li>
+  <li><a href="#building-a-data-frame" id="toc-building-a-data-frame" class="nav-link" data-scroll-target="#building-a-data-frame"><span class="header-section-number">2.5.1</span> Building a Data Frame</a></li>
+  <li><a href="#examining-our-data-frame" id="toc-examining-our-data-frame" class="nav-link" data-scroll-target="#examining-our-data-frame"><span class="header-section-number">2.5.2</span> Examining our Data Frame</a></li>
   </ul></li>
   <li><a href="#factors" id="toc-factors" class="nav-link" data-scroll-target="#factors"><span class="header-section-number">2.6</span> Factors</a>
   <ul class="collapse">
@@ -339,7 +340,8 @@ returning NA</code></pre>
 <section id="data-frames" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">2.5</span> Data Frames</h2>
 <p>For the most part, we will be working with data frames. These are collections of data organized in rows and columns. In data science, it’s generally preferable for data to take a particular shape wherein each row indicates a single observation, and each column represents a unique variable. This is called the ‘tidy’ data format.</p>
-<p>###Building a Data Frame</p>
+<section id="building-a-data-frame" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="building-a-data-frame"><span class="header-section-number">2.5.1</span> Building a Data Frame</h3>
 <p>Let’s use the vectors we created above to mock up a little data frame. We will imagine some variables that those vectors could represent. First, let’s make a couple more vectors.</p>
 <p>We want a data frame that reflects the ‘tidy’ format (rows = observations, columns = variables). So, let’s add a character vector of participant IDs associated with imaginary people in our mock data set. For reasons that will become clear in the next section, we are also going to add another character vector.</p>
 <div class="cell">
@@ -387,8 +389,9 @@ Tip
 <li><code>food_per_day</code> = The amount of food each owner feeds their dog daily (in ounces)</li>
 <li><code>has_a_labrador</code> = true/false indicator for whether the owner has a lab or not</li>
 </ul>
-<section id="examining-our-data-frame" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="examining-our-data-frame"><span class="header-section-number">2.5.1</span> Examining our Data Frame</h3>
+</section>
+<section id="examining-our-data-frame" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="examining-our-data-frame"><span class="header-section-number">2.5.2</span> Examining our Data Frame</h3>
 <p>Take a look at our new data frame by clicking on the object in our Environment window at the upper right, or by running the command <code>View(our_df)</code>.</p>
 <p>Once we have created a data frame, we can refer to individual variable vectors with the <code>$</code> operator in R</p>
 <div class="cell">

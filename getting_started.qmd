@@ -92,7 +92,7 @@ Now that we've talked about some of these basic building blocks for data, let's 
 
 For the most part, we will be working with data frames. These are collections of data organized in rows and columns. In data science, it's generally preferable for data to take a particular shape wherein each row indicates a single observation, and each column represents a unique variable. This is called the 'tidy' data format.
 
-###Building a Data Frame
+### Building a Data Frame
 
 Let's use the vectors we created above to mock up a little data frame. We will imagine some variables that those vectors could represent. First, let's make a couple more vectors.
 
