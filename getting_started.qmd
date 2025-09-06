@@ -220,6 +220,6 @@ This is all part of the process of data cleaning, where we make sure our data is
 
 As we close this section, here is a figure to help you internalize the hierarchy of variable types based on the levels of measurement. The bottom level of the hierarchy (in green) reflects the R data type that is best aligned with a particular measurement level. Also recall that numeric data can either be interval or ratio, though we will generally treat these similarly.
 
-![A hierarchy of variables and their corresponding R data types](docs/data_types.png){fig-alt="A nested hierarchy of variables. Variables breaks down into numeric and categorical. Numeric breaks down into continuous and discrete. All numeric data is conveniently associated with the numeric data type.  Categorical breaks down into ordinal or nominal. Ordinal variables need ordered factors while nominal variables need unordered factors"}
+![A hierarchy of variables and their corresponding R data types](data_types.png){fig-alt="A nested hierarchy of variables. Variables breaks down into numeric and categorical. Numeric breaks down into continuous and discrete. All numeric data is conveniently associated with the numeric data type.  Categorical breaks down into ordinal or nominal. Ordinal variables need ordered factors while nominal variables need unordered factors"}
 
 For our last bit, let's learn a little about working with functions that don't come included in base R.
