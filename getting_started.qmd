@@ -92,6 +92,8 @@ Now that we've talked about some of these basic building blocks for data, let's 
 
 For the most part, we will be working with data frames. These are collections of data organized in rows and columns. In data science, it's generally preferable for data to take a particular shape wherein each row indicates a single observation, and each column represents a unique variable. This is called the 'tidy' data format.
 
+###Building a Data Frame
+
 Let's use the vectors we created above to mock up a little data frame. We will imagine some variables that those vectors could represent. First, let's make a couple more vectors.
 
 We want a data frame that reflects the 'tidy' format (rows = observations, columns = variables). So, let's add a character vector of participant IDs associated with imaginary people in our mock data set. For reasons that will become clear in the next section, we are also going to add another character vector.
@@ -139,6 +141,8 @@ Now our vectors make up meaningful variables in our mock data frame.
 -   `side_of_town` = Which part of town the owners reside
 -   `food_per_day` = The amount of food each owner feeds their dog daily (in ounces)
 -   `has_a_labrador` = true/false indicator for whether the owner has a lab or not
+
+### Examining our Data Frame
 
 Take a look at our new data frame by clicking on the object in our Environment window at the upper right, or by running the command `View(our_df)`.
 
