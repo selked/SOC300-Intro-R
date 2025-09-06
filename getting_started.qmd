@@ -113,25 +113,33 @@ or we can specify new variable names and use the `=` sign to associate them with
 
 We'll go ahead and imagine building a small data frame of dog owners and rename our vectors accordingly.
 
-:::{.callout-note}
-Remember that when you see the `#` symbol in R, that indicates the following text should be treated as a comment for us rather than something for R to process. Note that I use some descriptive comments below to help explain what the code is doing
-:::
 
 ```{r}
 our_df<-data.frame(
-  p_id = p_id_vec, # a participant ID variable for each dog owner
-  dog_size = ordinal_vec, # a variable for the number of dogs each participant has
-  side_of_town = character_vec, # the side of town each participant lives in
-  food_per_day = num_vec, # daily dog food amount in ounces
-  has_a_labrador = logical_vec # a variable indicating whether a participant has a lab or not
+  p_id = p_id_vec,
+  dog_size = ordinal_vec,
+  side_of_town = character_vec,
+  food_per_day = num_vec, 
+  has_a_labrador = logical_vec
 )
 ```
 
+:::{.callout-tip}
 As a slight tangent, note that we can use line breaks to our advantage with longer strings of code. The above command is identical to the one below, but some find the line-break strategy more intuitively readable. It's most important that your code works, so you don't have to organize it like that, but know that's an option
 
 ```{r, eval=FALSE, echo=TRUE}
 our_df <- data.frame(p_id = p_id_vec, dog_size = ordinal_vec, side_of_town = character_vec, food_per_day = num_vec, has_a_labrador = logical_vec)
 ```
+:::
+
+Now our vectors make up meaningful variables in our mock data frame. 
+
+- `p_id` = An ID for each participant in our survey of dog owners
+- `dog_size` = Owner's ranking of their dog's size
+- `side_of_town` = Which part of town the owners reside
+- `food_per_day` = The amount of food each owner feeds their dog daily (in ounces)
+- `has_a_labrador` = true/false indicator for whether the owner has a lab or not
+
 
 Take a look at our new data frame by clicking on the object in our Environment window at the upper right, or by running the command `View(our_df)`.
 

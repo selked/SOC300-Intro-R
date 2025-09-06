@@ -350,32 +350,39 @@ returning NA</code></pre>
 </div>
 <p>or we can specify new variable names and use the <code>=</code> sign to associate them with the vector. We will go with this latter strategy because our current vector names do not translate well to variable names.</p>
 <p>We’ll go ahead and imagine building a small data frame of dog owners and rename our vectors accordingly.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_id =</span> p_id_vec,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dog_size =</span> ordinal_vec,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">side_of_town =</span> character_vec,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">food_per_day =</span> num_vec, </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">has_a_labrador =</span> logical_vec</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Remember that when you see the <code>#</code> symbol in R, that indicates the following text should be treated as a comment for us rather than something for R to process. Note that I use some descriptive comments below to help explain what the code is doing</p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_id =</span> p_id_vec, <span class="co"># a participant ID variable for each dog owner</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dog_size =</span> ordinal_vec, <span class="co"># a variable for the number of dogs each participant has</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">side_of_town =</span> character_vec, <span class="co"># the side of town each participant lives in</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">food_per_day =</span> num_vec, <span class="co"># daily dog food amount in ounces</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">has_a_labrador =</span> logical_vec <span class="co"># a variable indicating whether a participant has a lab or not</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>As a slight tangent, note that we can use line breaks to our advantage with longer strings of code. The above command is identical to the one below, but some find the line-break strategy more intuitively readable. It’s most important that your code works, so you don’t have to organize it like that, but know that’s an option</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>our_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">p_id =</span> p_id_vec, <span class="at">dog_size =</span> ordinal_vec, <span class="at">side_of_town =</span> character_vec, <span class="at">food_per_day =</span> num_vec, <span class="at">has_a_labrador =</span> logical_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+</div>
+<p>Now our vectors make up meaningful variables in our mock data frame.</p>
+<ul>
+<li><code>p_id</code> = An ID for each participant in our survey of dog owners</li>
+<li><code>dog_size</code> = Owner’s ranking of their dog’s size</li>
+<li><code>side_of_town</code> = Which part of town the owners reside</li>
+<li><code>food_per_day</code> = The amount of food each owner feeds their dog daily (in ounces)</li>
+<li><code>has_a_labrador</code> = true/false indicator for whether the owner has a lab or not</li>
+</ul>
 <p>Take a look at our new data frame by clicking on the object in our Environment window at the upper right, or by running the command <code>View(our_df)</code>.</p>
 <p>Once we have created a data frame, we can refer to individual variable vectors with the <code>$</code> operator in R</p>
 <div class="cell">
