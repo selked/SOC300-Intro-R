@@ -28,5 +28,11 @@
   },
   "packages_and_tidy.qmd": {
     "packages_and_tidy.html": "5283a66e"
+  },
+  "prologue.qmd": {
+    "prologue.html": "965cc1c7"
+  },
+  "background.qmd": {
+    "background.html": "61e46520"
   }
 }

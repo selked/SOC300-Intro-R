@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Packages and the Tidyverse – Introduction to R</title>
+<title>3&nbsp; Packages and the Tidyverse – Introduction to R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting_started.html">Day 1: Getting Started</a></li><li class="breadcrumb-item"><a href="./packages_and_tidy.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./prologue.html">Day 1: Getting Started</a></li><li class="breadcrumb-item"><a href="./packages_and_tidy.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -159,14 +159,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./prologue.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prologue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages_and_tidy.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></span></a>
   </div>
 </li>
       </ul>
@@ -193,17 +199,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link active" data-scroll-target="#loading-packages"><span class="header-section-number">2.1</span> Loading Packages</a></li>
-  <li><a href="#practice-with-data-manipulation" id="toc-practice-with-data-manipulation" class="nav-link" data-scroll-target="#practice-with-data-manipulation"><span class="header-section-number">2.2</span> Practice with Data Manipulation</a></li>
+  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link active" data-scroll-target="#loading-packages"><span class="header-section-number">3.1</span> Loading Packages</a></li>
+  <li><a href="#practice-with-data-manipulation" id="toc-practice-with-data-manipulation" class="nav-link" data-scroll-target="#practice-with-data-manipulation"><span class="header-section-number">3.2</span> Practice with Data Manipulation</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting_started.html">Day 1: Getting Started</a></li><li class="breadcrumb-item"><a href="./packages_and_tidy.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./prologue.html">Day 1: Getting Started</a></li><li class="breadcrumb-item"><a href="./packages_and_tidy.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></h1>
 </div>
 
 
@@ -221,8 +227,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>R’s open-source culture has encouraged a rich ecosystem of custom functions designed by scientists and researchers in the R userbase. These come in the form of ‘packages’, which are suites of several related functions. For example, there are packages for conducting statistical tests, producing data visualizations, generating publication-ready tables, and all manner of other tasks.</p>
-<section id="loading-packages" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="loading-packages"><span class="header-section-number">2.1</span> Loading Packages</h2>
+<section id="loading-packages" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="loading-packages"><span class="header-section-number">3.1</span> Loading Packages</h2>
 <p>Let’s try this out with one of the better known R packages–‘tidyverse’. This is actually a collection of several packages with a variety of interrelated functions for ‘tidying’, visualizing, and analyzing data. We will focus on what we need from ‘tidyverse’, but, if you’re curious, you can read more here: <a href="https://www.tidyverse.org/">https://www.tidyverse.org/</a></p>
 <p>If you’re on a lab computer, this package may already be installed. Let’s check by running the following command:</p>
 <div class="cell">
@@ -241,18 +247,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>If you receive an error when you run this, you likely do not have the package installed on your system. This is also probably the case if you are on your personal device and only recently acquired R.</p>
-<p>If you got an error, run the following command: install.packages(“tidyverse”)</p>
+<p>If you got an error, run the following command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>With a few exceptions, you will always install new packages in this fashion: install.packages(“package_name”)</p>
 <p>After it’s done installing, go back and run the library(tidyverse) command again. Note that you always need to do this for an added package. Whether you’ve had it for a while or just installed it, you need to load any outside package into your current session by placing its name in the library() function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="practice-with-data-manipulation" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="practice-with-data-manipulation"><span class="header-section-number">2.2</span> Practice with Data Manipulation</h2>
+<section id="practice-with-data-manipulation" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="practice-with-data-manipulation"><span class="header-section-number">3.2</span> Practice with Data Manipulation</h2>
 <p>Let’s try bringing in a data frame to play with a few tidyverse functions. We’ll use the load() function to bring in a subset of the General Social Survey, which contains a few variables from the 2022 survey wave. Run the following command and select the file “gss_sub.rda”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.choose</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.choose</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The file.choose() function will open up a file-explorer window that allows you to manually select an R data file to load in. We’ll talk about some other ways to import data files using R syntax next time.</p>
 
@@ -680,7 +689,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./getting_started.html" class="pagination-link" aria-label="R Fundamentals">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

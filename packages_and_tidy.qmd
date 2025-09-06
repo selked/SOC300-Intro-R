@@ -14,7 +14,9 @@ library(tidyverse)
 If you receive an error when you run this, you likely do not have the package installed on your system. This is also probably the case if you are on your personal device and only recently acquired R.
 
 If you got an error, run the following command:
+```{r, eval=FALSE, echo=TRUE}
 install.packages("tidyverse")
+```
 
 With a few exceptions, you will always install new packages in this fashion: install.packages("package_name")
 
