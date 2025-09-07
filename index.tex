@@ -615,7 +615,7 @@ rename our vectors accordingly.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, rightrule=.15mm, left=2mm, breakable, colback=white, titlerule=0mm, colframe=quarto-callout-tip-color-frame, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, opacitybacktitle=0.6, arc=.35mm, colbacktitle=quarto-callout-tip-color!10!white, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, left=2mm, colback=white, leftrule=.75mm, opacityback=0, toptitle=1mm, coltitle=black, breakable, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, titlerule=0mm]
 
 As a slight tangent, note that we can use line breaks to our advantage
 with longer strings of code. The above command is identical to the one
@@ -1094,7 +1094,7 @@ that will help us learn to chain these functions together.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, rightrule=.15mm, left=2mm, breakable, colback=white, titlerule=0mm, colframe=quarto-callout-note-color-frame, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, opacitybacktitle=0.6, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, colback=white, leftrule=.75mm, opacityback=0, toptitle=1mm, coltitle=black, breakable, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm]
 
 You probably noticed the \texttt{na.rm\ =\ TRUE} input that I supplied
 for the above function. This is short for `remove NAs', which we need to
@@ -1197,7 +1197,7 @@ according to this variable grouping.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, rightrule=.15mm, left=2mm, breakable, colback=white, titlerule=0mm, colframe=quarto-callout-note-color-frame, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, opacitybacktitle=0.6, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, colback=white, leftrule=.75mm, opacityback=0, toptitle=1mm, coltitle=black, breakable, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm]
 
 Note that I've added one new function here, \texttt{group\_by()}. We'll
 see this plenty more in other cases, and it will help us quite a bit
@@ -1262,7 +1262,10 @@ with these in the next unit and hopefully accumulate some muscle memory.
 
 \part{Day 5: Data Visualization and ggplot}
 
-\chapter{Introduction}\label{introduction}
+\chapter*{Introduction}\label{introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+
+\markboth{Introduction}{Introduction}
 
 Up to this point, we have worked with pretty simple visualizations, just
 so we can quickly glean important information about our statistical
@@ -1276,8 +1279,11 @@ fine-tune some of the visuals we have already worked with, and we will
 preview some other common visual styles that can manage with
 \texttt{ggplot}.
 
-\section{Visualization and Analytical
+\section*{Visualization and Analytical
 Thinking}\label{visualization-and-analytical-thinking}
+\addcontentsline{toc}{section}{Visualization and Analytical Thinking}
+
+\markright{Visualization and Analytical Thinking}
 
 Before we start working with some of these new visual tools, I want to
 take an opportunity to stress the importance of visualization more
@@ -1293,7 +1299,10 @@ visualization's in the research process.
 
 I will illustrate with a modern twist on a classic example.
 
-\subsection{Thirteen Data Sets}\label{thirteen-data-sets}
+\section*{Thirteen Data Sets}\label{thirteen-data-sets}
+\addcontentsline{toc}{section}{Thirteen Data Sets}
+
+\markright{Thirteen Data Sets}
 
 Let's take a look at a collection of thirteen different data sets. Each
 data set has 142 observations with 2 columns, labeled x \& y.
@@ -1326,10 +1335,6 @@ these data look to be identical. Let's try plotting a regression line to
 model a linear relationship between the x and y variables in each data
 set.
 
-\begin{verbatim}
-`geom_smooth()` using formula = 'y ~ x'
-\end{verbatim}
-
 \pandocbounded{\includegraphics[keepaspectratio]{viz_introduction_files/figure-pdf/unnamed-chunk-2-1.pdf}}
 
 It's really starting to look like this is just the same data. All
@@ -1338,13 +1343,12 @@ variables are similarly correlated.
 
 Finally, let's go ahead and plot the actual data.
 
-\begin{verbatim}
-`geom_smooth()` using formula = 'y ~ x'
-\end{verbatim}
-
 \pandocbounded{\includegraphics[keepaspectratio]{viz_introduction_files/figure-pdf/unnamed-chunk-3-1.pdf}}
 
-\subsection{In Sum}\label{in-sum}
+\section*{In Sum}\label{in-sum}
+\addcontentsline{toc}{section}{In Sum}
+
+\markright{In Sum}
 
 So, take this as an illustration of the importance of visualizing your
 data. When we get a look at the actual data, we can see that it does not
@@ -1357,7 +1361,7 @@ tests will produce intelligible results.
 
 Making our figures and tables look aesthetically pleasing is indeed
 valuable in its own right, but don't underestimate the utility of good
-visualization for the analytical process itsel.
+visualization for the analytical process itself.
 
 
 
