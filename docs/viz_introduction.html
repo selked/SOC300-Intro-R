@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction – Introduction to R</title>
+<title>4&nbsp; Introduction – Introduction to R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -80,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 5: Data Visualization and ggplot</a></li><li class="breadcrumb-item"><a href="./viz_introduction.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 5: Data Visualization and ggplot</a></li><li class="breadcrumb-item"><a href="./viz_introduction.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -167,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./viz_introduction.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
       </ul>
@@ -182,18 +182,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#visualization-and-analytical-thinking" id="toc-visualization-and-analytical-thinking" class="nav-link active" data-scroll-target="#visualization-and-analytical-thinking">Visualization and Analytical Thinking</a></li>
-  <li><a href="#thirteen-data-sets" id="toc-thirteen-data-sets" class="nav-link" data-scroll-target="#thirteen-data-sets">Thirteen Data Sets</a></li>
-  <li><a href="#in-sum" id="toc-in-sum" class="nav-link" data-scroll-target="#in-sum">In Sum</a></li>
+  <li><a href="#visualization-and-analytical-thinking" id="toc-visualization-and-analytical-thinking" class="nav-link active" data-scroll-target="#visualization-and-analytical-thinking"><span class="header-section-number">4.1</span> Visualization and Analytical Thinking</a></li>
+  <li><a href="#thirteen-data-sets" id="toc-thirteen-data-sets" class="nav-link" data-scroll-target="#thirteen-data-sets"><span class="header-section-number">4.2</span> Thirteen Data Sets</a></li>
+  <li><a href="#in-sum" id="toc-in-sum" class="nav-link" data-scroll-target="#in-sum"><span class="header-section-number">4.3</span> In Sum</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 5: Data Visualization and ggplot</a></li><li class="breadcrumb-item"><a href="./viz_introduction.html">Introduction</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 5: Data Visualization and ggplot</a></li><li class="breadcrumb-item"><a href="./viz_introduction.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Introduction</h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
 </div>
 
 
@@ -212,14 +212,14 @@ ul.task-list li input[type="checkbox"] {
 
 <p>Up to this point, we have worked with pretty simple visualizations, just so we can quickly glean important information about our statistical models without spending too much time focusing on the aesthetics of the visuals.</p>
 <p>In this lab, we will learn a bit more about R’s graphical capability—especially through tidyverse’s <code>ggplot</code>—which provides us with incredible customizability. We will learn how to fine-tune some of the visuals we have already worked with, and we will preview some other common visual styles that can manage with <code>ggplot</code>.</p>
-<section id="visualization-and-analytical-thinking" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-and-analytical-thinking">Visualization and Analytical Thinking</h2>
+<section id="visualization-and-analytical-thinking" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="visualization-and-analytical-thinking"><span class="header-section-number">4.1</span> Visualization and Analytical Thinking</h2>
 <p>Before we start working with some of these new visual tools, I want to take an opportunity to stress the importance of visualization more generally. It’s easy to see the process of presenting visuals as something somewhat superficial, but visualization can be critical for defining the kind of questions we can ask about our data.</p>
 <p>For now, I’m going to obscure the code I’m using for this document. We will learn more about the kind of commands I used to generate the following figures, but I don’t want anyone to get bogged down initially. I’ll use these visuals to help impart an important lesson about data visualization’s in the research process.</p>
 <p>I will illustrate with a modern twist on a classic example.</p>
 </section>
-<section id="thirteen-data-sets" class="level2">
-<h2 class="anchored" data-anchor-id="thirteen-data-sets">Thirteen Data Sets</h2>
+<section id="thirteen-data-sets" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="thirteen-data-sets"><span class="header-section-number">4.2</span> Thirteen Data Sets</h2>
 <p>Let’s take a look at a collection of thirteen different data sets. Each data set has 142 observations with 2 columns, labeled x &amp; y.</p>
 <p>I’ll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations.</p>
 <div class="cell">
@@ -263,10 +263,11 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+<p>This is a well known data set referred to as the <a href="https://en.wikipedia.org/wiki/Datasaurus_dozen">‘datasaurus dozen’</a>. It’s often used in intro statistical classes to help illustrate the importance of visualization. It’s inspired by another conceptually similar data set known as <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">‘Anscombe’s Quartet’</a> which likewise illustrates the importance of plotting data and the impact that statistical outliers can have on simple descriptive summaries of a data set.</p>
 </section>
-<section id="in-sum" class="level2">
-<h2 class="anchored" data-anchor-id="in-sum">In Sum</h2>
-<p>So, take this as an illustration of the importance of visualizing your data. When we get a look at the actual data, we can see that it does not make sense to model any of these relationships linearly. And even though they all have the same summary statistics, they are are very different data sets that clearly reflect different sorts of relationships among the x,y variables in each case. Visualizing your data will help give you insight on what question it’s capable of answering and which statistical tests will produce intelligible results.</p>
+<section id="in-sum" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="in-sum"><span class="header-section-number">4.3</span> In Sum</h2>
+<p>So, take this as a showcase of the importance of visualizing your data. When we get a look at the actual data, we can see that it does not make sense to model any of these relationships linearly. And even though they all have the same summary statistics, they are very different data sets that clearly reflect different sorts of relationships among the x,y variables in each case. Visualizing your data will help give you insight on what question it’s capable of answering and which statistical tests will produce intelligible results.</p>
 <p>Making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don’t underestimate the utility of good visualization for the analytical process itself.</p>
 
 

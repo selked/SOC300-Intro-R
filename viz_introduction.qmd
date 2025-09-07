@@ -61,8 +61,10 @@ dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
     theme(legend.position = "none") +
     facet_wrap(~dataset, nrow=3)
 ```
+This is a well known data set referred to as the ['datasaurus dozen'](https://en.wikipedia.org/wiki/Datasaurus_dozen). It's often used in intro statistical classes to help illustrate the importance of visualization. It's inspired by another conceptually similar data set known as ['Anscombe's Quartet'](https://en.wikipedia.org/wiki/Anscombe%27s_quartet) which likewise illustrates the importance of plotting data and the impact that statistical outliers can have on simple descriptive summaries of a data set. 
+
 
 ## In Sum
-So, take this as an illustration of the importance of visualizing your data. When we get a look at the actual data, we can see that it does not make sense to model any of these relationships linearly. And even though they all have the same summary statistics, they are are very different data sets that clearly reflect different sorts of relationships among the x,y variables in each case. Visualizing your data will help give you insight on what question it's capable of answering and which statistical tests will produce intelligible results. 
+So, take this as a showcase of the importance of visualizing your data. When we get a look at the actual data, we can see that it does not make sense to model any of these relationships linearly. And even though they all have the same summary statistics, they are very different data sets that clearly reflect different sorts of relationships among the x,y variables in each case. Visualizing your data will help give you insight on what question it's capable of answering and which statistical tests will produce intelligible results. 
 
 Making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don't underestimate the utility of good visualization for the analytical process itself.
