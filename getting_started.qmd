@@ -52,13 +52,13 @@ character_vec <- c("east", "west", "south", "south", "north")
 logical_vec <- c(TRUE, FALSE, TRUE, FALSE, FALSE) 
 ```
 
-Let's talk a bit about what we have here. Each of these vectors represents a **data type** in R, or, in other words, one of the basic ways in which R stores data. There are some more data types out there that we may encounter, but these are the most most relevant for us.
+Let's talk a bit about what we have here. Each of these vectors represents a **data type** in R, or, in other words, one of the basic ways in which R stores data. There are some more data types out there, but these are the most most relevant for us.
 
 -   ***Numeric Data:*** As the name suggests, this is the typical fashion in which numbers are stored in R. Numeric data encompasses both *continuous* values and *discrete* values. These are essentially numbers that can have decimal places vs. integers (whole numbers).
 
--   ***Character Data:*** Character here refers to the idea of character strings. This is typically how R stores text data---as distinct strings of text. Note that, while numbers are typically processed as numeric by R, numbers can also become character data if you place them between quotation marks. Some wonky things can occasionally happen when you are importing data in from various source file types as well (e.g. .CSV, .XLSX, etc.)
+-   ***Character Data:*** Character here refers to the idea of character strings. This is typically how R stores text data---as distinct strings of text. Note that, while numbers are typically processed as numeric by R, numbers can also become character data if you place them between quotation marks. Some wonky things can happen when you are importing data in from various source file types as well (e.g. .CSV, .XLSX, etc.)
 
--   ***Logical Data:*** In R syntax, upper-case 'true' and 'false' have fixed values in R and, when used without quotes, will refer to these pre-defined logical values. We probably won't use this data type much for analyses, but we will run into them in other places. They can be useful for sorting and searching through subsets of data, and we will also use logical values to turn certain procedures on or off in some functions.
+-   ***Logical Data:*** In R syntax, upper-case 'true' and 'false' have fixed values and, when used without quotes, will refer to these pre-defined logical values. We probably won't use this data type much for analyses, but we will run into them in other places. They can be useful for sorting and searching through subsets of data, and we will also use logical values to turn certain procedures on or off in some functions.
 
 Many R functions will respond differently to different data types, so it's important to keep these in mind when you need to troubleshoot errors.
 
@@ -100,7 +100,7 @@ ordinal_vec<-c("small", "medium", "medium", "large", "medium")
 
 Now, let's use a base R function to create a data frame and assign it to a new object.
 
-We can use the `data.frame()` function to build up our data frame. This function expects that we will give it some vectors, which it will organize into columns. We could just give it the vectors, and it will take the vector names as column names, e.g.:
+We can use `data.frame()` for this. `data.frame()` expects that we will give it some vectors, which it will then organize into columns. We could just give it the vectors, and it would take the vector names as column names, e.g.:
 
 ```{r, eval=FALSE, echo=TRUE}
 our_df <- data.frame(p_id_vec, num_vec, character_vec, ordinal_vec, logical_vec)
@@ -160,7 +160,7 @@ The summary of `has_a_labrador` makes sense. It's recognized as a logical vector
 
 `food_per_day` works as well. We're dealing with a continuous variable that allows for decimal places, so it makes sense to take the mean and look at the range and distribution.
 
-But how about `side_of_town`? We don't really want these values to be treated as 5 unrelated character strings. What that summary tells us is that this variable is a character type (or class). 'Length' refers to the size of the vector. So, a vector with 5 items in it would be a vector of length 5. But does it make sense for us to treat the `side_of_town` variable as 5 totally separate strings of characters?
+But how about `side_of_town`? What that summary tells us is that this variable is a character type (or class). 'Length' refers to the size of the vector. So, a vector containing 5 items would be a vector of length 5. But does it make sense for us to treat the `side_of_town` variable as 5 totally separate strings of characters?
 
 Not quite. When we have two entries of "south", for example, we want those responses to be grouped together and not treated as unique entries.
 
