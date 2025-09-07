@@ -29,7 +29,7 @@ load("our_gss.rda")
 ```
 
 ## Bringing in our Data
-Let's try bringing in a data frame to play with a few tidyverse functions. We'll use the load() function to bring in a subset of the General Social Survey, which contains a few variables from the 2022 survey wave. Run the following command and select the file "our_gss.rda"
+Let's try bringing in a data frame to play with a few tidyverse functions. We'll use the `load()` function to bring in a subset of the General Social Survey, which contains a few variables from the 2022 survey wave. Run the following command and select the file "our_gss.rda"
 
 ```{r, eval=FALSE, echo=TRUE}
 load(file.choose())

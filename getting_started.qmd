@@ -78,13 +78,7 @@ But, what happens when we run the following command?
 mean(character_vec)
 ```
 
-It doesn't make any sense to take the mean of the cardinal directions, so it will throw a warning message. We need a variable that can be represented numerically. Note that `mean()` also accepts logical variables, as, in R, TRUEs will be counted as 1s and FALSEs will be counted as 0s. In this case, you will be getting the proportion of true responses
-
-```{r}
-mean(logical_vec)
-
-(1+0+1+0+0)/5
-```
+It doesn't make any sense to take the mean of the cardinal directions, so it will throw a warning message. We need a variable that can be represented numerically. As we'll see, it's a good habit to make sure you know the data type of your variables before you begin your analysis.
 
 Now that we've talked about some of these basic building blocks for data, let's talk about putting them together.
 
