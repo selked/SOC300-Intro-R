@@ -1,5 +1,9 @@
 # R Fundamentals
+In this first section, we are going to start from the ground up and start to familiarize ourselves with the way R works and what it expects from us. We will begin with the most basic building blocks of R data and work our way up to the data frame---the object that will be most relevant for us. While you won't generally need to build data frames from scratch within R for your own research, it's a good way to familiarize yourself with the structure of data in R. While we will start here with an incredibly simple data frame, all the principles you learn here will scale up as we start to work with much larger and more complex data frames.
 
+:::{.callout-note}
+I'm writing this mini-book in a language called Quarto, which allows us to carry out a bunch of neat formatting tasks with little effort. One of the big perks is that Quarto can read and process R code, so I will show you all my R code here, and you will be able to directly view the output. If you want to follow along with your own script on your personal device, you should copy and paste the commands from this document and run them locally.
+:::
 ## Basic Operations
 
 First, we will start by exploring some of the basic characteristics of R.
