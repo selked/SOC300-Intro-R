@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Background – Introduction to R</title>
+<title>4&nbsp; Introduction – Introduction to R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./getting_started.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./packages_and_tidy.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./background.html">Day 1: Getting Started</a></li><li class="breadcrumb-item"><a href="./background.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Background</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 5: Data Visualization and ggplot</a></li><li class="breadcrumb-item"><a href="./viz_introduction.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -126,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./background.html" class="sidebar-item-text sidebar-link active">
+  <a href="./background.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Background</span></span></a>
   </div>
 </li>
@@ -167,7 +166,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./viz_introduction.html" class="sidebar-item-text sidebar-link">
+  <a href="./viz_introduction.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -183,12 +182,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-r" id="toc-what-is-r" class="nav-link active" data-scroll-target="#what-is-r"><span class="header-section-number">1.1</span> What is R?</a></li>
-  <li><a href="#what-is-r-studio" id="toc-what-is-r-studio" class="nav-link" data-scroll-target="#what-is-r-studio"><span class="header-section-number">1.2</span> What is R Studio?</a></li>
-  <li><a href="#acquiring-r-and-r-studio" id="toc-acquiring-r-and-r-studio" class="nav-link" data-scroll-target="#acquiring-r-and-r-studio"><span class="header-section-number">1.3</span> Acquiring R and R Studio</a>
+  <li><a href="#visualization-and-analytical-thinking" id="toc-visualization-and-analytical-thinking" class="nav-link active" data-scroll-target="#visualization-and-analytical-thinking"><span class="header-section-number">4.1</span> Visualization and Analytical Thinking</a>
   <ul class="collapse">
-  <li><a href="#downloading-r" id="toc-downloading-r" class="nav-link" data-scroll-target="#downloading-r"><span class="header-section-number">1.3.1</span> Downloading R</a></li>
-  <li><a href="#downloading-r-studio" id="toc-downloading-r-studio" class="nav-link" data-scroll-target="#downloading-r-studio"><span class="header-section-number">1.3.2</span> Downloading R Studio</a></li>
+  <li><a href="#thirteen-data-sets" id="toc-thirteen-data-sets" class="nav-link" data-scroll-target="#thirteen-data-sets"><span class="header-section-number">4.1.1</span> Thirteen Data Sets</a></li>
+  <li><a href="#in-sum" id="toc-in-sum" class="nav-link" data-scroll-target="#in-sum"><span class="header-section-number">4.1.2</span> In Sum</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -196,9 +193,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./background.html">Day 1: Getting Started</a></li><li class="breadcrumb-item"><a href="./background.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Background</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 5: Data Visualization and ggplot</a></li><li class="breadcrumb-item"><a href="./viz_introduction.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Background</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
 </div>
 
 
@@ -215,31 +212,69 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Before we start exploring some of R’s basic functionality, I’m going to set the stage a little on what R and R studio are, why we are using these tools in particular, and what we will need to know before we dig in.</p>
-<section id="what-is-r" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="what-is-r"><span class="header-section-number">1.1</span> What is R?</h2>
-<p>At it’s core, R is a programming language. There’s a lot to say about this from a computer science perspective, but, for our purposes, you can just think of R as a language with a very particular structure that’s designed to tell our computers what to do.</p>
-<p>There are all sorts of different programming languages out there, and they all offer certain benefits or cater to particular computing needs. Unlike some general purpose languages like C, C++, or Python, R is relatively specialized, and this is part of what makes it so useful for us. R is designed with statistical computing as a primary motivator, and now—roughly 30 years into its tenure—stands as one of the most widely adopted resources for statistical data science in the social sciences and beyond.</p>
-<p>Though there can be a bit of a learning curve when getting used to R, we will focus on exactly the things that we need and build ourselves up slowly. Once you get used to it, R will allow you to perform incredibly complex statistical procedures with relative ease, and it can even help us with other related tasks like visualizing and presenting our analyses.</p>
+<p>Up to this point, we have worked with pretty simple visualizations, just so we can quickly glean important information about our statistical models without spending too much time focusing on the aesthetics of the visuals.</p>
+<p>In this lab, we will learn a bit more about R’s graphical capability—especially through tidyverse’s <code>ggplot</code>—which provides us with incredible customizability. We will learn how to fine-tune some of the visuals we have already worked with, and we will preview some other common visual styles that can manage with <code>ggplot</code>.</p>
+<section id="visualization-and-analytical-thinking" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="visualization-and-analytical-thinking"><span class="header-section-number">4.1</span> Visualization and Analytical Thinking</h2>
+<p>Before we start working with some of these new visual tools, I want to take an opportunity to stress the importance of visualization more generally. It’s easy to see the process of presenting visuals as something somewhat superficial, but visualization can be critical for defining the kind of questions we can ask about our data.</p>
+<p>For now, I’m going to obscure the code I’m using for this document. We will learn more about the kind of commands I used to generate the following figures, but I don’t want anyone to get bogged down initially. I’ll use these visuals to help impart an important lesson about data visualization’s in the research process.</p>
+<p>I will illustrate with a modern twist on a classic example.</p>
+<section id="thirteen-data-sets" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="thirteen-data-sets"><span class="header-section-number">4.1.1</span> Thirteen Data Sets</h3>
+<p>Let’s take a look at a collection of thirteen different data sets. Each data set has 142 observations with 2 columns, labeled x &amp; y.</p>
+<p>I’ll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 4
+   mean_x mean_y std_x std_y
+    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1   54.3   47.8  16.8  26.9
+ 2   54.3   47.8  16.8  26.9
+ 3   54.3   47.8  16.8  26.9
+ 4   54.3   47.8  16.8  26.9
+ 5   54.3   47.8  16.8  26.9
+ 6   54.3   47.8  16.8  26.9
+ 7   54.3   47.8  16.8  26.9
+ 8   54.3   47.8  16.8  26.9
+ 9   54.3   47.8  16.8  26.9
+10   54.3   47.8  16.8  26.9
+11   54.3   47.8  16.8  26.9
+12   54.3   47.8  16.8  26.9
+13   54.3   47.8  16.8  26.9</code></pre>
+</div>
+</div>
+<p>Now, there’s not much to say here. In terms of the summary statistics, these data look to be identical. Let’s try plotting a regression line to model a linear relationship between the x and y variables in each data set.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="viz_introduction_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It’s really starting to look like this is just the same data. All thirteen data sets have the same trend line, suggesting that the variables are similarly correlated.</p>
+<p>Finally, let’s go ahead and plot the actual data.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="viz_introduction_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="what-is-r-studio" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="what-is-r-studio"><span class="header-section-number">1.2</span> What is R Studio?</h2>
-<p>We are going to pair R with the software R Studio, which is what’s known as an Integrated Development Environment (IDE). Programming languages can be leveraged in a number of different ways. You could run R commands entirely from a Windows command line or Mac terminal. But that would probably not be very ideal for us—not to mention sort of ethereal and frustrating for those of without any programming experience. IDEs provide user-friendly interfaces for working with programming languages, so that we can easily manage our code, quickly generate and view the output of our analyses, and generally keep track of what we are doing with R. There are lots of other IDEs out there, but R Studio is an ideal balance of ease and power, so it will serve as our IDE of choice.</p>
-<p>The best way to think about R Studio’s relationship to R is by framing it as an analogy with a desktop computer. R Studio is to R as a monitor is to a computer. R is the thing that’s doing all the heavy lifting computationally, and R Studio is the thing that allows us to view and interact with R in a way that’s simple and straightforward.</p>
-</section>
-<section id="acquiring-r-and-r-studio" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="acquiring-r-and-r-studio"><span class="header-section-number">1.3</span> Acquiring R and R Studio</h2>
-<p>All of the CHASS computers (and likely most NC State computers) come with R and R Studio, so you do not need to download them, but you may find it convenient to work on R assignments using your own personal device, so I’ve provided some instructions below.</p>
-<p>Note that you will want to install R first,</p>
-<section id="downloading-r" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="downloading-r"><span class="header-section-number">1.3.1</span> Downloading R</h3>
-<p>You can download R from the <a href="https://www.r-project.org/">Comprehensive R Archive Network (CRAN)</a>.</p>
-<p>When you click that link, you will arrive at CRAN’s homepage. Navigate to the sidebar on the left, find ‘Download’ near the top, and then click ‘CRAN’. This will take you to the ‘mirrors’ page. Mirrors are just different host locations for downloading the R installation files. This allows you to maximize download speed by choosing a nearby server, so scroll down to ‘USA’ and choose one of those (I usually opt for the Durham, NC mirror).</p>
-<p>Unless you are very experienced with computers, you should download one of the options listed as ‘pre-compiled binary distributions’. These will typically be the first options listed. Don’t even worry about what that means if you’re not familiar. Just choose the one that reflects your operating system (there are options for Windows, Mac, and Linux) That should download an R installer, and you can follow the directions to complete a default installation.</p>
-</section>
-<section id="downloading-r-studio" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="downloading-r-studio"><span class="header-section-number">1.3.2</span> Downloading R Studio</h3>
-<p>R Studio is a little more straightforward to download. Just <a href="https://posit.co/download/rstudio-desktop/">navigate to its homepage</a>, scroll down a little, and you will find a big button that says ‘Download R Studio for [your operating system]’. Go ahead and run the installer with the default settings.</p>
+<section id="in-sum" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="in-sum"><span class="header-section-number">4.1.2</span> In Sum</h3>
+<p>So, take this as an illustration of the importance of visualizing your data. When we get a look at the actual data, we can see that it does not make sense to model any of these relationships linearly. And even though they all have the same summary statistics, they are are very different data sets that clearly reflect different sorts of relationships among the x,y variables in each case. Visualizing your data will help give you insight on what question it’s capable of answering and which statistical tests will produce intelligible results.</p>
+<p>Making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don’t underestimate the utility of good visualization for the analytical process itsel.</p>
 
 
 </section>
@@ -665,14 +700,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./packages_and_tidy.html" class="pagination-link" aria-label="Packages and the Tidyverse">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./getting_started.html" class="pagination-link" aria-label="R Fundamentals">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

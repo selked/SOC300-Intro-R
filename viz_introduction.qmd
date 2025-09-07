@@ -1,0 +1,68 @@
+# Introduction
+
+Up to this point, we have worked with pretty simple visualizations, just so we can quickly glean important information about our statistical models without spending too much time focusing on the aesthetics of the visuals.
+
+In this lab, we will learn a bit more about R's graphical capability---especially through tidyverse's `ggplot`---which provides us with incredible customizability. We will learn how to fine-tune some of the visuals we have already worked with, and we will preview some other common visual styles that can manage with `ggplot`.
+
+## Visualization and Analytical Thinking
+
+Before we start working with some of these new visual tools, I want to take an opportunity to stress the importance of visualization more generally. It's easy to see the process of presenting visuals as something somewhat superficial, but visualization can be critical for defining the kind of questions we can ask about our data.
+
+For now, I'm going to obscure the code I'm using for this document. We will learn more about the kind of commands I used to generate the following figures, but I don't want anyone to get bogged down initially. I'll use these visuals to help impart an important lesson about data visualization's in the research process.
+
+I will illustrate with a modern twist on a classic example.
+
+### Thirteen Data Sets
+
+Let's take a look at a collection of thirteen different data sets. Each data set has 142 observations with 2 columns, labeled x & y.
+
+I'll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations.
+
+```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
+library(datasauRus)
+library(tidyverse)
+
+dino <- datasaurus_dozen
+
+dino_mean <- dino |>
+  group_by(dataset) |> 
+        summarise("mean_x" = mean(x), 
+                  "mean_y" = mean(y),
+                  "std_x" = sd(x),
+                  "std_y" = sd(y),
+                                      ) |>
+  mutate_if(is.numeric, round, 1) |>
+  select(!dataset)
+
+dino_mean
+```
+Now, there's not much to say here. In terms of the summary statistics, these data look to be identical. Let's try plotting a regression line to model a linear relationship between the x and y variables in each data set.
+
+```{r, eval=TRUE, echo=FALSE}
+dino |> 
+  ggplot(
+  aes(x=x, y=y, color=dataset)) +
+    geom_smooth(method="lm")+
+    ylim(0,100)+
+    theme(legend.position = "none") +
+    facet_wrap(~dataset, nrow=3)
+```
+It's really starting to look like this is just the same data. All thirteen data sets have the same trend line, suggesting that the variables are similarly correlated.
+
+Finally, let's go ahead and plot the actual data.
+
+```{r, eval=TRUE, echo=FALSE}
+dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
+  ggplot(
+  aes(x=x, y=y, color=dataset)) +
+    geom_smooth(method="lm")+
+    ylim(0,100)+
+    geom_point()+
+    theme(legend.position = "none") +
+    facet_wrap(~dataset, nrow=3)
+```
+
+### In Sum
+So, take this as an illustration of the importance of visualizing your data. When we get a look at the actual data, we can see that it does not make sense to model any of these relationships linearly. And even though they all have the same summary statistics, they are are very different data sets that clearly reflect different sorts of relationships among the x,y variables in each case. Visualizing your data will help give you insight on what question it's capable of answering and which statistical tests will produce intelligible results. 
+
+Making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don't underestimate the utility of good visualization for the analytical process itsel.

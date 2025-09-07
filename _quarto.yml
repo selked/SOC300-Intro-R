@@ -22,7 +22,9 @@ book:
     - part: "Day 2: Survey Data and Univariate Analysis"
     - part: "Day 3: Bivariate Analysis with the GSS"
     - part: "Day 4: Multivariable Analysis and Elaboration"
-    - part: "Day 5: Data Visualization and ggplot" 
+    - part: "Day 5: Data Visualization and ggplot"
+      chapters:
+        - viz_introduction.qmd
 
 
 bibliography: references.bib
