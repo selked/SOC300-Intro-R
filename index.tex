@@ -615,7 +615,7 @@ rename our vectors accordingly.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, opacitybacktitle=0.6, arc=.35mm, colbacktitle=quarto-callout-tip-color!10!white, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, left=2mm, colback=white, leftrule=.75mm, opacityback=0, toptitle=1mm, coltitle=black, breakable, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, titlerule=0mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, rightrule=.15mm, colback=white, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, left=2mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, bottomrule=.15mm, leftrule=.75mm, opacityback=0, bottomtitle=1mm, arc=.35mm, toptitle=1mm, coltitle=black, opacitybacktitle=0.6]
 
 As a slight tangent, note that we can use line breaks to our advantage
 with longer strings of code. The above command is identical to the one
@@ -1094,7 +1094,7 @@ that will help us learn to chain these functions together.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, opacitybacktitle=0.6, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, colback=white, leftrule=.75mm, opacityback=0, toptitle=1mm, coltitle=black, breakable, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, rightrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, left=2mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, leftrule=.75mm, opacityback=0, bottomtitle=1mm, arc=.35mm, toptitle=1mm, coltitle=black, opacitybacktitle=0.6]
 
 You probably noticed the \texttt{na.rm\ =\ TRUE} input that I supplied
 for the above function. This is short for `remove NAs', which we need to
@@ -1197,7 +1197,7 @@ according to this variable grouping.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, opacitybacktitle=0.6, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, colback=white, leftrule=.75mm, opacityback=0, toptitle=1mm, coltitle=black, breakable, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, breakable, rightrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, left=2mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, leftrule=.75mm, opacityback=0, bottomtitle=1mm, arc=.35mm, toptitle=1mm, coltitle=black, opacitybacktitle=0.6]
 
 Note that I've added one new function here, \texttt{group\_by()}. We'll
 see this plenty more in other cases, and it will help us quite a bit
@@ -1345,19 +1345,29 @@ Finally, let's go ahead and plot the actual data.
 
 \pandocbounded{\includegraphics[keepaspectratio]{viz_introduction_files/figure-pdf/unnamed-chunk-3-1.pdf}}
 
+This is a well known data set referred to as the
+\href{https://en.wikipedia.org/wiki/Datasaurus_dozen}{`datasaurus
+dozen'}. It's often used in intro statistical classes to help illustrate
+the importance of visualization. It's inspired by another conceptually
+similar data set known as
+\href{https://en.wikipedia.org/wiki/Anscombe\%27s_quartet}{`Anscombe's
+Quartet'} which likewise illustrates the importance of plotting data and
+the impact that statistical outliers can have on simple descriptive
+summaries of a data set.
+
 \section*{In Sum}\label{in-sum}
 \addcontentsline{toc}{section}{In Sum}
 
 \markright{In Sum}
 
-So, take this as an illustration of the importance of visualizing your
-data. When we get a look at the actual data, we can see that it does not
-make sense to model any of these relationships linearly. And even though
-they all have the same summary statistics, they are are very different
-data sets that clearly reflect different sorts of relationships among
-the x,y variables in each case. Visualizing your data will help give you
-insight on what question it's capable of answering and which statistical
-tests will produce intelligible results.
+So, take this as a showcase of the importance of visualizing your data.
+When we get a look at the actual data, we can see that it does not make
+sense to model any of these relationships linearly. And even though they
+all have the same summary statistics, they are very different data sets
+that clearly reflect different sorts of relationships among the x,y
+variables in each case. Visualizing your data will help give you insight
+on what question it's capable of answering and which statistical tests
+will produce intelligible results.
 
 Making our figures and tables look aesthetically pleasing is indeed
 valuable in its own right, but don't underestimate the utility of good
