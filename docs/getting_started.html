@@ -267,7 +267,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>I’m writing this mini-book in a language called Quarto, which allows us to carry out a bunch of neat formatting tasks with little effort. One of the big perks is that Quarto can read and process R code, so I will show you all my R code here, and you will be able to directly view the output. If you want to follow along with your own script on your personal device, you should copy and paste the commands from this document and run them locally.</p>
+<p>I’m writing this mini-book in a language called <a href="https://quarto.org/">Quarto</a>, which allows us to carry out a bunch of neat formatting tasks with little effort. One of the big perks is that Quarto can read and process R code, so I will show you all my R code here, and you will be able to directly view the output. If you want to follow along with your own script on your personal device, you should copy and paste the commands from this document and run them locally.</p>
 </div>
 </div>
 <section id="basic-operations" class="level2" data-number="2.1">
@@ -313,7 +313,7 @@ Note
 </section>
 <section id="vectors-and-r-data-types" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="vectors-and-r-data-types"><span class="header-section-number">2.4</span> Vectors and R Data Types</h2>
-<p>You can think of vectors as ordered sets of values. We can use the <code>c()</code> function (short for ‘combine’) to create a vector made up of the values we provide. Let’s make a few different vectors</p>
+<p>You can think of vectors as ordered sets of values. We can use the <code>c()</code> function (short for ‘combine’) to create a vector made up of the values we provide. Let’s make a few different vectors—each one will have 5 separate items in it, and we separate those items with commas. Note that when we want R to process something as text (and not a named object, number, or function), we put it in quotation marks.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>num_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">3.4</span>, <span class="fl">5.6</span>, <span class="fl">7.1</span>, <span class="fl">2.8</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -324,7 +324,7 @@ Note
 <p>Let’s talk a bit about what we have here. Each of these vectors represents a <strong>data type</strong> in R, or, in other words, one of the basic ways in which R stores data. There are some more data types out there, but these are the most most relevant for us.</p>
 <ul>
 <li><p><strong><em>Numeric Data:</em></strong> As the name suggests, this is the typical fashion in which numbers are stored in R. Numeric data encompasses both <em>continuous</em> values and <em>discrete</em> values. These are essentially numbers that can have decimal places vs.&nbsp;integers (whole numbers).</p></li>
-<li><p><strong><em>Character Data:</em></strong> Character here refers to the idea of character strings. This is typically how R stores text data—as distinct strings of text. Note that, while numbers are typically processed as numeric by R, numbers can also become character data if you place them between quotation marks. Some wonky things can happen when you are importing data in from various source file types as well (e.g.&nbsp;.CSV, .XLSX, etc.)</p></li>
+<li><p><strong><em>Character Data:</em></strong> Character here refers to the idea of character strings. This is typically how R stores text data—as distinct strings of text. Note that, while numbers are typically processed as numeric by R, numbers can also become character data if you place them between quotation marks.</p></li>
 <li><p><strong><em>Logical Data:</em></strong> In R syntax, upper-case ‘true’ and ‘false’ have fixed values and, when used without quotes, will refer to these pre-defined logical values. We probably won’t use this data type much for analyses, but we will run into them in other places. They can be useful for sorting and searching through subsets of data, and we will also use logical values to turn certain procedures on or off in some functions.</p></li>
 </ul>
 <p>Many R functions will respond differently to different data types, so it’s important to keep these in mind when you need to troubleshoot errors.</p>
