@@ -38,7 +38,7 @@ dino_mean
 ```
 Now, there's not much to say here. In terms of the summary statistics, these data look to be identical. Let's try plotting a regression line to model a linear relationship between the x and y variables in each data set.
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
 dino |> 
   ggplot(
   aes(x=x, y=y, color=dataset)) +
@@ -51,7 +51,7 @@ It's really starting to look like this is just the same data. All thirteen data 
 
 Finally, let's go ahead and plot the actual data.
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
 dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
   ggplot(
   aes(x=x, y=y, color=dataset)) +
@@ -65,4 +65,4 @@ dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
 ### In Sum
 So, take this as an illustration of the importance of visualizing your data. When we get a look at the actual data, we can see that it does not make sense to model any of these relationships linearly. And even though they all have the same summary statistics, they are are very different data sets that clearly reflect different sorts of relationships among the x,y variables in each case. Visualizing your data will help give you insight on what question it's capable of answering and which statistical tests will produce intelligible results. 
 
-Making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don't underestimate the utility of good visualization for the analytical process itsel.
+Making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don't underestimate the utility of good visualization for the analytical process itself.
