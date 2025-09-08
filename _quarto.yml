@@ -19,6 +19,7 @@ book:
         - background.qmd
         - getting_started.qmd
         - packages_and_tidy.qmd
+        - usajobs_embeddings.qmd
     - part: "Day 2: Survey Data and Univariate Analysis"
     - part: "Day 3: Bivariate Analysis with the GSS"
     - part: "Day 4: Multivariable Analysis and Elaboration"
