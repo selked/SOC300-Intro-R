@@ -216,12 +216,11 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="visualization-and-analytical-thinking">Visualization and Analytical Thinking</h2>
 <p>Before we start working with some of these new visual tools, I want to take an opportunity to stress the importance of visualization more generally. It’s easy to see the process of presenting visuals as something somewhat superficial, but visualization can be critical for defining the kind of questions we can ask about our data.</p>
 <p>For now, I’m going to obscure the code I’m using for this document. We will learn more about the kind of commands I used to generate the following figures, but I don’t want anyone to get bogged down initially. I’ll use these visuals to help impart an important lesson about data visualization’s in the research process.</p>
-<p>I will illustrate with a modern twist on a classic example.</p>
 </section>
 <section id="thirteen-data-sets" class="level2">
 <h2 class="anchored" data-anchor-id="thirteen-data-sets">Thirteen Data Sets</h2>
 <p>Let’s take a look at a collection of thirteen different data sets. Each data set has 142 observations with 2 columns, labeled x &amp; y.</p>
-<p>I’ll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations.</p>
+<p>I’ll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations. Let’s see what seems to distinguish some these datasets from one another.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 4
@@ -242,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
 13   54.3   47.8  16.8  26.9</code></pre>
 </div>
 </div>
-<p>Now, there’s not much to say here. In terms of the summary statistics, these data look to be identical. Let’s try plotting a regression line to model a linear relationship between the x and y variables in each data set.</p>
+<p>Well, there’s not much we can say here. All the summary statistics are identical. Why don’t we try modeling a linear relationship between the x and y variables. Maybe looking at the correlations will tell us something. I’ll display the linear regression lines for each data set below.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -252,8 +251,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>It’s really starting to look like this is just the same data. All thirteen data sets have the same trend line, suggesting that the variables are similarly correlated.</p>
-<p>Finally, let’s go ahead and plot the actual data.</p>
+<p>Okay. This is not revealing much either. All the lines seem to have a (slight) negative relationship, where y decreases as x increases. The correlations aren’t revealing any notable distinctions, and we don’t seem to be getting anywhere in telling these data sets apart. Maybe these data sets aren’t so different after all…</p>
+<p>But let’s go ahead and plot the actual data and be sure.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -262,13 +261,34 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ggproto object: Class FacetWrap, Facet, gg&gt;
+    compute_layout: function
+    draw_back: function
+    draw_front: function
+    draw_labels: function
+    draw_panels: function
+    finish_data: function
+    init_scales: function
+    map_data: function
+    params: list
+    setup_data: function
+    setup_params: function
+    shrink: TRUE
+    train_scales: function
+    vars: function
+    super:  &lt;ggproto object: Class FacetWrap, Facet, gg&gt;</code></pre>
 </div>
-<p>This is a well known data set referred to as the <a href="https://en.wikipedia.org/wiki/Datasaurus_dozen">‘datasaurus dozen’</a>. It’s often used in intro statistical classes to help illustrate the importance of visualization. It’s inspired by another conceptually similar data set known as <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">‘Anscombe’s Quartet’</a> which likewise illustrates the importance of plotting data and the impact that statistical outliers can have on simple descriptive summaries of a data set.</p>
+</div>
+<p>Now there’s some distinction!</p>
+<p>This is a tongue in cheek data set known as the <a href="https://jumpingrivers.github.io/datasauRus/">‘datasaurus dozen’</a>. It’s often used in intro statistical classes to help illustrate the importance of visualization. It’s inspired by another conceptually similar data set known as <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">‘Anscombe’s quartet’</a> which likewise illustrates the importance of plotting data.</p>
 </section>
 <section id="in-sum" class="level2">
 <h2 class="anchored" data-anchor-id="in-sum">In Sum</h2>
-<p>So, take this as a showcase of the importance of visualizing your data. When we get a look at the actual data, we can see that it does not make sense to model any of these relationships linearly. And even though they all have the same summary statistics, they are very different data sets that clearly reflect different sorts of relationships among the x,y variables in each case. Visualizing your data will help give you insight on what question it’s capable of answering and which statistical tests will produce intelligible results.</p>
-<p>Making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don’t underestimate the utility of good visualization for the analytical process itself.</p>
+<p>So, take this as a showcase of the importance of visualizing your data. This isn’t to discount summary statistics and other numeric description of data—those are still invaluable for us.</p>
+<p>Rather, cases like Datasaurus or Anscombe’s quartet highlight the necessity of understanding the shape of your data. This will determine the kind of questions you can ask with the data, as well as the kind of statistical tools you need to describe it.</p>
+<p>For example, in the case we just examined, those x and y variables do not have any kind of clear linear relationship. In that case, tools like regression that assume linearity are not appropriate. Any relationship between the variables could only be explored through other statistical means.</p>
+<p>So, making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don’t underestimate the utility of good visualization for the analytic process itself.</p>
 
 
 </section>

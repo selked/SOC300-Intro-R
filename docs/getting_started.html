@@ -256,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In this first section, we are going to start from the ground up and start to familiarize ourselves with the way R works and what it expects from us. We will begin with the most basic building blocks of R data and work our way up to the data frame—the object that will be most relevant for us. While you won’t generally need to build data frames from scratch within R for your own research, it’s a good way to familiarize yourself with the structure of data in R. While we will start here with an incredibly simple data frame, all the principles you learn here will scale up as we start to work with much larger and more complex data frames.</p>
+<p>In this first section, we are going to start from the ground up and start to familiarize ourselves with the way R works and what it expects from us. We will begin with the most basic building blocks of R data and work our way up to the data frame—the object that will be most relevant for us. While you won’t generally need to build data frames from scratch within R for your own research, it’s a good way to familiarize yourself with the structure of data in R. While we will start here with a rather simple data frame, all the principles you learn here will scale up as we start to work with much larger and more complex data frames.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -339,7 +339,19 @@ Note
 <pre><code>[1] 4.02</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Note that it gives the same response as if we had manually calculated it. Functions can make our lives a lot easier with larger amounts of data, but always make sure you’re familiar with what’s going on under the hood of any given function.</p>
+</div>
+</div>
 <p>But, what happens when we run the following command?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(character_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -359,20 +371,21 @@ returning NA</code></pre>
 <p>For the most part, we will be working with data frames. These are collections of data organized in rows and columns. In data science, it’s generally preferable for data to take a particular shape wherein each row indicates a single observation, and each column represents a unique variable. This is called the ‘tidy’ data format.</p>
 <section id="building-a-data-frame" class="level3" data-number="2.5.1">
 <h3 data-number="2.5.1" class="anchored" data-anchor-id="building-a-data-frame"><span class="header-section-number">2.5.1</span> Building a Data Frame</h3>
-<p>Let’s use the vectors we created above to mock up a little data frame. We will imagine some variables that those vectors could represent. First, let’s make a couple more vectors.</p>
-<p>We want a data frame that reflects the ‘tidy’ format (rows = observations, columns = variables). So, let’s add a character vector of participant IDs associated with imaginary people in our mock data set. For reasons that will become clear in the next section, we are also going to add another character vector.</p>
+<p>Let’s use the vectors we created above to mock up a little data frame. We will imagine some variables that those vectors could represent. But first, let’s make a couple more vectors.</p>
+<p>Let’s add a vector of participant IDs associated with imaginary people in our mock data set. In accordance with tidy data, each of our rows will then represent a unique person. The column vectors will represent the variables that we are measuring for each person. Lastly, the individual cells will represent the specific values measured for each variable.</p>
+<p>For reasons that will become clear in the next section, we are also going to add one more character vector.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>p_id_vec<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"p1"</span>, <span class="st">"p2"</span>, <span class="st">"p3"</span>, <span class="st">"p4"</span>, <span class="st">"p5"</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ordinal_vec<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"small"</span>, <span class="st">"medium"</span>, <span class="st">"medium"</span>, <span class="st">"large"</span>, <span class="st">"medium"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now, let’s use a base R function to create a data frame and assign it to a new object.</p>
+<p>Now, let’s use a function to create a data frame and store it in a new object.</p>
 <p>We can use <code>data.frame()</code> for this. <code>data.frame()</code> expects that we will give it some vectors, which it will then organize into columns. We could just give it the vectors, and it would take the vector names as column names, e.g.:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>our_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(p_id_vec, num_vec, character_vec, ordinal_vec, logical_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>or we can specify new variable names and use the <code>=</code> sign to associate them with the vector. We will go with this latter strategy because our current vector names do not translate well to variable names.</p>
-<p>We’ll go ahead and imagine building a small data frame of dog owners and rename our vectors accordingly.</p>
+<p>Or we could specify new variable names and use the <code>=</code> sign to associate them with the vector. We will go with this latter strategy because our current vector names do not translate well to variable names.</p>
+<p>We’ll imagine building a small data frame of dog owners and rename our vectors accordingly.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_id =</span> p_id_vec,</span>
@@ -445,7 +458,20 @@ Tip
 <p>The summary of <code>has_a_labrador</code> makes sense. It’s recognized as a logical vector and tells us the number of TRUEs and FALSEs</p>
 <p><code>food_per_day</code> works as well. We’re dealing with a continuous variable that allows for decimal places, so it makes sense to take the mean and look at the range and distribution.</p>
 <p>But how about <code>side_of_town</code>? What that summary tells us is that this variable is a character type (or class). ‘Length’ refers to the size of the vector. So, a vector containing 5 items would be a vector of length 5. But does it make sense for us to treat the <code>side_of_town</code> variable as 5 totally separate strings of characters?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df<span class="sc">$</span>side_of_town)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Length     Class      Mode 
+        5 character character </code></pre>
+</div>
+</div>
 <p>Not quite. When we have two entries of “south”, for example, we want those responses to be grouped together and not treated as unique entries.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>side_of_town</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "east"  "west"  "south" "south" "north"</code></pre>
+</div>
+</div>
 <p>For this, we will want another key R data type.</p>
 </section>
 </section>
@@ -454,13 +480,13 @@ Tip
 <section id="unorderd-factors" class="level3" data-number="2.6.1">
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="unorderd-factors"><span class="header-section-number">2.6.1</span> Unorderd Factors</h3>
 <p>Factors are often the best way to treat categorical variables (nominal or ordinal) in R. Factors are a certain kind of vector that can only contain a number of pre-defined values. Each of these pre-defined values is considered a ‘level’ of the factor. So, we want <code>side_of_town</code> to be a factor variable with 4 levels: east, west, south, and north.</p>
-<p>We can turn this variable into a factor variable with base R’s <code>as.factor()</code> function.</p>
+<p>We can turn this variable into a factor with R’s <code>as.factor()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>side_of_town <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(our_df<span class="sc">$</span>side_of_town)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>side_of_town <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(our_df<span class="sc">$</span>side_of_town)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Check the <code>summary()</code> output again and notice how the output is reported now. Instead of simply noting that the vector contained 5 character strings, we can now see the different levels and the number of people who belong to each side of town.</p>
+<p>Check the <code>summary()</code> output again and notice how the output is reported now. Instead of simply listing that the vector contained 5 character strings, we can now see the different levels and the number of people who belong to each side of town.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     p_id             dog_size         side_of_town  food_per_day 
  Length:5           Length:5           east :1      Min.   :1.20  
@@ -484,15 +510,15 @@ Tip
 <p>Now, let’s think about <code>dog_size</code>. This should clearly be a factor variable as well. But, unlike <code>food_per_day</code>, the levels of this variable have an apparent order, from small to large.</p>
 <p>The <code>factor()</code> function allows us to turn a vector into a factor, as well as manually specify the levels. Additionally, we can activate a process in the function letting it know that we want the order to matter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>dog_size <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  our_df<span class="sc">$</span>dog_size, </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"small"</span>, <span class="st">"medium"</span>, <span class="st">"large"</span>),</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ordered =</span> <span class="cn">TRUE</span> </span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>our_df<span class="sc">$</span>dog_size <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  our_df<span class="sc">$</span>dog_size, </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"small"</span>, <span class="st">"medium"</span>, <span class="st">"large"</span>),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ordered =</span> <span class="cn">TRUE</span> </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Take a look back at the summary. Now, instead of 5 separate character strings, we can see the breakdown of how many people have a dog of a certain size.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     p_id             dog_size side_of_town  food_per_day  has_a_labrador 
  Length:5           small :1   east :1      Min.   :1.20   Mode :logical  
@@ -506,7 +532,7 @@ Tip
 <p>Note that the <code>str()</code> command is also useful for quickly gleaning the various data types of variable columns within a data frame. It will show us our variable names, the data types, and then a preview of the first several values in each variable column.</p>
 <p>We can also verify that <code>dog_size</code> has been successfully re-coded as an ordered factor.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(our_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   5 obs. of  5 variables:
  $ p_id          : chr  "p1" "p2" "p3" "p4" ...

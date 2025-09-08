@@ -10,13 +10,11 @@ Before we start working with some of these new visual tools, I want to take an o
 
 For now, I'm going to obscure the code I'm using for this document. We will learn more about the kind of commands I used to generate the following figures, but I don't want anyone to get bogged down initially. I'll use these visuals to help impart an important lesson about data visualization's in the research process.
 
-I will illustrate with a modern twist on a classic example.
-
 ## Thirteen Data Sets
 
 Let's take a look at a collection of thirteen different data sets. Each data set has 142 observations with 2 columns, labeled x & y.
 
-I'll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations.
+I'll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations. Let's see what seems to distinguish some these datasets from one another.
 
 ```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
 library(datasauRus)
@@ -36,7 +34,7 @@ dino_mean <- dino |>
 
 dino_mean
 ```
-Now, there's not much to say here. In terms of the summary statistics, these data look to be identical. Let's try plotting a regression line to model a linear relationship between the x and y variables in each data set.
+Well, there's not much we can say here. All the summary statistics are identical. Why don't we try modeling a linear relationship between the x and y variables. Maybe looking at the correlations will tell us something. I'll display the linear regression lines for each data set below.
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE}
 dino |> 
@@ -47,9 +45,9 @@ dino |>
     theme(legend.position = "none") +
     facet_wrap(~dataset, nrow=3)
 ```
-It's really starting to look like this is just the same data. All thirteen data sets have the same trend line, suggesting that the variables are similarly correlated.
+Okay. This is not revealing much either. All the lines seem to have a (slight) negative relationship, where y decreases as x increases. The correlations aren't revealing any notable distinctions, and we don't seem to be getting anywhere in telling these data sets apart. Maybe these data sets aren't so different after all...
 
-Finally, let's go ahead and plot the actual data.
+But let's go ahead and plot the actual data and be sure.
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE}
 dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
@@ -59,12 +57,19 @@ dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
     ylim(0,100)+
     geom_point()+
     theme(legend.position = "none") +
+    labs(caption = "Data from the R package 'datasauRus'")
     facet_wrap(~dataset, nrow=3)
 ```
-This is a well known data set referred to as the ['datasaurus dozen'](https://en.wikipedia.org/wiki/Datasaurus_dozen). It's often used in intro statistical classes to help illustrate the importance of visualization. It's inspired by another conceptually similar data set known as ['Anscombe's Quartet'](https://en.wikipedia.org/wiki/Anscombe%27s_quartet) which likewise illustrates the importance of plotting data and the impact that statistical outliers can have on simple descriptive summaries of a data set. 
+Now there's some distinction! 
+
+This is a tongue in cheek data set known as the ['datasaurus dozen'](https://jumpingrivers.github.io/datasauRus/). It's often used in intro statistical classes to help illustrate the importance of visualization. It's inspired by another conceptually similar data set known as ['Anscombe's quartet'](https://en.wikipedia.org/wiki/Anscombe%27s_quartet) which likewise illustrates the importance of plotting data.
 
 
 ## In Sum
-So, take this as a showcase of the importance of visualizing your data. When we get a look at the actual data, we can see that it does not make sense to model any of these relationships linearly. And even though they all have the same summary statistics, they are very different data sets that clearly reflect different sorts of relationships among the x,y variables in each case. Visualizing your data will help give you insight on what question it's capable of answering and which statistical tests will produce intelligible results. 
+So, take this as a showcase of the importance of visualizing your data. This isn't to discount summary statistics and other numeric description of data---those are still invaluable for us. 
 
-Making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don't underestimate the utility of good visualization for the analytical process itself.
+Rather, cases like Datasaurus or Anscombe's quartet highlight the necessity of understanding the shape of your data. This will determine the kind of questions you can ask with the data, as well as the kind of statistical tools you need to describe it.
+
+For example, in the case we just examined, those x and y variables do not have any kind of clear linear relationship. In that case, tools like regression that assume linearity are not appropriate. Any relationship between the variables could only be explored through other statistical means. 
+
+So, making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don't underestimate the utility of good visualization for the analytic process itself.

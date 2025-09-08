@@ -1,9 +1,11 @@
 # R Fundamentals
-In this first section, we are going to start from the ground up and start to familiarize ourselves with the way R works and what it expects from us. We will begin with the most basic building blocks of R data and work our way up to the data frame---the object that will be most relevant for us. While you won't generally need to build data frames from scratch within R for your own research, it's a good way to familiarize yourself with the structure of data in R. While we will start here with an incredibly simple data frame, all the principles you learn here will scale up as we start to work with much larger and more complex data frames.
 
-:::{.callout-note}
+In this first section, we are going to start from the ground up and start to familiarize ourselves with the way R works and what it expects from us. We will begin with the most basic building blocks of R data and work our way up to the data frame---the object that will be most relevant for us. While you won't generally need to build data frames from scratch within R for your own research, it's a good way to familiarize yourself with the structure of data in R. While we will start here with a rather simple data frame, all the principles you learn here will scale up as we start to work with much larger and more complex data frames.
+
+::: callout-note
 I'm writing this mini-book in a language called [Quarto](https://quarto.org/), which allows us to carry out a bunch of neat formatting tasks with little effort. One of the big perks is that Quarto can read and process R code, so I will show you all my R code here, and you will be able to directly view the output. If you want to follow along with your own script on your personal device, you should copy and paste the commands from this document and run them locally.
 :::
+
 ## Basic Operations
 
 First, we will start by exploring some of the basic characteristics of R.
@@ -74,7 +76,9 @@ mean(num_vec)
 (1.2+3.4+5.6+7.1+2.8)/5
 ```
 
+::: callout-note
 Note that it gives the same response as if we had manually calculated it. Functions can make our lives a lot easier with larger amounts of data, but always make sure you're familiar with what's going on under the hood of any given function.
+:::
 
 But, what happens when we run the following command?
 
@@ -92,9 +96,11 @@ For the most part, we will be working with data frames. These are collections of
 
 ### Building a Data Frame
 
-Let's use the vectors we created above to mock up a little data frame. We will imagine some variables that those vectors could represent. First, let's make a couple more vectors.
+Let's use the vectors we created above to mock up a little data frame. We will imagine some variables that those vectors could represent. But first, let's make a couple more vectors.
 
-We want a data frame that reflects the 'tidy' format (rows = observations, columns = variables). So, let's add a character vector of participant IDs associated with imaginary people in our mock data set. For reasons that will become clear in the next section, we are also going to add another character vector.
+Let's add a vector of participant IDs associated with imaginary people in our mock data set. In accordance with tidy data, each of our rows will then represent a unique person. The column vectors will represent the variables that we are measuring for each person. Lastly, the individual cells will represent the specific values measured for each variable.
+
+For reasons that will become clear in the next section, we are also going to add one more character vector.
 
 ```{r}
 p_id_vec<-c("p1", "p2", "p3", "p4", "p5")
@@ -102,7 +108,7 @@ p_id_vec<-c("p1", "p2", "p3", "p4", "p5")
 ordinal_vec<-c("small", "medium", "medium", "large", "medium")
 ```
 
-Now, let's use a base R function to create a data frame and assign it to a new object.
+Now, let's use a function to create a data frame and store it in a new object.
 
 We can use `data.frame()` for this. `data.frame()` expects that we will give it some vectors, which it will then organize into columns. We could just give it the vectors, and it would take the vector names as column names, e.g.:
 
@@ -110,9 +116,9 @@ We can use `data.frame()` for this. `data.frame()` expects that we will give it 
 our_df <- data.frame(p_id_vec, num_vec, character_vec, ordinal_vec, logical_vec)
 ```
 
-or we can specify new variable names and use the `=` sign to associate them with the vector. We will go with this latter strategy because our current vector names do not translate well to variable names.
+Or we could specify new variable names and use the `=` sign to associate them with the vector. We will go with this latter strategy because our current vector names do not translate well to variable names.
 
-We'll go ahead and imagine building a small data frame of dog owners and rename our vectors accordingly.
+We'll imagine building a small data frame of dog owners and rename our vectors accordingly.
 
 ```{r}
 our_df<-data.frame(
@@ -166,7 +172,15 @@ The summary of `has_a_labrador` makes sense. It's recognized as a logical vector
 
 But how about `side_of_town`? What that summary tells us is that this variable is a character type (or class). 'Length' refers to the size of the vector. So, a vector containing 5 items would be a vector of length 5. But does it make sense for us to treat the `side_of_town` variable as 5 totally separate strings of characters?
 
+```{r}
+summary(our_df$side_of_town)
+```
+
 Not quite. When we have two entries of "south", for example, we want those responses to be grouped together and not treated as unique entries.
+
+```{r}
+our_df$side_of_town
+```
 
 For this, we will want another key R data type.
 
@@ -176,13 +190,13 @@ For this, we will want another key R data type.
 
 Factors are often the best way to treat categorical variables (nominal or ordinal) in R. Factors are a certain kind of vector that can only contain a number of pre-defined values. Each of these pre-defined values is considered a 'level' of the factor. So, we want `side_of_town` to be a factor variable with 4 levels: east, west, south, and north.
 
-We can turn this variable into a factor variable with base R's `as.factor()` function.
+We can turn this variable into a factor with R's `as.factor()` function.
 
 ```{r}
 our_df$side_of_town <- as.factor(our_df$side_of_town)
 ```
 
-Check the `summary()` output again and notice how the output is reported now. Instead of simply noting that the vector contained 5 character strings, we can now see the different levels and the number of people who belong to each side of town.
+Check the `summary()` output again and notice how the output is reported now. Instead of simply listing that the vector contained 5 character strings, we can now see the different levels and the number of people who belong to each side of town.
 
 ```{r}
 summary(our_df)

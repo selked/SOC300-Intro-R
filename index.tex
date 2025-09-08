@@ -348,6 +348,29 @@ run the installer with the default settings.
 
 \chapter{R Fundamentals}\label{r-fundamentals}
 
+In this first section, we are going to start from the ground up and
+start to familiarize ourselves with the way R works and what it expects
+from us. We will begin with the most basic building blocks of R data and
+work our way up to the data frame---the object that will be most
+relevant for us. While you won't generally need to build data frames
+from scratch within R for your own research, it's a good way to
+familiarize yourself with the structure of data in R. While we will
+start here with a rather simple data frame, all the principles you learn
+here will scale up as we start to work with much larger and more complex
+data frames.
+
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, breakable, opacityback=0, coltitle=black, arc=.35mm, titlerule=0mm, left=2mm, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, bottomtitle=1mm, rightrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, leftrule=.75mm]
+
+I'm writing this mini-book in a language called
+\href{https://quarto.org/}{Quarto}, which allows us to carry out a bunch
+of neat formatting tasks with little effort. One of the big perks is
+that Quarto can read and process R code, so I will show you all my R
+code here, and you will be able to directly view the output. If you want
+to follow along with your own script on your personal device, you should
+copy and paste the commands from this document and run them locally.
+
+\end{tcolorbox}
+
 \section{Basic Operations}\label{basic-operations}
 
 First, we will start by exploring some of the basic characteristics of
@@ -453,7 +476,10 @@ blocks in R.
 
 You can think of vectors as ordered sets of values. We can use the
 \texttt{c()} function (short for `combine') to create a vector made up
-of the values we provide. Let's make a few different vectors
+of the values we provide. Let's make a few different vectors---each one
+will have 5 separate items in it, and we separate those items with
+commas. Note that when we want R to process something as text (and not a
+named object, number, or function), we put it in quotation marks.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -482,9 +508,7 @@ there, but these are the most most relevant for us.
   character strings. This is typically how R stores text data---as
   distinct strings of text. Note that, while numbers are typically
   processed as numeric by R, numbers can also become character data if
-  you place them between quotation marks. Some wonky things can happen
-  when you are importing data in from various source file types as well
-  (e.g.~.CSV, .XLSX, etc.)
+  you place them between quotation marks.
 \item
   \textbf{\emph{Logical Data:}} In R syntax, upper-case `true' and
   `false' have fixed values and, when used without quotes, will refer to
@@ -523,10 +547,14 @@ give it the one we just made above:
 [1] 4.02
 \end{verbatim}
 
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, breakable, opacityback=0, coltitle=black, arc=.35mm, titlerule=0mm, left=2mm, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, bottomtitle=1mm, rightrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, leftrule=.75mm]
+
 Note that it gives the same response as if we had manually calculated
 it. Functions can make our lives a lot easier with larger amounts of
 data, but always make sure you're familiar with what's going on under
 the hood of any given function.
+
+\end{tcolorbox}
 
 But, what happens when we run the following command?
 
@@ -564,14 +592,18 @@ variable. This is called the `tidy' data format.
 \subsection{Building a Data Frame}\label{building-a-data-frame}
 
 Let's use the vectors we created above to mock up a little data frame.
-We will imagine some variables that those vectors could represent.
-First, let's make a couple more vectors.
+We will imagine some variables that those vectors could represent. But
+first, let's make a couple more vectors.
 
-We want a data frame that reflects the `tidy' format (rows =
-observations, columns = variables). So, let's add a character vector of
-participant IDs associated with imaginary people in our mock data set.
+Let's add a vector of participant IDs associated with imaginary people
+in our mock data set. In accordance with tidy data, each of our rows
+will then represent a unique person. The column vectors will represent
+the variables that we are measuring for each person. Lastly, the
+individual cells will represent the specific values measured for each
+variable.
+
 For reasons that will become clear in the next section, we are also
-going to add another character vector.
+going to add one more character vector.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -581,8 +613,8 @@ going to add another character vector.
 \end{Highlighting}
 \end{Shaded}
 
-Now, let's use a base R function to create a data frame and assign it to
-a new object.
+Now, let's use a function to create a data frame and store it in a new
+object.
 
 We can use \texttt{data.frame()} for this. \texttt{data.frame()} expects
 that we will give it some vectors, which it will then organize into
@@ -595,13 +627,13 @@ names as column names, e.g.:
 \end{Highlighting}
 \end{Shaded}
 
-or we can specify new variable names and use the \texttt{=} sign to
+Or we could specify new variable names and use the \texttt{=} sign to
 associate them with the vector. We will go with this latter strategy
 because our current vector names do not translate well to variable
 names.
 
-We'll go ahead and imagine building a small data frame of dog owners and
-rename our vectors accordingly.
+We'll imagine building a small data frame of dog owners and rename our
+vectors accordingly.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -615,7 +647,7 @@ rename our vectors accordingly.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, colframe=quarto-callout-tip-color-frame, toptitle=1mm, bottomtitle=1mm, opacitybacktitle=0.6, titlerule=0mm, breakable, opacityback=0, coltitle=black, arc=.35mm, colback=white, leftrule=.75mm, toprule=.15mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, breakable, opacityback=0, coltitle=black, arc=.35mm, titlerule=0mm, left=2mm, colback=white, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, bottomtitle=1mm, rightrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, leftrule=.75mm]
 
 As a slight tangent, note that we can use line breaks to our advantage
 with longer strings of code. The above command is identical to the one
@@ -722,9 +754,30 @@ vector of length 5. But does it make sense for us to treat the
 \texttt{side\_of\_town} variable as 5 totally separate strings of
 characters?
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(our\_df}\SpecialCharTok{$}\NormalTok{side\_of\_town)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   Length     Class      Mode 
+        5 character character 
+\end{verbatim}
+
 Not quite. When we have two entries of ``south'', for example, we want
 those responses to be grouped together and not treated as unique
 entries.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{our\_df}\SpecialCharTok{$}\NormalTok{side\_of\_town}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "east"  "west"  "south" "south" "north"
+\end{verbatim}
 
 For this, we will want another key R data type.
 
@@ -739,8 +792,8 @@ is considered a `level' of the factor. So, we want
 \texttt{side\_of\_town} to be a factor variable with 4 levels: east,
 west, south, and north.
 
-We can turn this variable into a factor variable with base R's
-\texttt{as.factor()} function.
+We can turn this variable into a factor with R's \texttt{as.factor()}
+function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -749,7 +802,7 @@ We can turn this variable into a factor variable with base R's
 \end{Shaded}
 
 Check the \texttt{summary()} output again and notice how the output is
-reported now. Instead of simply noting that the vector contained 5
+reported now. Instead of simply listing that the vector contained 5
 character strings, we can now see the different levels and the number of
 people who belong to each side of town.
 
@@ -1094,7 +1147,7 @@ that will help us learn to chain these functions together.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomtitle=1mm, opacitybacktitle=0.6, titlerule=0mm, breakable, opacityback=0, coltitle=black, arc=.35mm, colback=white, leftrule=.75mm, toprule=.15mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, breakable, opacityback=0, coltitle=black, arc=.35mm, titlerule=0mm, left=2mm, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, bottomtitle=1mm, rightrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, leftrule=.75mm]
 
 You probably noticed the \texttt{na.rm\ =\ TRUE} input that I supplied
 for the above function. This is short for `remove NAs', which we need to
@@ -1197,7 +1250,7 @@ according to this variable grouping.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomtitle=1mm, opacitybacktitle=0.6, titlerule=0mm, breakable, opacityback=0, coltitle=black, arc=.35mm, colback=white, leftrule=.75mm, toprule=.15mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, breakable, opacityback=0, coltitle=black, arc=.35mm, titlerule=0mm, left=2mm, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, bottomtitle=1mm, rightrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, leftrule=.75mm]
 
 Note that I've added one new function here, \texttt{group\_by()}. We'll
 see this plenty more in other cases, and it will help us quite a bit
@@ -1297,8 +1350,6 @@ following figures, but I don't want anyone to get bogged down initially.
 I'll use these visuals to help impart an important lesson about data
 visualization's in the research process.
 
-I will illustrate with a modern twist on a classic example.
-
 \section*{Thirteen Data Sets}\label{thirteen-data-sets}
 \addcontentsline{toc}{section}{Thirteen Data Sets}
 
@@ -1309,7 +1360,8 @@ data set has 142 observations with 2 columns, labeled x \& y.
 
 I'll use some tidyverse commands to get some summary statistics for each
 of the data sets, including the mean of both variables and their
-standard deviations.
+standard deviations. Let's see what seems to distinguish some these
+datasets from one another.
 
 \begin{verbatim}
 # A tibble: 13 x 4
@@ -1330,30 +1382,52 @@ standard deviations.
 13   54.3   47.8  16.8  26.9
 \end{verbatim}
 
-Now, there's not much to say here. In terms of the summary statistics,
-these data look to be identical. Let's try plotting a regression line to
-model a linear relationship between the x and y variables in each data
-set.
+Well, there's not much we can say here. All the summary statistics are
+identical. Why don't we try modeling a linear relationship between the x
+and y variables. Maybe looking at the correlations will tell us
+something. I'll display the linear regression lines for each data set
+below.
 
 \pandocbounded{\includegraphics[keepaspectratio]{viz_introduction_files/figure-pdf/unnamed-chunk-2-1.pdf}}
 
-It's really starting to look like this is just the same data. All
-thirteen data sets have the same trend line, suggesting that the
-variables are similarly correlated.
+Okay. This is not revealing much either. All the lines seem to have a
+(slight) negative relationship, where y decreases as x increases. The
+correlations aren't revealing any notable distinctions, and we don't
+seem to be getting anywhere in telling these data sets apart. Maybe
+these data sets aren't so different after all\ldots{}
 
-Finally, let's go ahead and plot the actual data.
+But let's go ahead and plot the actual data and be sure.
 
 \pandocbounded{\includegraphics[keepaspectratio]{viz_introduction_files/figure-pdf/unnamed-chunk-3-1.pdf}}
 
-This is a well known data set referred to as the
-\href{https://en.wikipedia.org/wiki/Datasaurus_dozen}{`datasaurus
-dozen'}. It's often used in intro statistical classes to help illustrate
-the importance of visualization. It's inspired by another conceptually
+\begin{verbatim}
+<ggproto object: Class FacetWrap, Facet, gg>
+    compute_layout: function
+    draw_back: function
+    draw_front: function
+    draw_labels: function
+    draw_panels: function
+    finish_data: function
+    init_scales: function
+    map_data: function
+    params: list
+    setup_data: function
+    setup_params: function
+    shrink: TRUE
+    train_scales: function
+    vars: function
+    super:  <ggproto object: Class FacetWrap, Facet, gg>
+\end{verbatim}
+
+Now there's some distinction!
+
+This is a tongue in cheek data set known as the
+\href{https://jumpingrivers.github.io/datasauRus/}{`datasaurus dozen'}.
+It's often used in intro statistical classes to help illustrate the
+importance of visualization. It's inspired by another conceptually
 similar data set known as
 \href{https://en.wikipedia.org/wiki/Anscombe\%27s_quartet}{`Anscombe's
-Quartet'} which likewise illustrates the importance of plotting data and
-the impact that statistical outliers can have on simple descriptive
-summaries of a data set.
+quartet'} which likewise illustrates the importance of plotting data.
 
 \section*{In Sum}\label{in-sum}
 \addcontentsline{toc}{section}{In Sum}
@@ -1361,17 +1435,23 @@ summaries of a data set.
 \markright{In Sum}
 
 So, take this as a showcase of the importance of visualizing your data.
-When we get a look at the actual data, we can see that it does not make
-sense to model any of these relationships linearly. And even though they
-all have the same summary statistics, they are very different data sets
-that clearly reflect different sorts of relationships among the x,y
-variables in each case. Visualizing your data will help give you insight
-on what question it's capable of answering and which statistical tests
-will produce intelligible results.
+This isn't to discount summary statistics and other numeric description
+of data---those are still invaluable for us.
 
-Making our figures and tables look aesthetically pleasing is indeed
+Rather, cases like Datasaurus or Anscombe's quartet highlight the
+necessity of understanding the shape of your data. This will determine
+the kind of questions you can ask with the data, as well as the kind of
+statistical tools you need to describe it.
+
+For example, in the case we just examined, those x and y variables do
+not have any kind of clear linear relationship. In that case, tools like
+regression that assume linearity are not appropriate. Any relationship
+between the variables could only be explored through other statistical
+means.
+
+So, making our figures and tables look aesthetically pleasing is indeed
 valuable in its own right, but don't underestimate the utility of good
-visualization for the analytical process itself.
+visualization for the analytic process itself.
 
 
 
