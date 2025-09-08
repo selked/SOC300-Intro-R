@@ -14,7 +14,7 @@ For now, I'm going to obscure the code I'm using for this document. We will lear
 
 Let's take a look at a collection of thirteen different data sets. Each data set has 142 observations with 2 columns, labeled x & y.
 
-I'll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations. Let's see what seems to distinguish some these datasets from one another.
+I'll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations. Let's see what seems to distinguish some of these data sets from one another.
 
 ```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
 library(datasauRus)
@@ -57,8 +57,8 @@ dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
     ylim(0,100)+
     geom_point()+
     theme(legend.position = "none") +
-    labs(caption = "Data from the R package 'datasauRus'")
-    facet_wrap(~dataset, nrow=3)
+    facet_wrap(~dataset, nrow=3) 
+
 ```
 Now there's some distinction! 
 
