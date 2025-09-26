@@ -1,6 +1,6 @@
 # Recoding Variables
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 load("our_gss.rda")
 ```
@@ -12,7 +12,7 @@ Recoding a variable involves manipulating the underlying structure of our variab
 There are also occasions when we need a variable to be translated from one level of measurement to another. For example, we may want to convert a ratio variable for "number of years of education" into an ordinal variable reflecting categories like "less than high school", "high school diploma", "Associates degree", and so on. 
 
 We may also want to collapse the categories of ordinal variables for some analyses. Take a variable like `partyid`, which has the following categories:
-```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, eval=TRUE, echo=FALSE}
 our_gss |> count(partyid)
 ```
 
