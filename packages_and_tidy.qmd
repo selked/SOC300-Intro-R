@@ -187,4 +187,4 @@ sexpol_means
 ```
 So, using `dplyr`, we can quickly subset and manipulate data frames in just a few lines of relatively straightforward code. Here we have all the means for each value of `sex` and `partyid`, which would have been a tedious task had we calculated them all manually.  
 
-We will see plenty more on the tidyverse, so don't fret if these new functions if you don't feel completely confident with these yet. It takes practice getting used to Rs peculiarities. We will keep building with these in the next unit and hopefully accumulate some muscle memory.
+We will see plenty more on the tidyverse, so don't fret if you don't feel completely confident with these yet. It takes practice getting used to Rs peculiarities. We will keep building with these in the next unit and hopefully accumulate some muscle memory.
