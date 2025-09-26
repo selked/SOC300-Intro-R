@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -192,8 +227,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">4.1</span> Background</a></li>
+  <li><a href="#converting-numeric-to-categorical" id="toc-converting-numeric-to-categorical" class="nav-link" data-scroll-target="#converting-numeric-to-categorical"><span class="header-section-number">4.2</span> Converting Numeric to Categorical</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -218,6 +260,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
@@ -230,27 +273,136 @@ ul.task-list li input[type="checkbox"] {
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"our_gss.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Today’s venture concerns univariate analysis, i.e.&nbsp;the quantitative description of a single variable. Before we do that, however, we need to familiarize ourselves with some data-cleaning procedures.</p>
+<section id="background" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="background"><span class="header-section-number">4.1</span> Background</h2>
 <p>Recoding a variable involves manipulating the underlying structure of our variable such that we can use it for analysis. We did a little recoding during the last unit when we converted character vectors into factor variables. This allowed us to align R data types with the appropriate level of measurement.</p>
 <p>There are also occasions when we need a variable to be translated from one level of measurement to another. For example, we may want to convert a ratio variable for “number of years of education” into an ordinal variable reflecting categories like “less than high school”, “high school diploma”, “Associates degree”, and so on.</p>
-<p>We may also want to collapse the categories of ordinal variables for some analyses. Take a variable like <code>partyid</code>, which has the following categories:</p>
+<p>We may also want to collapse the categories of ordinal variables for some analyses. Consider a variable with a Likert-scale agreement rating, where you responses like “strongly agree,” “moderately agree,” “slightly agree,” and so forth. You may decide to collapse these categories into categories of “Agree” and “Disagree”.</p>
+<p>We will get some practice doing this sort of thing, which is an essential component of responsible analysis. Additionally, our next unit on bivariate analysis will require us to work with categorical variables in particular, so we need to be capable of converting any numeric variables.</p>
+</section>
+<section id="converting-numeric-to-categorical" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="converting-numeric-to-categorical"><span class="header-section-number">4.2</span> Converting Numeric to Categorical</h2>
+<p>We will start by recoding <code>age</code>—a ratio variable—into an ordinal variable reflecting age groupings. The same strategies we use here will work for any numeric variable.</p>
+<p>As usual, let’s make sure we load in <code>tidyverse</code> along with our GSS data.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"our_gss.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s double check the structure of our data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(our_gss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                             partyid   n
-1 independent (neither, no response) 835
-2     independent, close to democrat 400
-3   independent, close to republican 330
-4           not very strong democrat 451
-5         not very strong republican 361
-6                        other party 106
-7                    strong democrat 595
-8                  strong republican 431
-9                               &lt;NA&gt;  35</code></pre>
+<pre><code>'data.frame':   3544 obs. of  8 variables:
+ $ year    : int  2022 2022 2022 2022 2022 2022 2022 2022 2022 2022 ...
+ $ id      : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ age     : int  72 80 57 23 62 27 20 47 31 72 ...
+ $ race    : Factor w/ 3 levels "black","other",..: 3 3 3 3 3 3 2 3 3 NA ...
+ $ sex     : Factor w/ 2 levels "female","male": 1 2 1 1 2 2 1 2 1 1 ...
+ $ realrinc: num  40900 NA 18405 2250 NA ...
+ $ educ    : Factor w/ 21 levels "1 year of college",..: 10 14 4 10 6 4 4 10 4 4 ...
+ $ partyid : Factor w/ 8 levels "independent (neither, no response)",..: 7 1 5 7 1 4 2 7 2 7 ...</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You might notice the ‘int’ category, which is short for ‘integer’. This is a subtype of numeric data in R. Variables that are exclusively whole numbers are often recorded in this way, but we can work with them in R just like we can other sorts of numbers</p>
+</div>
+</div>
+<p>We can take a look at all the values of age (along with the # of respondents in each age category) using the <code>count()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(our_gss, age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   age   n
+1   18  22
+2   19  29
+3   20  48
+4   21  46
+5   22  46
+6   23  53
+7   24  45
+8   25  45
+9   26  58
+10  27  46
+11  28  57
+12  29  61
+13  30  60
+14  31  68
+15  32  76
+16  33  69
+17  34  61
+18  35  58
+19  36  69
+20  37  47
+21  38  57
+22  39  72
+23  40  62
+24  41  48
+25  42  67
+26  43  45
+27  44  55
+28  45  56
+29  46  52
+30  47  53
+31  48  46
+32  49  51
+33  50  40
+34  51  55
+35  52  47
+36  53  38
+37  54  50
+38  55  60
+39  56  56
+40  57  53
+41  58  44
+42  59  51
+43  60  75
+44  61  57
+45  62  60
+46  63  48
+47  64  50
+48  65  65
+49  66  67
+50  67  44
+51  68  68
+52  69  56
+53  70  67
+54  71  40
+55  72  54
+56  73  34
+57  74  43
+58  75  34
+59  76  31
+60  77  32
+61  78  26
+62  79  30
+63  80  22
+64  81  15
+65  82  15
+66  83  13
+67  84  21
+68  85   8
+69  86  11
+70  87   5
+71  88   4
+72  89  19
+73  NA 208</code></pre>
+</div>
+</div>
+<p>There are quite a few values here, but we can use this information to condense the range of values into a smaller number of age groups.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

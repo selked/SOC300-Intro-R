@@ -1,20 +1,47 @@
 # Recoding Variables
 
-```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
 library(tidyverse)
 load("our_gss.rda")
 ```
 
 Today's venture concerns univariate analysis, i.e. the quantitative description of a single variable. Before we do that, however, we need to familiarize ourselves with some data-cleaning procedures. 
 
+## Background
 Recoding a variable involves manipulating the underlying structure of our variable such that we can use it for analysis. We did a little recoding during the last unit when we converted character vectors into factor variables. This allowed us to align R data types with the appropriate level of measurement.
 
 There are also occasions when we need a variable to be translated from one level of measurement to another. For example, we may want to convert a ratio variable for "number of years of education" into an ordinal variable reflecting categories like "less than high school", "high school diploma", "Associates degree", and so on. 
 
-We may also want to collapse the categories of ordinal variables for some analyses. Take a variable like `partyid`, which has the following categories:
-```{r, eval=TRUE, echo=FALSE}
-our_gss |> count(partyid)
+We may also want to collapse the categories of ordinal variables for some analyses. Consider a variable with a Likert-scale agreement rating, where you responses like "strongly agree," "moderately agree," "slightly agree," and so forth. You may decide to collapse these categories into categories of "Agree" and "Disagree". 
+
+We will get some practice doing this sort of thing, which is an essential component of responsible analysis. Additionally, our next unit on bivariate analysis will require us to work with categorical variables in particular, so we need to be capable of converting any numeric variables.
+
+## Converting Numeric to Categorical
+We will start by recoding `age`---a ratio variable---into an ordinal variable reflecting age groupings. The same strategies we use here will work for any numeric variable. 
+
+As usual, let's make sure we load in `tidyverse` along with our GSS data.
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+load("our_gss.rda")
 ```
+
+Let's double check the structure of our data frame.
+```{r}
+str(our_gss)
+```
+::: {.callout-note}
+You might notice the 'int' category, which is short for 'integer'. This is a subtype of numeric data in R. Variables that are exclusively whole numbers are often recorded in this way, but we can work with them in R just like we can other sorts of numbers
+:::
+
+We can take a look at all the values of age (along with the # of respondents in each age category) using the `count()` function. 
+```{r}
+count(our_gss, age)
+```
+There are quite a few values here, but we can use this information to condense the range of values into a smaller number of age groups.
+
+
+
+
 
 
 
