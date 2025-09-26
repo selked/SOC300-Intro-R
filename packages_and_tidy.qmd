@@ -50,11 +50,11 @@ summary(our_gss)
 
 ## Data Wrangling with Tidyverse
 
-Let's use this subset to explore some tidyverse functionality. Tidyverse includes several functions for efficiently manipulating data frames in preparation for analyses. We will encounter a number of these throughout our time with R, but I want to briefly introduce a few key functions and operations that we will dig into more next time.
+Let's use this subset to explore some tidyverse functionality. One of the packages included in the tidyverse is `dplyr`, which includes several functions for efficiently manipulating data frames in preparation for analyses. We will encounter a number of these throughout our time with R, but I want to briefly introduce a few key `dplyr` functions and operations that we will dig into more next time.
 
 ### select()
 
-It happens quite often that we have a data frame containing far more variables than we ultimately need for a given analysis. The `select()` function allows us to quickly subset data frames according to the variable columns we need.
+It happens quite often that we have a data frame containing far more variables than we need for a given analysis. The `select()` function allows us to quickly subset data frames according to the variable columns we specify.
 
 This function takes a data frame as its first input, and all following inputs are the variable columns that you want to keep
 
@@ -86,7 +86,7 @@ summary(fem_inc)
 
 ### summarize()
 
-As the name suggests, `summarize()` allows us to quickly summarize information across variables. It will give us a new data frame that reflects the summaries that we ask for, which can be very useful for quickly generating descriptive statistics.
+As the name suggests, `summarize()` allows us to quickly summarize information across variables. It will give us a new data frame that reflects the summaries that we ask for, which can be very useful for quickly generating descriptive statistics. We will use this to get the mean income value for our data frame.
 
 ```{r}
 mean_inc <- summarize(our_gss, "mean_inc"=mean(realrinc, na.rm=TRUE))
@@ -94,7 +94,7 @@ mean_inc <- summarize(our_gss, "mean_inc"=mean(realrinc, na.rm=TRUE))
 ```
 
 ::: callout-note
-You probably noticed the `na.rm = TRUE` input that I supplied for the above function. This is short for 'remove NAs', which we need to do when a variable has any NA values. If we don't, R will return an error, because it does not know to disregard NA values when calculating a column mean.
+You probably noticed the `na.rm = TRUE` input that I supplied for the above function. This is short for 'remove NAs', which we need to do when a variable has any NA values. If we don't, R will screw up, because it does not know to disregard NA values when calculating a column mean unless we tell it to.
 :::
 
 This gives us a new data frame that we called `mean_inc`. It should have 1 row and 1 column, and it just gives us the average income of a person in our GSS subset---about \$28,000/year.
@@ -135,6 +135,8 @@ mean_inc <- summarize(
 
 mean_inc
 ```
+
+We ran the same `summarize()` command as before, but now it reflects the grouping structure that we imposed.
 
 
 ## The Pipe
@@ -183,5 +185,6 @@ We can use `drop_na()` to do as the function's name suggests. When we learned ab
 ```{r}
 sexpol_means
 ```
+So, using `dplyr`, we can quickly subset and manipulate data frames in just a few lines of relatively straightforward code. Here we have all the means for each value of `sex` and `partyid`, which would have been a tedious task had we calculated them all manually.  
 
-We will see plenty more on the tidyverse, so don't fret if these new functions are not completely clicking right away. We will keep building with these in the next unit and hopefully accumulate some muscle memory.
+We will see plenty more on the tidyverse, so don't fret if these new functions if you don't feel completely confident with these yet. It takes practice getting used to Rs peculiarities. We will keep building with these in the next unit and hopefully accumulate some muscle memory.

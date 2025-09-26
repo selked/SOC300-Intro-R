@@ -328,10 +328,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-wrangling-with-tidyverse" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="data-wrangling-with-tidyverse"><span class="header-section-number">3.3</span> Data Wrangling with Tidyverse</h2>
-<p>Let’s use this subset to explore some tidyverse functionality. Tidyverse includes several functions for efficiently manipulating data frames in preparation for analyses. We will encounter a number of these throughout our time with R, but I want to briefly introduce a few key functions and operations that we will dig into more next time.</p>
+<p>Let’s use this subset to explore some tidyverse functionality. One of the packages included in the tidyverse is <code>dplyr</code>, which includes several functions for efficiently manipulating data frames in preparation for analyses. We will encounter a number of these throughout our time with R, but I want to briefly introduce a few key <code>dplyr</code> functions and operations that we will dig into more next time.</p>
 <section id="select" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="select"><span class="header-section-number">3.3.1</span> select()</h3>
-<p>It happens quite often that we have a data frame containing far more variables than we ultimately need for a given analysis. The <code>select()</code> function allows us to quickly subset data frames according to the variable columns we need.</p>
+<p>It happens quite often that we have a data frame containing far more variables than we need for a given analysis. The <code>select()</code> function allows us to quickly subset data frames according to the variable columns we specify.</p>
 <p>This function takes a data frame as its first input, and all following inputs are the variable columns that you want to keep</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sex_inc <span class="ot">&lt;-</span> <span class="fu">select</span>(our_gss, id, sex, realrinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -375,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="summarize" class="level3" data-number="3.3.3">
 <h3 data-number="3.3.3" class="anchored" data-anchor-id="summarize"><span class="header-section-number">3.3.3</span> summarize()</h3>
-<p>As the name suggests, <code>summarize()</code> allows us to quickly summarize information across variables. It will give us a new data frame that reflects the summaries that we ask for, which can be very useful for quickly generating descriptive statistics.</p>
+<p>As the name suggests, <code>summarize()</code> allows us to quickly summarize information across variables. It will give us a new data frame that reflects the summaries that we ask for, which can be very useful for quickly generating descriptive statistics. We will use this to get the mean income value for our data frame.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mean_inc <span class="ot">&lt;-</span> <span class="fu">summarize</span>(our_gss, <span class="st">"mean_inc"</span><span class="ot">=</span><span class="fu">mean</span>(realrinc, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -389,7 +389,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You probably noticed the <code>na.rm = TRUE</code> input that I supplied for the above function. This is short for ‘remove NAs’, which we need to do when a variable has any NA values. If we don’t, R will return an error, because it does not know to disregard NA values when calculating a column mean.</p>
+<p>You probably noticed the <code>na.rm = TRUE</code> input that I supplied for the above function. This is short for ‘remove NAs’, which we need to do when a variable has any NA values. If we don’t, R will screw up, because it does not know to disregard NA values when calculating a column mean unless we tell it to.</p>
 </div>
 </div>
 <p>This gives us a new data frame that we called <code>mean_inc</code>. It should have 1 row and 1 column, and it just gives us the average income of a person in our GSS subset—about $28,000/year.</p>
@@ -441,6 +441,7 @@ Note
 9 &lt;NA&gt;                                 16922.</code></pre>
 </div>
 </div>
+<p>We ran the same <code>summarize()</code> command as before, but now it reflects the grouping structure that we imposed.</p>
 </section>
 </section>
 <section id="the-pipe" class="level2" data-number="3.4">
@@ -512,7 +513,8 @@ Note
 16 male   strong republican                    40210.</code></pre>
 </div>
 </div>
-<p>We will see plenty more on the tidyverse, so don’t fret if these new functions are not completely clicking right away. We will keep building with these in the next unit and hopefully accumulate some muscle memory.</p>
+<p>So, using <code>dplyr</code>, we can quickly subset and manipulate data frames in just a few lines of relatively straightforward code. Here we have all the means for each value of <code>sex</code> and <code>partyid</code>, which would have been a tedious task had we calculated them all manually.</p>
+<p>We will see plenty more on the tidyverse, so don’t fret if these new functions if you don’t feel completely confident with these yet. It takes practice getting used to Rs peculiarities. We will keep building with these in the next unit and hopefully accumulate some muscle memory.</p>
 
 
 </section>
