@@ -171,10 +171,13 @@ So, I want to take a **selection** of variables from `our_gss`. I want these var
 ```{r}
 sexpol_means <- our_gss |>
   select(id, sex, realrinc, partyid) |>
-  group_by(sex) |>
+  group_by(sex, partyid) |>
   summarize("mean_inc" = mean(realrinc, na.rm=TRUE)) |>
-  drop_na(sex)
+  drop_na(sex, partyid)
 ```
+::: {.callout-note}
+We can use `drop_na()` to do as the function's name suggests. When we learned about `group_by()` above, you may have noticed that a mean was reported for an `NA` category within the `partyid` variable. Any time you notice this and want your summaries to exclude these NA categories, just include that variable as an input to `drop_na()`.
+:::
 
 
 ```{r}

@@ -466,18 +466,50 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sexpol_means <span class="ot">&lt;-</span> our_gss <span class="sc">|&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, sex, realrinc, partyid) <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex, partyid) <span class="sc">|&gt;</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="st">"mean_inc"</span> <span class="ot">=</span> <span class="fu">mean</span>(realrinc, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex, partyid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'sex'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We can use <code>drop_na()</code> to do as the function’s name suggests. When we learned about <code>group_by()</code> above, you may have noticed that a mean was reported for an <code>NA</code> category within the <code>partyid</code> variable. Any time you notice this and want your summaries to exclude these NA categories, just include that variable as an input to <code>drop_na()</code>.</p>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sexpol_means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sexpol_means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  sex    mean_inc
-  &lt;fct&gt;     &lt;dbl&gt;
-1 female   22702.
-2 male     33191.</code></pre>
+<pre><code># A tibble: 16 × 3
+# Groups:   sex [2]
+   sex    partyid                            mean_inc
+   &lt;fct&gt;  &lt;fct&gt;                                 &lt;dbl&gt;
+ 1 female independent (neither, no response)   17923.
+ 2 female independent, close to democrat       19961.
+ 3 female independent, close to republican     20095.
+ 4 female not very strong democrat             24300.
+ 5 female not very strong republican           22448.
+ 6 female other party                          26595.
+ 7 female strong democrat                      30111.
+ 8 female strong republican                    21584.
+ 9 male   independent (neither, no response)   25474.
+10 male   independent, close to democrat       36947.
+11 male   independent, close to republican     31393.
+12 male   not very strong democrat             41233.
+13 male   not very strong republican           34544.
+14 male   other party                          22450.
+15 male   strong democrat                      31600.
+16 male   strong republican                    40210.</code></pre>
 </div>
 </div>
 <p>We will see plenty more on the tidyverse, so don’t fret if these new functions are not completely clicking right away. We will keep building with these in the next unit and hopefully accumulate some muscle memory.</p>
