@@ -1,2 +1,20 @@
 # Recoding Variables
 
+```{r, eval=TRUE, echo=FALSE}
+library(tidyverse)
+load("our_gss.rda")
+```
+
+Today's venture concerns univariate analysis, i.e. the quantitative description of a single variable. Before we do that, however, we need to familiarize ourselves with some data-cleaning procedures. 
+
+Recoding a variable involves manipulating the underlying structure of our variable such that we can use it for analysis. We did a little recoding during the last unit when we converted character vectors into factor variables. This allowed us to align R data types with the appropriate level of measurement.
+
+There are also occasions when we need a variable to be translated from one level of measurement to another. For example, we may want to convert a ratio variable for "number of years of education" into an ordinal variable reflecting categories like "less than high school", "high school diploma", "Associates degree", and so on. 
+
+We may also want to collapse the categories of ordinal variables for some analyses. Take a variable like `partyid`, which has the following categories:
+```{r, eval=TRUE, echo=FALSE}
+our_gss |> count(partyid)
+```
+
+
+

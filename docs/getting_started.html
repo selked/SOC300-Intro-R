@@ -181,8 +181,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Day 2: Survey Data and Univariate Analysis</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Day 2: Survey Data and Univariate Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./recoding_variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Recoding Variables</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -353,7 +366,7 @@ Note
 <pre><code>[1] 4.02</code></pre>
 </div>
 </div>
-<p>Note that <code>mean()</code> gives the same response as if we had manually calculated it. Functions can make our lives a lot easier with larger amounts of data, but always make sure you’re familiar with what’s going on under the hood of any given function.</p>
+<p>Observe that <code>mean()</code> gives the same response as if we had manually calculated it. Functions can make our lives a lot easier with larger amounts of data, but always make sure you’re familiar with what’s going on under the hood of any given function.</p>
 </div>
 </div>
 <p>But, what happens when we run the following command?</p>

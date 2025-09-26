@@ -79,7 +79,7 @@ mean(num_vec)
 ```{r}
 (1.2+3.4+5.6+7.1+2.8)/5
 ```
-Note that `mean()` gives the same response as if we had manually calculated it. Functions can make our lives a lot easier with larger amounts of data, but always make sure you're familiar with what's going on under the hood of any given function.
+Observe that `mean()` gives the same response as if we had manually calculated it. Functions can make our lives a lot easier with larger amounts of data, but always make sure you're familiar with what's going on under the hood of any given function.
 :::
 
 But, what happens when we run the following command?
