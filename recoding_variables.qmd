@@ -1,10 +1,5 @@
 # Recoding Variables
 
-```{r}
-library(tidyverse)
-load("our_gss.rda")
-```
-
 Today's venture concerns univariate analysis, i.e. the quantitative description of a single variable. Before we do that, however, we need to familiarize ourselves with some data-cleaning procedures. 
 
 ## Background
