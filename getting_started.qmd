@@ -10,7 +10,7 @@ I'm writing this mini-book in a language called [Quarto](https://quarto.org/), w
 
 First, we will start by exploring some of the basic characteristics of R.
 
-R can be used as a simple calculator and will process both numbers and conventional mathematical operator symbols. You can run the commands below by placing your cursor at the beginning or end of the line and pressing CTRL+Enter (Windows) or Command+Return (Mac)
+R can be used as a simple calculator and will process both numbers and conventional mathematical operator symbols. You can run the commands below by placing your cursor at the beginning or end of the line in your script file and pressing CTRL+Enter (Windows) or Command+Return (Mac)
 
 ```{r}
 5+2
@@ -73,11 +73,13 @@ Take the `mean()` function, for example. As the name implies, this function will
 ```{r}
 mean(num_vec)
 
-(1.2+3.4+5.6+7.1+2.8)/5
 ```
 
 ::: callout-note
-Note that it gives the same response as if we had manually calculated it. Functions can make our lives a lot easier with larger amounts of data, but always make sure you're familiar with what's going on under the hood of any given function.
+```{r}
+(1.2+3.4+5.6+7.1+2.8)/5
+```
+Note that `mean()` gives the same response as if we had manually calculated it. Functions can make our lives a lot easier with larger amounts of data, but always make sure you're familiar with what's going on under the hood of any given function.
 :::
 
 But, what happens when we run the following command?

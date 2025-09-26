@@ -275,7 +275,7 @@ Note
 <section id="basic-operations" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="basic-operations"><span class="header-section-number">2.1</span> Basic Operations</h2>
 <p>First, we will start by exploring some of the basic characteristics of R.</p>
-<p>R can be used as a simple calculator and will process both numbers and conventional mathematical operator symbols. You can run the commands below by placing your cursor at the beginning or end of the line and pressing CTRL+Enter (Windows) or Command+Return (Mac)</p>
+<p>R can be used as a simple calculator and will process both numbers and conventional mathematical operator symbols. You can run the commands below by placing your cursor at the beginning or end of the line in your script file and pressing CTRL+Enter (Windows) or Command+Return (Mac)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span><span class="sc">+</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -336,10 +336,6 @@ Note
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.02</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">1.2+3.4+5.6+7.1+2.8</span>)<span class="sc">/</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.02</code></pre>
-</div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -351,7 +347,13 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note that it gives the same response as if we had manually calculated it. Functions can make our lives a lot easier with larger amounts of data, but always make sure you’re familiar with what’s going on under the hood of any given function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">1.2+3.4+5.6+7.1+2.8</span>)<span class="sc">/</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.02</code></pre>
+</div>
+</div>
+<p>Note that <code>mean()</code> gives the same response as if we had manually calculated it. Functions can make our lives a lot easier with larger amounts of data, but always make sure you’re familiar with what’s going on under the hood of any given function.</p>
 </div>
 </div>
 <p>But, what happens when we run the following command?</p>
