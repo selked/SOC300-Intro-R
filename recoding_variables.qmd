@@ -115,15 +115,17 @@ The following code may look a little chaotic at first glance, but it's really th
 Just like above, we are applying `mutate()` to `our_gss`, and we are giving the name of our new variable column (`age_ord`, in this case) as the first input. Then, for the calculation, we give the `cut()` function and the arguments it needs.
 
 **cut() and its inputs**
+
 -   The variable for which we want to specify intervals (`age`)
 
--   breaks: This is where we indicate the intervals. The first number we give is the low end of our lowest age group (18). The second number is the low end of our middle age group (36). The third number, as you probably guessed, is the low end of our highest age group. The last value should reflect our upper limit. In this case, I use the value `Inf`, which is short for 'infinity'. This essentially tells R that the last category can include any values higher than the previous number we entered. 
+-   **breaks**: This is where we indicate the intervals. The first number we give is the low end of our lowest age group (18). The second number is the low end of our middle age group (36). The third number, as you probably guessed, is the low end of our highest age group. The last value should reflect our upper limit. In this case, I use the value `Inf`, which is short for 'infinity'. This essentially tells R that the last category can include any values higher than the previous number we entered. 
 
--   include.lowest: Putting `TRUE` here tells R that, in each interval, we want the lowest value to be included. If we don't do this, then our 'younger' age grouping would be 19 - 35 rather than 18 - 35. In other words, setting this to `TRUE` indicates a left-closed interval, and `FALSE` indicates a left-open interval.
+-   **include.lowest**: Putting `TRUE` here tells R that, in each interval, we want the lowest value to be included. If we don't do this, then our 'younger' age grouping would be 19 - 35 rather than 18 - 35. In other words, setting this to `TRUE` indicates a left-closed interval, and `FALSE` indicates a left-open interval.
 
--   right: This is the input for specifying whether we want this to be a right-closed interval, and it takes a logical value (`TRUE` or `FALSE`). We want a right-open interval, so we will set this to `FALSE`. 
+-   **right**: This is the input for specifying whether we want this to be a right-closed interval, and it takes a logical value (`TRUE` or `FALSE`). We want a right-open interval, so we will set this to `FALSE`. 
+-   **labels**: R will actually default to formal interval notation for the names of each level of our new factor variable, so it would be [18,36), [36,50), [50, Inf). However, we can provide a character vector to specify custom labels for these new factor levels. In the event that you have an ordinal variable, make sure that you always specify these labels in ascending order. In this case, that would be Younger < Middle Age < Older.
 
--   ordered_result: This takes a logical value and, as the name suggests, indicates whether we want the factor to be ordered or not. In our case, there is a clear progression in terms of age, so we need to set this to `TRUE`.
+-   **ordered_result**: This takes a logical value and, as the name suggests, indicates whether we want the factor to be ordered or not. In our case, there is a clear progression in terms of age, so we need to set this to `TRUE`.
 
 
 ```{r}
