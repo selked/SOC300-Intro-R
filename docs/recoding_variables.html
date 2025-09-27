@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Recoding Variables – Introduction to R for Quantitative Social Science Research</title>
+<title>3&nbsp; Recoding Variables – Introduction to R for Quantitative Social Science Research</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding_variables.html">Day 2: Survey Data and Univariate Analysis</a></li><li class="breadcrumb-item"><a href="./recoding_variables.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Recoding Variables</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding_variables.html">Day 2: Survey Data and Univariate Analysis</a></li><li class="breadcrumb-item"><a href="./recoding_variables.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Recoding Variables</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./background.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Background</span></span></a>
+ <span class="menu-text">Background</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -169,13 +169,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages_and_tidy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></span></a>
   </div>
 </li>
       </ul>
@@ -192,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./recoding_variables.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Recoding Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Recoding Variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,18 +232,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">4.1</span> Background</a></li>
-  <li><a href="#converting-numeric-to-categorical" id="toc-converting-numeric-to-categorical" class="nav-link" data-scroll-target="#converting-numeric-to-categorical"><span class="header-section-number">4.2</span> Converting Numeric to Categorical</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">3.1</span> Background</a></li>
+  <li><a href="#converting-numeric-to-categorical" id="toc-converting-numeric-to-categorical" class="nav-link" data-scroll-target="#converting-numeric-to-categorical"><span class="header-section-number">3.2</span> Converting Numeric to Categorical</a>
   <ul class="collapse">
-  <li><a href="#setting-up-our-workspace" id="toc-setting-up-our-workspace" class="nav-link" data-scroll-target="#setting-up-our-workspace"><span class="header-section-number">4.2.1</span> Setting up our workspace</a></li>
-  <li><a href="#the-age-variable" id="toc-the-age-variable" class="nav-link" data-scroll-target="#the-age-variable"><span class="header-section-number">4.2.2</span> The ‘age’ variable</a></li>
-  <li><a href="#new-columns-with-mutate" id="toc-new-columns-with-mutate" class="nav-link" data-scroll-target="#new-columns-with-mutate"><span class="header-section-number">4.2.3</span> New columns with mutate()</a></li>
-  <li><a href="#custom-intervals-with-cut" id="toc-custom-intervals-with-cut" class="nav-link" data-scroll-target="#custom-intervals-with-cut"><span class="header-section-number">4.2.4</span> Custom intervals with cut()</a></li>
+  <li><a href="#setting-up-our-workspace" id="toc-setting-up-our-workspace" class="nav-link" data-scroll-target="#setting-up-our-workspace"><span class="header-section-number">3.2.1</span> Setting up our workspace</a></li>
+  <li><a href="#the-age-variable" id="toc-the-age-variable" class="nav-link" data-scroll-target="#the-age-variable"><span class="header-section-number">3.2.2</span> The ‘age’ variable</a></li>
+  <li><a href="#new-columns-with-mutate" id="toc-new-columns-with-mutate" class="nav-link" data-scroll-target="#new-columns-with-mutate"><span class="header-section-number">3.2.3</span> New columns with mutate()</a></li>
+  <li><a href="#custom-intervals-with-cut" id="toc-custom-intervals-with-cut" class="nav-link" data-scroll-target="#custom-intervals-with-cut"><span class="header-section-number">3.2.4</span> Custom intervals with cut()</a></li>
   </ul></li>
-  <li><a href="#restructuring-categorical-variables" id="toc-restructuring-categorical-variables" class="nav-link" data-scroll-target="#restructuring-categorical-variables"><span class="header-section-number">4.3</span> Restructuring Categorical Variables</a>
+  <li><a href="#restructuring-categorical-variables" id="toc-restructuring-categorical-variables" class="nav-link" data-scroll-target="#restructuring-categorical-variables"><span class="header-section-number">3.3</span> Restructuring Categorical Variables</a>
   <ul class="collapse">
-  <li><a href="#collapsing-categories" id="toc-collapsing-categories" class="nav-link" data-scroll-target="#collapsing-categories"><span class="header-section-number">4.3.1</span> Collapsing categories</a></li>
-  <li><a href="#excluding-levels" id="toc-excluding-levels" class="nav-link" data-scroll-target="#excluding-levels"><span class="header-section-number">4.3.2</span> Excluding levels</a></li>
+  <li><a href="#collapsing-categories" id="toc-collapsing-categories" class="nav-link" data-scroll-target="#collapsing-categories"><span class="header-section-number">3.3.1</span> Collapsing categories</a></li>
+  <li><a href="#excluding-levels" id="toc-excluding-levels" class="nav-link" data-scroll-target="#excluding-levels"><span class="header-section-number">3.3.2</span> Excluding levels</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -251,9 +251,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding_variables.html">Day 2: Survey Data and Univariate Analysis</a></li><li class="breadcrumb-item"><a href="./recoding_variables.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Recoding Variables</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding_variables.html">Day 2: Survey Data and Univariate Analysis</a></li><li class="breadcrumb-item"><a href="./recoding_variables.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Recoding Variables</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Recoding Variables</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Recoding Variables</span></h1>
 </div>
 
 
@@ -271,18 +271,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Today’s venture concerns univariate analysis, i.e.&nbsp;the quantitative description of a single variable. Before we do that, however, we need to familiarize ourselves with some data-cleaning procedures.</p>
-<section id="background" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="background"><span class="header-section-number">4.1</span> Background</h2>
+<section id="background" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="background"><span class="header-section-number">3.1</span> Background</h2>
 <p>Recoding a variable involves manipulating the underlying structure of our variable such that we can use it for analysis. We did a little recoding during the last unit when we converted character vectors into factor variables. This allowed us to align R data types with the appropriate level of measurement.</p>
 <p>There are also occasions when we need a variable to be translated from one level of measurement to another. For example, we may want to convert a ratio variable for “number of years of education” into an ordinal variable reflecting categories like “less than high school”, “high school diploma”, “Associates degree”, and so on.</p>
 <p>We may also want to collapse the categories of ordinal variables for some analyses. Consider a variable with a Likert-scale agreement rating, where you responses like “strongly agree,” “moderately agree,” “slightly agree,” and so forth. You may decide to collapse these categories into categories of “Agree” and “Disagree”.</p>
 <p>We will get some practice doing this sort of thing, which is an essential component of responsible analysis. Additionally, our next unit on bivariate analysis will require us to work with categorical variables in particular, so we need to be capable of converting any numeric variables.</p>
 </section>
-<section id="converting-numeric-to-categorical" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="converting-numeric-to-categorical"><span class="header-section-number">4.2</span> Converting Numeric to Categorical</h2>
+<section id="converting-numeric-to-categorical" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="converting-numeric-to-categorical"><span class="header-section-number">3.2</span> Converting Numeric to Categorical</h2>
 <p>We will start by recoding <code>age</code>—a ratio variable—into an ordinal variable reflecting age groupings. The same strategies we use here will work for any numeric variable.</p>
-<section id="setting-up-our-workspace" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="setting-up-our-workspace"><span class="header-section-number">4.2.1</span> Setting up our workspace</h3>
+<section id="setting-up-our-workspace" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="setting-up-our-workspace"><span class="header-section-number">3.2.1</span> Setting up our workspace</h3>
 <p>As usual, let’s make sure we load in <code>tidyverse</code> along with our GSS data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -317,8 +317,8 @@ Note
 </div>
 </div>
 </section>
-<section id="the-age-variable" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="the-age-variable"><span class="header-section-number">4.2.2</span> The ‘age’ variable</h3>
+<section id="the-age-variable" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="the-age-variable"><span class="header-section-number">3.2.2</span> The ‘age’ variable</h3>
 <p>We can take a look at all the values of age (along with the # of respondents in each age category) using the <code>count()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(our_gss, age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -333,8 +333,8 @@ Note
 </ul>
 <p>At the end of the day, what we need to do is 1.) create a new variable column 2.) populate that column with ordinal labels that correspond with each respondent’s numeric age interval.</p>
 </section>
-<section id="new-columns-with-mutate" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="new-columns-with-mutate"><span class="header-section-number">4.2.3</span> New columns with mutate()</h3>
+<section id="new-columns-with-mutate" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="new-columns-with-mutate"><span class="header-section-number">3.2.3</span> New columns with mutate()</h3>
 <p>First, let’s consider the <code>mutate()</code> function. This function takes a data frame and appends a new variable column. This new variable is the result of some calculation applied to an existing variable column.</p>
 <p>Let’s look at an application fo <code>mutate()</code> to get a feel for it. Now, this wouldn’t be the best idea for a couple reasons, but, as an illustration, let’s say we wanted to convert our yearly income values to an hourly wage (assuming 40 hrs/week).</p>
 <p><code>mutate()</code> takes a data frame as its input, and then we provide the name of our new variable column(s) along with the calculation for this new variable. Below, I use <code>mutate()</code> to create a new column called <code>hr_wage</code>. Then, I tell R that the <code>hr_wage</code> variable should be calculated by taking each person’s income value and diving that by 52 weeks in a year, and then 40 hours in a week.</p>
@@ -384,12 +384,12 @@ Note
 </div>
 <p>So, we can use <code>mutate()</code> to add a new column that contains our recoded variable. We just need a way to specify a calculation that takes into account the specific intervals we want for our ordinal labels. For this, we need one more function.</p>
 </section>
-<section id="custom-intervals-with-cut" class="level3" data-number="4.2.4">
-<h3 data-number="4.2.4" class="anchored" data-anchor-id="custom-intervals-with-cut"><span class="header-section-number">4.2.4</span> Custom intervals with cut()</h3>
+<section id="custom-intervals-with-cut" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="custom-intervals-with-cut"><span class="header-section-number">3.2.4</span> Custom intervals with cut()</h3>
 <p>We can use the <code>cut()</code> function to specify the intervals we want for our age groupings, and then we will combine it with <code>mutate()</code> to generate our recoded age variable. Specifically, <code>cut()</code> takes our intervals and turns each of them into a level in a new factor variable.</p>
 <p>But first, I want to give a little context on interval notation in mathematics. It will help us all be a little more precise when we talk about ranges, and it will also help us understand an input we need to provide for <code>cut()</code>.</p>
-<section id="an-aside-on-intervals" class="level4" data-number="4.2.4.1">
-<h4 data-number="4.2.4.1" class="anchored" data-anchor-id="an-aside-on-intervals"><span class="header-section-number">4.2.4.1</span> An aside on intervals</h4>
+<section id="an-aside-on-intervals" class="level4" data-number="3.2.4.1">
+<h4 data-number="3.2.4.1" class="anchored" data-anchor-id="an-aside-on-intervals"><span class="header-section-number">3.2.4.1</span> An aside on intervals</h4>
 <p>In mathematic terms, an interval is the set of all numbers in between two specified end points. In formal notation, these are indicated with the two endpoints placed in square brackets, e.g [1,5] as the interval of 1 through 5.</p>
 <p>There are some technical terms to describe whether or not we want to include the endpoints when we are talking about a particular interval.</p>
 <ul>
@@ -401,8 +401,8 @@ Note
 <p>We will be working with the right-open interval format, and we can specify that in <code>cut()</code>.</p>
 <p>Now, let’s return to our task at hand.</p>
 </section>
-<section id="inputs-for-cut" class="level4" data-number="4.2.4.2">
-<h4 data-number="4.2.4.2" class="anchored" data-anchor-id="inputs-for-cut"><span class="header-section-number">4.2.4.2</span> Inputs for cut()</h4>
+<section id="inputs-for-cut" class="level4" data-number="3.2.4.2">
+<h4 data-number="3.2.4.2" class="anchored" data-anchor-id="inputs-for-cut"><span class="header-section-number">3.2.4.2</span> Inputs for cut()</h4>
 <p>We’ll go ahead and work with cut directly in <code>mutate()</code>, as its going to be the calculation that we are providing for the new column we generate with <code>mutate()</code>.</p>
 <p>As a reminder, here are the intervals we need:</p>
 <ul>
@@ -454,11 +454,11 @@ Note
 </section>
 </section>
 </section>
-<section id="restructuring-categorical-variables" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="restructuring-categorical-variables"><span class="header-section-number">4.3</span> Restructuring Categorical Variables</h2>
+<section id="restructuring-categorical-variables" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="restructuring-categorical-variables"><span class="header-section-number">3.3</span> Restructuring Categorical Variables</h2>
 <p>Now, let’s go ahead and tackle the other recoding situation I mentioned up at the top—collapsing the levels of categorical variables. We’ll work with <code>partyid</code> here, but the logic of this process will apply to any categorical variable.</p>
-<section id="collapsing-categories" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="collapsing-categories"><span class="header-section-number">4.3.1</span> Collapsing categories</h3>
+<section id="collapsing-categories" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="collapsing-categories"><span class="header-section-number">3.3.1</span> Collapsing categories</h3>
 <p>I encourage you to take a look at <code>partyid</code> in <a href="https://gssdataexplorer.norc.org/variables/141/vshow">the GSS Data Explorer, like we did for ‘age’.</a>.</p>
 <p>Because <code>partyid</code> is a categorical variable, it has far fewer unique values than a ratio variable like <code>age</code>, so we can go ahead and take a look at all of its levels with the <code>count()</code> function.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -516,8 +516,8 @@ Note
 </div>
 </div>
 </section>
-<section id="excluding-levels" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="excluding-levels"><span class="header-section-number">4.3.2</span> Excluding levels</h3>
+<section id="excluding-levels" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="excluding-levels"><span class="header-section-number">3.3.2</span> Excluding levels</h3>
 <p>You may also want to work with an existing categorical variable, but only focus on certain values. In this case, we can create a recoded variable and simply code the levels we are uninterested in as <code>NA</code>.</p>
 <p>We can use the <code>fct_recode()</code> function for this. For the first input, we will give it the factor-variable column that we want to recode. Then, we will let it know that we want to set the levels of “Other Party” and “Independent” to <code>NULL</code>. This will convert them to NAs and allow us to easily exclude them from our analyses. We will use <code>fct_recode()</code> within <code>mutate()</code> so we can create another recoded version of <code>partyid_recoded</code>. We’ll call this one <code>dem_rep</code> to distinguish it from the original <code>partyid</code> and our first recoded version.</p>
 <div class="cell">
@@ -946,7 +946,7 @@ Note
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./packages_and_tidy.html" class="pagination-link" aria-label="Packages and the Tidyverse">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

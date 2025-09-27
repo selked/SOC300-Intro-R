@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Packages and the Tidyverse – Introduction to R for Quantitative Social Science Research</title>
+<title>2&nbsp; Packages and the Tidyverse – Introduction to R for Quantitative Social Science Research</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting_started.html">Day 1: Getting Started</a></li><li class="breadcrumb-item"><a href="./packages_and_tidy.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting_started.html">Day 1: Getting Started</a></li><li class="breadcrumb-item"><a href="./packages_and_tidy.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./background.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Background</span></span></a>
+ <span class="menu-text">Background</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -169,13 +169,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages_and_tidy.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></span></a>
   </div>
 </li>
       </ul>
@@ -192,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./recoding_variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Recoding Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Recoding Variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,18 +232,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link active" data-scroll-target="#loading-packages"><span class="header-section-number">3.1</span> Loading Packages</a></li>
-  <li><a href="#bringing-in-our-data" id="toc-bringing-in-our-data" class="nav-link" data-scroll-target="#bringing-in-our-data"><span class="header-section-number">3.2</span> Bringing in our Data</a></li>
-  <li><a href="#data-wrangling-with-tidyverse" id="toc-data-wrangling-with-tidyverse" class="nav-link" data-scroll-target="#data-wrangling-with-tidyverse"><span class="header-section-number">3.3</span> Data Wrangling with Tidyverse</a>
+  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link active" data-scroll-target="#loading-packages"><span class="header-section-number">2.1</span> Loading Packages</a></li>
+  <li><a href="#bringing-in-our-data" id="toc-bringing-in-our-data" class="nav-link" data-scroll-target="#bringing-in-our-data"><span class="header-section-number">2.2</span> Bringing in our Data</a></li>
+  <li><a href="#data-wrangling-with-tidyverse" id="toc-data-wrangling-with-tidyverse" class="nav-link" data-scroll-target="#data-wrangling-with-tidyverse"><span class="header-section-number">2.3</span> Data Wrangling with Tidyverse</a>
   <ul class="collapse">
-  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select"><span class="header-section-number">3.3.1</span> select()</a></li>
-  <li><a href="#filter" id="toc-filter" class="nav-link" data-scroll-target="#filter"><span class="header-section-number">3.3.2</span> filter()</a></li>
-  <li><a href="#summarize" id="toc-summarize" class="nav-link" data-scroll-target="#summarize"><span class="header-section-number">3.3.3</span> summarize()</a></li>
-  <li><a href="#group_by" id="toc-group_by" class="nav-link" data-scroll-target="#group_by"><span class="header-section-number">3.3.4</span> group_by()</a></li>
+  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select"><span class="header-section-number">2.3.1</span> select()</a></li>
+  <li><a href="#filter" id="toc-filter" class="nav-link" data-scroll-target="#filter"><span class="header-section-number">2.3.2</span> filter()</a></li>
+  <li><a href="#summarize" id="toc-summarize" class="nav-link" data-scroll-target="#summarize"><span class="header-section-number">2.3.3</span> summarize()</a></li>
+  <li><a href="#group_by" id="toc-group_by" class="nav-link" data-scroll-target="#group_by"><span class="header-section-number">2.3.4</span> group_by()</a></li>
   </ul></li>
-  <li><a href="#the-pipe" id="toc-the-pipe" class="nav-link" data-scroll-target="#the-pipe"><span class="header-section-number">3.4</span> The Pipe</a>
+  <li><a href="#the-pipe" id="toc-the-pipe" class="nav-link" data-scroll-target="#the-pipe"><span class="header-section-number">2.4</span> The Pipe</a>
   <ul class="collapse">
-  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together"><span class="header-section-number">3.4.1</span> Putting It All Together</a></li>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together"><span class="header-section-number">2.4.1</span> Putting It All Together</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -251,9 +251,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting_started.html">Day 1: Getting Started</a></li><li class="breadcrumb-item"><a href="./packages_and_tidy.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting_started.html">Day 1: Getting Started</a></li><li class="breadcrumb-item"><a href="./packages_and_tidy.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Packages and the Tidyverse</span></h1>
 </div>
 
 
@@ -271,8 +271,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>R’s open-source culture has encouraged a rich ecosystem of custom functions designed by scientists and researchers in the R userbase. These come in the form of ‘packages’, which are suites of several related functions. For example, there are packages for conducting statistical tests, producing data visualizations, generating publication-ready tables, and all manner of other tasks.</p>
-<section id="loading-packages" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="loading-packages"><span class="header-section-number">3.1</span> Loading Packages</h2>
+<section id="loading-packages" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="loading-packages"><span class="header-section-number">2.1</span> Loading Packages</h2>
 <p>Let’s try this out with one of the better known R packages–‘tidyverse’. This is actually a collection of several packages with a variety of interrelated functions for ‘tidying’, visualizing, and analyzing data. We will focus on what we need from ‘tidyverse’, but, if you’re curious, you can read more here: <a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a></p>
 <p>If you’re on a lab computer, this package may already be installed. Let’s check by running the following command:</p>
 <div class="cell">
@@ -301,8 +301,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="bringing-in-our-data" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="bringing-in-our-data"><span class="header-section-number">3.2</span> Bringing in our Data</h2>
+<section id="bringing-in-our-data" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="bringing-in-our-data"><span class="header-section-number">2.2</span> Bringing in our Data</h2>
 <p>Let’s try bringing in a data frame to play with a few tidyverse functions. We’ll use the <code>load()</code> function to bring in a subset of the General Social Survey, which contains a few variables from the 2022 survey wave. Run the following command and select the file “our_gss.rda”</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.choose</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -339,11 +339,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="data-wrangling-with-tidyverse" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="data-wrangling-with-tidyverse"><span class="header-section-number">3.3</span> Data Wrangling with Tidyverse</h2>
+<section id="data-wrangling-with-tidyverse" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="data-wrangling-with-tidyverse"><span class="header-section-number">2.3</span> Data Wrangling with Tidyverse</h2>
 <p>Let’s use this subset to explore some tidyverse functionality. One of the packages included in the tidyverse is <code>dplyr</code>, which includes several functions for efficiently manipulating data frames in preparation for analyses. We will encounter a number of these throughout our time with R, but I want to briefly introduce a few key <code>dplyr</code> functions and operations that we will dig into more next time.</p>
-<section id="select" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="select"><span class="header-section-number">3.3.1</span> select()</h3>
+<section id="select" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="select"><span class="header-section-number">2.3.1</span> select()</h3>
 <p>It happens quite often that we have a data frame containing far more variables than we need for a given analysis. The <code>select()</code> function allows us to quickly subset data frames according to the variable columns we specify.</p>
 <p>This function takes a data frame as its first input, and all following inputs are the variable columns that you want to keep</p>
 <div class="cell">
@@ -364,8 +364,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="filter" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="filter"><span class="header-section-number">3.3.2</span> filter()</h3>
+<section id="filter" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="filter"><span class="header-section-number">2.3.2</span> filter()</h3>
 <p><code>filter()</code> functions similarly except that, instead of sub-setting by specific variables, it allows you to subset by specific values. So, let’s take the <code>sex_inc</code> object we just created above. We now have this subset of three variables—id, sex, and income—but let’s imagine we want to answer a question that’s specific to women.</p>
 <p>In order to do that, we need to <em>filter</em> the data to include only observations where the value of the variable <code>sex</code> is ‘female’.</p>
 <div class="cell">
@@ -386,8 +386,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="summarize" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="summarize"><span class="header-section-number">3.3.3</span> summarize()</h3>
+<section id="summarize" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="summarize"><span class="header-section-number">2.3.3</span> summarize()</h3>
 <p>As the name suggests, <code>summarize()</code> allows us to quickly summarize information across variables. It will give us a new data frame that reflects the summaries that we ask for, which can be very useful for quickly generating descriptive statistics. We will use this to get the mean income value for our data frame.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mean_inc <span class="ot">&lt;-</span> <span class="fu">summarize</span>(our_gss, <span class="st">"mean_inc"</span><span class="ot">=</span><span class="fu">mean</span>(realrinc, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -422,8 +422,8 @@ Note
 </div>
 <p>The true power of <code>summarize()</code> comes from chaining it together with other tidyverse functions. However, in order to do that, we will need to learn about one more new R operation. I’ll show you that in a moment, but let’s take a look at one more helpful tidyverse function.</p>
 </section>
-<section id="group_by" class="level3" data-number="3.3.4">
-<h3 data-number="3.3.4" class="anchored" data-anchor-id="group_by"><span class="header-section-number">3.3.4</span> group_by()</h3>
+<section id="group_by" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="group_by"><span class="header-section-number">2.3.4</span> group_by()</h3>
 <p>Often when we’re using a function like <code>summarize()</code>, we want to get summaries for all kinds of different subgroups within our data set. For example, we may want the mean for each value of <code>sex</code> or <code>partyid</code>, rather than for all people in the data frame. We can do this with <code>group_by</code>.</p>
 <p>This function may seem a little unusual when used in isolation, because it does not seem to do much on the surface.</p>
 <div class="cell">
@@ -457,8 +457,8 @@ Note
 <p>We ran the same <code>summarize()</code> command as before, but now it reflects the grouping structure that we imposed.</p>
 </section>
 </section>
-<section id="the-pipe" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="the-pipe"><span class="header-section-number">3.4</span> The Pipe</h2>
+<section id="the-pipe" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="the-pipe"><span class="header-section-number">2.4</span> The Pipe</h2>
 <p>This one might be a little unintuitive, so don’t worry if it doesn’t immediately click. We will continue to get plenty of practice with it over the next couple of sessions.</p>
 <p>The pipe operator looks like this: <code>|&gt;</code>. What it does is take whatever is to the left of the symbol and ‘pipe’ it into the function on the right-hand side. That probably sounds a little strange, so let’s see some examples.</p>
 <p>We’ll refer back to our <code>summarize()</code> command from above.</p>
@@ -472,8 +472,8 @@ Note
 </div>
 <p>Notice that, in the first command, the first input that we give <code>summarize()</code> is the data frame that we want it to work with.</p>
 <p>In the command featuring the pipe operator, we supply the data frame and then pipe it into <code>summarize()</code>. The real magic comes from chaining multiple pipes together. This will likely take a little practice to get used to, but it can become a very powerful tool in our R arsenal.</p>
-<section id="putting-it-all-together" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="putting-it-all-together"><span class="header-section-number">3.4.1</span> Putting It All Together</h3>
+<section id="putting-it-all-together" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="putting-it-all-together"><span class="header-section-number">2.4.1</span> Putting It All Together</h3>
 <p>Let’s illustrate with an example. I’ll let you know what I want to do in plain English, and then I will execute that desire with multiple piped commands.</p>
 <p>Ultimately, I want to see the mean income, but I want to see the mean broken down by <code>sex</code> and <code>partyid.</code></p>
 <p>So, I want to take a <strong>selection</strong> of variables from <code>our_gss</code>. I want these variables to be <strong>grouped by</strong> <code>sex</code> and <code>partyid</code>. Finally, I want to see a <strong>summary</strong> of the mean according to this variable grouping.</p>
@@ -936,12 +936,12 @@ Note
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./getting_started.html" class="pagination-link" aria-label="R Fundamentals">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Fundamentals</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./recoding_variables.html" class="pagination-link" aria-label="Recoding Variables">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Recoding Variables</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Recoding Variables</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
