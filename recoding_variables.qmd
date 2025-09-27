@@ -137,7 +137,7 @@ our_gss <- our_gss |>
       include.lowest = TRUE,
       right = FALSE,
       labels = c("Younger", "Middle Age", "Older"),
-      orderd_result = TRUE
+      ordered_result = TRUE
     )
   )
 ```
