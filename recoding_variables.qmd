@@ -46,12 +46,14 @@ For the purposes of this exercise, let's go ahead and turn age into a simple cat
 -   **Middle Age** = 36 - 49
 -   **Older** = 50 and up
 
+At the end of the day, what we need to do is 1.) create a new variable column 2.) populate that column with ordinal labels that correspond with each respondent's numeric age interval.
+
 ### New columns with mutate()
-Let's go ahead and actualize this scheme. First, let's consider the `mutate()` function. This function takes a data frame and outputs a new variable that is calculated by way of some transformation applied to an existing column. 
+First, let's consider the `mutate()` function. This function takes a data frame and appends a new variable column. This new variable is the result of some calculation applied to an existing variable column.  
 
-Now, this wouldn't be the best idea for a couple reasons, but, as an illustration, let's say we wanted to convert our yearly income values to an hourly wage (assuming 40 hrs/week).
+Let's look at an application fo `mutate()` to get a feel for it. Now, this wouldn't be the best idea for a couple reasons, but, as an illustration, let's say we wanted to convert our yearly income values to an hourly wage (assuming 40 hrs/week).
 
-`mutate()` takes a data frame as its input, and then we provide the name of our new variable column(s) along with the calculation for this new variable. Below, I use `mutate()` to create a new column called `hr_wage` which is the result of taking each person's income and dividing that by 52 weeks in a year, and then 40 hours in a week. 
+`mutate()` takes a data frame as its input, and then we provide the name of our new variable column(s) along with the calculation for this new variable. Below, I use `mutate()` to create a new column called `hr_wage`. Then, I tell R that the `hr_wage` variable should be calculated by taking each person's income value and diving that by 52 weeks in a year, and then 40 hours in a week.
 
 ```{r}
 # Without the pipe operator
@@ -74,20 +76,22 @@ Take a look at your new data frame object. I'll show a summary here to verify th
 summary(our_gss)
 ```
 
-Ultimately, we want to use `mutate()` to add a new column that contains our recoded variable that translates each observations numeric value into its corresponding ordinal label. In order to specify the intervals for our new ordinal variable, we need to learn about one more function.
+So, we can use `mutate()` to add a new column that contains our recoded variable. We just need a way to specify a calculation that takes into account the specific intervals we want for our ordinal labels. For this, we need one more function.
 
 ### Custom intervals with cut()
 
 We can use the `cut()` function to specify the intervals we want for our age groupings, and then we will combine it with `mutate()` to generate our recoded age variable.
 
-But first, I want to give a little context on interval notation in mathematics. It will help us be a little more precise when we talk about ranges, and it will also help us understand an input we need to provide for `cut()`.
+But first, I want to give a little context on interval notation in mathematics. It will help us all be a little more precise when we talk about ranges, and it will also help us understand an input we need to provide for `cut()`.
 
 #### An aside on intervals
 In mathematic terms, an interval is the set of all numbers in between two specified end points. In formal notation, these are indicated with the two endpoints placed in square brackets, e.g [1,5] as the interval of 1 through 5. 
 
 There are some technical terms to describe whether or not we want to include the endpoints when we are talking about a particular interval.
 
-- **Open interval**: This is when neither endpoint is included in the interval. In interval notation, openness is indicated with parentheses rather than square brackets, so the open interval of 1 through 5 would be written as (1,5). This interval would indicate any number x where 1 < x < 5
+- **Closed interval**: This is when both end points are included in the interval. Closedness is indicated with square brackets, so, the closed interval of 1 through 5 would be written just like I have above---[1,5]. This indicates any number 'x' where 1 <= x <= 5
+
+- **Open interval**: This is when neither endpoint is included in the interval. In interval notation, openness is indicated with parentheses rather than square brackets, so the open interval of 1 through 5 would be written as (1,5). This interval would indicate any number 'x' where 1 < x < 5
 
 - **Left-open interval**: This is when the left-hand endpoint is not included, but the right-hand endpoint is. This would be written as (1,5] in interval notation, and that interval would indicate any number 'x' where 1 < x <= 5
 
@@ -98,22 +102,28 @@ We will be working with the right-open interval format, and we can specify that 
 Now, let's return to our task at hand.
 
 #### Inputs for cut()
-We'll go ahead and work with cut directly in `mutate()`, as its basically the calculation that we are providing for the new column we generate with `mutate()`. 
+We'll go ahead and work with cut directly in `mutate()`, as its going to be the calculation that we are providing for the new column we generate with `mutate()`. 
+
+As a reminder, here are the intervals we need:
+
+-   **Younger** = 18 - 35
+-   **Middle Age** = 36 - 49
+-   **Older** = 50 and up
 
 The following code may look a little chaotic at first glance, but it's really the same sort of thing that we did with `mutate()` above. It's just that `cut()` is a little bit more involved of a calculation than the simple division we did in our example. 
 
-Just like above, we are applying `mutate()` to `our_gss`, and we are giving the name of our new variable column (`age_ord`, in this case) as the first input. Then, for the calculation, we give the `cut()` function and the arguments we need.
+Just like above, we are applying `mutate()` to `our_gss`, and we are giving the name of our new variable column (`age_ord`, in this case) as the first input. Then, for the calculation, we give the `cut()` function and the arguments it needs.
 
 **cut() and its inputs**
 -   The variable for which we want to specify intervals (`age`)
 
 -   breaks: This is where we indicate the intervals. The first number we give is the low end of our lowest age group (18). The second number is the low end of our middle age group (36). The third number, as you probably guessed, is the low end of our highest age group. The last value should reflect our upper limit. In this case, I use the value `Inf`, which is short for 'infinity'. This essentially tells R that the last category can include any values higher than the previous number we entered. 
 
--   include.lowest: Putting `TRUE` here tells R that, in each interval, we want the lowest value to be included. If we don't do this, then our 'younger' age grouping would be 19 - 35 rather than 18 - 35. 
+-   include.lowest: Putting `TRUE` here tells R that, in each interval, we want the lowest value to be included. If we don't do this, then our 'younger' age grouping would be 19 - 35 rather than 18 - 35. In other words, setting this to `TRUE` indicates a left-closed interval, and `FALSE` indicates a left-open interval.
 
--   right: This is the input for specifying our interval notation, and it takes a logical value (`TRUE` or `FALSE`). When set to `TRUE`, it parses your intervals as right-closed and left-open. We want it the other way around---right-open and left-closed. So, we will set this to `FALSE`. 
+-   right: This is the input for specifying whether we want this to be a right-closed interval, and it takes a logical value (`TRUE` or `FALSE`). We want a right-open interval, so we will set this to `FALSE`. 
 
--   ordered_result: This takes a logical value and, as the name suggests, indicates whether we want the factor to be ordered or not. In our case, there is a clear progression in terms of age, so we can set this to `TRUE`.
+-   ordered_result: This takes a logical value and, as the name suggests, indicates whether we want the factor to be ordered or not. In our case, there is a clear progression in terms of age, so we need to set this to `TRUE`.
 
 
 ```{r}

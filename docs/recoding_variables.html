@@ -326,12 +326,13 @@ Note
 <li><strong>Middle Age</strong> = 36 - 49</li>
 <li><strong>Older</strong> = 50 and up</li>
 </ul>
+<p>At the end of the day, what we need to do is 1.) create a new variable column 2.) populate that column with ordinal labels that correspond with each respondent’s numeric age interval.</p>
 </section>
 <section id="new-columns-with-mutate" class="level3" data-number="4.2.3">
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="new-columns-with-mutate"><span class="header-section-number">4.2.3</span> New columns with mutate()</h3>
-<p>Let’s go ahead and actualize this scheme. First, let’s consider the <code>mutate()</code> function. This function takes a data frame and outputs a new variable that is calculated by way of some transformation applied to an existing column.</p>
-<p>Now, this wouldn’t be the best idea for a couple reasons, but, as an illustration, let’s say we wanted to convert our yearly income values to an hourly wage (assuming 40 hrs/week).</p>
-<p><code>mutate()</code> takes a data frame as its input, and then we provide the name of our new variable column(s) along with the calculation for this new variable. Below, I use <code>mutate()</code> to create a new column called <code>hr_wage</code> which is the result of taking each person’s income and dividing that by 52 weeks in a year, and then 40 hours in a week.</p>
+<p>First, let’s consider the <code>mutate()</code> function. This function takes a data frame and appends a new variable column. This new variable is the result of some calculation applied to an existing variable column.</p>
+<p>Let’s look at an application fo <code>mutate()</code> to get a feel for it. Now, this wouldn’t be the best idea for a couple reasons, but, as an illustration, let’s say we wanted to convert our yearly income values to an hourly wage (assuming 40 hrs/week).</p>
+<p><code>mutate()</code> takes a data frame as its input, and then we provide the name of our new variable column(s) along with the calculation for this new variable. Below, I use <code>mutate()</code> to create a new column called <code>hr_wage</code>. Then, I tell R that the <code>hr_wage</code> variable should be calculated by taking each person’s income value and diving that by 52 weeks in a year, and then 40 hours in a week.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Without the pipe operator</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>our_gss <span class="ot">&lt;-</span> <span class="fu">mutate</span>(</span>
@@ -376,18 +377,19 @@ Note
  NA's                              : 35   NA's   :1554      </code></pre>
 </div>
 </div>
-<p>Ultimately, we want to use <code>mutate()</code> to add a new column that contains our recoded variable that translates each observations numeric value into its corresponding ordinal label. In order to specify the intervals for our new ordinal variable, we need to learn about one more function.</p>
+<p>So, we can use <code>mutate()</code> to add a new column that contains our recoded variable. We just need a way to specify a calculation that takes into account the specific intervals we want for our ordinal labels. For this, we need one more function.</p>
 </section>
 <section id="custom-intervals-with-cut" class="level3" data-number="4.2.4">
 <h3 data-number="4.2.4" class="anchored" data-anchor-id="custom-intervals-with-cut"><span class="header-section-number">4.2.4</span> Custom intervals with cut()</h3>
 <p>We can use the <code>cut()</code> function to specify the intervals we want for our age groupings, and then we will combine it with <code>mutate()</code> to generate our recoded age variable.</p>
-<p>But first, I want to give a little context on interval notation in mathematics. It will help us be a little more precise when we talk about ranges, and it will also help us understand an input we need to provide for <code>cut()</code>.</p>
+<p>But first, I want to give a little context on interval notation in mathematics. It will help us all be a little more precise when we talk about ranges, and it will also help us understand an input we need to provide for <code>cut()</code>.</p>
 <section id="an-aside-on-intervals" class="level4" data-number="4.2.4.1">
 <h4 data-number="4.2.4.1" class="anchored" data-anchor-id="an-aside-on-intervals"><span class="header-section-number">4.2.4.1</span> An aside on intervals</h4>
 <p>In mathematic terms, an interval is the set of all numbers in between two specified end points. In formal notation, these are indicated with the two endpoints placed in square brackets, e.g [1,5] as the interval of 1 through 5.</p>
 <p>There are some technical terms to describe whether or not we want to include the endpoints when we are talking about a particular interval.</p>
 <ul>
-<li><p><strong>Open interval</strong>: This is when neither endpoint is included in the interval. In interval notation, openness is indicated with parentheses rather than square brackets, so the open interval of 1 through 5 would be written as (1,5). This interval would indicate any number x where 1 &lt; x &lt; 5</p></li>
+<li><p><strong>Closed interval</strong>: This is when both end points are included in the interval. Closedness is indicated with square brackets, so, the closed interval of 1 through 5 would be written just like I have above—[1,5]. This indicates any number ‘x’ where 1 &lt;= x &lt;= 5</p></li>
+<li><p><strong>Open interval</strong>: This is when neither endpoint is included in the interval. In interval notation, openness is indicated with parentheses rather than square brackets, so the open interval of 1 through 5 would be written as (1,5). This interval would indicate any number ‘x’ where 1 &lt; x &lt; 5</p></li>
 <li><p><strong>Left-open interval</strong>: This is when the left-hand endpoint is not included, but the right-hand endpoint is. This would be written as (1,5] in interval notation, and that interval would indicate any number ‘x’ where 1 &lt; x &lt;= 5</p></li>
 <li><p><strong>Right-open interval</strong>: When the right-hand endpoint isn’t included but the left endpoint is, you have a right-open interval. This would be written as [1,5) in interval notation and would indicate any number ‘x’ where 1 &lt;= x &lt; 5.</p></li>
 </ul>
@@ -396,15 +398,21 @@ Note
 </section>
 <section id="inputs-for-cut" class="level4" data-number="4.2.4.2">
 <h4 data-number="4.2.4.2" class="anchored" data-anchor-id="inputs-for-cut"><span class="header-section-number">4.2.4.2</span> Inputs for cut()</h4>
-<p>We’ll go ahead and work with cut directly in <code>mutate()</code>, as its basically the calculation that we are providing for the new column we generate with <code>mutate()</code>.</p>
+<p>We’ll go ahead and work with cut directly in <code>mutate()</code>, as its going to be the calculation that we are providing for the new column we generate with <code>mutate()</code>.</p>
+<p>As a reminder, here are the intervals we need:</p>
+<ul>
+<li><strong>Younger</strong> = 18 - 35</li>
+<li><strong>Middle Age</strong> = 36 - 49</li>
+<li><strong>Older</strong> = 50 and up</li>
+</ul>
 <p>The following code may look a little chaotic at first glance, but it’s really the same sort of thing that we did with <code>mutate()</code> above. It’s just that <code>cut()</code> is a little bit more involved of a calculation than the simple division we did in our example.</p>
-<p>Just like above, we are applying <code>mutate()</code> to <code>our_gss</code>, and we are giving the name of our new variable column (<code>age_ord</code>, in this case) as the first input. Then, for the calculation, we give the <code>cut()</code> function and the arguments we need.</p>
+<p>Just like above, we are applying <code>mutate()</code> to <code>our_gss</code>, and we are giving the name of our new variable column (<code>age_ord</code>, in this case) as the first input. Then, for the calculation, we give the <code>cut()</code> function and the arguments it needs.</p>
 <p><strong>cut() and its inputs</strong> - The variable for which we want to specify intervals (<code>age</code>)</p>
 <ul>
 <li><p>breaks: This is where we indicate the intervals. The first number we give is the low end of our lowest age group (18). The second number is the low end of our middle age group (36). The third number, as you probably guessed, is the low end of our highest age group. The last value should reflect our upper limit. In this case, I use the value <code>Inf</code>, which is short for ‘infinity’. This essentially tells R that the last category can include any values higher than the previous number we entered.</p></li>
-<li><p>include.lowest: Putting <code>TRUE</code> here tells R that, in each interval, we want the lowest value to be included. If we don’t do this, then our ‘younger’ age grouping would be 19 - 35 rather than 18 - 35.</p></li>
-<li><p>right: This is the input for specifying our interval notation, and it takes a logical value (<code>TRUE</code> or <code>FALSE</code>). When set to <code>TRUE</code>, it parses your intervals as right-closed and left-open. We want it the other way around—right-open and left-closed. So, we will set this to <code>FALSE</code>.</p></li>
-<li><p>ordered_result: This takes a logical value and, as the name suggests, indicates whether we want the factor to be ordered or not. In our case, there is a clear progression in terms of age, so we can set this to <code>TRUE</code>.</p></li>
+<li><p>include.lowest: Putting <code>TRUE</code> here tells R that, in each interval, we want the lowest value to be included. If we don’t do this, then our ‘younger’ age grouping would be 19 - 35 rather than 18 - 35. In other words, setting this to <code>TRUE</code> indicates a left-closed interval, and <code>FALSE</code> indicates a left-open interval.</p></li>
+<li><p>right: This is the input for specifying whether we want this to be a right-closed interval, and it takes a logical value (<code>TRUE</code> or <code>FALSE</code>). We want a right-open interval, so we will set this to <code>FALSE</code>.</p></li>
+<li><p>ordered_result: This takes a logical value and, as the name suggests, indicates whether we want the factor to be ordered or not. In our case, there is a clear progression in terms of age, so we need to set this to <code>TRUE</code>.</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="ot">&lt;-</span> our_gss <span class="sc">|&gt;</span></span>
