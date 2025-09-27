@@ -409,6 +409,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>my_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(our_gss<span class="sc">$</span>partyid_recoded)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(my_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>Now, as I mentioned, we won’t spend too much time adjusting these plots for now, but there’s a couple things we can do to make this a little better to look at for now.</p>
 <p>For one, our response labels (Democrat, Republican, Independent, etc) are long enough that they get cut off unless we expand the plot margins. Let’s go ahead and make the font size a little bit smaller.</p>

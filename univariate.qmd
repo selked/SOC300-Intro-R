@@ -153,7 +153,7 @@ our_gss$partyid_recoded |>
   barplot()
 ```
 
-```{r, eval = FALSE}
+```{r}
 # Make separate object for the summary() output
 
 my_summary <- summary(our_gss$partyid_recoded)
