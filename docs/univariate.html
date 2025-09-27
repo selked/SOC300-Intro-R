@@ -240,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#frequency-distributions" id="toc-frequency-distributions" class="nav-link active" data-scroll-target="#frequency-distributions"><span class="header-section-number">4.1</span> Frequency Distributions</a>
   <ul class="collapse">
-  <li><a href="#categorical-variables-frequency-tables" id="toc-categorical-variables-frequency-tables" class="nav-link" data-scroll-target="#categorical-variables-frequency-tables"><span class="header-section-number">4.1.1</span> Categorical Variables &amp; Frequency Tables</a></li>
+  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link" data-scroll-target="#categorical-variables"><span class="header-section-number">4.1.1</span> Categorical Variables</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -273,50 +273,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This tutorial will cover each of these elements, and I will highlight any differences specific to certain levels of measurement along the way.</p>
 <section id="frequency-distributions" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="frequency-distributions"><span class="header-section-number">4.1</span> Frequency Distributions</h2>
-<section id="categorical-variables-frequency-tables" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="categorical-variables-frequency-tables"><span class="header-section-number">4.1.1</span> Categorical Variables &amp; Frequency Tables</h3>
+<section id="categorical-variables" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="categorical-variables"><span class="header-section-number">4.1.1</span> Categorical Variables</h3>
+<section id="frequency-tables" class="level4" data-number="4.1.1.1">
+<h4 data-number="4.1.1.1" class="anchored" data-anchor-id="frequency-tables"><span class="header-section-number">4.1.1.1</span> Frequency tables</h4>
 <p>Frequency tables are the most effective way to report the frequency distributions for categorical variables. There are actually a ton of different ways to produce this kind of table in R, but we are going to use some convenient functions from the <code>janitor</code> package, so let’s go ahead and load that in.</p>
 <p>If you are on a lab computer, try to load it with <code>library()</code> first. If you get an error, go ahead and install it with <code>install.packages()</code> and then load it in.</p>
 <p>While we’re at it, we’ll also bring in <code>tidyverse</code> and load in our GSS subset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'janitor'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    chisq.test, fisher.test</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.2
-✔ ggplot2   4.0.0     ✔ tibble    3.3.0
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.1.0     </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"our_gss.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"our_gss.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s go ahead and work with one of our <code>partyid</code> recodes from last time. We’ll use <code>partyid_recoded</code>, where we retained all the party choices but collapses the categories of degree (e.g.&nbsp;strong democrate + not very strong democrat = Democrat).</p>
 <p>We can use a simple command with <code>tabyl()</code> from the <code>janitor</code> package to produce our frequency tables. Let’s take a look at some output, and I’ll go through a couple details and mention some further specifications we can make.</p>
 <p>All we need to do is give our data frame as the first argument, and then our particular variable column as the second argument.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Without pipe operator</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tabyl</span>(our_gss, partyid_recoded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Without pipe operator</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tabyl</span>(our_gss, partyid_recoded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># With pipe operator</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(partyid_recoded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># With pipe operator</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(partyid_recoded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> partyid_recoded    n     percent valid_percent
      Independent 1565 0.441591422    0.44599601
@@ -326,8 +305,147 @@ Attaching package: 'janitor'</code></pre>
             &lt;NA&gt;   35 0.009875847            NA</code></pre>
 </div>
 </div>
+<p>Now, we have a frequency table for <code>partyid_recoded</code>!</p>
+<p>Each row is a level of <code>partyid_recoded</code>. The <code>n</code> column refers to the sample size, so, for example, 1,565 respondents indicated that they were Independents.</p>
+<p>We then have two different columns for percentages. The <code>percent</code> column is the proportion of all respondents that chose each response value—while including NA values. Often, we want to get a proportion for only the sample of those who actually answered the question. This is what the <code>valid_percent</code> column indicates and is what we are often looking for.</p>
+<p>Let’s break it down a little for clarity.</p>
+<p>The total number of respondents is the sum of the <code>n</code> column.</p>
+<p>1565 + 1046 + 792 + 106 + 35 = 3,544 (which is also the number of observations in our data frame)</p>
+<p>Note that there are 35 observations coded as <code>NA</code>, so the total number of <em>valid</em> respondents is 3,509.</p>
+<p>Now, I’ll give the calculations for the <code>Independent</code> row.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I'll define a few objects here for simplicity.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>all_respondents <span class="ot">&lt;-</span> <span class="dv">3544</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>all_minus_na <span class="ot">&lt;-</span> <span class="dv">3509</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>independents <span class="ot">&lt;-</span> <span class="dv">1565</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Percent column</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>independents <span class="sc">/</span> all_respondents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4415914</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valid percent column</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>independents <span class="sc">/</span> all_minus_na</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.445996</code></pre>
+</div>
+</div>
+<p>In this case, there really aren’t that many NA values, so it does not change too much. In general, we will often discard NA categories for the analyses we do for the course, but they give us important information about the survey and can be useful for some questions, so it’s important to keep track of them nonetheless.</p>
+<p>Now, let’s clean a couple things up and add one extra dimension to this frequency table with the <code>adorn()</code> functions.</p>
+<p>Let’s add a row for totals, turn the proportions into percentages, and round the decimals. We can use the pipe operator to quickly leverage a bunch of different <code>adorn()</code> functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(partyid_recoded) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_rounding</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> partyid_recoded    n percent valid_percent
+     Independent 1565   44.2%         44.6%
+        Democrat 1046   29.5%         29.8%
+      Republican  792   22.3%         22.6%
+     Other Party  106    3.0%          3.0%
+            &lt;NA&gt;   35    1.0%             -
+           Total 3544  100.0%        100.0%</code></pre>
+</div>
+</div>
+<p>Lastly, if we want, we can also make the column names a little nicer. It may not be obvious because we’ve just been displaying this table rather than storing it as an object, but it’s actually a data frame, so we can edit the column names directly.</p>
+<p>Let’s save it as an object so that’s easier to see.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>our_table <span class="ot">&lt;-</span> our_gss <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(partyid_recoded) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_rounding</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can then use the <code>colnames()</code> function to write over the column names. We can just supply our table as an input, and then assign a character vector of our new column names (in the order we want them).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(our_table) <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Political Party"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Frequency"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Percent"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Valid Percent"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>our_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Political Party Frequency Percent Valid Percent
+     Independent      1565   44.2%         44.6%
+        Democrat      1046   29.5%         29.8%
+      Republican       792   22.3%         22.6%
+     Other Party       106    3.0%          3.0%
+            &lt;NA&gt;        35    1.0%             -
+           Total      3544  100.0%        100.0%</code></pre>
+</div>
+</div>
+<p>Excellent! We’ll learn how to make this even nicer a bit later in the semester, as well as how to export these tables for Word. But this looks pretty good for now.</p>
+<p>Let’s look at one last visualization technique for categorical variables.</p>
+</section>
+<section id="bar-plots" class="level4" data-number="4.1.1.2">
+<h4 data-number="4.1.1.2" class="anchored" data-anchor-id="bar-plots"><span class="header-section-number">4.1.1.2</span> Bar plots</h4>
+<p>For categorical data, bar plots are often the way to go. These typically have the response values on the x axis, and the count or percentage of each response value is tracked on the Y axis.</p>
+<p>Much like with tables, we’ll learn some fancier ways to do this later in the semester. But, in the meanwhile, base R has some great plotting functions that can be used very easily without much specification. They’re not the prettiest out of the box, but they will do everything we need.</p>
+<p>For <code>barplot()</code>, we just need the variable column that we are trying to plot. But, there’s one thing to remember when you are trying to get a barplot this way—you have to provide the result of <code>summary(my_variable)</code> rather than the variable column directly.</p>
+<p>I’ll show you a couple ways to do that, which all do the exact same thing.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No pipe operator; summary() nested inside barplot()</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">summary</span>(our_gss<span class="sc">$</span>partyid_recoded))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># With pipe operator</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>partyid_recoded <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make separate object for the summary() output</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>my_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(our_gss<span class="sc">$</span>partyid_recoded)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(my_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, as I mentioned, we won’t spend too much time adjusting these plots for now, but there’s a couple things we can do to make this a little better to look at for now.</p>
+<p>For one, our response labels (Democrat, Republican, Independent, etc) are long enough that they get cut off unless we expand the plot margins. Let’s go ahead and make the font size a little bit smaller.</p>
+<p>We can add the <code>cex.names</code> argument to <code>barplot()</code>. This argument takes a number, and the number should reflect an intended proportion of the default font size for our value labels on the x-axis. So, for example, I would enter ‘2’ if I wanted the font to be twice as big. For our purposes, I want to reduce the font a bit, so we’ll enter ‘.75’ to reduce the font size by 1/4.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>partyid_recoded <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>(<span class="at">cex.names =</span> .<span class="dv">75</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Lastly, we can also add some simple descriptive information for the plot, such as a title and labels for the x and y axis. We can do so within <code>barplot()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>partyid_recoded <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex.names =</span> .<span class="dv">75</span>, </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">"Count of GSS Respondents by Political Party"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Political Party"</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Count"</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 </section>
 
