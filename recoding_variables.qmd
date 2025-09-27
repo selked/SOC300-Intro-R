@@ -178,7 +178,8 @@ our_gss <- our_gss |>
   mutate(
     partyid_recoded=fct_collapse(partyid, 
 "Democrat" = c("strong democrat", "not very strong democrat"),
-"Republican" = c("strong republican","not very strong republican"), "Independent" = c("independent, close to democrat", "independent (neither, no response)", "independent, close to republican"),
+"Republican" = c("strong republican","not very strong republican"),
+"Independent" = c("independent, close to democrat", "independent (neither, no response)", "independent, close to republican"),
 "Other Party" = c("other party")
 ))
 ```

@@ -14,9 +14,9 @@ book:
 
   chapters:
     - index.qmd
+    - background.qmd
     - part: "Day 1: Getting Started"
       chapters: 
-        - background.qmd
         - getting_started.qmd
         - packages_and_tidy.qmd
     - part: "Day 2: Survey Data and Univariate Analysis"

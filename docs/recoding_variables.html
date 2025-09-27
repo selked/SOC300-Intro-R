@@ -151,6 +151,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./background.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Background</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -160,12 +166,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./background.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Background</span></span></a>
-  </div>
-</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
@@ -498,9 +498,10 @@ Note
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">partyid_recoded=</span><span class="fu">fct_collapse</span>(partyid, </span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="st">"Democrat"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"strong democrat"</span>, <span class="st">"not very strong democrat"</span>),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">"Republican"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"strong republican"</span>,<span class="st">"not very strong republican"</span>), <span class="st">"Independent"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"independent, close to democrat"</span>, <span class="st">"independent (neither, no response)"</span>, <span class="st">"independent, close to republican"</span>),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">"Other Party"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"other party"</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">"Republican"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"strong republican"</span>,<span class="st">"not very strong republican"</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">"Independent"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"independent, close to democrat"</span>, <span class="st">"independent (neither, no response)"</span>, <span class="st">"independent, close to republican"</span>),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">"Other Party"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"other party"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, let’s take a look at our new variable.</p>
 <div class="cell">
