@@ -80,7 +80,7 @@ So, we can use `mutate()` to add a new column that contains our recoded variable
 
 ### Custom intervals with cut()
 
-We can use the `cut()` function to specify the intervals we want for our age groupings, and then we will combine it with `mutate()` to generate our recoded age variable.
+We can use the `cut()` function to specify the intervals we want for our age groupings, and then we will combine it with `mutate()` to generate our recoded age variable. Specifically, `cut()` takes our intervals and turns each of them into a level in a new factor variable.
 
 But first, I want to give a little context on interval notation in mathematics. It will help us all be a little more precise when we talk about ranges, and it will also help us understand an input we need to provide for `cut()`.
 
@@ -142,17 +142,71 @@ our_gss <- our_gss |>
   )
 ```
 
-Go ahead and take a look at `our_gss`, and our new column should bring us to 10 variables instead of 9. I'll display a summary here so we can check.
+Go ahead and take a look at `our_gss`, and our new column should bring us to 10 variables instead of 9. I'll use the `str()` function here so we can confirm that our factor was ordered and added to the data frame.
 
 ```{r}
-summary(our_gss)
+str(our_gss)
 ```
 
+## Restructuring Categorical Variables
+Now, let's go ahead and tackle the other recoding situation I mentioned up at the top---collapsing the levels of categorical variables. We'll work with `partyid` here, but the logic of this process will apply to any categorical variable.
 
+### Collapsing categories
 
+I encourage you to take a look at `partyid` in [the GSS Data Explorer, like we did for 'age'.](https://gssdataexplorer.norc.org/variables/141/vshow). 
 
+Because `partyid` is a categorical variable, it has far fewer unique values than a ratio variable like `age`, so we can go ahead and take a look at all of its levels with the `count()` function.
 
+:::{.callout-note}
+Observe that `count(our_gss, partyid)` basically provides the same information as `summary(our_gss$partyid)` when the variable is a factor. The only real difference is that `count()` organizes the info into a tidy data frame. In other words, you can use either function to take a look at factor variable like this. 
+:::
 
+```{r}
+count(our_gss, partyid)
+```
 
+Let's go ahead and collapse these into categories of "Democrat", "Independent", "Other Party", and "Republican". We'll use `mutate()` to make a new variable column called `partyid_recoded`. For the calculation of our new variable, we can use the `fct_collapse()` function. This function allows us to first give the name of a new factor level, and then we can give a character vector of the names of levels that want to be collapses into a single category. 
 
+So, to collapse our 3 Democrat levels into a single factor level, we would give the following input for `fct_collapse()`:
 
+`"Democrat" = c("strong democrat", "not very strong democrat")`
+
+And then repeat for each new factor level.
+
+```{r}
+our_gss <- our_gss |>
+  mutate(
+    partyid_recoded=fct_collapse(partyid, 
+"Democrat" = c("strong democrat", "not very strong democrat"),
+"Republican" = c("strong republican","not very strong republican"), "Independent" = c("independent, close to democrat", "independent (neither, no response)", "independent, close to republican"),
+"Other Party" = c("other party")
+))
+```
+
+Now, let's take a look at our new variable.
+
+```{r}
+count(our_gss, partyid_recoded)
+```
+
+### Excluding levels
+You may also want to work with an existing categorical variable, but only focus on certain values. In this case, we can create a recoded variable and simply code the levels we are uninterested in as `NA`. 
+
+We can use the `fct_recode()` function for this. For the first input, we will give it the factor-variable column that we want to recode. Then, we will let it know that we want to set the levels of "Other Party" and "Independent" to `NULL`. This will convert them to NAs and allow us to easily exclude them from our analyses. We will use `fct_recode()` within `mutate()` so we can create another recoded version of `partyid_recoded`. We'll call this one `dem_rep` to distinguish it from the original `partyid` and our first recoded version.
+
+```{r}
+our_gss <- our_gss |>
+  mutate(dem_rep = fct_recode(
+    partyid_recoded, 
+    NULL="Other Party", 
+    NULL="Independent"))
+
+```
+
+Let's check to see that it worked.
+
+```{r}
+count(our_gss, dem_rep)
+```
+
+Now that we have gotten all this pre-processing stuff out of the way, let's go ahead and dig into some univariate analysis.
