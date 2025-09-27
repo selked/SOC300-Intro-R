@@ -1,0 +1,55 @@
+# Univariate Analysis
+
+Before we start examining the relationships between multiple variables, we have to look under the hood of our variables individually and make sure we have a good sense of what they are like. 
+
+We want to know the frequency distribution of the response values, the measures of central tendency, and the dispersion. In other words, we want to see how many respondents chose each response value, which response values are most typical for each variable, and the extent to which the response values vary. 
+
+Luckily for us, R has plenty of tools for generating these quantitative summaries, as well as visualizing them in the form of barcharts, histograms, and other common styles for displaying data.
+
+This tutorial will cover each of these elements, and I will highlight any differences specific to certain levels of measurement along the way.
+
+## Frequency Distributions
+
+### Categorical Variables & Frequency Tables
+
+Frequency tables are the most effective way to report the frequency distributions for categorical variables. There are actually a ton of different ways to produce this kind of table in R, but we are going to use some convenient functions from the `janitor` package, so let's go ahead and load that in. 
+
+If you are on a lab computer, try to load it with `library()` first. If you get an error, go ahead and install it with `install.packages()` and then load it in.
+
+While we're at it, we'll also bring in `tidyverse` and load in our GSS subset.
+
+```{r}
+library(janitor)
+library(tidyverse)
+load("our_gss.rda")
+```
+
+Let's go ahead and work with one of our `partyid` recodes from last time. We'll use `partyid_recoded`, where we retained all the party choices but collapses the categories of degree (e.g. strong democrate + not very strong democrat = Democrat). 
+
+```{r, eval = TRUE, echo = FALSE}
+our_gss <- our_gss |>
+  mutate(
+    partyid_recoded=fct_collapse(partyid, 
+"Democrat" = c("strong democrat", "not very strong democrat"),
+"Republican" = c("strong republican","not very strong republican"),
+"Independent" = c("independent, close to democrat", "independent (neither, no response)", "independent, close to republican"),
+"Other Party" = c("other party")
+))
+```
+
+We can use a simple command with `tabyl()` from the `janitor` package to produce our frequency tables. Let's take a look at some output, and I'll go through a couple details and mention some further specifications we can make.
+
+All we need to do is give our data frame as the first argument, and then our particular variable column as the second argument.
+
+```{r, echo = TRUE, eval = FALSE}
+# Without pipe operator
+tabyl(our_gss, partyid_recoded)
+```
+```{r}
+# With pipe operator
+our_gss |>
+  tabyl(partyid_recoded)
+```
+
+
+

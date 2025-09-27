@@ -22,9 +22,10 @@ book:
     - part: "Day 2: Survey Data and Univariate Analysis"
       chapters: 
         - recoding_variables.qmd
+        - univariate.qmd
     - part: "Day 3: Bivariate Analysis with the GSS"
     - part: "Day 4: Multivariable Analysis and Elaboration"
-    - part: "Day 5: Tidying our Visualizatons with ggplot"
+    - part: "Day 5: Making Better Visualizations"
       chapters:
         - viz_introduction.qmd
 
