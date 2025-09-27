@@ -306,84 +306,24 @@ Note
 <p>We can take a look at all the values of age (along with the # of respondents in each age category) using the <code>count()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(our_gss, age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   age   n
-1   18  22
-2   19  29
-3   20  48
-4   21  46
-5   22  46
-6   23  53
-7   24  45
-8   25  45
-9   26  58
-10  27  46
-11  28  57
-12  29  61
-13  30  60
-14  31  68
-15  32  76
-16  33  69
-17  34  61
-18  35  58
-19  36  69
-20  37  47
-21  38  57
-22  39  72
-23  40  62
-24  41  48
-25  42  67
-26  43  45
-27  44  55
-28  45  56
-29  46  52
-30  47  53
-31  48  46
-32  49  51
-33  50  40
-34  51  55
-35  52  47
-36  53  38
-37  54  50
-38  55  60
-39  56  56
-40  57  53
-41  58  44
-42  59  51
-43  60  75
-44  61  57
-45  62  60
-46  63  48
-47  64  50
-48  65  65
-49  66  67
-50  67  44
-51  68  68
-52  69  56
-53  70  67
-54  71  40
-55  72  54
-56  73  34
-57  74  43
-58  75  34
-59  76  31
-60  77  32
-61  78  26
-62  79  30
-63  80  22
-64  81  15
-65  82  15
-66  83  13
-67  84  21
-68  85   8
-69  86  11
-70  87   5
-71  88   4
-72  89  19
-73  NA 208</code></pre>
 </div>
+<p>However, I’m not going to display those results here, as it will be a particularly long table of values (with 70+ different ages). It’s fine to run it—it won’t crash R or anything—but it will it clutter up this page. Let’s take this as a good opportunity to take advantage of the fact that we are using one of the better funded and well-organized surveys in all of social sciences. As such, there’s extensive documentation about all of the variables measured for the GSS. <a href="https://gssdataexplorer.norc.org/variables/53/vshow">Go ahead and take a look at the age variable via the GSS Data Explorer</a>, which allows us to search for unique variables and view their response values, the specific question(s) that was asked on the survey, and several other variable characteristics.</p>
+<p>The responses range from 18 - 89 (in addition to a few categories for non-response). However, note that there’s something unique about value 89. It’s not just 89 years of age, but 89 &amp; older. This isn’t a real issue for our purposes, but take this as encouragement to interface with the codebook of any publicly available data you use. There’s some imprecision at the upper end of this variable, and that might not be obvious without referencing the codebook.</p>
+<p>For the purposes of this exercise, let’s go ahead and turn age into a simple categorical variable with 3 levels—older, middle age, and younger. I’m going to choose the range somewhat arbitrarily for now. We can use univariate analysis to inform our decision about how to break up a numeric variable, so we will revisit this idea again later on.</p>
+<ul>
+<li><em>Younger</em> = 18 - 35</li>
+<li><em>Middle Age</em> = 36 - 49</li>
+<li><em>Older</em> = 50 and up</li>
+</ul>
+<p>Let’s go ahead and actualize this scheme. First, let’s consider the <code>mutate()</code> function. This function takes a data frame and outputs a new variable that is calculated by way of some transformation applied to an existing column.</p>
+<p>Now, this wouldn’t be the best idea for a couple reasons, but, as an illustration, let’s say we wanted to convert our yearly income values to an hourly wage (assuming 40 hrs/week).</p>
+<p><code>mutate()</code> takes a data frame as its input, and then we provide the name of our new variable column(s) along with the calculation for this new variable. Below, I use <code>mutate()</code> to create a new column called <code>hr_wage</code> which is the result of taking each person’s income and dividing that by 52 weeks in a year, and then 40 hours in a week.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="ot">&lt;-</span> our_gss <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">hr_wage =</span> (realrinc<span class="sc">/</span><span class="dv">52</span>)<span class="sc">/</span><span class="dv">40</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>There are quite a few values here, but we can use this information to condense the range of values into a smaller number of age groups.</p>
 
 
 </section>

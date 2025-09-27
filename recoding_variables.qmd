@@ -29,10 +29,32 @@ You might notice the 'int' category, which is short for 'integer'. This is a sub
 :::
 
 We can take a look at all the values of age (along with the # of respondents in each age category) using the `count()` function. 
-```{r}
+```{r, eval=FALSE}
 count(our_gss, age)
 ```
-There are quite a few values here, but we can use this information to condense the range of values into a smaller number of age groups.
+However, I'm not going to display those results here, as it will be a particularly long table of values (with 70+ different ages). It's fine to run it---it won't crash R or anything---but it will it clutter up this page. Let's take this as a good opportunity to take advantage of the fact that we are using one of the better funded and well-organized surveys in all of social sciences. As such, there's extensive documentation about all of the variables measured for the GSS. [Go ahead and take a look at the age variable via the GSS Data Explorer](https://gssdataexplorer.norc.org/variables/53/vshow), which allows us to search for unique variables and view their response values, the specific question(s) that was asked on the survey, and several other variable characteristics. 
+
+The responses range from 18 - 89 (in addition to a few categories for non-response). However, note that there's something unique about value 89. It's not just 89 years of age, but 89 & older. This isn't a real issue for our purposes, but take this as encouragement to interface with the codebook of any publicly available data you use. There's some imprecision at the upper end of this variable, and that might not be obvious without referencing the codebook.
+
+For the purposes of this exercise, let's go ahead and turn age into a simple categorical variable with 3 levels---older, middle age, and younger. I'm going to choose the range somewhat arbitrarily for now. We can use univariate analysis to inform our decision about how to break up a numeric variable, so we will revisit this idea again later on.
+
+-   *Younger* = 18 - 35
+-   *Middle Age* = 36 - 49
+-   *Older* = 50 and up
+
+Let's go ahead and actualize this scheme. First, let's consider the `mutate()` function. This function takes a data frame and outputs a new variable that is calculated by way of some transformation applied to an existing column. 
+
+Now, this wouldn't be the best idea for a couple reasons, but, as an illustration, let's say we wanted to convert our yearly income values to an hourly wage (assuming 40 hrs/week).
+
+`mutate()` takes a data frame as its input, and then we provide the name of our new variable column(s) along with the calculation for this new variable. Below, I use `mutate()` to create a new column called `hr_wage` which is the result of taking each person's income and dividing that by 52 weeks in a year, and then 40 hours in a week. 
+
+```{r}
+our_gss <- our_gss |>
+  mutate(
+    hr_wage = (realrinc/52)/40
+  )
+```
+
 
 
 
