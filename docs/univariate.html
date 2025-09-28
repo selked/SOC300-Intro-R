@@ -541,13 +541,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Lastly, I’ll show a normal distribution with outliers. This is also a situation where we would need to take the mode of an ordinal variable. Note that the vast majority of this distribution is between -4 and 4, but we have some observations at -20, way outside the range of the distribution. For a categorical variable—even an ordinal one—the median will not be ideal in this context.</p>
 <p>We do want to keep any outlier values if we have good reason to believe that they were measured correctly, but it’s always worth double-checking outliers, as they sometimes indicate that something has gone wrong with the measurement process.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">300</span>),</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="dv">20</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -558,6 +551,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>So, if the distribution of your variable looks (mostly) like the normal distribution, go ahead and take the median of any ordinal variable.</p>
 <p>Let’s go ahead and practice doing that with the <code>age_ord</code> variable we created last time.</p>
+<p>In the case of <code>age_ord</code>, we’d actually want to take the mode, because it’s a bit left-skewed. We can see that when we make the barplot</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>age_ord <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">"Age Distribution of GSS Respondents"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Age grouping"</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>However, there’s not a great example of a normally distributed ordinal variable in our subset, so I’ll show you how to calculate the median using this variable anyhow.</p>
+<p>For this, we can use the <code>quantile()</code> function. It has a lot of nifty uses, but we will only really use it for this purpose—calculating the median of a normally distributed ordinal variable.</p>
+<p>In technical terms, quantiles are markers that split up a distribution into equal parts.</p>
+<p>For our purposes, you can think of quantiles in terms of percentiles, where, for example, being in the 90th percentile means you are performing at or above 90% of others in the sample.</p>
+<p>We can use the <code>quantile()</code> function to get the value at the 50th percentile of the distribution, which is another way of saying the median.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>age_ord, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>.<span class="dv">5</span>, </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="at">type =</span> <span class="dv">1</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       50% 
+Middle Age 
+Levels: Younger &lt; Middle Age &lt; Older</code></pre>
+</div>
+</div>
+<p>For the first input, we provide the ordinal variable column for which we want to calculate the median.</p>
+<p>Then, we give a proportion equivalent to the percentile that we want. Because want to take the value at the 50th percentile, we will enter 0.5.</p>
+<p>The specifics of the ‘type’ argument are a little above our paygrade, but we need to specify this so that <code>quantile()</code> knows its working with an ordered factor.</p>
+<p>Lastly, we’ll specify that we want NAs to be removed in the calculation, as R will throw an error unless we tell it to disregard these.</p>
+<p>So, we can see that ‘Middle Age’ would be the median response—which we would report if <code>age_ord</code> weren’t skewed.</p>
 
 
 </section>

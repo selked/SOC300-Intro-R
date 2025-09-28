@@ -284,13 +284,15 @@ Lastly, I'll show a normal distribution with outliers. This is also a situation 
 
 We do want to keep any outlier values if we have good reason to believe that they were measured correctly, but it's always worth double-checking outliers, as they sometimes indicate that something has gone wrong with the measurement process.
 
-```{r}
+```{r, eval = TRUE, echo = FALSE}
 hist(
   c(
     rnorm(300),
     1,
   -20
-  )
+  ),
+  main = "Normal distribution with outliers; n = 300",
+  xlab = "Variable Response Values"
 ) 
 ```
 So, if the distribution of your variable looks (mostly) like the normal distribution, go ahead and take the median of any ordinal variable.
@@ -311,4 +313,42 @@ our_gss <- our_gss |>
   )
 ```
 
+In the case of `age_ord`, we'd actually want to take the mode, because it's a bit left-skewed. We can see that when we make the barplot
 
+```{r}
+our_gss$age_ord |>
+  summary() |>
+  barplot(
+    main = "Age Distribution of GSS Respondents",
+    xlab = "Age grouping"
+  )
+```
+
+However, there's not a great example of a normally distributed ordinal variable in our subset, so I'll show you how to calculate the median using this variable anyhow.
+
+For this, we can use the `quantile()` function. It has a lot of nifty uses, but we will only really use it for this purpose---calculating the median of a normally distributed ordinal variable.
+
+In technical terms, quantiles are markers that split up a distribution into equal parts. 
+
+For our purposes, you can think of quantiles in terms of percentiles, where, for example, being in the 90th percentile means you are performing at or above 90% of others in the sample.
+
+We can use the `quantile()` function to get the value at the 50th percentile of the distribution, which is another way of saying the median. 
+
+```{r}
+quantile(
+our_gss$age_ord, 
+.5, 
+type = 1,
+na.rm = TRUE
+)
+```
+
+For the first input, we provide the ordinal variable column for which we want to calculate the median.
+
+Then, we give a proportion equivalent to the percentile that we want. Because want to take the value at the 50th percentile, we will enter 0.5. 
+
+The specifics of the 'type' argument are a little above our paygrade, but we need to specify this so that `quantile()` knows its working with an ordered factor.
+
+Lastly, we'll specify that we want NAs to be removed in the calculation, as R will throw an error unless we tell it to disregard these.
+
+So, we can see that 'Middle Age' would be the median response---which we would report if `age_ord` weren't skewed.
