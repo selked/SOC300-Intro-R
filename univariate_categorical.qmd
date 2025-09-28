@@ -208,25 +208,25 @@ Our options are limited to the mode or the median, depending on the distribution
 ### Nominal variables
 In the case nominal variables, there is no semblance of meaningful arrangement to the categories. In this case, we can only report the mode. 
 
-Often times, we can just glean this from the frequency tables, or even just the `summary()` output. Let's take `sex` as an example.
+Often times, we can just glean this from the frequency tables, or even just the `summary()` output. Let's stick with `partyid_recoded` as an example.
 
 ```{r}
-summary(our_gss$sex)
+summary(our_gss$partyid_recoded)
 ```
 
-Remember that the mode is just the value with the most occurrences. So, the mode here is 'female'. 
+Remember that the mode is just the value with the most occurrences. So, the mode here is 'Independent'. 
 
 This is likely sufficient for the variables we will work with, but it's possible for some variables to have so many factor levels that it can be a little annoying to try and spot the mode visually. So, I'll show you how to calculate it manually as well.
 
 We can use the `summary()` output again. For a factor variable, it gives us each of the levels of the factor along with the number of respondents in each level. So, we can use a nifty base R function called `which.max()` along with `summary()`. This will return the maximum value in our summary output, which will correspond to the most frequent level of the factor.
 
 ```{r}
-sex_sum <- summary(our_gss$sex)
+party_sum <- summary(our_gss$partyid_recoded)
 
-which.max(sex_sum)
+which.max(party_sum)
 ```
 
-so, this also gives us our mode, and is a bit more precise a way of doing so---especially when we have a bunch of possible response values.
+So, this also gives us our mode, and is a bit more precise a way of doing so---especially when we have a bunch of possible response values.
 
 Now, let's talk about ordinal variables, where we have another consideration.
 

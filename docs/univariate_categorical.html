@@ -482,27 +482,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="nominal-variables" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="nominal-variables"><span class="header-section-number">4.2.1</span> Nominal variables</h3>
 <p>In the case nominal variables, there is no semblance of meaningful arrangement to the categories. In this case, we can only report the mode.</p>
-<p>Often times, we can just glean this from the frequency tables, or even just the <code>summary()</code> output. Let’s take <code>sex</code> as an example.</p>
+<p>Often times, we can just glean this from the frequency tables, or even just the <code>summary()</code> output. Let’s stick with <code>partyid_recoded</code> as an example.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_gss<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_gss<span class="sc">$</span>partyid_recoded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>female   male   NA's 
-  1897   1627     20 </code></pre>
+<pre><code>Independent    Democrat  Republican Other Party        NA's 
+       1565        1046         792         106          35 </code></pre>
 </div>
 </div>
-<p>Remember that the mode is just the value with the most occurrences. So, the mode here is ‘female’.</p>
+<p>Remember that the mode is just the value with the most occurrences. So, the mode here is ‘Independent’.</p>
 <p>This is likely sufficient for the variables we will work with, but it’s possible for some variables to have so many factor levels that it can be a little annoying to try and spot the mode visually. So, I’ll show you how to calculate it manually as well.</p>
 <p>We can use the <code>summary()</code> output again. For a factor variable, it gives us each of the levels of the factor along with the number of respondents in each level. So, we can use a nifty base R function called <code>which.max()</code> along with <code>summary()</code>. This will return the maximum value in our summary output, which will correspond to the most frequent level of the factor.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sex_sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(our_gss<span class="sc">$</span>sex)</span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>party_sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(our_gss<span class="sc">$</span>partyid_recoded)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(sex_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(party_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>female 
-     1 </code></pre>
+<pre><code>Independent 
+          1 </code></pre>
 </div>
 </div>
-<p>so, this also gives us our mode, and is a bit more precise a way of doing so—especially when we have a bunch of possible response values.</p>
+<p>So, this also gives us our mode, and is a bit more precise a way of doing so—especially when we have a bunch of possible response values.</p>
 <p>Now, let’s talk about ordinal variables, where we have another consideration.</p>
 </section>
 <section id="ordinal-variables" class="level3" data-number="4.2.2">
