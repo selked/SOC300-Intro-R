@@ -241,7 +241,7 @@ However, we can only do so when the variable is normally distributed. If there i
 Let's refresh our memory on distributions before we take some central tendency measures of ordinal variables in the GSS. 
 
 ##### Distribution assumptions
-If the responses of an ordinal variable are normally distributed, we can take the mean. 
+If the responses of an ordinal variable are normally distributed, we can take the median. 
 
 In the ideal form of the normal distribution, you have a mean of 0 and a standard deviation of 1, where roughly 68% of values are within 1 standard deviation in either direction of the mean, and roughly 95% of values are within 2 standard deviations in either direction.
 
