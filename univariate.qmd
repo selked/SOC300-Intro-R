@@ -236,5 +236,79 @@ Now, let's talk about ordinal variables, where we have another consideration.
 
 While ordinal variables are still categorical and thus unamenable to mathematical analysis, they do have a meaningful order. This means that it's possible for us to take the median value of an ordinal variable.
 
-However, we can only do so when the variable is normally distributed. 
+However, we can only do so when the variable is normally distributed. If there is significant skew in the distribution of responses, then we will need to report the mode for an ordinal variable.
+
+Let's refresh our memory on distributions before we take some central tendency measures of ordinal variables in the GSS. 
+
+##### Distribution assumptions
+If the responses of an ordinal variable are normally distributed, we can take the mean. 
+
+In the ideal form of the normal distribution, you have a mean of 0 and a standard deviation of 1, where roughly 68% of values are within 1 standard deviation in either direction of the mean, and roughly 95% of values are within 2 standard deviations in either direction.
+
+However, in practice, our distributions are unlikely to reflect the ideal normal distribution. But, if they are roughly normal, we can work with that.
+
+I'll display a classic normal distribution here. If you produce a barplot and find the data looks generally like this---where the majority of variables are concentrated around the middle of the distribution---then you can report the median response rather than the mode.
+
+I'll display a few distributions here as a reminder.
+
+This is the classic normal distribution
+```{r, eval = TRUE, echo = FALSE}
+hist(
+  rnorm(10000),
+  main = "Normal distribution; n = 10,000",
+  xlab = "Variable Response Values"
+)
+```
+
+Here's a left-skewed distribution. This is when there's a promintent 'tail' on most of the left-hand side of the distribution. In other words, when most of the values are concentrated on the right-hand side of the distribution (the upper end), then we have a left-skew.
+
+```{r, eval = TRUE, echo = FALSE}
+hist(
+  rbeta(10000, 10, 2),
+  main = "Left-skewed distribution, n = 10,000",
+  xlab = "Variable Response Values"
+)
+```
+
+Lastly, here's a right-skewed distribution. As you can probably guess from the description of a left-skewed distribution, a right-skew occurs when we have a long tail through most of the right-hand side of the distribution. In other words, most values are concentrated on the left-hand side. 
+
+```{r, eval = TRUE, echo = FALSE}
+hist(
+  rbeta(10000, 2, 10),
+  main = "Right-skewed distribution, n = 10,000",
+  xlab = "Variable Response Values"
+)
+```
+
+Lastly, I'll show a normal distribution with outliers. This is also a situation where we would need to take the mode of an ordinal variable. Note that the vast majority of this distribution is between -4 and 4, but we have some observations at -20, way outside the range of the distribution. For a categorical variable---even an ordinal one---the median will not be ideal in this context.
+
+We do want to keep any outlier values if we have good reason to believe that they were measured correctly, but it's always worth double-checking outliers, as they sometimes indicate that something has gone wrong with the measurement process.
+
+```{r}
+hist(
+  c(
+    rnorm(300),
+    1,
+  -20
+  )
+) 
+```
+So, if the distribution of your variable looks (mostly) like the normal distribution, go ahead and take the median of any ordinal variable.
+
+Let's go ahead and practice doing that with the `age_ord` variable we created last time.
+
+```{r, eval = TRUE, echo = FALSE}
+our_gss <- our_gss |>
+  mutate(
+    age_ord = cut(
+      age,
+      breaks = c(18, 36, 51, Inf),
+      include.lowest = TRUE,
+      right = FALSE,
+      labels = c("Younger", "Middle Age", "Older"),
+      ordered_result = TRUE
+    )
+  )
+```
+
 

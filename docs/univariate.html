@@ -499,9 +499,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="ordinal-variables" class="level4" data-number="4.1.2.2">
 <h4 data-number="4.1.2.2" class="anchored" data-anchor-id="ordinal-variables"><span class="header-section-number">4.1.2.2</span> Ordinal variables</h4>
 <p>While ordinal variables are still categorical and thus unamenable to mathematical analysis, they do have a meaningful order. This means that it’s possible for us to take the median value of an ordinal variable.</p>
-<p>However, we can only do so when the variable is normally distributed.</p>
+<p>However, we can only do so when the variable is normally distributed. If there is significant skew in the distribution of responses, then we will need to report the mode for an ordinal variable.</p>
+<p>Let’s refresh our memory on distributions before we take some central tendency measures of ordinal variables in the GSS.</p>
+<section id="distribution-assumptions" class="level5" data-number="4.1.2.2.1">
+<h5 data-number="4.1.2.2.1" class="anchored" data-anchor-id="distribution-assumptions"><span class="header-section-number">4.1.2.2.1</span> Distribution assumptions</h5>
+<p>If the responses of an ordinal variable are normally distributed, we can take the mean.</p>
+<p>In the ideal form of the normal distribution, you have a mean of 0 and a standard deviation of 1, where roughly 68% of values are within 1 standard deviation in either direction of the mean, and roughly 95% of values are within 2 standard deviations in either direction.</p>
+<p>However, in practice, our distributions are unlikely to reflect the ideal normal distribution. But, if they are roughly normal, we can work with that.</p>
+<p>I’ll display a classic normal distribution here. If you produce a barplot and find the data looks generally like this—where the majority of variables are concentrated around the middle of the distribution—then you can report the median response rather than the mode.</p>
+<p>I’ll display a few distributions here as a reminder.</p>
+<p>This is the classic normal distribution</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here’s a left-skewed distribution. This is when there’s a promintent ‘tail’ on most of the left-hand side of the distribution. In other words, when most of the values are concentrated on the right-hand side of the distribution (the upper end), then we have a left-skew.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Lastly, here’s a right-skewed distribution. As you can probably guess from the description of a left-skewed distribution, a right-skew occurs when we have a long tail through most of the right-hand side of the distribution. In other words, most values are concentrated on the left-hand side.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Lastly, I’ll show a normal distribution with outliers. This is also a situation where we would need to take the mode of an ordinal variable. Note that the vast majority of this distribution is between -4 and 4, but we have some observations at -20, way outside the range of the distribution. For a categorical variable—even an ordinal one—the median will not be ideal in this context.</p>
+<p>We do want to keep any outlier values if we have good reason to believe that they were measured correctly, but it’s always worth double-checking outliers, as they sometimes indicate that something has gone wrong with the measurement process.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">300</span>),</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="dv">20</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So, if the distribution of your variable looks (mostly) like the normal distribution, go ahead and take the median of any ordinal variable.</p>
+<p>Let’s go ahead and practice doing that with the <code>age_ord</code> variable we created last time.</p>
 
 
+</section>
 </section>
 </section>
 </section>
