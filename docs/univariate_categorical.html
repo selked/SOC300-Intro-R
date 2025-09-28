@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Univariate Analysis – Introduction to R for Quantitative Social Science Research</title>
+<title>4&nbsp; Categorical Variables – Introduction to R for Quantitative Social Science Research</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./viz_introduction.html" rel="next">
+<link href="./univariate_numeric.html" rel="next">
 <link href="./recoding_variables.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding_variables.html">Day 2: Survey Data and Univariate Analysis</a></li><li class="breadcrumb-item"><a href="./univariate.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Univariate Analysis</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding_variables.html">Day 2: Survey Data and Univariate Analysis</a></li><li class="breadcrumb-item"><a href="./univariate_categorical.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorical Variables</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -197,8 +197,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./univariate.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Univariate Analysis</span></span></a>
+  <a href="./univariate_categorical.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorical Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./univariate_numeric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Numeric Variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -238,10 +244,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link active" data-scroll-target="#categorical-variables"><span class="header-section-number">4.1</span> Categorical Variables</a>
+  <li><a href="#frequency-distributions" id="toc-frequency-distributions" class="nav-link active" data-scroll-target="#frequency-distributions"><span class="header-section-number">4.1</span> Frequency Distributions</a>
   <ul class="collapse">
-  <li><a href="#frequency-distributions" id="toc-frequency-distributions" class="nav-link" data-scroll-target="#frequency-distributions"><span class="header-section-number">4.1.1</span> Frequency Distributions</a></li>
-  <li><a href="#measures-of-central-tendency" id="toc-measures-of-central-tendency" class="nav-link" data-scroll-target="#measures-of-central-tendency"><span class="header-section-number">4.1.2</span> Measures of Central Tendency</a></li>
+  <li><a href="#frequency-tables" id="toc-frequency-tables" class="nav-link" data-scroll-target="#frequency-tables"><span class="header-section-number">4.1.1</span> Frequency tables</a></li>
+  <li><a href="#bar-plots" id="toc-bar-plots" class="nav-link" data-scroll-target="#bar-plots"><span class="header-section-number">4.1.2</span> Bar plots</a></li>
+  </ul></li>
+  <li><a href="#measures-of-central-tendency" id="toc-measures-of-central-tendency" class="nav-link" data-scroll-target="#measures-of-central-tendency"><span class="header-section-number">4.2</span> Measures of Central Tendency</a>
+  <ul class="collapse">
+  <li><a href="#nominal-variables" id="toc-nominal-variables" class="nav-link" data-scroll-target="#nominal-variables"><span class="header-section-number">4.2.1</span> Nominal variables</a></li>
+  <li><a href="#ordinal-variables" id="toc-ordinal-variables" class="nav-link" data-scroll-target="#ordinal-variables"><span class="header-section-number">4.2.2</span> Ordinal variables</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -249,9 +260,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding_variables.html">Day 2: Survey Data and Univariate Analysis</a></li><li class="breadcrumb-item"><a href="./univariate.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Univariate Analysis</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding_variables.html">Day 2: Survey Data and Univariate Analysis</a></li><li class="breadcrumb-item"><a href="./univariate_categorical.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorical Variables</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Univariate Analysis</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorical Variables</span></h1>
 </div>
 
 
@@ -272,13 +283,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We want to know the frequency distribution of the response values, the measures of central tendency, and the dispersion. In other words, we want to see how many respondents chose each response value, which response values are most typical for each variable, and the extent to which the response values vary.</p>
 <p>Luckily for us, R has plenty of tools for generating these quantitative summaries, as well as visualizing them in the form of barplots, histograms, and other common styles for displaying data.</p>
 <p>This tutorial will cover each of these elements, and I will highlight any differences specific to certain levels of measurement along the way.</p>
-<section id="categorical-variables" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="categorical-variables"><span class="header-section-number">4.1</span> Categorical Variables</h2>
+<section id="frequency-distributions" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="frequency-distributions"><span class="header-section-number">4.1</span> Frequency Distributions</h2>
 <p>Let’s start with categorical variables. We will start with frequency distributions by way of frequency tables and bar plots. Then, we will talk about measures of tendency and observe when they are appropriate for categorical data.</p>
-<section id="frequency-distributions" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="frequency-distributions"><span class="header-section-number">4.1.1</span> Frequency Distributions</h3>
-<section id="frequency-tables" class="level4" data-number="4.1.1.1">
-<h4 data-number="4.1.1.1" class="anchored" data-anchor-id="frequency-tables"><span class="header-section-number">4.1.1.1</span> Frequency tables</h4>
+<section id="frequency-tables" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="frequency-tables"><span class="header-section-number">4.1.1</span> Frequency tables</h3>
 <p>Frequency tables are the most effective way to report the frequency distributions for categorical variables. There are actually a ton of different ways to produce this kind of table in R, but we are going to use some convenient functions from the <code>janitor</code> package, so let’s go ahead and load that in.</p>
 <p>If you are on a lab computer, try to load it with <code>library()</code> first. If you get an error, go ahead and install it with <code>install.packages()</code> and then load it in.</p>
 <p>While we’re at it, we’ll also bring in <code>tidyverse</code> and load in our GSS subset.</p>
@@ -399,8 +408,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Excellent! We’ll learn how to make this even nicer a bit later in the semester, but this looks pretty good for now.</p>
 <p>Let’s look at one last visualization technique for categorical variables.</p>
 </section>
-<section id="bar-plots" class="level4" data-number="4.1.1.2">
-<h4 data-number="4.1.1.2" class="anchored" data-anchor-id="bar-plots"><span class="header-section-number">4.1.1.2</span> Bar plots</h4>
+<section id="bar-plots" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="bar-plots"><span class="header-section-number">4.1.2</span> Bar plots</h3>
 <p>For categorical data, bar plots are often the way to go. These typically have the response values on the x axis, and the count or percentage of each response value is tracked on the Y axis.</p>
 <p>Much like with tables, we’ll learn some fancier ways to do this later in the semester. But, in the meanwhile, base R has some great plotting functions that can be used very easily without much specification. They’re not the prettiest out of the box, but they will do everything we need.</p>
 <p>For <code>barplot()</code>, we just need the variable column that we are trying to plot. But, there’s one thing to remember when you are trying to get a barplot this way—you have to provide the result of <code>summary(my_variable)</code> rather than the variable column directly.</p>
@@ -425,7 +434,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -440,7 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -458,20 +467,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="measures-of-central-tendency" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="measures-of-central-tendency"><span class="header-section-number">4.1.2</span> Measures of Central Tendency</h3>
+<section id="measures-of-central-tendency" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="measures-of-central-tendency"><span class="header-section-number">4.2</span> Measures of Central Tendency</h2>
 <p>Now, let’s talk about measures of central tendency. Because there is no mathematically meaningful relationship between the different levels of a categorical variable, our options for reporting measures of central tendency are a little more limited.</p>
 <p>The classic central tendency measures are the mode, the median, and the mean. For categorical variables, it is not ever meaningful to take the mean. As we saw back on our first day with R, you will get a warning message if you try to run <code>mean()</code> on a character or factor variable.</p>
 <p>Our options are limited to the mode or the median, depending on the distribution of responses.</p>
-<section id="nominal-variables" class="level4" data-number="4.1.2.1">
-<h4 data-number="4.1.2.1" class="anchored" data-anchor-id="nominal-variables"><span class="header-section-number">4.1.2.1</span> Nominal variables</h4>
+<section id="nominal-variables" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="nominal-variables"><span class="header-section-number">4.2.1</span> Nominal variables</h3>
 <p>In the case nominal variables, there is no semblance of meaningful arrangement to the categories. In this case, we can only report the mode.</p>
 <p>Often times, we can just glean this from the frequency tables, or even just the <code>summary()</code> output. Let’s take <code>sex</code> as an example.</p>
 <div class="cell">
@@ -496,13 +505,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>so, this also gives us our mode, and is a bit more precise a way of doing so—especially when we have a bunch of possible response values.</p>
 <p>Now, let’s talk about ordinal variables, where we have another consideration.</p>
 </section>
-<section id="ordinal-variables" class="level4" data-number="4.1.2.2">
-<h4 data-number="4.1.2.2" class="anchored" data-anchor-id="ordinal-variables"><span class="header-section-number">4.1.2.2</span> Ordinal variables</h4>
+<section id="ordinal-variables" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="ordinal-variables"><span class="header-section-number">4.2.2</span> Ordinal variables</h3>
 <p>While ordinal variables are still categorical and thus unamenable to mathematical analysis, they do have a meaningful order. This means that it’s possible for us to take the median value of an ordinal variable.</p>
 <p>However, we can only do so when the variable is normally distributed. If there is significant skew in the distribution of responses, then we will need to report the mode for an ordinal variable.</p>
 <p>Let’s refresh our memory on distributions before we take some central tendency measures of ordinal variables in the GSS.</p>
-<section id="distribution-assumptions" class="level5" data-number="4.1.2.2.1">
-<h5 data-number="4.1.2.2.1" class="anchored" data-anchor-id="distribution-assumptions"><span class="header-section-number">4.1.2.2.1</span> Distribution assumptions</h5>
+<section id="distribution-assumptions" class="level5" data-number="4.2.2.0.1">
+<h5 data-number="4.2.2.0.1" class="anchored" data-anchor-id="distribution-assumptions"><span class="header-section-number">4.2.2.0.1</span> Distribution assumptions</h5>
 <p>If the responses of an ordinal variable are normally distributed, we can take the median.</p>
 <p>In the ideal form of the normal distribution, you have a mean of 0 and a standard deviation of 1, where roughly 68% of values are within 1 standard deviation in either direction of the mean, and roughly 95% of values are within 2 standard deviations in either direction.</p>
 <p>However, in practice, our distributions are unlikely to reflect the ideal normal distribution. But, if they are roughly normal, we can work with that.</p>
@@ -513,7 +522,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -523,7 +532,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -533,7 +542,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -544,7 +553,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -562,7 +571,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -592,7 +601,6 @@ Levels: Younger &lt; Middle Age &lt; Older</code></pre>
 <p>So, we can see that ‘Middle Age’ would be the median response—which we would report if <code>age_ord</code> weren’t skewed.</p>
 
 
-</section>
 </section>
 </section>
 </section>
@@ -1004,8 +1012,8 @@ Levels: Younger &lt; Middle Age &lt; Older</code></pre>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./viz_introduction.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text">Introduction</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./univariate_numeric.html" class="pagination-link" aria-label="Numeric Variables">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Numeric Variables</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

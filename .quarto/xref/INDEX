@@ -46,5 +46,11 @@
   },
   "univariate.qmd": {
     "univariate.html": "a56c6b9b"
+  },
+  "univariate_categorical.qmd": {
+    "univariate_categorical.html": "1474a423"
+  },
+  "univariate_numeric.qmd": {
+    "univariate_numeric.html": "d710da29"
   }
 }

@@ -1,4 +1,4 @@
-# Univariate Analysis
+# Categorical Variables
 
 Before we start examining the relationships between multiple variables, we have to look under the hood of our variables individually and make sure we have a good sense of what they are like. 
 
@@ -8,12 +8,10 @@ Luckily for us, R has plenty of tools for generating these quantitative summarie
 
 This tutorial will cover each of these elements, and I will highlight any differences specific to certain levels of measurement along the way.
 
-## Categorical Variables
+## Frequency Distributions
 Let's start with categorical variables. We will start with frequency distributions by way of frequency tables and bar plots. Then, we will talk about measures of tendency and observe when they are appropriate for categorical data. 
 
-### Frequency Distributions
-
-#### Frequency tables
+### Frequency tables
 
 Frequency tables are the most effective way to report the frequency distributions for categorical variables. There are actually a ton of different ways to produce this kind of table in R, but we are going to use some convenient functions from the `janitor` package, so let's go ahead and load that in. 
 
@@ -145,7 +143,7 @@ Excellent! We'll learn how to make this even nicer a bit later in the semester, 
 
 Let's look at one last visualization technique for categorical variables.
 
-#### Bar plots
+### Bar plots
 
 For categorical data, bar plots are often the way to go. These typically have the response values on the x axis, and the count or percentage of each response value is tracked on the Y axis. 
 
@@ -200,14 +198,14 @@ our_gss$partyid_recoded |>
     ylab = "Count"
   )
 ```
-### Measures of Central Tendency
+## Measures of Central Tendency
 Now, let's talk about measures of central tendency. Because there is no mathematically meaningful relationship between the different levels of a categorical variable, our options for reporting measures of central tendency are a little more limited.
 
 The classic central tendency measures are the mode, the median, and the mean. For categorical variables, it is not ever meaningful to take the mean. As we saw back on our first day with R, you will get a warning message if you try to run `mean()` on a character or factor variable. 
 
 Our options are limited to the mode or the median, depending on the distribution of responses.
 
-#### Nominal variables
+### Nominal variables
 In the case nominal variables, there is no semblance of meaningful arrangement to the categories. In this case, we can only report the mode. 
 
 Often times, we can just glean this from the frequency tables, or even just the `summary()` output. Let's take `sex` as an example.
@@ -232,7 +230,7 @@ so, this also gives us our mode, and is a bit more precise a way of doing so---e
 
 Now, let's talk about ordinal variables, where we have another consideration.
 
-#### Ordinal variables
+### Ordinal variables
 
 While ordinal variables are still categorical and thus unamenable to mathematical analysis, they do have a meaningful order. This means that it's possible for us to take the median value of an ordinal variable.
 
