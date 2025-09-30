@@ -1,4 +1,4 @@
-# Categorical Variables
+# Univariate: Categorical
 
 Before we start examining the relationships between multiple variables, we have to look under the hood of our variables individually and make sure we have a good sense of what they are like. 
 
@@ -234,6 +234,8 @@ Mode(our_gss$partyid_recoded, na.rm = TRUE)
 ```
 
 So, this also gives us our mode, and is a bit more precise a way of doing so---especially when we have a bunch of possible response values.
+
+Note that it also tells us how many responses were associated with that value (1565).
 
 Now, let's talk about ordinal variables, where we have another consideration.
 

@@ -1,2 +1,1 @@
-# Numeric Variables
-
+# Univariate: Numeric
