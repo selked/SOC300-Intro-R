@@ -491,15 +491,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Remember that the mode is just the value with the most occurrences. So, the mode here is ‘Independent’.</p>
-<p>This is likely sufficient for the variables we will work with, but it’s possible for some variables to have so many factor levels that it can be a little annoying to try and spot the mode visually. So, I’ll show you how to calculate it manually as well.</p>
-<p>We can use the <code>summary()</code> output again. For a factor variable, it gives us each of the levels of the factor along with the number of respondents in each level. So, we can use a nifty base R function called <code>which.max()</code> along with <code>summary()</code>. This will return the maximum value in our summary output, which will correspond to the most frequent level of the factor.</p>
+<p>This is likely sufficient for the variables we will work with, but you may also want a method that’s a little more exacting and does not depend on visually scanning for the mode.</p>
+<p>R does not actually have a built-in <code>mode()</code> function like it does for <code>mean()</code> and <code>median()</code>. Well, it does have <code>mode()</code>, but it evaluates the ‘mode’ of the data, which, in this case, is actually the ‘storage mode’, or the data type. This is not particularly helpful for us, but we can use another convenient package called <code>DescTools</code>.</p>
+<p>If you are on a lab computer, go ahead and try loading it with <code>library()</code> first. If it does not load, then install it with <code>install.packages("DescTools")</code> and then load it in.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>party_sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(our_gss<span class="sc">$</span>partyid_recoded)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(party_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then, we can just use the <code>Mode()</code> function within DescTools. Make sure you capitalize the ‘M’, as this is what distinguishes the DescTools function from the base R function.</p>
+<p>Also, be sure to include <code>na.rm = TRUE</code>, as R will not know what to do with the NA values when calculating the mode, so we need to tell it to disregard them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Mode</span>(our_gss<span class="sc">$</span>partyid, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Independent 
-          2 </code></pre>
+<pre><code>[1] independent (neither, no response)
+attr(,"freq")
+[1] 835
+8 Levels: strong democrat ... strong republican</code></pre>
 </div>
 </div>
 <p>So, this also gives us our mode, and is a bit more precise a way of doing so—especially when we have a bunch of possible response values.</p>
@@ -521,7 +527,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -531,7 +537,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -541,7 +547,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -550,27 +556,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Let’s go ahead and practice doing that with the <code>age_ord</code> variable we created last time.</p>
 <p>In the case of <code>age_ord</code>, we’d actually want to take the mode, because it’s a bit left-skewed. We can see that when we make the barplot</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>age_ord <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">|&gt;</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>(</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">"Age Distribution of GSS Respondents"</span>,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Age grouping"</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>But wait, let’s try the <code>happy</code> variable. This is an ordinal variable in our subset that we haven’t used yet. We’ll see if its normally distributed.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>happy <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>age_ord <span class="sc">|&gt;</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">|&gt;</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>(</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">"Happiness Distribution of 2022 GSS Respondents"</span>,</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Response value"</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">"Age Distribution of GSS Respondents"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Age grouping"</span></span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -580,31 +570,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Perfect. We can ignore the NAs for this, and, otherwise, the distribution is exactly what we want to see. Most of the variables are concentrated at the midpoint of the distribution, with tails on either side. So, <code>happy</code> will serve as a good example of a case where taking the median of an ordinal variable is appropriate.</p>
-<p>For this, we can use the <code>quantile()</code> function. It has a lot of nifty uses, but we will only really use it for this purpose—calculating the median of a normally distributed ordinal variable.</p>
-<p>In technical terms, quantiles are markers that split up a distribution into equal parts.</p>
-<p>For our purposes, you can think of quantiles in terms of percentiles, where, for example, being in the 90th percentile means you are performing at or above 90% of others in the sample. Percentiles are a specific type of quantile where the distribution is divided into 100 equal parts.</p>
-<p>We can use the <code>quantile()</code> function to get the value at the 50th percentile of the distribution, which is another way of saying the median.</p>
+<p>But wait, let’s try the <code>happy</code> variable. This is an ordinal variable in our subset that we haven’t used yet. We’ll see if its normally distributed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>happy, </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>.<span class="dv">5</span>, </span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="at">type =</span> <span class="dv">1</span>,</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>happy <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">"Happiness Distribution of 2022 GSS Respondents"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Response value"</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_categorical_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Perfect. We can ignore the NAs for this, and, otherwise, the distribution is exactly what we want to see. Most of the variables are concentrated at the midpoint of the distribution, with tails on either side. So, <code>happy</code> will serve as a good example of a case where taking the median of an ordinal variable is appropriate.</p>
+<p>While R has a built-in <code>median()</code> function, it actually only works with numeric data. Fear not, however, as we can also use the <code>DescTools</code> package for this.</p>
+<p>In order to distinguish itself from the default <code>median()</code> function, the DescTools package uses a capitalized ‘M’. So, make sure you use <code>Median()</code> when you are working with an ordinal variable.</p>
+<p>We also need to make sure that NAs are not included for the calculation. As we have seen a few times, R will not know what to do with these if we don’t tell it to exclude them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Median</span>(our_gss<span class="sc">$</span>happy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         50% 
-pretty happy 
+<pre><code>[1] pretty happy
 Levels: not too happy &lt; pretty happy &lt; very happy</code></pre>
 </div>
 </div>
-<ul>
-<li><p>For the first input, we provide the ordinal variable column for which we want to calculate the median.</p></li>
-<li><p>Then, we give a proportion equivalent to the percentile that we want. Because want to take the value at the 50th percentile, we will enter 0.5.</p></li>
-<li><p>The specifics of the ‘type’ argument are a little above our paygrade, but we need to specify this so that <code>quantile()</code> knows its working with an ordered factor.</p></li>
-<li><p>Lastly, we’ll specify that we want NAs to be removed in the calculation, as R will throw an error unless we tell it to disregard these.</p></li>
-</ul>
-<p>So, we can see that ‘pretty happy’ would be the median response.</p>
+<p>Perfect! Looks like our median is ‘pretty happy.’ Not too bad.</p>
 
 
 </section>

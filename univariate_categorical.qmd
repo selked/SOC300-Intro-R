@@ -216,14 +216,21 @@ summary(our_gss$partyid_recoded)
 
 Remember that the mode is just the value with the most occurrences. So, the mode here is 'Independent'. 
 
-This is likely sufficient for the variables we will work with, but it's possible for some variables to have so many factor levels that it can be a little annoying to try and spot the mode visually. So, I'll show you how to calculate it manually as well.
+This is likely sufficient for the variables we will work with, but you may also want a method that's a little more exacting and does not depend on visually scanning for the mode. 
 
-We can use the `summary()` output again. For a factor variable, it gives us each of the levels of the factor along with the number of respondents in each level. So, we can use a nifty base R function called `which.max()` along with `summary()`. This will return the maximum value in our summary output, which will correspond to the most frequent level of the factor.
+R does not actually have a built-in `mode()` function like it does for `mean()` and `median()`. Well, it does have `mode()`, but it evaluates the 'mode' of the data, which, in this case, is actually the 'storage mode', or the data type. This is not particularly helpful for us, but we can use another convenient package called `DescTools`.
+
+If you are on a lab computer, go ahead and try loading it with `library()` first. If it does not load, then install it with `install.packages("DescTools")` and then load it in.
 
 ```{r}
-party_sum <- summary(our_gss$partyid_recoded)
+library(DescTools)
+```
 
-which.max(party_sum)
+Then, we can just use the `Mode()` function within DescTools. Make sure you capitalize the 'M', as this is what distinguishes the DescTools function from the base R function.
+
+Also, be sure to include `na.rm = TRUE`, as R will not know what to do with the NA values when calculating the mode, so we need to tell it to disregard them.
+```{r}
+Mode(our_gss$partyid, na.rm = TRUE)
 ```
 
 So, this also gives us our mode, and is a bit more precise a way of doing so---especially when we have a bunch of possible response values.
@@ -318,29 +325,12 @@ our_gss$happy |>
 ```
 Perfect. We can ignore the NAs for this, and, otherwise, the distribution is exactly what we want to see. Most of the variables are concentrated at the midpoint of the distribution, with tails on either side. So, `happy` will serve as a good example of a case where taking the median of an ordinal variable is appropriate.
 
-For this, we can use the `quantile()` function. It has a lot of nifty uses, but we will only really use it for this purpose---calculating the median of a normally distributed ordinal variable.
+While R has a built-in `median()` function, it actually only works with numeric data. Fear not, however, as we can also use the `DescTools` package for this. 
 
-In technical terms, quantiles are markers that split up a distribution into equal parts. 
+In order to distinguish itself from the default `median()` function, the DescTools package uses a capitalized 'M'. So, make sure you use `Median()` when you are working with an ordinal variable.
 
-For our purposes, you can think of quantiles in terms of percentiles, where, for example, being in the 90th percentile means you are performing at or above 90% of others in the sample. Percentiles are a specific type of quantile where the distribution is divided into 100 equal parts.
-
-We can use the `quantile()` function to get the value at the 50th percentile of the distribution, which is another way of saying the median. 
-
+We also need to make sure that NAs are not included for the calculation. As we have seen a few times, R will not know what to do with these if we don't tell it to exclude them.
 ```{r}
-quantile(
-our_gss$happy, 
-.5, 
-type = 1,
-na.rm = TRUE
-)
+Median(our_gss$happy, na.rm = TRUE)
 ```
-
-- For the first input, we provide the ordinal variable column for which we want to calculate the median.
-
-- Then, we give a proportion equivalent to the percentile that we want. Because want to take the value at the 50th percentile, we will enter 0.5. 
-
-- The specifics of the 'type' argument are a little above our paygrade, but we need to specify this so that `quantile()` knows its working with an ordered factor.
-
-- Lastly, we'll specify that we want NAs to be removed in the calculation, as R will throw an error unless we tell it to disregard these.
-
-So, we can see that 'pretty happy' would be the median response.
+Perfect! Looks like our median is 'pretty happy.' Not too bad.
