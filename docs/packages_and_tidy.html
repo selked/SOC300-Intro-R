@@ -325,29 +325,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_gss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      year            id              age           race          sex      
- Min.   :2022   Min.   :   1.0   Min.   :18.00   black: 565   female:1897  
+ Min.   :2022   Min.   :   1.0   Min.   :18.00   white:2514   female:1897  
  1st Qu.:2022   1st Qu.: 886.8   1st Qu.:34.00   other: 412   male  :1627  
- Median :2022   Median :1772.5   Median :48.00   white:2514   NA's  :  20  
+ Median :2022   Median :1772.5   Median :48.00   black: 565   NA's  :  20  
  Mean   :2022   Mean   :1772.5   Mean   :49.18   NA's :  53                
  3rd Qu.:2022   3rd Qu.:2658.2   3rd Qu.:64.00                             
  Max.   :2022   Max.   :3545.0   Max.   :89.00                             
                                  NA's   :208                               
-    realrinc                        educ    
- Min.   :   204.5   12th grade        :909  
- 1st Qu.:  8691.2   4 years of college:697  
- Median : 18405.0   2 years of college:506  
- Mean   : 27835.3   1 year of college :268  
- 3rd Qu.: 33742.5   6 years of college:210  
- Max.   :141848.3   (Other)           :934  
- NA's   :1554       NA's              : 20  
-                               partyid   
- independent (neither, no response):835  
- strong democrat                   :595  
- not very strong democrat          :451  
- strong republican                 :431  
- independent, close to democrat    :400  
- (Other)                           :797  
- NA's                              : 35  </code></pre>
+    realrinc                                      partyid   
+ Min.   :   204.5   independent (neither, no response):835  
+ 1st Qu.:  8691.2   strong democrat                   :595  
+ Median : 18405.0   not very strong democrat          :451  
+ Mean   : 27835.3   strong republican                 :431  
+ 3rd Qu.: 33742.5   independent, close to democrat    :400  
+ Max.   :141848.3   (Other)                           :797  
+ NA's   :1554       NA's                              : 35  
+           happy     
+ not too happy: 799  
+ pretty happy :1942  
+ very happy   : 779  
+ NA's         :  24  
+                     
+                     
+                     </code></pre>
 </div>
 </div>
 </section>
@@ -455,13 +455,13 @@ Note
 <pre><code># A tibble: 9 × 2
   partyid                            mean_inc
   &lt;fct&gt;                                 &lt;dbl&gt;
-1 independent (neither, no response)   21570.
-2 independent, close to democrat       27916.
-3 independent, close to republican     26825.
+1 strong democrat                      30677.
+2 independent (neither, no response)   21570.
+3 not very strong republican           29101.
 4 not very strong democrat             31743.
-5 not very strong republican           29101.
+5 independent, close to democrat       27916.
 6 other party                          23891.
-7 strong democrat                      30677.
+7 independent, close to republican     26825.
 8 strong republican                    32376.
 9 &lt;NA&gt;                                 16922.</code></pre>
 </div>
@@ -520,21 +520,21 @@ Note
 # Groups:   sex [2]
    sex    partyid                            mean_inc
    &lt;fct&gt;  &lt;fct&gt;                                 &lt;dbl&gt;
- 1 female independent (neither, no response)   17923.
- 2 female independent, close to democrat       19961.
- 3 female independent, close to republican     20095.
+ 1 female strong democrat                      30111.
+ 2 female independent (neither, no response)   17923.
+ 3 female not very strong republican           22448.
  4 female not very strong democrat             24300.
- 5 female not very strong republican           22448.
+ 5 female independent, close to democrat       19961.
  6 female other party                          26595.
- 7 female strong democrat                      30111.
+ 7 female independent, close to republican     20095.
  8 female strong republican                    21584.
- 9 male   independent (neither, no response)   25474.
-10 male   independent, close to democrat       36947.
-11 male   independent, close to republican     31393.
+ 9 male   strong democrat                      31600.
+10 male   independent (neither, no response)   25474.
+11 male   not very strong republican           34544.
 12 male   not very strong democrat             41233.
-13 male   not very strong republican           34544.
+13 male   independent, close to democrat       36947.
 14 male   other party                          22450.
-15 male   strong democrat                      31600.
+15 male   independent, close to republican     31393.
 16 male   strong republican                    40210.</code></pre>
 </div>
 </div>
