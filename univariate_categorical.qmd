@@ -230,7 +230,7 @@ Then, we can just use the `Mode()` function within DescTools. Make sure you capi
 
 Also, be sure to include `na.rm = TRUE`, as R will not know what to do with the NA values when calculating the mode, so we need to tell it to disregard them.
 ```{r}
-Mode(our_gss$partyid, na.rm = TRUE)
+Mode(our_gss$partyid_recoded, na.rm = TRUE)
 ```
 
 So, this also gives us our mode, and is a bit more precise a way of doing so---especially when we have a bunch of possible response values.

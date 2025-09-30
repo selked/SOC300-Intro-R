@@ -500,12 +500,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Then, we can just use the <code>Mode()</code> function within DescTools. Make sure you capitalize the ‘M’, as this is what distinguishes the DescTools function from the base R function.</p>
 <p>Also, be sure to include <code>na.rm = TRUE</code>, as R will not know what to do with the NA values when calculating the mode, so we need to tell it to disregard them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Mode</span>(our_gss<span class="sc">$</span>partyid, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Mode</span>(our_gss<span class="sc">$</span>partyid_recoded, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] independent (neither, no response)
+<pre><code>[1] Independent
 attr(,"freq")
-[1] 835
-8 Levels: strong democrat ... strong republican</code></pre>
+[1] 1565
+Levels: Democrat Independent Republican Other Party</code></pre>
 </div>
 </div>
 <p>So, this also gives us our mode, and is a bit more precise a way of doing so—especially when we have a bunch of possible response values.</p>
