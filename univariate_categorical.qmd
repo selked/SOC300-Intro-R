@@ -63,6 +63,7 @@ Let's break it down a little for clarity.
 The total number of respondents is the sum of the 'n' column. 
 
 1565 + 1046 + 792 + 106 + 35 = 3,544 
+
 Note that this is also the number of observations in our data frame
 
 There are also 35 observations coded as NA, so the total number of *valid* respondents is 3,509.
@@ -70,7 +71,7 @@ There are also 35 observations coded as NA, so the total number of *valid* respo
 Now, I'll give the calculations for the `Independent` row.
 
 ```{r}
-# I'll define a few objects here for simplicity.
+# I'm going to define a few objects here for simplicity.
 
 all_respondents <- 3544
 
@@ -94,7 +95,7 @@ In this case, there really aren't that many NA values, so it does not change too
 
 Now, let's clean a couple things up with the `adorn_()` functions.
 
-Let's add a row for totals, turn the proportions into percentages, and round the decimals. We can use the pipe operator to quickly leverage a bunch of different `adorn()` functions.
+Let's add a row for totals, turn the proportions into percentages, and round the decimals. We can use the pipe operator to quickly leverage a few different `adorn_()` functions.
 
 ```{r}
 our_gss |>
@@ -186,7 +187,7 @@ our_gss$partyid_recoded |>
   barplot(cex.names = .75)
 ```
 
-Lastly, we can also add some simple descriptive information for the plot, such as a title and labels for the x and y axis. We can do so within `barplot()`
+We can also add some simple descriptive information for the plot, such as a title and labels for the x and y axis. We can do so within `barplot()`
 
 ```{r}
 our_gss$partyid_recoded |>
@@ -198,6 +199,21 @@ our_gss$partyid_recoded |>
     ylab = "Count"
   )
 ```
+
+As a final point, I'll also note that you can pass `partyid_recoded` into the function `na.omit()` before `summary()` if you ever want to produce a barplot that excludes NA responses. `na.omit()` will remove any NA values from the vector we provide it.
+
+```{r}
+our_gss$partyid_recoded |>
+  na.omit() |>
+  summary() |>
+  barplot(
+    cex.names = .75,
+    main = "Count of GSS Respondents by Political Party",
+    xlab = "Political party"
+  )
+  
+```
+
 ## Measures of Central Tendency
 Now, let's talk about measures of central tendency. Because there is no mathematically meaningful relationship between the different levels of a categorical variable, our options for reporting measures of central tendency are a little more limited.
 
@@ -335,4 +351,8 @@ We also need to make sure that NAs are not included for the calculation. As we h
 ```{r}
 Median(our_gss$happy, na.rm = TRUE)
 ```
-Perfect! Looks like our median is 'pretty happy.' Not too bad.
+Perfect! Looks like our median is 'pretty happy.' 
+
+Now, let's talk about presenting a univariate analysis of numeric data.
+
+
