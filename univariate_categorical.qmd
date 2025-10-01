@@ -320,7 +320,7 @@ our_gss <- our_gss |>
   )
 ```
 
-Well, hold on. In the case of `age_ord`, it looks like we'd actually want to take the mode, because it's a bit left-skewed. We can see that when we make the barplot
+First, we'll verify that the distribution allows for reporting the median.
 
 ```{r}
 our_gss$age_ord |>
@@ -332,7 +332,9 @@ our_gss$age_ord |>
   )
 ```
 
-But wait, let's try the `happy` variable. This is an ordinal variable in our subset that we haven't used yet. We'll see if its normally distributed.
+Well, hold on now. In the case of `age_ord`, it looks like we'd actually want to take the mode, because it's a bit left-skewed. 
+
+Let's try the `happy` variable. This is an ordinal variable in our subset that we haven't used yet. We'll see if its normally distributed.
 
 ```{r}
  our_gss$happy |>
@@ -347,7 +349,7 @@ Perfect. The distribution is exactly what we want to see. Most of the variables 
 
 Now, the median response value is fairly apparent in this case, but I'll show you a method that you can use to calculate the median of any ordinal variable you might come across.
 
-While R has a built-in `median()` function, it actually only works with numeric data. Fear not, however, as we can also use the `DescTools` package for this. 
+While R has a built-in `median()` function, it actually only works with numeric data. Fear not, however, as we can also use the `DescTools` again. 
 
 In order to distinguish itself from the default `median()` function, the DescTools package uses a capitalized 'M'. So, make sure you use `Median()` when you are working with an ordinal variable.
 
