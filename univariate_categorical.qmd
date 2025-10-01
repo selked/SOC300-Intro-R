@@ -320,7 +320,7 @@ our_gss <- our_gss |>
   )
 ```
 
-In the case of `age_ord`, we'd actually want to take the mode, because it's a bit left-skewed. We can see that when we make the barplot
+Well, hold on. In the case of `age_ord`, it looks like we'd actually want to take the mode, because it's a bit left-skewed. We can see that when we make the barplot
 
 ```{r}
 our_gss$age_ord |>
@@ -335,7 +335,7 @@ our_gss$age_ord |>
 But wait, let's try the `happy` variable. This is an ordinal variable in our subset that we haven't used yet. We'll see if its normally distributed.
 
 ```{r}
-our_gss$happy |>
+ our_gss$happy |>
   na.omit() |>
   summary() |>
   barplot(
@@ -343,17 +343,19 @@ our_gss$happy |>
     xlab = "Response value"
   )
 ```
-Perfect. We can ignore the NAs for this, and, otherwise, the distribution is exactly what we want to see. Most of the variables are concentrated at the midpoint of the distribution, with tails on either side. So, `happy` will serve as a good example of a case where taking the median of an ordinal variable is appropriate.
+Perfect. The distribution is exactly what we want to see. Most of the variables are concentrated at the midpoint of the distribution, with tails on either side. So, as it's roughly normally distributed, `happy` will serve as a good example of a case where taking the median of an ordinal variable is appropriate.
+
+Now, the median response value is fairly apparent in this case, but I'll show you a method that you can use to calculate the median of any ordinal variable you might come across.
 
 While R has a built-in `median()` function, it actually only works with numeric data. Fear not, however, as we can also use the `DescTools` package for this. 
 
 In order to distinguish itself from the default `median()` function, the DescTools package uses a capitalized 'M'. So, make sure you use `Median()` when you are working with an ordinal variable.
 
-We also need to make sure that NAs are not included for the calculation. As we have seen a few times, R will not know what to do with these if we don't tell it to exclude them.
+We also need to assure that NAs are not included for the calculation. As we have seen a few times, R will not know what to do with these if we don't tell it to exclude them.
 ```{r}
 Median(our_gss$happy, na.rm = TRUE)
 ```
-Perfect! Looks like our median is 'pretty happy.' 
+Perfect! Looks like our median is 'pretty happy'. 
 
 Now, let's talk about presenting a univariate analysis of numeric data.
 

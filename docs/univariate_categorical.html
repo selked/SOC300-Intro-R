@@ -574,7 +574,7 @@ Levels: Democrat Independent Republican Other Party</code></pre>
 </div>
 <p>So, if the distribution of your variable looks (mostly) like the normal distribution, go ahead and take the median of any ordinal variable.</p>
 <p>Let’s go ahead and practice doing that with the <code>age_ord</code> variable we created last time.</p>
-<p>In the case of <code>age_ord</code>, we’d actually want to take the mode, because it’s a bit left-skewed. We can see that when we make the barplot</p>
+<p>Well, hold on. In the case of <code>age_ord</code>, it looks like we’d actually want to take the mode, because it’s a bit left-skewed. We can see that when we make the barplot</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>age_ord <span class="sc">|&gt;</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">|&gt;</span></span>
@@ -593,7 +593,7 @@ Levels: Democrat Independent Republican Other Party</code></pre>
 </div>
 <p>But wait, let’s try the <code>happy</code> variable. This is an ordinal variable in our subset that we haven’t used yet. We’ll see if its normally distributed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>our_gss<span class="sc">$</span>happy <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a> our_gss<span class="sc">$</span>happy <span class="sc">|&gt;</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">|&gt;</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">|&gt;</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>(</span>
@@ -608,10 +608,11 @@ Levels: Democrat Independent Republican Other Party</code></pre>
 </div>
 </div>
 </div>
-<p>Perfect. We can ignore the NAs for this, and, otherwise, the distribution is exactly what we want to see. Most of the variables are concentrated at the midpoint of the distribution, with tails on either side. So, <code>happy</code> will serve as a good example of a case where taking the median of an ordinal variable is appropriate.</p>
+<p>Perfect. The distribution is exactly what we want to see. Most of the variables are concentrated at the midpoint of the distribution, with tails on either side. So, as it’s roughly normally distributed, <code>happy</code> will serve as a good example of a case where taking the median of an ordinal variable is appropriate.</p>
+<p>Now, the median response value is fairly apparent in this case, but I’ll show you a method that you can use to calculate the median of any ordinal variable you might come across.</p>
 <p>While R has a built-in <code>median()</code> function, it actually only works with numeric data. Fear not, however, as we can also use the <code>DescTools</code> package for this.</p>
 <p>In order to distinguish itself from the default <code>median()</code> function, the DescTools package uses a capitalized ‘M’. So, make sure you use <code>Median()</code> when you are working with an ordinal variable.</p>
-<p>We also need to make sure that NAs are not included for the calculation. As we have seen a few times, R will not know what to do with these if we don’t tell it to exclude them.</p>
+<p>We also need to assure that NAs are not included for the calculation. As we have seen a few times, R will not know what to do with these if we don’t tell it to exclude them.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Median</span>(our_gss<span class="sc">$</span>happy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -619,7 +620,7 @@ Levels: Democrat Independent Republican Other Party</code></pre>
 Levels: not too happy &lt; pretty happy &lt; very happy</code></pre>
 </div>
 </div>
-<p>Perfect! Looks like our median is ‘pretty happy.’</p>
+<p>Perfect! Looks like our median is ‘pretty happy’.</p>
 <p>Now, let’s talk about presenting a univariate analysis of numeric data.</p>
 
 
