@@ -244,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#frequency-distributions" id="toc-frequency-distributions" class="nav-link active" data-scroll-target="#frequency-distributions"><span class="header-section-number">5.1</span> Frequency distributions</a>
+  <li><a href="#frequency-distributions" id="toc-frequency-distributions" class="nav-link active" data-scroll-target="#frequency-distributions"><span class="header-section-number">5.1</span> Frequency Distributions</a>
   <ul class="collapse">
   <li><a href="#histograms" id="toc-histograms" class="nav-link" data-scroll-target="#histograms"><span class="header-section-number">5.1.1</span> Histograms</a></li>
   </ul></li>
@@ -252,6 +252,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#mean-or-median" id="toc-mean-or-median" class="nav-link" data-scroll-target="#mean-or-median"><span class="header-section-number">5.2.1</span> Mean or Median?</a></li>
   <li><a href="#the-mode" id="toc-the-mode" class="nav-link" data-scroll-target="#the-mode"><span class="header-section-number">5.2.2</span> The Mode</a></li>
+  </ul></li>
+  <li><a href="#dispersion" id="toc-dispersion" class="nav-link" data-scroll-target="#dispersion"><span class="header-section-number">5.3</span> Dispersion</a>
+  <ul class="collapse">
+  <li><a href="#range" id="toc-range" class="nav-link" data-scroll-target="#range"><span class="header-section-number">5.3.1</span> Range</a></li>
+  <li><a href="#standard-deviation" id="toc-standard-deviation" class="nav-link" data-scroll-target="#standard-deviation"><span class="header-section-number">5.3.2</span> Standard Deviation</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -278,11 +283,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>While we also want to report on the frequency distribution, and central tendency of numeric variables, there are some differences in the way we go about that relative to the techniques we just learned about for categorical variables.</p>
+<p>While we also want to report on the frequency distribution and central tendency of numeric variables, there are some differences in the way we go about that relative to the techniques we just learned about for categorical variables.</p>
 <p>Additionally, we will need to report on some measures of dispersion that can only be reported for numeric data, such as the standard deviation.</p>
 <p>This section will walk us through the process of calculating and reporting necessary elements of a univariate analysis of numeric data.</p>
 <section id="frequency-distributions" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="frequency-distributions"><span class="header-section-number">5.1</span> Frequency distributions</h2>
+<h2 data-number="5.1" class="anchored" data-anchor-id="frequency-distributions"><span class="header-section-number">5.1</span> Frequency Distributions</h2>
 <p>As we saw when we were recoding <code>age</code> earlier in the unit, a frequency table is not really appropriate for numeric data. When there are upwards of 71 different response values—as we have with <code>age</code>—a table would be both spatially unwieldy and difficult to interpret.</p>
 <p>So, let’s start with a style of plotting data that is essentially the barplot of numeric data.</p>
 <p>First, let’s go ahead and set up our environment by loading in our data and <code>tidyverse</code> per usual.</p>
@@ -293,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="histograms" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="histograms"><span class="header-section-number">5.1.1</span> Histograms</h3>
 <p>A histogram is the result of taking a numeric variable, slicing it up into equal, ordinal intervals, and then plotting the frequency of each interval.</p>
-<p>There are plenty of other ways for plotting numeric data—some of which we will see later when we focus on visualization—but for now, this is a simple but effective way to get a sense of the distribution of a numeric variable. This is especially important when we need to decide on an appropriate measure of central tendency.</p>
+<p>There are plenty of other ways for plotting numeric data—some of which we will see later when we focus on visualization—but for now, this is a simple and effective way to get a sense of the distribution of a numeric variable. This is especially important when we need to decide on an appropriate measure of central tendency.</p>
 <p>We can create these easily using the <code>hist()</code> function, which is in the same family of base R plotting functions as <code>barplot()</code>, so much of what we learned for that function will also apply with <code>hist()</code>. This function will automatically apply a commonly used method called Sturges’s rule to divide our numeric variable into equal bins, so we do not have to specify anything in that regard.</p>
 <p>All we need to do is give the <code>hist()</code> function our numeric variable. Let’s work with the <code>realrinc</code> variable for this example.</p>
 <div class="cell">
@@ -333,8 +338,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I will first cover the choice of mean or median by revisiting some basics of distributions, and then I will address the rare circumstance where the mode is appropriate.</p>
 <section id="mean-or-median" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="mean-or-median"><span class="header-section-number">5.2.1</span> Mean or Median?</h3>
+<p>In most cases, we will be making a decision between the mean and the median. When the distribution is normal, you should report the mean—otherwise, report the median. We’ll see one exception to this later, but that’s generally our task.</p>
 <p>We saw some typical distributions in our last section on uivariate analysis of categorical data. We’ll return to some discussion of those basic distribution types but add a little more context for numeric data that will help us see the impact of making the wrong decision.</p>
-<p>I’m going to display a normal distribution, but this time, I’m going to draw a vertical line indicating the location of the mean and median.</p>
+<p>I’m going to display a normal distribution, but this time, I’ll draw a vertical line indicating the location of the mean and median.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -344,7 +350,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Now, we can’t even really tell the mean and median apart. In fact, in a completely normal distribution, all three of the measures of central tendency will be equal. Remember that real-world data will rarely exhibit perfect normality, but as long as it’s reasonably normal, then we can follow convention and report the mean.</p>
+<p>In this case, we can’t even really tell the mean and median apart. In fact, in a completely normal distribution, all three measures of central tendency will be equal. Remember that real-world data will rarely exhibit perfect normality, but as long as it’s approximately normal, we can follow convention and report the mean.</p>
 <p>Now, let’s look back at <code>realrinc</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -355,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>In the case of <code>realrinc</code>, we definitely do not have much normality going on. For one, there are some apparent outlier cases. Much of our data seems to be concentrated within about $0 - $75,000, but then we have a bunch of values at nearly double the maximum of that narrower range. And even within the range where most of our responses are clustered, we have some clear right-skew.</p>
+<p>In the case of <code>realrinc</code>, we definitely do not have much normality going on. For one, there are some apparent outlier cases. Much of our data seems to be concentrated within about $0 - $75,000, but then we have a bunch of values at roughly double the maximum of that narrower range. And even within the range where most of our responses are clustered, we have some clear right-skew.</p>
 <p>As we can see, because the mean takes all values into account, this makes it susceptible to non-normal distributions. It gets pulled in the direction of the outlier, which, in this case, is also the direction of the skew.</p>
 <p>So, in any case where your numeric variable contains clear outliers and/or exhibits notable skew in either direction, you should report the median rather than the mean.</p>
 </section>
@@ -379,8 +385,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>This isn’t quite a normal distribution, but it’s not exactly skewed in either direction either. And there are no apparent outliers.</p>
 <p>What we have here is a <strong>bimodal</strong> distribution.</p>
-<p>This may be a peculiarity of the 2022 survey wave, because we wouldn’t necessarily expect this, but it looks like there are two distinct central tendencies. In this case, we want to capture the two distinct peaks, meaning we need to calculate two modes.</p>
-<p>Thankfully, there’s a convenient function for this, but we need to install a new package. Let’s install and load in <code>multimode</code>.</p>
+<p>This is what happens when we have multiple peaks in a distribution—two, in this case. We have seen several different distributions so far, but they all had only one peak in the distribution. They were differentiated on the basis of that single peak’s location in the distribution. In the case of a multimodal distribution, we want to report on any notable peak.</p>
+<p>This may be a peculiarity of the 2022 survey wave, because we wouldn’t necessarily expect this, but it looks like there are two distinct central tendencies for <code>age</code>. In this case, we want to capture the two distinct peaks, meaning we need to calculate two modes.</p>
+<p>Thankfully, there’s a convenient function for this, but we need to install a new package, so let’s install and load in <code>multimode</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"multimode"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multimode)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -388,7 +395,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Then, we just need to provide a few arguments to the <code>locmodes()</code> function.</p>
 <p>First, we give the variable for which we want to calculate multiple modes.</p>
 <p>Then we give an input for <code>mod0</code>, which asks us how many modes the function should be looking for. This should be based on visual inspection of the data. We have two peaks in our distribution, so we will enter ‘2’ for this input.</p>
-<p>Lastly, we will set <code>display</code> to ‘TRUE’, which will show us a plot of the estimated modes superimposed onto the frequency distribution of the variable. This will let us evaluate whether the function seems to be finding the modes.</p>
+<p>Lastly, we will set <code>display</code> to ‘TRUE’, which will show us a plot of the estimated modes superimposed onto the frequency distribution of the variable. This will let us evaluate whether the modes estimated by the function are plausible. They should match up with the visible peaks in the frequency distribution.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">locmodes</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  our_gss<span class="sc">$</span>age,</span>
@@ -415,8 +422,71 @@ Antimode: 0.01444287
 Critical bandwidth: 2.543659</code></pre>
 </div>
 </div>
-<p>We only really need to pay attention to the modes that it gives us (32.43 and 66.25), but it looks like this function spotted the two modes pretty effectively.</p>
+<p>We only really need to pay attention to the modes that it gives us (32.43 and 66.25), but it looks like this function spotted these values pretty effectively.</p>
 <p>For a bimodal distribution like this, we can report both modes for the measure of central tendency. I don’t expect we will run into too much of this, but go ahead and deal with it like this in the event that you do.</p>
+</section>
+</section>
+<section id="dispersion" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="dispersion"><span class="header-section-number">5.3</span> Dispersion</h2>
+<p>Now, let’s talk about dispersion. This is the last major element of a univariate analysis of numeric data. Actually calculating this information is quite simple in R, so we will practice with some of our GSS variables and then talk about putting all of this information together.</p>
+<section id="range" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="range"><span class="header-section-number">5.3.1</span> Range</h3>
+<p>This is perhaps the simplest measure of dispersion and comprises the minimum and maximum values of the distribution.</p>
+<p>R has a built in range function, so we can simply provide one of our variables as the input. We’ll work with <code>realrinc</code> again. As we have done before, we will also need to provide <code>na.rm = TRUE</code>, as this variable column includes NAs and will confuse R otherwise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]    204.5 141848.3</code></pre>
+</div>
+</div>
+<p>At this point, I’ll also offer a reminder about the <code>summary()</code> function, which we can use to see a variety of information about the dispersion (in an addition to the central tendency).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_gss<span class="sc">$</span>realrinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+   204.5   8691.2  18405.0  27835.3  33742.5 141848.3     1554 </code></pre>
+</div>
+</div>
+<p>For a numeric variable, <code>summary()</code> will show us the minimum &amp; maximum, as well as the mean &amp; median, and the 1st &amp; 3rd quartiles.</p>
+<p>We can actually think of most of these elements in terms of percentiles. - The minimum value is the 0th percentile of the distribution</p>
+<ul>
+<li><p>The 1st quartile is the 25th percentile.</p></li>
+<li><p>The median is the 50th percentile</p></li>
+<li><p>The 3rd quartile is the 75th percentile</p></li>
+<li><p>And the maximum is the 100th percentile.</p></li>
+</ul>
+<p><code>summary()</code> is great for quickly assessing some of these descriptive statistics, but it’s a little less convenient for exporting this information into something like a table for our own univariate analysis.</p>
+<p>So, I’ll also highlight the <code>min()</code> and <code>max()</code> functions, which will come in hand for us shortly. They work simply enough—we just need to provide our variable column, and they will output the minimum and maximum, respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 204.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 141848.3</code></pre>
+</div>
+</div>
+</section>
+<section id="standard-deviation" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="standard-deviation"><span class="header-section-number">5.3.2</span> Standard Deviation</h3>
+<p>This is one of the more commonly reported dispersion metrics for numeric data. The standard deviation is a measure of how much the average value varies from the mean. In plainer terms, it’s a measure that tells us how spread out the distribution is.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_numeric_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can grab the standard deviation quite easily with the <code>sd()</code> function</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 31962.34</code></pre>
+</div>
+</div>
 
 
 </section>
