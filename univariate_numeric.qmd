@@ -258,6 +258,6 @@ If you have a numeric variable where the mean is more appropriate, you can just 
 And that should do us! For any univariate analysis you report in this course, you will just need to produce 
 
 - a histogram displaying the variable's frequency distribution
-- a table like the one above (With the appropriate measure of central tendency).
+- a table like the one above (with the appropriate measure of central tendency).
 
 
