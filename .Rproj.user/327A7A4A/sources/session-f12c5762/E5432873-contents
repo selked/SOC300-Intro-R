@@ -1,0 +1,1115 @@
+#Set Working Directory
+setwd("C:/Users/Daulton/Downloads")
+setwd("C:/Users/selke/Desktop/Scholarship/USAJobs Project")
+setwd("C:/Users/selke/Desktop/Scholarship/Dissertation Materials/MIT Job Interview Dataset/Labels")
+
+#Read in the data
+load("ja_cskills.rda")
+load("ja_newcount.rda")
+load("ja_recoded.rda")
+load("ja_last.rda")
+load("ja_terminus.rda")
+load("ja_embedded.rda")
+
+
+#Load some packages
+library(ggplot2)
+library(flextable)
+library(huxtable)
+library(magrittr)
+library(dplyr)
+#install.packages("mediation")
+library(mediation)
+#install.packages('furrr')
+library(furrr)
+install.packages('lmerTest')
+install.packages("easystats")
+install.packages("pscl")
+install.packages("interactions")
+library(interactions)
+library(easystats)
+library(MASS)
+library(performance)
+library(pscl)
+library(sandwich)
+library(sjPlot)
+library(haven)
+install.packages("mfx")
+library(mfx)
+library(psych)
+
+
+write.csv(ja_terminus, file="workingjobs.csv")
+
+workingjobs.df<-ja_recoded
+
+workingjobs.df$age_square<-workingjobs.df$ageu^2
+workingjobs.df$sal_sqrt<-sqrt(workingjobs.df$sal_div)
+
+summary(ja_terminus$sal_rate)
+
+names(ja_newcount)
+
+write.csv(workingjobs.df, file="workingjobs.csv")
+
+library(haven)
+
+stata_f<-workingjobs.df
+
+names(stata_f)[46]<-"soc_code_match"
+
+write_dta(stata_f, "workingjobs.dta")
+
+workingjobs.df<-ja_newcount[,-c(2:39, 42:79, 153:173)]
+
+workingjobs.df<-subset
+
+names(workingjobs.df)[38]
+
+workingjobs.df <- workingjobs.df %>%
+  group_by(soccode) %>%
+  mutate(other.race=nhpiu+nhnau)
+
+names(workingjobs.df)[136]<-"care_index3"
+
+glimpse(workingjobs.df)
+
+summary(workingjobs.df$word.count)
+
+workingjobs.df<-subset(workingjobs.df, word.count>11)
+
+ja_recoded<-workingjobs.df
+
+save(ja_recoded, file="ja_recoded.rda")
+
+workingjobs.df<-ja_recoded
+names(workingjobs.df)
+
+zscores<-scale(workingjobs.df[,108])
+
+
+names(workingjobs.df)
+
+workingjobs.df<-workingjobs.df[,-c(2:39)]
+
+workingjobs.df<-cbind(workingjobs.df, zscores)
+
+names(workingjobs.df)[108]<-"commit_diverse"
+names(workingjobs.df)[140]<-"zdiverse"
+
+names(workingjobs.df)[113]<-"sal_og"
+
+names(workingjobs.df)[143]<-"sal_div"
+
+workingjobs.df$sal_div<-workingjobs.df$sal_div/1000
+
+hist(workingjobs.df$zdiverse)
+
+hist(workingjobs.df$warmth_dic_hi)
+
+zs<-subset(workingjobs.df, warmth_dic_hi==0)
+
+install.packages("performance")
+
+workingjobs.df<-ja_newcount
+
+workingjobs.df<-ja_last
+
+workingjobs.df$sal_div<-workingjobs.df$sal_div/1000
+
+names(ja_terminus)[37]<-"word.count"
+
+save(ja_terminus, file="ja_terminus.rda")
+
+workingjobs.df<-ja_terminus
+
+names(workingjobs.df)
+
+
+install.packages("MASS")
+library(MASS)
+
+#Create the Warmth Models
+#wmodel1<-lm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df)
+
+#wmodel1<-glm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df, family="poisson")
+
+wmodel1<-glm.nb(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+sal_rate, workingjobs.df)
+
+#wmodel2<-lm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2, workingjobs.df)
+
+wmodel2<-glm.nb(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+sal_rate, workingjobs.df)
+
+#wmodel3<-lm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+femaleu:sal_div, workingjobs.df)
+
+wmodel3<-glm.nb(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+sal_rate+femaleu:sal_div, workingjobs.df)
+
+
+#wmodel4<-lm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+femaleu:zdiverse, workingjobs.df)
+
+wmodel4<-glm.nb(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+sal_rate+femaleu:zdiverse, workingjobs.df)
+
+cmodel4<-glm.nb(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+sal_rate+femaleu:zdiverse, workingjobs.df)
+
+workingjobs.df$agency<-as.factor(workingjobs.df$agency)
+
+str(workingjobs.df$agency)
+
+
+######Three way interactions#######
+
+wmodel4<-glm.nb(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+sal_rate+femaleu:sal_div+sal_div:zdiverse+femaleu:zdiverse+femaleu:sal_div:zdiverse, workingjobs.df)
+
+wmodel4<-glm.nb(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+sal_rate+femaleu:sal_div+sal_div:zdiverse+femaleu:zdiverse+femaleu:sal_div:zdiverse, workingjobs.df)
+
+cmodel4<-glm.nb(competence_dic_hi~femaleu*sal_div*zdiverse+nhbu+hispu+asianu+other.race+jobzone+ageu+age_square+word.count+care_index3+cog_index2+sal_rate, workingjobs.df)
+
+glmnbmodel <- glm(competence_dic_hi~femaleu*sal_div*zdiverse+nhbu+hispu+asianu+other.race+jobzone+ageu+age_square+word.count+care_index3+cog_index2+sal_rate, data=workingjobs.df,
+                  family = negative.binomial(cmodel4$theta))
+
+glmnbmodel <- glm(warmth_dic_hi~femaleu+zdiverse+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+sal_rate+femaleu:zdiverse, workingjobs.df,
+                  family = negative.binomial(wmodel4$theta))
+
+summary(cmodel4)
+summary(glmnbmodel)
+
+wmodel4<-glm.nb(warmth_dic_hi~femaleu*sal_div*zdiverse+nhbu+hispu+asianu+other.race+jobzone+ageu+age_square+word.count+care_index3+cog_index2+sal_rate, workingjobs.df)
+
+
+interact_plot(glmnbmodel, pred="femaleu", modx="sal_div", modx.values=c(170, 100, 30), mod2 = "zdiversity", mod2.values = c(-2, 0, 2), x.label = "Proportion women", y.label="Predicted warmth counts", pred.labels = "Proportion Women", modx.labels = c("170k", "100k", "30k"), mod2.labels = c("Diversity Commitment = -2 SD", "Diversity Commitment = 0 (mean)", "Diversity Commitment = +2 SD"), main.title = "Warmth language: Three-way interaction of Proportion Women, Salary, and Commitment to Diversity", legend.main = "Salary", outcome.scale = "response", colors = "Qual2")
+
+test_plot<-interact_plot(glmnbmodel, pred="femaleu", modx="sal_div", modx.values=c(170, 100, 30), mod2 = "zdiverse", mod2.values = c(-2, 0, 2), x.label = "Proportion women", y.label="Predicted competence counts", pred.labels = "Proportion Women", modx.labels = c("170k", "100k", "30k"), mod2.labels = c("Diversity Commitment = -2 SD", "Diversity Commitment = 0 (mean)", "Diversity Commitment = +2 SD"), main.title = "Competence language: Three-way interaction of Proportion Women, Salary, and Commitment to Diversity", legend.main = "Salary", outcome.scale = "response", colors = "Qual2")
+
+test_plot
+
+write_dta(workingjobs.df)
+
+vline.dat <- data.frame(z=levels(dat$z), vl=c(0,1))
+
+jn<-ss_plot$jn
+
+dataInt <- train3 %>%
+  group_by(Sex) %>%
+  summarize(Int = mean(Age))
+
+ss_plot<-sim_slopes(glmnbmodel, pred = femaleu, modx = sal_div, mod2 = zdiverse, jnplot = TRUE, mod2.values = c(-2, 0, 2), modx.values = c(30, 100, 170), mod2.labels = c("Diversity Commitment = -2 SD", "Diversity Commitment = 0 (mean)", "Diversity Commitment = +2 SD"), control.fdr=FALSE)
+
+sim_slopes(glmnbmodel, pred = femaleu, modx = sal_div, mod2 = zdiverse, jnplot = TRUE, mod2.values = c(-2, 0, 2), modx.values = c(30, 100, 170), mod2.labels = c("Diversity Commitment = -2 SD", "Diversity Commitment = 0 (mean)", "Diversity Commitment = +2 SD"), control.fdr=FALSE)
+
+###Johnson-Neyman for Warmth Woman/Politics interaction
+ss_plot<-sim_slopes(wmodel2, pred = femaleu, modx = ideo_rating, jnplot = TRUE, control.fdr=FALSE)
+
+
+
+sim_slopes(glmnbmodel, pred = femaleu, modx = zdiverse, jnplot = TRUE, modx.values = c(-2, 0, 2), control.fdr=FALSE)
+
+ss_plot
+
+names(workingjobs.df)[59]<-"femaleu"
+names(workingjobs.df)[128]<-"sal_div"
+
+ss_gg<-ss_plot$jnplot
+
+ss_gg + theme(axis.title.x = "Salary")
+
+ss_plot
+
+plot(ss_plot)
+
+install.packages("cowplot")
+library(cowplot)
+
+summary(wmodel4)
+####################
+workingjobs.df<-ja_terminus
+save(workingjobs.df, file="ja_last.rda")
+
+summary(wmodel1)
+check_zeroinflation(wmodel1)
+check_zeroinflation(wmodel2)
+
+check_overdispersion(wmodel1)
+
+
+#Create the Competence Models
+#cmodel1<-lm(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df)
+
+cmodel1<-glm.nb(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+sal_rate, workingjobs.df)
+
+#cmodel1.5<-negbinirr(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df, robust=TRUE)
+
+summary(cmodel1.5$fit)
+summary(cmodel1)
+
+#cmodel2<-lm(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2, workingjobs.df)
+
+cmodel2<-glm.nb(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+sal_rate, workingjobs.df)
+
+
+#cmodel3<-lm(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+femaleu:sal_div, workingjobs.df)
+
+cmodel3<-glm.nb(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+sal_rate+femaleu:sal_div, workingjobs.df)
+
+
+AIC(cmodel3, cmodel3.5)
+AIC(wmodel3, wmodel3.5)
+
+#cmodel4<-lm(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+femaleu:zdiverse, workingjobs.df)
+
+cmodel4<-glm.nb(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+sal_rate+femaleu:zdiverse, workingjobs.df)
+
+summary(wmodel1)
+
+coeftest(cmodel3, vcov.=sandwich)
+
+summary(workingjobs.df$sal_div)
+hist(workingjobs.df$sal_div)
+
+#Create list objects for the models so we can use a nested display
+basemodels<-list("Model 1" = cmodel1, "Model 2" = wmodel1, "Model 3" = cmodel2, "Model 4" = wmodel2)
+
+intmodels<-list("Model 1" = cmodel3, "Model 2" = wmodel3, "Model 3" = cmodel4, "Model 4" = wmodel4)
+
+library(magrittr)
+
+#Create a huxreg object for the Warmth Models
+#wtab<-huxreg(wmodels, statistics = c('N' = "nobs", "AIC" = "AIC", "2x Log-likelihood"="logLike"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu", "Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3", "Percent Woman * Salary"="femaleu:sal_div", "Diversity Commitment"="zdiverse", "Proportion Woman * Diversity Commitment"="femaleu:zdiverse"))%>%
+  #set_caption("OLS Regressions of Raw Warmth on Vertical and Horizontal Indicators")
+
+summary(wmodel1)
+
+basetab<-huxreg(basemodels, statistics = c('N' = "nobs", "AIC" = "AIC", "-2x Log-likelihood"="logLik"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu", "Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3", "Salary Interval: Hourly"="sal_ratehourly", "Vocational Preparation"="jobzone", "Proportion Asian"="asianu", "Proportion Black"="nhbu", "Proportion Hispanic"="hispu", "Other Race"="other.race", "Age"="ageu", "Age Squared"="age_square", "Word Count"="word.count"))%>%
+  set_caption("Table A1. Unstandardized Coefficients (and Standard Errors) from Negative Binomial Regression of Competence and Warmth Counts: Main Effects")
+
+basetab<-huxreg(basemodels, statistics = c('N' = "nobs", "AIC" = "AIC", "-2x Log-likelihood"="logLik"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu", "Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3"))%>%
+  set_caption("Negative Binomial Regressions of Warmth and Competence Counts on Vertical and Horizontal Indicators")
+
+#Create a hugreg object for the Competence Models
+#ctab<-huxreg(cmodels, statistics = c('N' = "nobs", 'R-squared' = "r.squared"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu", "Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3", "Proportion Woman * Salary"="femaleu:sal_div", "Diversity Commitment"="zdiverse", "Proportion Woman * Diversity Commitment"="femaleu:zdiverse"))%>%
+  #set_caption("OLS Regressions of Raw Competence on Vertical and Horizontal Indicators")
+
+inttab<-huxreg(intmodels, statistics = c('N' = "nobs", "AIC" = "AIC", "-2x Log-likelihood"="logLik"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu","Salary"="sal_div", "Vocational Preparation"="jobzone", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3", "Proportion Woman * Salary"="femaleu:sal_div", "Diversity Commitment"="zdiverse", "Proportion Woman * Diversity Commitment"="femaleu:zdiverse", "Salary Interval: Hourly"="sal_ratehourly", "Proportion Asian"="asianu", "Proportion Black"="nhbu", "Proportion Hispanic"="hispu", "Other Race"="other.race", "Age"="ageu", "Age Squared"="age_square", "Word Count"="word.count"))%>%
+  set_caption("Table A2. Unstandardized Coefficients (and Standard Errors) from Negative Binomial Regression of Competence and Warmth Counts: Interaction Effects")
+
+inttab<-huxreg(intmodels, statistics = c('N' = "nobs", "AIC" = "AIC", "-2x Log-likelihood"="logLik"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu","Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3", "Proportion Woman * Salary"="femaleu:sal_div", "Diversity Commitment"="zdiverse", "Proportion Woman * Diversity Commitment"="femaleu:zdiverse"))%>%
+  set_caption("Negative Binomial Regressions of Warmth and Competence Counts on Interaction Terms")
+
+#Turn these into flextable objects
+basetab<-as_flextable(basetab)
+inttab<-as_flextable(inttab)
+
+options(scipen = 9999)
+
+#Take a look at them
+basetab
+inttab
+
+
+
+summary(wmodel4)
+
+library(sjPlot)
+
+plot_model(cmodel2, type="pred", terms="femaleu", title="Predicted counts of competence language") + xlab("Proportion Women") + ylab("Number of competence words") + ylim(10,16)
+
+plot_model(wmodel2, type="pred", terms="femaleu", title="Predicted counts of warmth language") + xlab("Proportion Women") + ylab("Number of warmth words") + ylim(6,10)
+
+hist(workingjobs.df$sal_div)
+
+plot_model(cmodel2, type="pred", terms="sal_div [30:170]", title="Predicted counts of competence language") +xlab("Salary (divided by 1000)") + ylab("Number of competence words") + ylim(12,17) #+ xlim(25,150)
+
+#plot_models(cmodel1, wmodel1, rm.terms = c("nhbu", "hispu", "asianu", "other.race", "sal_div", "jobzone", "ageu", "age_square", "word.count"))
+
+summary(workingjobs.df$sal_div)
+
+plot_model(wmodel3, type="pred", terms=c("femaleu", "sal_div [30,100,170]"),title="Predicted counts of warmth language")  + xlab("Proportion Women") + ylab("Number of warmth words") + scale_color_discrete(name="Salary", labels=c("30k", "100k", "170k" )) #+ xlim(.05, .95)
+
+#This version has my original scale_color approach to legend naming
+plot_model(wmodel4, type="pred", terms=c("femaleu", "zdiverse [-2, 0, 2]"),title="Predicted counts of warmth language")  + xlab("Proportion Women") + ylab("Number of warmth words") + scale_color_discrete(name="Diversity Commitment", labels=c("Low (-2 SD)", "Average (mean)", "High (+2 SD)")) + ylim(4.5,7.5) #+ xlim(.05, .95)
+
+plot_model(wmodel4, type="pred", terms=c("femaleu", "zdiverse [-2, 0, 2]"),title="Predicted counts of warmth language", color="bw")  + xlab("Proportion Women") + ylab("Number of warmth words") + scale_linetype_discrete(name="Diversity Commitment", labels=c("Low (-2 SD)", "Average (mean)", "High (+2 SD)")) #+ xlim(.05, .95)
+
+
+coef_test(cmodel1, vcov = )
+
+vcovCR(cmodel1)
+
+summary(cmodel1, vcov=)
+
+coeftest(cmodel1, vcov. = vcovHC(cmodel1, type="HC3"))
+
+coeftest(wmodel4, vcov. = sandwich)
+
+exp(.030)
+
+library(MASS)
+
+wmodel4<-glm.nb(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+sal_rate+deia+word.count+care_index3+cog_index2+femaleu:deia, workingjobs.df)
+
+summary(wmodel4)
+
+coeftest(wmodel4, vcov. = sandwich)
+
+wmodel4<-glm.nb(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+sal_rate+diversity+word.count+care_index3+cog_index2+femaleu:diversity, workingjobs.df)
+
+summary(wmodel4)
+
+coeftest(wmodel4, vcov. = sandwich)
+
+wmodel4<-glm.nb(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+sal_rate+equity+word.count+care_index3+cog_index2+femaleu:equity, workingjobs.df)
+
+
+
+wmodel4<-glm.nb(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+sal_rate+inclusion+word.count+care_index3+cog_index2+femaleu:inclusion, workingjobs.df)
+
+summary(wmodel4)
+
+coeftest(wmodel4, vcov. = sandwich)
+
+wmodel4<-glm.nb(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+sal_rate+accessibility+word.count+care_index3+cog_index2+femaleu:accessibility, workingjobs.df)
+
+summary(wmodel4)
+
+coeftest(wmodel4, vcov. = sandwich)
+
+
+summary(workingjobs.df$zdeia)
+
+workingjobs.df$zdeia<-scale(workingjobs.df$deia)
+
+workingjobs.df$zdiversity<-scale(workingjobs.df$diversity)
+
+#################
+glmnbmodel <- glm(warmth_dic_hi~femaleu*sal_div*zdiversity+nhbu+hispu+asianu+other.race+jobzone+ageu+age_square+sal_rate+word.count+care_index3+cog_index2, workingjobs.df,
+                  family = negative.binomial(cmodel4$theta))
+
+cmodel4<-glm.nb(warmth_dic_hi~femaleu*sal_div*deia+nhbu+hispu+asianu+other.race+jobzone+ageu+age_square+sal_rate+word.count+care_index3+cog_index2, workingjobs.df)
+
+summary(cmodel4)
+
+summary(glmnbmodel)
+
+coeftest(wmodel4, vcov. = sandwich)
+
+cmodel4<-glm.nb(warmth_dic_hi~femaleu*sal_div*zdiversity+nhbu+hispu+asianu+other.race+jobzone+ageu+age_square+sal_rate+word.count+care_index3+cog_index2, workingjobs.df)
+
+summary(cmodel4)
+
+coeftest(wmodel4, vcov. = sandwich)
+
+cmodel4<-glm.nb(warmth_dic_hi~femaleu*sal_div*equity+nhbu+hispu+asianu+other.race+jobzone+ageu+age_square+sal_rate+word.count+care_index3+cog_index2, workingjobs.df)
+
+
+
+cmodel4<-glm.nb(warmth_dic_hi~femaleu*sal_div*inclusion+nhbu+hispu+asianu+other.race+jobzone+ageu+age_square+sal_rate+care_index3+cog_index2, workingjobs.df)
+
+summary(cmodel4)
+
+coeftest(wmodel4, vcov. = sandwich)
+
+wmodel4<-glm.nb(competence_dic_hi~femaleu*sal_div*accessibility+nhbu+hispu+asianu+other.race+jobzone+ageu+age_square+sal_rate+word.count+care_index3+cog_index2, workingjobs.df)
+
+summary(wmodel4)
+
+
+
+##################
+
+
+
+library(lmtest)
+
+library(clubSandwich)
+summary(wmodel4)
+
+hist(workingjobs.df$warmth_dic_hi)
+
+summary(workingjobs.df$warmth_dic_hi)
+
+
+
+#Save Warmth tables as a Word doc
+save_as_docx(
+  "m1" = basetab, "m2" = inttab,
+  path = "C:/Users/selke/Desktop/Scholarship/USAJobs Project/nbTables_revisedWithControls.docx")
+
+ja_recoded<-workingjobs.df
+
+ja_saledit<-workingjobs.df
+
+save(ja_saledit, file="ja_saledit.rda")
+
+save(ja_recoded, file="ja_recoded.rda")
+
+load("ja_recoded.rda")
+
+#Save Competence tables as a Word doc
+save_as_docx(
+  "m2" = ctab,
+  path = "C:/Users/selke/Desktop/Scholarship/USAJobs Project/flextablesaccessabilitycompetence.docx")
+
+
+
+
+summary(cmodel1)
+
+
+
+##############
+#Test for causal mediation of the skill variables
+
+#For the warmth models
+
+#Create model estimating effect of IV on the mediator
+wfit_mediator<-lm(care_index3~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+cog_index2+word.count, workingjobs.df)
+
+summary(wfit_mediator)
+
+#Create model estimating the effect of the mediator on the DV net of other IVs and controls
+wfit_dv<-lm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2, workingjobs.df)
+
+summary(wfit_dv)
+
+
+#Get results
+
+results<-mediate(wfit_mediator, wfit_dv, treat='femaleu', mediator = 'care_index3', boot=T)
+
+summary(wresults)
+
+plot(wresults)
+
+#For the Competence Models
+#Create model estimating effect of IV on the mediators
+cfit_mediator1<-lm(cog_index2~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+care_index3+word.count, workingjobs.df)
+
+cfit_mediator2<-lm(care_index3~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+cog_index2+word.count, workingjobs.df)
+
+summary(cfit_mediator1)
+summary(cfit_mediator1)
+
+
+#Create model estimating the effect of the mediator net of other IVs and controls
+cfit_dv<-lm(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2, workingjobs.df)
+
+
+
+summary(cfit_dv)
+
+#Get results
+cresults<-mediate(cfit_mediator1, cfit_dv, treat='femaleu', mediator = 'cog_index2', boot=T)
+
+cresults2<-mediate(cfit_mediator2, cfit_dv, treat='femaleu', mediator = 'care_index3', boot=T)
+
+
+summary(cresults)
+summary(cresults2)
+
+plot(cresults)
+plot(cresults2)
+
+
+########
+##Test for significant changes across models using seemingly unrelated regression estimation (SUR)
+
+install.packages("clubSandwich")
+library(clubSandwich)
+install.packages("systemfit")
+library(systemfit)
+install.packages("sur")
+library(sur)
+
+
+#Model equations
+weq1<-warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count
+
+weq2<-warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2
+
+
+equations<-list(weq1, weq2)
+sur_model<-systemfit(list(womanreg=weq1, skillreg=weq2), data=workingjobs.df)
+
+summary(sur_model)
+
+restriction <- "womanreg_femaleu- skillreg_femaleu"
+linearHypothesis(sur_model, restriction, test = "Chisq")
+
+
+compareCoefs(wmodel1, wmodel2, zvals=TRUE, pvals=TRUE, print=TRUE)
+
+install.packages("paramhetero")
+library(paramhetero)
+
+
+compare_coefs(models)
+
+
+######Plot the model coefficients
+library(tidyverse) # always bring in the tidy tools
+library(haven) # to read in Stata .dta files
+library(jtools) # contains the plotting procedures
+library(broom.mixed) # separate package called on by plot_coefs
+#install.packages('ggstance')
+library(ggstance)
+#update.packages('ggplot')
+library(magrittr)
+
+#Plot Warmth Model Coefficients
+
+plot_coefs(wmodel1, wmodel2,
+           coefs = c("Proportion Women" = "femaleu","Cognitive Skills" = "cog_index2", "Care Skills" = "care_index3"),
+           scale = FALSE, # generates standardized coefficients when TRUE
+           robust = FALSE, # robust standard errors when TRUE
+           legend.title = "Predicted Warmth Language",
+           model.names = c("Without Gendered Skills","With Gendered Skills")) 
+
+plot_coefs(wmodel1, wmodel2,
+           coefs = c("Salary" = "sal_div"),
+           scale = FALSE, # generates standardized coefficients when TRUE
+           robust = FALSE, # robust standard errors when TRUE
+           legend.title = "Predicted Warmth Language",
+model.names = c("Without Gendered Skills","With Gendered Skills")) 
+
+
+
+#Plot Competence Model Coefficients
+plot_coefs(cmodel1, cmodel2,
+           coefs = c("Proportion Women" = "femaleu","Cognitive Skills" = "cog_index2", "Care Skills" = "care_index3"),
+           scale = FALSE, # generates standardized coefficients when TRUE
+           robust = FALSE, # robust standard errors when TRUE
+           legend.title = "Predicted Competence Language",
+           model.names = c("Without Gendered Skills","With Gendered Skills")) 
+
+plot_coefs(cmodel1, cmodel2,
+           coefs = c("Salary" = "sal_div"),
+           scale = FALSE, # generates standardized coefficients when TRUE
+           robust = FALSE, # robust standard errors when TRUE
+           legend.title = "Predicted Competence Language",
+           model.names = c("Without Gendered Skills","With Gendered Skills")) 
+
+
+
+####Descriptives
+warmth<-ja_recoded$warmth_dic_hi
+
+mean(ja_recoded$warmth_dic_hi)
+sd(warmth)
+min(warmth)
+max(warmth)
+
+competence<-ja_recoded$competence_dic_hi
+mean(competence)
+sd(competence)
+min(competence)
+max(competence)
+
+fem<-ja_recoded$femaleu
+mean(fem)
+sd(fem)
+min(fem)
+max(fem)
+
+sal<-ja_recoded$sal_div
+mean(sal)
+sd(sal)
+min(sal)
+max(sal)
+
+cog<-ja_recoded$cog_index2
+mean(cog)
+sd(cog)
+min(cog)
+max(cog)
+
+care<-ja_recoded$care_index3
+mean(care)
+sd(care)
+min(care)
+max(care)
+
+nas<-ja_recoded[complete.cases(ja_recoded)]
+
+ja_nona<-complete.cases()
+
+options(scipen = 0)
+
+divcom <- ja_recoded$zdiverse
+mean(divcom, na.rm=TRUE)
+sd(divcom, na.rm=TRUE)
+min(divcom, na.rm=TRUE)
+max(divcom, na.rm=TRUE)
+
+dico<-ja_recoded$commit_diverse
+mean(dico, na.rm=TRUE)
+sd(dico, na.rm=TRUE)
+min(dico, na.rm=TRUE)
+max(dico, na.rm=TRUE)
+
+white<-ja_recoded$whiteu
+mean(white)
+sd(white)
+min(white)
+max(white)
+
+aa<-ja_recoded$blacku
+mean(aa)
+sd(aa)
+min(aa)
+max(aa)
+
+hisp<-ja_recoded$hispu
+mean(hisp)
+sd(hisp)
+min(hisp)
+max(hisp)
+
+azn<-ja_recoded$asianu
+mean(azn)
+sd(azn)
+min(azn)
+max(azn)
+
+othr<-ja_recoded$other.race
+mean(othr)
+sd(othr)
+min(othr)
+max(othr)
+
+jz<-ja_recoded$jobzone
+mean(jz)
+sd(jz)
+min(jz)
+max(jz)
+
+age<-ja_recoded$ageu
+mean(age)
+sd(age)
+min(age)
+max(age)
+
+agsq<-ja_recoded$age_square
+mean(agsq)
+sd(agsq)
+min(agsq)
+max(agsq)
+
+wc<-ja_recoded$word.count
+mean(wc)
+sd(wc)
+min(wc)
+max(wc)
+
+
+exp(.374)
+
+####Brainstorming warmth/competence prop
+workingjobs.df$warmth_prop<-workingjobs.df$warmth_dic_hi/workingjobs.df$word.count
+
+workingjobs.df$competence_prop<-workingjobs.df$competence_dic_hi/workingjobs.df$word.count
+
+workingjobs.df$warmth_prop<-workingjobs.df$warmth_prop*100
+
+workingjobs.df$competence_prop<-workingjobs.df$competence_prop*100
+
+
+#Create the Warmth Models
+wmodel1<-lm(warmth_prop~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df)
+
+wmodel2<-lm(warmth_prop~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2, workingjobs.df)
+
+wmodel3<-lm(warmth_prop~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+femaleu:sal_div, workingjobs.df)
+
+wmodel4<-lm(warmth_prop~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+femaleu:zdiverse, workingjobs.df)
+
+
+#Create the Competence Models
+cmodel1<-lm(competence_prop~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df)
+
+cmodel2<-lm(competence_prop~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2, workingjobs.df)
+
+cmodel3<-lm(competence_prop~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+femaleu:sal_div, workingjobs.df)
+
+cmodel4<-lm(competence_prop~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+femaleu:zdiverse, workingjobs.df)
+
+
+#Create list objects for the models so we can use a nested display
+wmodels<-list("Model 1" = wmodel1, "Model 2" = wmodel2, "Model 3" = wmodel3, "Model 4" = wmodel4)
+
+cmodels<-list("Model 1" = cmodel1, "Model 2" = cmodel2, "Model 3" = cmodel3, "Model 4" = cmodel4)
+
+
+#Create a huxreg object for the Warmth Models
+wtab<-huxreg(wmodels, statistics = c('N' = "nobs", 'R-squared' = "r.squared"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu", "Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3", "Percent Woman * Salary"="femaleu:sal_div", "Diversity Commitment"="zdiverse", "Proportion Woman * Diversity Commitment"="femaleu:zdiverse"))%>%
+  set_caption("OLS Regressions of Raw Warmth on Vertical and Horizontal Indicators")
+
+#Create a hugreg object for the Competence Models
+ctab<-huxreg(cmodels, statistics = c('N' = "nobs", 'R-squared' = "r.squared"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu", "Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3", "Proportion Woman * Salary"="femaleu:sal_div", "Diversity Commitment"="zdiverse", "Proportion Woman * Diversity Commitment"="femaleu:zdiverse"))%>%
+  set_caption("OLS Regressions of Raw Competence on Vertical and Horizontal Indicators")
+
+#Turn these into flextable objects
+wtab<-as_flextable(wtab)
+ctab<-as_flextable(ctab)
+
+#Take a look at them
+wtab
+ctab
+
+sd(workingjobs.df$warmth_prop)
+
+summary(workingjobs.df$warmth_dic_hi)
+
+
+warmy<-subset(workingjobs.df, warmth_dic_hi>60)
+
+warmy$duties
+
+
+library(qpdf)
+
+setwd("C:/Users/selke/Downloads")
+
+pdf_combine(input=c("phon1.pdf", "phon2.pdf"), output="Ch3.pdf")
+
+cv<-"Selke_CV_Spring_2025.pdf"
+cl<-"DS_GRA_CoverLetter.pdf"
+
+pdf_combine(input=c(cv, cl), output="DS_GRA_CV_CL_selke.pdf")
+
+hwarm<-subset(ja_recoded, warmth_dic_hi>10 & competence_dic_hi<5)
+
+hcomp<-subset(ja_recoded, competence_dic_hi>10 & warmth_dic_hi<5)
+
+hwarm[1,45]
+
+
+
+
+mit<-read.csv("turker_scores_full_interview.csv")
+
+mit_agg<-subset(mit, Worker=="AGGR" & Participant==c("p", "\\d"))
+
+mit_agg<-subset(mit, !grepl("pp", Participant) & Worker=="AGGR")
+
+mit_agg<-mit_agg[,1:69]
+
+mit_sub<-mit_sub[, -c(1)]
+
+mit_sub2<-mit_agg[,4:21]
+
+
+scree(mit_sub2, pc=FALSE)
+
+fa.parallel(mit_sub2, fa="fa")
+
+fit <- factanal(mit_sub, 4, rotation="promax")
+
+print(fit)
+
+loads<-fit$loadings
+
+fa.diagram(loads)
+
+summary(fit$call)
+
+head(fit$factors)
+
+install.packages("rgl")
+library(rgl)
+
+loads <- fit$loadings[,2:3]
+plot(loads,type="n") # set up plot
+  text(loads,labels=names(mit_sub),cex=.7)
+  
+
+dim1 <- fit$loadings[,1]
+dim2 <- fit$loadings[,2]
+dim3 <- fit$loadings[,3]
+dat <- as.data.frame(cbind(colnames(mit_sub),dim1,dim2,dim3))
+
+with(dat,plot3d(dim1,dim2,dim3))
+with(dat,text3d(dim1,dim2,dim3,V1))
+
+
+f1<-mit_sub[,c("EyeContact", "Focused", "NoFillers", "Excited", "StructuredAnswers", "EngagingTone")]
+f2<-mit_sub[,c("Friendly", "Smiled", "Authentic")]  
+f3<-mit_sub[,c("Calm", "NotStressed", "NotAwkward")]
+f4<-mit_sub[,c("SpeakingRate", "Paused")]
+
+alpha(f1)
+alpha(f2)
+alpha(f3)
+alpha(f4, check.keys = TRUE)
+
+
+load(url("http://dmirman.github.io/FAex.Rdata"))
+
+##############################
+summary(workingjobs.df$femaleu)
+
+realallwom<-subset(workingjobs.df, femaleu>.95)
+
+ninetywom<-subset(workingjobs.df, femaleu>.9)
+
+
+
+workingjobs.df$maleu<-1-workingjobs.df$femaleu
+
+summary(workingjobs.df$maleu)
+
+realallmal<-subset(workingjobs.df, maleu>.95)
+
+ninetymal<-subset(workingjobs.df, maleu>.9)
+
+ninetynomal<-subset(workingjobs.df, maleu<.05)
+ninetynofem<-subset(workingjobs.df, femaleu<.05)
+
+realmalsub<-subset(realallmal, select=c(JobTitle2, soccps, duties, maleu))
+select
+
+highcomp<-subset(workingjobs.df, competence_dic_hi>10 & warmth_dic_hi==0)
+highwarm<-subset(workingjobs.df, warmth_dic_hi>5 & competence_dic_hi<3)
+
+
+222/5533
+
+265/5533
+
+7/5533
+17/5533
+
+workingjobs.df$femperc<-workingjobs.df$femaleu*100
+
+#Create the Warmth Models
+#wmodel1<-lm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df)
+
+#wmodel1<-glm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df, family="poisson")
+
+wmodel1<-glm.nb(warmth_dic_hi~femperc+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df)
+
+#wmodel2<-lm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2, workingjobs.df)
+
+wmodel2<-glm.nb(warmth_dic_hi~femperc+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2, workingjobs.df)
+
+#wmodel3<-lm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+femaleu:sal_div, workingjobs.df)
+
+wmodel3<-glm.nb(warmth_dic_hi~femperc+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+femperc:sal_div, workingjobs.df)
+
+
+#wmodel4<-lm(warmth_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+femaleu:zdiverse, workingjobs.df)
+
+wmodel4<-glm.nb(warmth_dic_hi~femperc+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+femperc:zdiverse, workingjobs.df)
+
+
+#Create the Competence Models
+#cmodel1<-lm(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df)
+
+cmodel1<-glm.nb(competence_dic_hi~femperc+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count, workingjobs.df)
+
+
+
+#cmodel2<-lm(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2, workingjobs.df)
+
+cmodel2<-glm.nb(competence_dic_hi~femperc+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2, workingjobs.df)
+
+
+#cmodel3<-lm(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+femaleu:sal_div, workingjobs.df)
+
+cmodel3<-glm.nb(competence_dic_hi~femperc+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+care_index3+cog_index2+femperc:sal_div, workingjobs.df)
+
+
+#cmodel4<-lm(competence_dic_hi~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+femaleu:zdiverse, workingjobs.df)
+
+cmodel4<-glm.nb(competence_dic_hi~femperc+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+zdiverse+word.count+care_index3+cog_index2+femperc:zdiverse, workingjobs.df)
+
+
+
+
+#Create list objects for the models so we can use a nested display
+basemodels<-list("Model 1" = cmodel1, "Model 2" = wmodel1, "Model 3" = cmodel2, "Model 4" = wmodel2)
+
+intmodels<-list("Model 1" = cmodel3, "Model 2" = wmodel3, "Model 3" = cmodel4, "Model 4" = wmodel4)
+
+
+#Create a huxreg object for the Warmth Models
+#wtab<-huxreg(wmodels, statistics = c('N' = "nobs", 'R-squared' = "r.squared"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu", "Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3", "Percent Woman * Salary"="femaleu:sal_div", "Diversity Commitment"="zdiverse", "Proportion Woman * Diversity Commitment"="femaleu:zdiverse"))%>%
+#set_caption("OLS Regressions of Raw Warmth on Vertical and Horizontal Indicators")
+
+basetab<-huxreg(basemodels, statistics = c('N' = "nobs", 'R-squared' = "r.squared"), coefs = c("(Intercept)" ="(Intercept)","Percentage Woman"="femperc", "Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3"))%>%
+  set_caption("Negative Binomial Regressions of Warmth and Competence Counts on Vertical and Horizontal Indicators")
+
+#Create a hugreg object for the Competence Models
+#ctab<-huxreg(cmodels, statistics = c('N' = "nobs", 'R-squared' = "r.squared"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu", "Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3", "Proportion Woman * Salary"="femaleu:sal_div", "Diversity Commitment"="zdiverse", "Proportion Woman * Diversity Commitment"="femaleu:zdiverse"))%>%
+#set_caption("OLS Regressions of Raw Competence on Vertical and Horizontal Indicators")
+
+inttab<-huxreg(intmodels, statistics = c('N' = "nobs", 'R-squared' = "r.squared"), coefs = c("(Intercept)" ="(Intercept)","Percentage Woman"="femperc","Salary"="sal_div", "Cognitive Skills"="cog_index2", "Care Skills"="care_index3", "Percentage Woman * Salary"="femperc:sal_div", "Diversity Commitment"="zdiverse", "Percentage Woman * Diversity Commitment"="femperc:zdiverse"))%>%
+  set_caption("Negative Binomial Regressions of Warmth and Competence Counts on Interaction Terms")
+
+#Turn these into flextable objects
+basetab<-as_flextable(basetab)
+inttab<-as_flextable(inttab)
+
+
+#Take a look at them
+basetab
+inttab
+
+
+
+
+hist(workingjobs.df$femperc)
+summary(workingjobs.df$femaleu)
+summary(workingjobs.df$maleu)
+
+
+plot_model(cmodel2, type="pred", terms="femperc", title="Predicted counts of competence language") + xlab("Percentage Women") + ylab("Number of competence words") + ylim(5,20) + xlim(10,90)
+
+plot_model(wmodel2, type="pred", terms="femperc", title="Predicted counts of warmth language") + xlab("Proportion Women") + ylab("Number of warmth words") + ylim(6,10)
+
+plot_model(cmodel2, type="pred", terms="sal_div [40:140]", title="Predicted counts of competence language") +xlab("Salary (divided by 1000)") + ylab("Number of competence words") + ylim(14,18)
+
+#plot_models(cmodel1, wmodel1, rm.terms = c("nhbu", "hispu", "asianu", "other.race", "sal_div", "jobzone", "ageu", "age_square", "word.count"))
+
+
+
+plot_model(wmodel3, type="pred", terms=c("femaleu", "sal_div [40,90,140]"),title="Predicted counts of warmth language", color="bw")  + xlab("Proportion Women") + ylab("Number of warmth words") + scale_linetype_discrete(name="Salary", labels=c("40k", "90k", "140k" )) #+ xlim(.05, .95)
+
+
+
+dicwords<-read.csv("dictionary_words.csv")
+
+dicwords<-subset(dicwords, select=c(warmth_hi_directionality, competence_hi_directionality))
+
+dicwords<-dicwords[1:976,]
+
+names(dicwords)[1]<-"Warmth Words"
+names(dicwords)[2]<-"Competence Words"
+
+fiftysub<-dicwords[sample(nrow(dicwords), 50), ]
+
+mytab<-table(fiftysub)
+
+write.csv(fiftysub, file="fiftysub.csv")
+
+getAnywhere(mean())[1]
+
+methods(mean)
+
+
+av<-function(x){
+  sum(x)/length(x)
+}
+
+vals<-c(1, 3, 6, 3, 2, 6, 4, 6, 5, 2)
+
+av(vals)
+
+mean(vals)
+
+mean
+
+
+
+
+
+summary(workingjobs.df$competence_dic_hi)
+sd(workingjobs.df$competence_dic_hi)
+summary(workingjobs.df$warmth_dic_hi)
+sd(workingjobs.df$warmth_dic)
+
+summary(workingjobs.df$femaleu)
+sd(workingjobs.df$femaleu)
+
+summary(workingjobs.df$sal_div)
+sd(workingjobs.df$sal_div)
+
+summary(workingjobs.df$cog_index2)
+sd(workingjobs.df$cog_index2)
+
+summary(workingjobs.df$care_index3)
+sd(workingjobs.df$care_index3)
+
+summary(workingjobs.df$zdiverse)
+sd(workingjobs.df$zdiverse)
+
+
+names(workingjobs.df)
+
+workingjobs.df$test<-scale(workingjobs.df$commit_diverse)
+
+summary(workingjobs.df$test)
+
+summary(workingjobs.df$whiteu)
+sd(workingjobs.df$whiteu)
+
+summary(workingjobs.df$nhbu)
+sd(workingjobs.df$nhbu)
+
+summary(workingjobs.df$hispu)
+sd(workingjobs.df$hispu)
+
+summary(workingjobs.df$asianu)
+sd(workingjobs.df$asianu)
+
+summary(workingjobs.df$other.race)
+sd(workingjobs.df$other.race)
+
+summary(workingjobs.df$jobzone)
+sd(workingjobs.df$jobzone)
+
+summary(workingjobs.df$ageu)
+sd(workingjobs.df$ageu)
+
+summary(workingjobs.df$age_square)
+sd(workingjobs.df$age_square)
+
+summary(workingjobs.df$word.count)
+sd(workingjobs.df$word.count)
+
+summary(workingjobs.df$sal_rate)
+
+yrly<-subset(workingjobs.df, sal_rate=="annually", select="sal_div")
+
+summary(yrly$sal_div)
+sd(yrly$sal_div)
+
+summary(wmodel4)
+
+summary(workingjobs.df$competence_dic_hi)
+
+workingjobs.df$delta_stype<-workingjobs.df$competence_dic_hi-workingjobs.df$warmth_dic_hi
+
+hist(workingjobs.df$delta_stype)
+
+summary(workingjobs.df$delta_stype)
+
+high_comp<-subset(workingjobs.df, delta_stype>=55, select=c("sococc_title", "JobTitle", "duties", "soccps", "competence_dic_hi", "warmth_dic_hi", "delta_stype"))
+
+low_comp<-subset(workingjobs.df, delta_stype<=-20, select=c("sococc_title", "JobTitle", "duties", "soccps", "competence_dic_hi", "warmth_dic_hi", "delta_stype"))
+
+summary(workingjobs.df$competence_dic_hi)
+
+pk_comp<-subset(workingjobs.df, competence_dic_hi>40 & warmth_dic_hi<=5, select=c("sococc_title", "JobTitle", "duties", "soccps", "competence_dic_hi", "warmth_dic_hi", "delta_stype"))
+
+pk_warm<-subset(workingjobs.df, competence_dic_hi<=5 & warmth_dic_hi>=15, select=c("sococc_title", "JobTitle", "duties", "soccps", "competence_dic_hi", "warmth_dic_hi", "delta_stype"))
+
+wom_type<-subset(workingjobs.df, doc_id=="text1996", select=c("JobTitle", "sococc_title", "duties", "sal_div", "competence_dic_hi", "warmth_dic_hi", "soccps", "cpsocc_title"))
+
+man_type<-subset(workingjobs.df, doc_id=="text3901", select=c("JobTitle", "sococc_title", "duties", "sal_div", "competence_dic_hi", "warmth_dic_hi", "soccps", "cpsocc_title"))
+
+high_comp<-high_comp %>%
+  arrange(desc(delta_stype))
+
+low_comp<-low_comp %>%
+  arrange((delta_stype))
+
+
+write.csv(high_comp, file="high_comp_delta.csv")
+write.csv(low_comp, file="high_warm_delta.csv")
+
+write.csv(pk_comp, file="high_competence.csv")
+write.csv(pk_warm, file="high_warmth.csv")
+                 
+
+peeking<-subset(workingjobs.df, doc_id=="text3901", select=c("soccps", "cpsocc_title", "duties", "warmth_dic_hi", "competence_dic_hi"))
+
+peek[1,3]

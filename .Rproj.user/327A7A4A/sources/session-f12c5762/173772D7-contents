@@ -1,0 +1,55 @@
+setwd()
+
+library(ggrepel)
+library(text2map)
+library(text2vec)
+library(gutenbergr)
+library(tidyverse)
+library(textclean)
+library(stringi)
+library(text2map.pretrained)
+library(flextable)
+library(huxtable)
+library(sjPlot)
+library(interactions)
+library(lmerTest)
+
+
+#Load Data
+load("ja_seeded.rda")
+
+### Full re-analysis with new skill variables (5.5.2025)
+cmodel1<-lmerTest::lmer(comp_sim~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+sal_rate+(1|agency), workingjobs.df)
+
+cmodel2<-lmerTest::lmer(comp_sim~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+sal_rate+careindex+analyticindex+(1|agency), workingjobs.df)
+
+cmodel3<-lmerTest::lmer(comp_sim~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+word.count+sal_rate+careindex+analyticindex+femaleu:sal_div+(1|agency), workingjobs.df)
+
+cmodel4<-lmerTest::lmer(comp_sim~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+ideo_rating+word.count+sal_rate+careindex+analyticindex+(1|agency), workingjobs.df)
+
+cmodel5<-lmerTest::lmer(comp_sim~femaleu+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+ideo_rating+word.count+sal_rate+careindex+analyticindex+femaleu:ideo_rating+(1|agency), workingjobs.df)
+
+cmodel6<-lmerTest::lmer(comp_sim~femaleu*ideo_rating*sal_div+nhbu+hispu+asianu+other.race+sal_div+jobzone+ageu+age_square+ideo_rating+word.count+sal_rate+careindex+analyticindex+(1|agency), workingjobs.df)
+
+cmodels<-list("Model 1" = cmodel1, "Model 2" = cmodel2, "Model 3" = cmodel3, "Model 4" = cmodel4, "Model 5" = cmodel5, "Model 6" = cmodel6)
+
+
+#Create hexreg object for our table display. Controls are included in these calculations, but we display only our independent variables.
+
+
+c_tab<-huxreg(cmodels, 
+              statistics = c('N' = "nobs", "AIC" = "AIC", "-2x Log-likelihood"="logLik"), coefs = c("(Intercept)" ="(Intercept)","Proportion Woman"="femaleu","Salary"="sal_div", "Care Skills"="careindex", "Analytic Skills"="analyticindex", "Political Ideology"="ideo_rating", "Proportion Woman * Salary"="femaleu:sal_div", "Proportion Woman * Political Ideology"="femaleu:ideo_rating", "Proportion Woman * Political Ideology * Salary"="femaleu:ideo_rating:sal_div"))%>%
+  set_caption("Table A2. Unstandardized Coefficients (and Standard Errors) from OLS Regressions of Competence Similarity")
+
+#Turn these into flextable objects
+c_tab<-as_flextable(c_tab)
+
+
+## Take a look at our models
+
+c_tab
+
+### Save as word doc (change the file directory info for your own device)
+save_as_docx(
+  "m1" = c_tab,
+  path = "C:/Users/selke/Desktop/Scholarship/USAJobs Project/Embedded_NewSkills_CareCog.docx")

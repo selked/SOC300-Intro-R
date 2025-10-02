@@ -1,0 +1,15 @@
+"0","our_gss <- our_gss |>
+  mutate(
+    partyid_recoded=fct_collapse(partyid, 
+""Democrat"" = c(""strong democrat"", ""not very strong democrat""),
+""Republican"" = c(""strong republican"",""not very strong republican""),
+""Independent"" = c(""independent, close to democrat"", ""independent (neither, no response)"", ""independent, close to republican""),
+""Other Party"" = c(""other party"")
+))
+"
+"1","[1m[33mError[39m in `mutate()`:[22m
+[38;5;253m[36mℹ[38;5;253m In argument: `partyid_recoded = fct_collapse(...)`.[39m
+[1mCaused by error in `fct_collapse()`:[22m
+[33m![39m could not find function ""fct_collapse""
+[90mRun `]8;;x-r-run:rlang::last_trace()rlang::last_trace()]8;;` to see where the error occurred.[39m
+"

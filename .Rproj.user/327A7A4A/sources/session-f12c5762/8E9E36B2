@@ -1,0 +1,31 @@
+{
+    "id": "8E9E36B2",
+    "path": "~/git_repos/SOC300-Intro-R/univariate_numeric.qmd",
+    "project_path": "univariate_numeric.qmd",
+    "type": "quarto_markdown",
+    "hash": "303642539",
+    "contents": "",
+    "dirty": false,
+    "created": 1759246508385.0,
+    "source_on_save": false,
+    "relative_order": 7,
+    "properties": {
+        "rmdVisualMode": "false",
+        "rmdVisualWrapConfigured": "true",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "262,0",
+        "scrollLine": "253",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "docOutlineSize": "143"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1759381087,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1759382110483,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,0 +1,7 @@
+"0","# With pipe operator
+our_gss |>
+  summary(partyid_recoded) |>
+  barplot()
+"
+"2","Error: object 'partyid_recoded' not found
+"
