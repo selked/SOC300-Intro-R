@@ -359,6 +359,14 @@ Median(our_gss$happy, na.rm = TRUE)
 ```
 Perfect! Looks like our median is 'pretty happy'. 
 
+And now we have all we need to report a univariate analysis of a categorical variable in this course:
+
+- A frequency table
+- A bar plot
+- A median or mode
+
+For now, it's just important that you can accurately identify the median or mode of a categorical value. We'll talk about ways to implement it in the tables a little later on when we focus on publication-ready tables and figures.
+
 Now, let's talk about presenting a univariate analysis of numeric data.
 
 
