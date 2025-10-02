@@ -176,6 +176,7 @@ summary(our_gss$realrinc)
 For a numeric variable, `summary()` will show us the minimum & maximum, as well as the mean & median, and the 1st & 3rd quartiles.
 
 We can actually think of most of these elements in terms of percentiles. 
+
 - The minimum value is the 0th percentile of the distribution
 
 - The 1st quartile is the 25th percentile.
@@ -227,4 +228,36 @@ We can grab the standard deviation quite easily with the `sd()` function
 ```{r}
 sd(our_gss$realrinc, na.rm = TRUE)
 ```
+
+Now, let's talk about putting all this together in our reporting of a univariate analysis for numeric data.
+
+## Putting It All Together
+Now that we have worked through how to calculate all of these key statistics with R, let's revisit some of the first `tidyverse` functions we learned about back on the first day.
+
+We can use a combination of `select()` and `summarize` to quickly compile several bits of important information, such as the range, the central tendency, and the standard deviation. 
+
+Let's do this for `realrinc`.
+
+```{r}
+our_gss |>
+  select(realrinc) |>
+  summarize(
+    "Minimum" = min(realrinc, na.rm = TRUE),
+    "Median" = median(realrinc, na.rm = TRUE),
+    "Maximum" = max(realrinc, na.rm = TRUE),
+    "SD" = sd(realrinc, na.rm = TRUE)
+  )
+```
+
+:::{.callout-note}
+You might notice that there's an attribute for each column that looks like `<dbl>`. This is short for 'double', which is itself shorthand for 'double-precision floating-point format'. This is in reference to the underlying data type that R uses to store continuous numeric values. You really don't need to know anything more about double-precision floating point than that for our purposes, but I mention it here because you might run into <dbl> or 'double' in R. When you do, just think 'numeric data'.
+:::
+
+If you have a numeric variable where the mean is more appropriate, you can just swap `median()` with `mean()` in the code template above. Be sure to also change the column name as well.
+
+And that should do us! For any univariate analysis you report in this course, you will just need to produce 
+
+- a histogram displaying the variable's frequency distribution
+- a table like the one above (With the appropriate measure of central tendency).
+
 

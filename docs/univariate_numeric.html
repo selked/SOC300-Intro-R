@@ -258,6 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#range" id="toc-range" class="nav-link" data-scroll-target="#range"><span class="header-section-number">5.3.1</span> Range</a></li>
   <li><a href="#standard-deviation" id="toc-standard-deviation" class="nav-link" data-scroll-target="#standard-deviation"><span class="header-section-number">5.3.2</span> Standard Deviation</a></li>
   </ul></li>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together"><span class="header-section-number">5.4</span> Putting It All Together</a></li>
   </ul>
 </nav>
     </div>
@@ -448,8 +449,9 @@ Critical bandwidth: 2.543659</code></pre>
 </div>
 </div>
 <p>For a numeric variable, <code>summary()</code> will show us the minimum &amp; maximum, as well as the mean &amp; median, and the 1st &amp; 3rd quartiles.</p>
-<p>We can actually think of most of these elements in terms of percentiles. - The minimum value is the 0th percentile of the distribution</p>
+<p>We can actually think of most of these elements in terms of percentiles.</p>
 <ul>
+<li><p>The minimum value is the 0th percentile of the distribution</p></li>
 <li><p>The 1st quartile is the 25th percentile.</p></li>
 <li><p>The median is the 50th percentile</p></li>
 <li><p>The 3rd quartile is the 75th percentile</p></li>
@@ -487,9 +489,49 @@ Critical bandwidth: 2.543659</code></pre>
 <pre><code>[1] 31962.34</code></pre>
 </div>
 </div>
-
-
+<p>Now, let’s talk about putting all this together in our reporting of a univariate analysis for numeric data.</p>
 </section>
+</section>
+<section id="putting-it-all-together" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="putting-it-all-together"><span class="header-section-number">5.4</span> Putting It All Together</h2>
+<p>Now that we have worked through how to calculate all of these key statistics with R, let’s revisit some of the first <code>tidyverse</code> functions we learned about back on the first day.</p>
+<p>We can use a combination of <code>select()</code> and <code>summarize</code> to quickly compile several bits of important information, such as the range, the central tendency, and the standard deviation.</p>
+<p>Let’s do this for <code>realrinc</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(realrinc) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Minimum"</span> <span class="ot">=</span> <span class="fu">min</span>(realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Median"</span> <span class="ot">=</span> <span class="fu">median</span>(realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Maximum"</span> <span class="ot">=</span> <span class="fu">max</span>(realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SD"</span> <span class="ot">=</span> <span class="fu">sd</span>(realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Minimum Median  Maximum       SD
+1   204.5  18405 141848.3 31962.34</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You might notice that there’s an attribute for each column that looks like <code>&lt;dbl&gt;</code>. This is short for ‘double’, which is itself shorthand for ‘double-precision floating-point format’. This is in reference to the underlying data type that R uses to store continuous numeric values. You really don’t need to know anything more about double-precision floating point than that for our purposes, but I mention it here because you might run into <dbl> or ‘double’ in R. When you do, just think ‘numeric data’.</dbl></p>
+</div>
+</div>
+<p>If you have a numeric variable where the mean is more appropriate, you can just swap <code>median()</code> with <code>mean()</code> in the code template above. Be sure to also change the column name as well.</p>
+<p>And that should do us! For any univariate analysis you report in this course, you will just need to produce</p>
+<ul>
+<li>a histogram displaying the variable’s frequency distribution</li>
+<li>a table like the one above (With the appropriate measure of central tendency).</li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->
