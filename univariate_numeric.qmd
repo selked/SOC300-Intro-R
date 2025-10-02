@@ -26,7 +26,7 @@ There are plenty of other ways for plotting numeric data---some of which we will
 
 We can create these easily using the `hist()` function, which is in the same family of base R plotting functions as `barplot()`, so much of what we learned for that function will also apply with `hist()`. This function will automatically apply a commonly used method called Sturges's rule to divide our numeric variable into equal bins, so we do not have to specify anything in that regard.
 
-All we need to do is give the `hist()` function our numeric variable. Let's work with the `realrinc`` variable for this example.
+All we need to do is give the `hist()` function our numeric variable. Let's work with the `realrinc` variable for this example.
 ```{r}
 hist(our_gss$realrinc)
 ```
@@ -48,7 +48,7 @@ However, this visualization does suggest that we need to do some thinking about 
 
 For numeric data, any of the 3 common measures of central tendency can be reported. However, the preferred measure for a given variable depends on its distribution.
 
-The mean is always the preferred measure, because it takes into account every single data point in its calculation, and is thus the most comprehensive index of central tendency. 
+The mean is the gold standard for numeric data, because it takes into account every single data point in its calculation, and is thus the most comprehensive index of central tendency. 
 
 However, the mean can be misleading in some cases. The distribution should be (basically) normal in order for you to report the mean, and you will want to report the median in most other cases. 
 
@@ -108,8 +108,49 @@ As we can see, because the mean takes all values into account, this makes it sus
 
 So, in any case where your numeric variable contains clear outliers and/or exhibits notable skew in either direction, you should report the median rather than the mean.
 
+### The Mode
 
+By and large, the mode is more appropriate for categorical data. But there are some circumstances where it makes sense to report the mode for numeric data. 
 
+Let's take a look at the original `age` variable to see an example.
+```{r}
+hist(
+  our_gss$age,
+  main = "Age distribution of 2022 GSS Respondents",
+  xlab = "Respondent age in years"
+)
+```
+This isn't quite a normal distribution, but it's not exactly skewed in either direction either. And there are no apparent outliers.
 
+What we have here is a **bimodal** distribution. 
 
+This may be a peculiarity of the 2022 survey wave, because we wouldn't necessarily expect this, but it looks like there are two distinct central tendencies. In this case, we want to capture the two distinct peaks, meaning we need to calculate two modes.
+
+Thankfully, there's a convenient function for this, but we need to install a new package. Let's install and load in `multimode`. 
+```{r, eval = TRUE, echo = FALSE}
+library(multimode)
+```
+
+```{r, eval = FALSE, echo = TRUE}
+install.packages("multimode")
+library(multimode)
+```
+Then, we just need to provide a few arguments to the `locmodes()` function.
+
+First, we give the variable for which we want to calculate multiple modes. 
+
+Then we give an input for `mod0`, which asks us how many modes the function should be looking for. This should be based on visual inspection of the data. We have two peaks in our distribution, so we will enter '2' for this input.
+
+Lastly, we will set `display` to 'TRUE', which will show us a plot of the estimated modes superimposed onto the frequency distribution of the variable. This will let us evaluate whether the function seems to be finding the modes.
+
+```{r, warning = FALSE, message = FALSE}
+locmodes(
+  our_gss$age,
+  mod0 = 2,
+  display = TRUE
+)
+```
+We only really need to pay attention to the modes that it gives us (32.43 and 66.25), but it looks like this function spotted the two modes pretty effectively. 
+
+For a bimodal distribution like this, we can report both modes for the measure of central tendency. I don't expect we will run into too much of this, but go ahead and deal with it like this in the event that you do.
 

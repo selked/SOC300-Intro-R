@@ -251,6 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#central-tendency" id="toc-central-tendency" class="nav-link" data-scroll-target="#central-tendency"><span class="header-section-number">5.2</span> Central Tendency</a>
   <ul class="collapse">
   <li><a href="#mean-or-median" id="toc-mean-or-median" class="nav-link" data-scroll-target="#mean-or-median"><span class="header-section-number">5.2.1</span> Mean or Median?</a></li>
+  <li><a href="#the-mode" id="toc-the-mode" class="nav-link" data-scroll-target="#the-mode"><span class="header-section-number">5.2.2</span> The Mode</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -294,7 +295,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A histogram is the result of taking a numeric variable, slicing it up into equal, ordinal intervals, and then plotting the frequency of each interval.</p>
 <p>There are plenty of other ways for plotting numeric data—some of which we will see later when we focus on visualization—but for now, this is a simple but effective way to get a sense of the distribution of a numeric variable. This is especially important when we need to decide on an appropriate measure of central tendency.</p>
 <p>We can create these easily using the <code>hist()</code> function, which is in the same family of base R plotting functions as <code>barplot()</code>, so much of what we learned for that function will also apply with <code>hist()</code>. This function will automatically apply a commonly used method called Sturges’s rule to divide our numeric variable into equal bins, so we do not have to specify anything in that regard.</p>
-<p>All we need to do is give the <code>hist()</code> function our numeric variable. Let’s work with the `realrinc`` variable for this example.</p>
+<p>All we need to do is give the <code>hist()</code> function our numeric variable. Let’s work with the <code>realrinc</code> variable for this example.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(our_gss<span class="sc">$</span>realrinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -327,7 +328,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="central-tendency" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="central-tendency"><span class="header-section-number">5.2</span> Central Tendency</h2>
 <p>For numeric data, any of the 3 common measures of central tendency can be reported. However, the preferred measure for a given variable depends on its distribution.</p>
-<p>The mean is always the preferred measure, because it takes into account every single data point in its calculation, and is thus the most comprehensive index of central tendency.</p>
+<p>The mean is the gold standard for numeric data, because it takes into account every single data point in its calculation, and is thus the most comprehensive index of central tendency.</p>
 <p>However, the mean can be misleading in some cases. The distribution should be (basically) normal in order for you to report the mean, and you will want to report the median in most other cases.</p>
 <p>I will first cover the choice of mean or median by revisiting some basics of distributions, and then I will address the rare circumstance where the mode is appropriate.</p>
 <section id="mean-or-median" class="level3" data-number="5.2.1">
@@ -357,6 +358,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In the case of <code>realrinc</code>, we definitely do not have much normality going on. For one, there are some apparent outlier cases. Much of our data seems to be concentrated within about $0 - $75,000, but then we have a bunch of values at nearly double the maximum of that narrower range. And even within the range where most of our responses are clustered, we have some clear right-skew.</p>
 <p>As we can see, because the mean takes all values into account, this makes it susceptible to non-normal distributions. It gets pulled in the direction of the outlier, which, in this case, is also the direction of the skew.</p>
 <p>So, in any case where your numeric variable contains clear outliers and/or exhibits notable skew in either direction, you should report the median rather than the mean.</p>
+</section>
+<section id="the-mode" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="the-mode"><span class="header-section-number">5.2.2</span> The Mode</h3>
+<p>By and large, the mode is more appropriate for categorical data. But there are some circumstances where it makes sense to report the mode for numeric data.</p>
+<p>Let’s take a look at the original <code>age</code> variable to see an example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  our_gss<span class="sc">$</span>age,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Age distribution of 2022 GSS Respondents"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Respondent age in years"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_numeric_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This isn’t quite a normal distribution, but it’s not exactly skewed in either direction either. And there are no apparent outliers.</p>
+<p>What we have here is a <strong>bimodal</strong> distribution.</p>
+<p>This may be a peculiarity of the 2022 survey wave, because we wouldn’t necessarily expect this, but it looks like there are two distinct central tendencies. In this case, we want to capture the two distinct peaks, meaning we need to calculate two modes.</p>
+<p>Thankfully, there’s a convenient function for this, but we need to install a new package. Let’s install and load in <code>multimode</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"multimode"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multimode)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then, we just need to provide a few arguments to the <code>locmodes()</code> function.</p>
+<p>First, we give the variable for which we want to calculate multiple modes.</p>
+<p>Then we give an input for <code>mod0</code>, which asks us how many modes the function should be looking for. This should be based on visual inspection of the data. We have two peaks in our distribution, so we will enter ‘2’ for this input.</p>
+<p>Lastly, we will set <code>display</code> to ‘TRUE’, which will show us a plot of the estimated modes superimposed onto the frequency distribution of the variable. This will let us evaluate whether the function seems to be finding the modes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">locmodes</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  our_gss<span class="sc">$</span>age,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mod0 =</span> <span class="dv">2</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">display =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="univariate_numeric_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Estimated location
+Modes:  32.4301  66.25356 
+Antimode: 50.89506 
+
+Estimated value of the density
+Modes: 0.01938966  0.01730832 
+Antimode: 0.01444287 
+
+Critical bandwidth: 2.543659</code></pre>
+</div>
+</div>
+<p>We only really need to pay attention to the modes that it gives us (32.43 and 66.25), but it looks like this function spotted the two modes pretty effectively.</p>
+<p>For a bimodal distribution like this, we can report both modes for the measure of central tendency. I don’t expect we will run into too much of this, but go ahead and deal with it like this in the event that you do.</p>
 
 
 </section>
