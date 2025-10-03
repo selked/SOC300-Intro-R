@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction – Introduction to R for Quantitative Social Science Research</title>
+<title>6&nbsp; Bivariate: Categorical – Introduction to R for Quantitative Social Science Research</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,7 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./bivariate_categorical.html" rel="prev">
+<link href="./viz_introduction.html" rel="next">
+<link href="./univariate_numeric.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -81,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 5: Making Better Visualizations</a></li><li class="breadcrumb-item"><a href="./viz_introduction.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bivariate_categorical.html">Day 3: Bivariate Analysis with the GSS</a></li><li class="breadcrumb-item"><a href="./bivariate_categorical.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bivariate: Categorical</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -184,7 +220,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bivariate_categorical.html" class="sidebar-item-text sidebar-link">
+  <a href="./bivariate_categorical.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bivariate: Categorical</span></span></a>
   </div>
 </li>
@@ -205,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./viz_introduction.html" class="sidebar-item-text sidebar-link active">
+  <a href="./viz_introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
@@ -221,18 +257,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#visualization-and-analytical-thinking" id="toc-visualization-and-analytical-thinking" class="nav-link active" data-scroll-target="#visualization-and-analytical-thinking">Visualization and Analytical Thinking</a></li>
-  <li><a href="#thirteen-data-sets" id="toc-thirteen-data-sets" class="nav-link" data-scroll-target="#thirteen-data-sets">Thirteen Data Sets</a></li>
-  <li><a href="#in-sum" id="toc-in-sum" class="nav-link" data-scroll-target="#in-sum">In Sum</a></li>
+  <li><a href="#contingency-tables" id="toc-contingency-tables" class="nav-link active" data-scroll-target="#contingency-tables"><span class="header-section-number">6.1</span> Contingency Tables</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 5: Making Better Visualizations</a></li><li class="breadcrumb-item"><a href="./viz_introduction.html">Introduction</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bivariate_categorical.html">Day 3: Bivariate Analysis with the GSS</a></li><li class="breadcrumb-item"><a href="./bivariate_categorical.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bivariate: Categorical</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Introduction</h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bivariate: Categorical</span></h1>
 </div>
 
 
@@ -249,68 +283,38 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Up to this point, we have worked with pretty simple visualizations, just so we can quickly glean important information about our statistical models without spending too much time focusing on the aesthetics of the visuals.</p>
-<p>In this lab, we will learn a bit more about R’s graphical capability—especially through tidyverse’s <code>ggplot</code>—which provides us with incredible customizability. We will learn how to fine-tune some of the visuals we have already worked with, and we will preview some other common visual styles that can manage with <code>ggplot</code>.</p>
-<section id="visualization-and-analytical-thinking" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-and-analytical-thinking">Visualization and Analytical Thinking</h2>
-<p>Before we start working with some of these new visual tools, I want to take an opportunity to stress the importance of visualization more generally. It’s easy to see the process of presenting visuals as something somewhat superficial, but visualization can be critical for defining the kind of questions we can ask about our data.</p>
-<p>For now, I’m going to obscure the code I’m using for this document. We will learn more about the kind of commands I used to generate the following figures, but I don’t want anyone to get bogged down initially. I’ll use these visuals to help impart an important lesson about data visualization’s in the research process.</p>
-</section>
-<section id="thirteen-data-sets" class="level2">
-<h2 class="anchored" data-anchor-id="thirteen-data-sets">Thirteen Data Sets</h2>
-<p>Let’s take a look at a collection of thirteen different data sets. Each data set has 142 observations with 2 columns, labeled x &amp; y.</p>
-<p>I’ll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations. Let’s see what seems to distinguish some of these data sets from one another.</p>
+<p>Now that we know how to peek under the hood of our variables individually, it’s time to start looking at them in combination.</p>
+<p>We will start with bivariate analysis, or the association between two variables.</p>
+<p>Let’s begin with the procedure for categorical variables. We will start with the basic display of two categorical variables and then get some practice with the chi-squared test, which is a common statistical test that assumes both variables are categorical.</p>
+<p>We will learn to recognize associations in the contingency table, and then we’ll use the chi-squared test to estimate the likelihood that the relationship we find is genuine or merely an artifact of random chance.</p>
+<section id="contingency-tables" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="contingency-tables"><span class="header-section-number">6.1</span> Contingency Tables</h2>
+<p>Also known as cross-tabulations—or crosstabs for short—contingency tables are quite similar to frequency tables. Rather than showing the distribution of a single variable, they show us the distribution of our dependent variable across the levels of our independent variable.</p>
+<p>Let’s dig in with an example. We’ll keep working with our GSS subset, so let’s go ahead and set up our workspace by loading in our packages &amp; data. We will need both <code>tidyverse</code> and <code>janitor</code> for this tutorial.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"our_gss.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll set up a simple hypothesis to illustrate. Let’s say that, based on theory, we predict a person’s gender will impact their likelihood of identifying as a Democrat or a Republican.</p>
+<p>Now, there’s enough literature on gender and political affiliation that we would probably be justified in making a more specific hypothesis about the predicted direction of the association, but let’s just say we simply predict that political-party affiliation will vary across categories of <code>sex</code>.</p>
+<p>This would be our alternative hypothesis, and its respective null hypothesis is that women and men are equally likely to identify with both political parties.</p>
+<p>In other words, the alternative hypothesis is that the proportion of men and women will be different across political parties. The null hypothesis is that there will be no such difference.</p>
+<p>We’ll work with the <code>dem_rep</code> variable that we created when learning about variable re-coding, as well as the <code>sex</code> variable.</p>
+<p>Thankfully, we can use a familiar function in <code>tabyl()</code>, which we used to create our frequency table. We can simply add a second variable to produce a crosstab, though we will need to specify a couple of things so that the variables are properly formatted in terms of rows and columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">var1 =</span> dem_rep,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">var2 =</span> sex</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 13 × 4
-   mean_x mean_y std_x std_y
-    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1   54.3   47.8  16.8  26.9
- 2   54.3   47.8  16.8  26.9
- 3   54.3   47.8  16.8  26.9
- 4   54.3   47.8  16.8  26.9
- 5   54.3   47.8  16.8  26.9
- 6   54.3   47.8  16.8  26.9
- 7   54.3   47.8  16.8  26.9
- 8   54.3   47.8  16.8  26.9
- 9   54.3   47.8  16.8  26.9
-10   54.3   47.8  16.8  26.9
-11   54.3   47.8  16.8  26.9
-12   54.3   47.8  16.8  26.9
-13   54.3   47.8  16.8  26.9</code></pre>
+<pre><code>    dem_rep female male
+   Democrat    629  416
+ Republican    371  418</code></pre>
 </div>
 </div>
-<p>Well, there’s not much we can say here. All the summary statistics are identical. Why don’t we try modeling a linear relationship between the x and y variables. Maybe looking at the correlations will tell us something. I’ll display the linear regression lines for each data set below.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="viz_introduction_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Okay. This is not revealing much either. All the lines seem to have the same slope, which shows a (slight) negative relationship where y decreases as x increases. The correlations aren’t revealing any notable distinctions.</p>
-<p>But wait. One thing we can see here is that, while the correlations appear to be about the same, there are some differences in the ranges of values. Note that the regression lines don’t extend across the same range of x-axis values in each data set. Maybe there is something here after all.</p>
-<p>Let’s just go ahead and plot the actual data over our regression lines.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="viz_introduction_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Now there’s some distinction!</p>
-<p>This is a tongue in cheek data set known as the <a href="https://jumpingrivers.github.io/datasauRus/">‘datasaurus dozen’</a>. It’s often used in intro statistical classes to help illustrate the importance of visualization. It’s inspired by another conceptually similar data set known as <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">‘Anscombe’s quartet’</a> which likewise stresses the role of plotting data in producing well informed analyses.</p>
-</section>
-<section id="in-sum" class="level2">
-<h2 class="anchored" data-anchor-id="in-sum">In Sum</h2>
-<p>So, take this as a showcase of the importance of visualizing your data. This isn’t to discount summary statistics and other numeric description of data—those are still invaluable for us.</p>
-<p>Rather, cases like Datasaurus or Anscombe’s quartet highlight the necessity of understanding the shape of your data. This will determine the kind of questions you can ask with the data, as well as the kind of statistical tools you need to describe it.</p>
-<p>For example, in the case we just examined, those x and y variables do not have any kind of clear linear relationship. In that case, tools like regression that assume linearity are not appropriate. Any relationship between the variables could only be explored through other statistical means.</p>
-<p>So, making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don’t underestimate the utility of good visualization for the analytic process itself.</p>
 
 
 </section>
@@ -717,11 +721,14 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./bivariate_categorical.html" class="pagination-link" aria-label="Bivariate: Categorical">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bivariate: Categorical</span></span>
+      <a href="./univariate_numeric.html" class="pagination-link" aria-label="Univariate: Numeric">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Univariate: Numeric</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./viz_introduction.html" class="pagination-link" aria-label="Introduction">
+        <span class="nav-page-text">Introduction</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

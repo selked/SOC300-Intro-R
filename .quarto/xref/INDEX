@@ -52,5 +52,8 @@
   },
   "univariate_numeric.qmd": {
     "univariate_numeric.html": "d710da29"
+  },
+  "bivariate_categorical.qmd": {
+    "bivariate_categorical.html": "a481f4ff"
   }
 }

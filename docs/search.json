@@ -281,6 +281,17 @@
     ]
   },
   {
+    "objectID": "bivariate_categorical.html",
+    "href": "bivariate_categorical.html",
+    "title": "6  Bivariate: Categorical",
+    "section": "",
+    "text": "6.1 Contingency Tables\nNow that we know how to peek under the hood of our variables individually, it’s time to start looking at them in combination.\nWe will start with bivariate analysis, or the association between two variables.\nLet’s begin with the procedure for categorical variables. We will start with the basic display of two categorical variables and then get some practice with the chi-squared test, which is a common statistical test that assumes both variables are categorical.\nWe will learn to recognize associations in the contingency table, and then we’ll use the chi-squared test to estimate the likelihood that the relationship we find is genuine or merely an artifact of random chance.\nAlso known as cross-tabulations—or crosstabs for short—contingency tables are quite similar to frequency tables. Rather than showing the distribution of a single variable, they show us the distribution of our dependent variable across the levels of our independent variable.\nLet’s dig in with an example. We’ll keep working with our GSS subset, so let’s go ahead and set up our workspace by loading in our packages & data. We will need both tidyverse and janitor for this tutorial.\nlibrary(tidyverse)\nlibrary(janitor)\nload(\"our_gss.rda\")\nWe’ll set up a simple hypothesis to illustrate. Let’s say that, based on theory, we predict a person’s gender will impact their likelihood of identifying as a Democrat or a Republican.\nNow, there’s enough literature on gender and political affiliation that we would probably be justified in making a more specific hypothesis about the predicted direction of the association, but let’s just say we simply predict that political-party affiliation will vary across categories of sex.\nThis would be our alternative hypothesis, and its respective null hypothesis is that women and men are equally likely to identify with both political parties.\nIn other words, the alternative hypothesis is that the proportion of men and women will be different across political parties. The null hypothesis is that there will be no such difference.\nWe’ll work with the dem_rep variable that we created when learning about variable re-coding, as well as the sex variable.\nThankfully, we can use a familiar function in tabyl(), which we used to create our frequency table. We can simply add a second variable to produce a crosstab, though we will need to specify a couple of things so that the variables are properly formatted in terms of rows and columns.\nour_gss |&gt;\n  drop_na(sex, dem_rep) |&gt;\n  tabyl(\n    var1 = dem_rep,\n    var2 = sex\n  )\n\n    dem_rep female male\n   Democrat    629  416\n Republican    371  418",
+    "crumbs": [
+      "Day 3: Bivariate Analysis with the GSS",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Bivariate: Categorical</span>"
+    ]
+  },
+  {
     "objectID": "viz_introduction.html",
     "href": "viz_introduction.html",
     "title": "Introduction",
