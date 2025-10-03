@@ -257,7 +257,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#contingency-tables" id="toc-contingency-tables" class="nav-link active" data-scroll-target="#contingency-tables"><span class="header-section-number">6.1</span> Contingency Tables</a></li>
+  <li><a href="#contingency-tables" id="toc-contingency-tables" class="nav-link active" data-scroll-target="#contingency-tables"><span class="header-section-number">6.1</span> Contingency Tables</a>
+  <ul class="collapse">
+  <li><a href="#creating-our-tale" id="toc-creating-our-tale" class="nav-link" data-scroll-target="#creating-our-tale"><span class="header-section-number">6.1.1</span> Creating our tale</a></li>
+  <li><a href="#reading-our-table" id="toc-reading-our-table" class="nav-link" data-scroll-target="#reading-our-table"><span class="header-section-number">6.1.2</span> Reading our table</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -296,6 +300,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"our_gss.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="creating-our-tale" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="creating-our-tale"><span class="header-section-number">6.1.1</span> Creating our tale</h3>
 <p>We’ll set up a simple hypothesis to illustrate. Let’s say that, based on theory, we predict a person’s gender will impact their likelihood of identifying as a Democrat or a Republican.</p>
 <p>Now, there’s enough literature on gender and political affiliation that we would probably be justified in making a more specific hypothesis about the predicted direction of the association, but let’s just say we simply predict that political-party affiliation will vary across categories of <code>sex</code>.</p>
 <p>This would be our alternative hypothesis, and its respective null hypothesis is that women and men are equally likely to identify with both political parties.</p>
@@ -315,8 +321,112 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Republican    371  418</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Whenever you make a two-way crosstab like this, make sure that you always give your dependent variable as <code>var1</code> and your independent variable as <code>var2</code>. This will make sure your dependent variable appears as rows and your independent variable as columns, which makes everything much easier to parse for our purposes.</p>
+</div>
+</div>
+<p>Now, let’s clean it up a little bit with the <code>adorn_()</code> functions like we did before.</p>
+<p>First, let’s add a <code>totals</code> row at the bottom, which will tell us how many respondents are in each category of the independent variable. Note that we always need to add <code>adorn_totals()</code> before all other <code>adorn_()</code> functions. It requires the raw counts as input, and these will be transformed by most other <code>adorn_()</code> functions, so we will get an error if we try to run <code>adorn_totals()</code> afterwards.</p>
+<p>We’ll give one input to <code>adorn_totals()</code>, which will be <code>where = "row"</code>, to indicate that we want the totals to appear as a row.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">var1 =</span> dem_rep,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">var2 =</span> sex) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    dem_rep female male
+   Democrat    629  416
+ Republican    371  418
+      Total   1000  834</code></pre>
+</div>
+</div>
+<p>Now, let’s convert counts to proportions. Somewhat misleadingly, this is done with the <code>adorn_percentages()</code> function, and then we can add the <code>adorn_pct_formatting()</code> function to turn them into percentages proper.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">var1 =</span> dem_rep,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">var2 =</span> sex) <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_percentages</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    dem_rep female  male
+   Democrat  60.2% 39.8%
+ Republican  47.0% 53.0%
+      Total  54.5% 45.5%</code></pre>
+</div>
+</div>
+<p>While percentages help give important context, it’s important that we still complement the percentages with the raw numbers. Thankfully, we can add those back in alongside the percentages with <code>adorn_ns()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">var1 =</span> dem_rep,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">var2 =</span> sex) <span class="sc">|&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_percentages</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_ns</span>(<span class="at">position =</span> <span class="st">"front"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    dem_rep        female        male
+   Democrat   629 (60.2%) 416 (39.8%)
+ Republican   371 (47.0%) 418 (53.0%)
+      Total 1,000 (54.5%) 834 (45.5%)</code></pre>
+</div>
+</div>
+<p>Great. Let’s go ahead and tack on a totals row as well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">var1 =</span> dem_rep,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">var2 =</span> sex) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_percentages</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_ns</span>(<span class="at">position =</span> <span class="st">"rear"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_title</span>(</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">placement =</span> <span class="st">"top"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">row_name =</span> <span class="st">"Political Party"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_name =</span> <span class="st">"Sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                           Sex            
+ Political Party        female        male
+        Democrat 60.2%   (629) 39.8% (416)
+      Republican 47.0%   (371) 53.0% (418)
+           Total 54.5% (1,000) 45.5% (834)</code></pre>
+</div>
+</div>
+<p>Great! Like our other visualizations, we’ll clean this up a bit more later on, but this will do for now.</p>
+</section>
+<section id="reading-our-table" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="reading-our-table"><span class="header-section-number">6.1.2</span> Reading our table</h3>
+<p>Now that have our two-way crosstab, let’s go ahead and think about what this means for our hypothesis.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                           Sex            
+ Political Party        female        male
+        Democrat 60.2%   (629) 39.8% (416)
+      Republican 47.0%   (371) 53.0% (418)
+           Total 54.5% (1,000) 45.5% (834)</code></pre>
+</div>
+</div>
+<p>Because our dependent variable makes up the rows, we can simply read across each row to get a sense of the patterns.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

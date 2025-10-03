@@ -18,6 +18,7 @@ library(janitor)
 load("our_gss.rda")
 ```
 
+### Creating our tale
 We'll set up a simple hypothesis to illustrate. Let's say that, based on theory, we predict a person's gender will impact their likelihood of identifying as a Democrat or a Republican.
 
 Now, there's enough literature on gender and political affiliation that we would probably be justified in making a more specific hypothesis about the predicted direction of the association, but let's just say we simply predict that political-party affiliation will vary across categories of `sex`. 
@@ -56,8 +57,85 @@ our_gss |>
   )
   
 ```
+::: {.callout-caution}
+Whenever you make a two-way crosstab like this, make sure that you always give your dependent variable as `var1` and your independent variable as `var2`. This will make sure your dependent variable appears as rows and your independent variable as columns, which makes everything much easier to parse for our purposes.
+:::
 
+Now, let's clean it up a little bit with the `adorn_()` functions like we did before.
 
+First, let's add a `totals` row at the bottom, which will tell us how many respondents are in each category of the independent variable. Note that we always need to add `adorn_totals()` before all other `adorn_()` functions. It requires the raw counts as input, and these will be transformed by most other `adorn_()` functions, so we will get an error if we try to run `adorn_totals()` afterwards.
+
+We'll give one input to `adorn_totals()`, which will be `where = "row"`, to indicate that we want the totals to appear as a row. 
+```{r}
+our_gss |>
+  drop_na(sex, dem_rep) |>
+  tabyl(
+    var1 = dem_rep,
+    var2 = sex) |>
+  adorn_totals(where = "row")
+```
+
+Now, let's convert counts to proportions. Somewhat misleadingly, this is done with the `adorn_percentages()` function, and then we can add the `adorn_pct_formatting()` function to turn them into percentages proper.
+```{r}
+our_gss |>
+  drop_na(sex, dem_rep) |>
+  tabyl(
+    var1 = dem_rep,
+    var2 = sex) |>
+  adorn_totals(where = "row") |>
+  adorn_percentages() |>
+  adorn_pct_formatting()
+```
+
+While percentages help give important context, it's important that we still complement the percentages with the raw numbers. Thankfully, we can add those back in alongside the percentages with `adorn_ns()`
+```{r}
+our_gss |>
+  drop_na(sex, dem_rep) |>
+  tabyl(
+    var1 = dem_rep,
+    var2 = sex) |>
+  adorn_totals(where = "row") |>
+  adorn_percentages() |>
+  adorn_pct_formatting() |>
+  adorn_ns(position = "front")
+```
+Great. Let's go ahead and tack on a totals row as well.
+```{r}
+our_gss |>
+  drop_na(sex, dem_rep) |>
+  tabyl(
+    var1 = dem_rep,
+    var2 = sex) |>
+  adorn_totals(where = "row") |>
+  adorn_percentages() |>
+  adorn_pct_formatting() |>
+  adorn_ns(position = "rear") |>
+  adorn_title(
+    placement = "top",
+    row_name = "Political Party",
+    col_name = "Sex")
+
+```
+Great! Like our other visualizations, we'll clean this up a bit more later on, but this will do for now.
+
+### Reading our table
+Now that have our two-way crosstab, let's go ahead and think about what this means for our hypothesis. 
+```{r, eval = TRUE, echo = FALSE}
+our_gss |>
+  drop_na(sex, dem_rep) |>
+  tabyl(
+    var1 = dem_rep,
+    var2 = sex) |>
+  adorn_totals(where = "row") |>
+  adorn_percentages() |>
+  adorn_pct_formatting() |>
+  adorn_ns(position = "rear") |>
+  adorn_title(
+    placement = "top",
+    row_name = "Political Party",
+    col_name = "Sex")
+```
+Because our dependent variable makes up the rows, we can simply read across each row to get a sense of the patterns.
 
 
 
