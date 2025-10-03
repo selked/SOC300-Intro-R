@@ -18,7 +18,7 @@ library(janitor)
 load("our_gss.rda")
 ```
 
-### Creating our tale
+### Creating our table
 We'll set up a simple hypothesis to illustrate. Let's say that, based on theory, we predict a person's gender will impact their likelihood of identifying as a Democrat or a Republican.
 
 Now, there's enough literature on gender and political affiliation that we would probably be justified in making a more specific hypothesis about the predicted direction of the association, but let's just say we simply predict that political-party affiliation will vary across categories of `sex`. 
@@ -99,7 +99,7 @@ our_gss |>
   adorn_pct_formatting() |>
   adorn_ns(position = "front")
 ```
-Great. Let's go ahead and tack on a totals row as well.
+Great. For our final adornment, let's add some better labels for the variables. We'll use `adorn_title()` for this, and we'll supply `placement = top` to let the function know we want the labels on top of each variable column. Then we can provide custom label names with `row_name =` and `col_name =`.
 ```{r}
 our_gss |>
   drop_na(sex, dem_rep) |>
@@ -137,7 +137,32 @@ our_gss |>
 ```
 Because our dependent variable makes up the rows, we can simply read across each row to get a sense of the patterns.
 
+Reading across the Democrat row, we can see that about 60% of Dems are women, and about 40% of Dems are men. So, there a decent-sized difference there.
 
+If we read across the Republican row, we can see that 47% are women compared to 53% men. This is not a big a difference as we see with Democrats, but, across both rows, it seems to be the case that women are more likely to be Democrats, and men are more likely to be Republicans
 
+However, in order to test whether this apparent association is statistically significant, we need to make use of the chi-squared test.
 
+## Chi-squared Test
+```{r}
+our_gss |>
+  drop_na(sex, dem_rep) |>
+  tabyl(
+    var1 = dem_rep,
+    var2 = sex) |>
+  chisq.test()
+```
+
+```{r}
+library(gtsummary)
+
+our_gss |>
+select(sex, dem_rep) |>
+  drop_na() |>
+  tbl_summary(
+    by = sex,
+    label = list(sex = "Sex", dem_rep = "Political Party")) |> 
+  add_p()
+  
+```
 
