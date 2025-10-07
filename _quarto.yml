@@ -25,8 +25,6 @@ book:
         - univariate_categorical.qmd
         - univariate_numeric.qmd
     - part: "Day 3: Bivariate Analysis with the GSS"
-      chapters:
-        - bivariate_categorical.qmd
     - part: "Day 4: Multivariable Analysis and Elaboration"
     - part: "Day 5: Making Better Visualizations"
       chapters:
