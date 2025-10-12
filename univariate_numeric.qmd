@@ -141,7 +141,7 @@ ggplot(our_gss, aes(realrinc)) +
     panel.grid.minor = element_blank()
   )
 
-showtext_end()
+showtext_auto(enable = FALSE)
 ```
 
 In the case of `realrinc`, we definitely do not have much normality going on. For one, there are some apparent outlier cases. Much of our data seems to be concentrated within about \$0 - \$75,000, but then we have a bunch of values at roughly double the maximum of that narrower range. And even within the range where most of our responses are clustered, we have some clear right-skew.
@@ -263,7 +263,7 @@ d2 <- data.frame(label = "low_sd", value = low_sd)
 
 sd_examples <- rbind(d, d2)
 
-showtext_auto()
+showtext_auto(enable = TRUE)
 
 ggplot(
   sd_examples,

@@ -89,10 +89,10 @@ dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
     facet_wrap(~dataset, nrow=3) +
     theme_ft_rc(
       base_size = 14,
-      axis_text_size = 14,
-      axis_title_size = 16,
+      axis_text_size = 20,
+      axis_title_size = 24,
       #plot_title_size = 30,
-      caption_size = 14,
+      caption_size = 16,
       strip_text_size = 24) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
