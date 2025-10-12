@@ -123,6 +123,7 @@ ggplot(our_gss, aes(realrinc)) +
   geom_vline(aes(xintercept = mean(realrinc, na.rm = TRUE), color = "mean")) +
   geom_vline(aes(xintercept = median(realrinc, na.rm = TRUE), color = "median"), linetype="dashed") +
   scale_color_manual(name = "stat", values = c(mean = "brown", median = "orange")) +
+  scale_x_continuous(labels = dollar_format()) +
   theme_ft_rc(
       base_size = 24,
       axis_text_size = 24,
@@ -140,7 +141,7 @@ ggplot(our_gss, aes(realrinc)) +
     panel.grid.minor = element_blank()
   )
 
-showtext_auto()
+showtext_end()
 ```
 
 In the case of `realrinc`, we definitely do not have much normality going on. For one, there are some apparent outlier cases. Much of our data seems to be concentrated within about \$0 - \$75,000, but then we have a bunch of values at roughly double the maximum of that narrower range. And even within the range where most of our responses are clustered, we have some clear right-skew.
