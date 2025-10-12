@@ -18,6 +18,7 @@ First, let's go ahead and set up our environment by loading in our data and `tid
 library(tidyverse)
 load("our_gss.rda")
 ```
+
 ```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
 library(sysfonts)
 sysfonts::font_add_google("Roboto Condensed")
@@ -28,7 +29,6 @@ library(tidyverse)
 library(scales)
 library(wesanderson)
 ```
-
 
 ### Histograms
 
@@ -267,13 +267,15 @@ showtext_auto(enable = TRUE)
 
 ggplot(
   sd_examples,
-    aes(value, fill = label)) +
+    aes(value, fill = label, color = label)) +
       geom_density() +
       labs(title = "Comparing Low vs. High SD Distributions",
        x = "Response value",
        y = "Proportion of responses",
        fill = "none") +
   scale_fill_manual(values = c("orange", "brown"), labels = c("High SD", "Low SD" )) +
+  scale_color_manual(values = c("orange", "brown")) +
+  guides(color = "none") +
   theme_ft_rc(
       base_size = 24,
       axis_text_size = 24,

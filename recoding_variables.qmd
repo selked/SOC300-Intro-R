@@ -212,8 +212,8 @@ We can use the `fct_recode()` function for this. For the first input, we will gi
 our_gss <- our_gss |>
   mutate(dem_rep = fct_recode(
     partyid_recoded, 
-    NULL="Other Party", 
-    NULL="Independent"))
+    NULL = "Other Party", 
+    NULL = "Independent"))
 
 ```
 
