@@ -122,7 +122,7 @@ ggplot(our_gss, aes(realrinc)) +
   geom_histogram(breaks = breaks) +
   geom_vline(aes(xintercept = mean(realrinc, na.rm = TRUE), color = "mean")) +
   geom_vline(aes(xintercept = median(realrinc, na.rm = TRUE), color = "median"), linetype="dashed") +
-  scale_color_manual(name = "stat", values = c(mean = "brown", median = "orange")) +
+  scale_color_manual(labels = c("Mean ($27.8k)", "Median ($18.4k)"), name = "Stat", values = c(mean = "brown", median = "orange")) +
   scale_x_continuous(
     labels = dollar_format()) +
   theme_ft_rc(
