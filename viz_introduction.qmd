@@ -60,10 +60,10 @@ dino |>
     theme(legend.position = "none") +
     facet_wrap(~dataset, nrow=3) + 
     theme_ft_rc(
-      base_size = 14,
-      axis_text_size = 14,
-      axis_title_size = 16,
-      plot_title_size = 22) +
+      base_size = 24,
+      axis_text_size = 24,
+      axis_title_size = 24,
+      plot_title_size = 30) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
     )
@@ -87,10 +87,10 @@ dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
     labs(caption = "(Data from the R package 'datasauRus')") +
     facet_wrap(~dataset, nrow=3) +
     theme_ft_rc(
-      base_size = 14,
-      axis_text_size = 14,
-      axis_title_size = 16,
-      plot_title_size = 22,
+      base_size = 24,
+      axis_text_size = 24,
+      axis_title_size = 24,
+      plot_title_size = 30,
       caption_size = 12) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
