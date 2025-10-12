@@ -18,6 +18,18 @@ First, let's go ahead and set up our environment by loading in our data and `tid
 library(tidyverse)
 load("our_gss.rda")
 ```
+```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+library(sysfonts)
+sysfonts::font_add_google("Roboto Condensed")
+sysfonts::font_add("Arial Narrow", regular = "ARIALN.ttf")
+library(showtext)
+library(hrbrthemes)
+library(tidyverse)
+library(scales)
+library(wesanderson)
+showtext_auto()
+```
+
 
 ### Histograms
 
@@ -75,6 +87,7 @@ ggplot(d, aes(y)) +
   geom_vline(aes(xintercept = mean(y), color = "mean")) +
   geom_vline(aes(xintercept = median(y), color = "median"), linetype="dashed") +
   scale_color_manual(name = "stat", values = c(mean = "brown", median = "orange")) +
+  theme_ft_rc() +
   labs(
     title = "Normal distribution; n = 10,000",
     x = "Response value",
@@ -102,10 +115,14 @@ ggplot(our_gss, aes(realrinc)) +
   geom_vline(aes(xintercept = mean(realrinc, na.rm = TRUE), color = "mean")) +
   geom_vline(aes(xintercept = median(realrinc, na.rm = TRUE), color = "median"), linetype="dashed") +
   scale_color_manual(name = "stat", values = c(mean = "brown", median = "orange")) +
+  theme_ft_rc() +
   labs(
     title = "Income distribution of 2022 GSS Respondents",
     x = "Respondent's income in dollars",
-    y = "Frequency"
+    y = "Frequency") +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
   )
 ```
 
@@ -217,7 +234,7 @@ max(our_gss$realrinc, na.rm = TRUE)
 This is one of the more commonly reported dispersion metrics for numeric data. The standard deviation is a measure of how much the average value varies from the mean. In plainer terms, it's a measure that tells us how spread out the distribution is.
 
 ```{r, eval = TRUE, echo = FALSE}
-high_sd <- rnorm(10000, 0, 5)
+high_sd <- rnorm(10000, 0, 4)
 low_sd <- rnorm(10000, 0, 1)
 
 
@@ -237,6 +254,7 @@ ggplot(
        y = "Proportion of responses",
        fill = "none") +
   scale_fill_manual(values = c("orange", "brown"), labels = c("High SD", "Low SD" )) +
+  theme_ft_rc() +
   theme(legend.title = element_blank())
 ```
 

@@ -1,5 +1,15 @@
 # Introduction {.unnumbered}
-
+```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+library(sysfonts)
+sysfonts::font_add_google("Roboto Condensed")
+sysfonts::font_add("Arial Narrow", regular = "ARIALN.ttf")
+library(showtext)
+library(hrbrthemes)
+library(tidyverse)
+library(scales)
+library(wesanderson)
+showtext_auto()
+```
 Up to this point, we have worked with pretty simple visualizations, just so we can quickly glean important information about our statistical models without spending too much time focusing on the aesthetics of the visuals.
 
 In this lab, we will learn a bit more about R's graphical capability---especially through tidyverse's `ggplot`---which provides us with incredible customizability. We will learn how to fine-tune some of the visuals we have already worked with, and we will preview some other common visual styles that can manage with `ggplot`.
@@ -24,28 +34,32 @@ dino <- datasaurus_dozen
 
 dino_mean <- dino |>
   group_by(dataset) |> 
-        summarise("mean_x" = mean(x), 
-                  "mean_y" = mean(y),
-                  "std_x" = sd(x),
-                  "std_y" = sd(y),
+        summarise("Mean (x)" = mean(x), 
+                  "Mean (y)" = mean(y),
+                  "SD (x)" = sd(x),
+                  "SD (y)" = sd(y),
                                       ) |>
   mutate_if(is.numeric, round, 1) |>
   select(!dataset)
 
-dino_mean
+knitr::kable(dino_mean)
 ```
+
 Well, there's not much we can say here. All the summary statistics are identical. Why don't we try modeling a linear relationship between the x and y variables. Maybe looking at the correlations will tell us something. I'll display the linear regression lines for each data set below.
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE}
 dino |> 
   ggplot(
   aes(x=x, y=y, color=dataset)) +
-    geom_smooth(method="lm")+
+    geom_smooth(method="lm") +
+    guides(color = "none") +
     ylim(0,100)+
     theme(legend.position = "none") +
-    facet_wrap(~dataset, nrow=3)
+    facet_wrap(~dataset, nrow=3) + 
+    theme_ft_rc()
 ```
-Okay. This is not revealing much either. All the lines seem to have the same slope, which shows a (slight) negative relationship where y decreases as x increases. The correlations aren't revealing any notable distinctions. 
+
+Okay. This is not revealing much either. All the lines seem to have the same slope, which shows a (slight) negative relationship where y decreases as x increases. The correlations aren't revealing any notable distinctions.
 
 But wait. One thing we can see here is that, while the correlations appear to be about the same, there are some differences in the ranges of values. Note that the regression lines don't extend across the same range of x-axis values in each data set. Maybe there is something here after all.
 
@@ -56,20 +70,23 @@ dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
   ggplot(
   aes(x=x, y=y, color=dataset)) +
     geom_smooth(method="lm")+
+    guides(color = "none") +
     ylim(0,100)+
     geom_point()+
     theme(legend.position = "none") +
     labs(subtitle = "(Data from the R package 'datasauRus')") +
-    facet_wrap(~dataset, nrow=3) 
+    facet_wrap(~dataset, nrow=3) +
+    theme_ft_rc()
 
 ```
-Now there's some distinction! 
+
+Now there's some distinction!
 
 This is a tongue in cheek data set known as the ['datasaurus dozen'](https://jumpingrivers.github.io/datasauRus/). It's often used in intro statistical classes to help illustrate the importance of visualization. It's inspired by another conceptually similar data set known as ['Anscombe's quartet'](https://en.wikipedia.org/wiki/Anscombe%27s_quartet) which likewise stresses the role of plotting data in producing well informed analyses.
 
-
 ## In Sum
-So, take this as a showcase of the importance of visualizing your data. This isn't to discount summary statistics and other numeric description of data---those are still invaluable for us. 
+
+So, take this as a showcase of the importance of visualizing your data. This isn't to discount summary statistics and other numeric description of data---those are still invaluable for us.
 
 Rather, cases like Datasaurus or Anscombe's quartet highlight the necessity of understanding the shape of your data. This will determine the kind of questions you can ask with the data, as well as the kind of statistical tools you need to describe it.
 
