@@ -95,17 +95,17 @@ But first, I want to give a little context on interval notation in mathematics. 
 
 #### An aside on intervals
 
-In mathematic terms, an interval is the set of all numbers in between two specified end points. In formal notation, these are indicated with the two endpoints placed in square brackets, e.g \[1,5\] as the interval of 1 through 5.
+In mathematic terms, an interval is the set of all numbers in between two specified end points. In formal notation, these are indicated with the two endpoints placed in brackets, e.g \[1,5\] as the interval of 1 through 5.
 
 There are some technical terms to describe whether or not we want to include the endpoints when we are talking about a particular interval.
 
--   **Closed interval**: This is when both end points are included in the interval. Closedness is indicated with square brackets, so, the closed interval of 1 through 5 would be written just like I have above---\[1,5\]. This indicates any number 'x' where 1 \<= x \<= 5
+-   **Closed interval**: This is when both end points are included in the interval. Closedness is indicated with square brackets, so, the closed interval of 1 through 5 would be written just like I have above---\[1,5\]. This indicates any number $x$ where $1 \leq x \leq 5$
 
--   **Open interval**: This is when neither endpoint is included in the interval. In interval notation, openness is indicated with parentheses rather than square brackets, so the open interval of 1 through 5 would be written as (1,5). This interval would indicate any number 'x' where 1 \< x \< 5
+-   **Open interval**: This is when neither endpoint is included in the interval. In interval notation, openness is indicated with parentheses rather than square brackets, so the open interval of 1 through 5 would be written as (1,5). This interval would indicate any number $x$ where $1 < x < 5$
 
--   **Left-open interval**: This is when the left-hand endpoint is not included, but the right-hand endpoint is. This would be written as (1,5\] in interval notation, and that interval would indicate any number 'x' where 1 \< x \<= 5
+-   **Left-open interval**: This is when the left-hand endpoint is not included, but the right-hand endpoint is. This would be written as (1,5\] in interval notation, and that interval would indicate any number $x$ where $1 < x \leq 5$
 
--   **Right-open interval**: When the right-hand endpoint isn't included but the left endpoint is, you have a right-open interval. This would be written as \[1,5) in interval notation and would indicate any number 'x' where 1 \<= x \< 5.
+-   **Right-open interval**: When the right-hand endpoint isn't included but the left endpoint is, you have a right-open interval. This would be written as \[1,5) in interval notation and would indicate any number $x$ where $1 \leq x < 5$.
 
 We will be working with the right-open interval format, and we can specify that in `cut()`.
 
@@ -144,7 +144,7 @@ our_gss <- our_gss |>
   mutate(
     age_ord = cut(
       age,
-      breaks = c(18, 36, 51, Inf),
+      breaks = c(18, 36, 50, Inf),
       include.lowest = TRUE,
       right = FALSE,
       labels = c("Younger", "Middle Age", "Older"),

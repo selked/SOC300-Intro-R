@@ -105,6 +105,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -402,13 +431,13 @@ Note
 <p>But first, I want to give a little context on interval notation in mathematics. It will help us all be a little more precise when we talk about ranges, and it will also help us understand an input we need to provide for <code>cut()</code>.</p>
 <section id="an-aside-on-intervals" class="level4" data-number="3.2.4.1">
 <h4 data-number="3.2.4.1" class="anchored" data-anchor-id="an-aside-on-intervals"><span class="header-section-number">3.2.4.1</span> An aside on intervals</h4>
-<p>In mathematic terms, an interval is the set of all numbers in between two specified end points. In formal notation, these are indicated with the two endpoints placed in square brackets, e.g [1,5] as the interval of 1 through 5.</p>
+<p>In mathematic terms, an interval is the set of all numbers in between two specified end points. In formal notation, these are indicated with the two endpoints placed in brackets, e.g [1,5] as the interval of 1 through 5.</p>
 <p>There are some technical terms to describe whether or not we want to include the endpoints when we are talking about a particular interval.</p>
 <ul>
-<li><p><strong>Closed interval</strong>: This is when both end points are included in the interval. Closedness is indicated with square brackets, so, the closed interval of 1 through 5 would be written just like I have above—[1,5]. This indicates any number ‘x’ where 1 &lt;= x &lt;= 5</p></li>
-<li><p><strong>Open interval</strong>: This is when neither endpoint is included in the interval. In interval notation, openness is indicated with parentheses rather than square brackets, so the open interval of 1 through 5 would be written as (1,5). This interval would indicate any number ‘x’ where 1 &lt; x &lt; 5</p></li>
-<li><p><strong>Left-open interval</strong>: This is when the left-hand endpoint is not included, but the right-hand endpoint is. This would be written as (1,5] in interval notation, and that interval would indicate any number ‘x’ where 1 &lt; x &lt;= 5</p></li>
-<li><p><strong>Right-open interval</strong>: When the right-hand endpoint isn’t included but the left endpoint is, you have a right-open interval. This would be written as [1,5) in interval notation and would indicate any number ‘x’ where 1 &lt;= x &lt; 5.</p></li>
+<li><p><strong>Closed interval</strong>: This is when both end points are included in the interval. Closedness is indicated with square brackets, so, the closed interval of 1 through 5 would be written just like I have above—[1,5]. This indicates any number <span class="math inline">\(x\)</span> where <span class="math inline">\(1 \leq x \leq 5\)</span></p></li>
+<li><p><strong>Open interval</strong>: This is when neither endpoint is included in the interval. In interval notation, openness is indicated with parentheses rather than square brackets, so the open interval of 1 through 5 would be written as (1,5). This interval would indicate any number <span class="math inline">\(x\)</span> where <span class="math inline">\(1 &lt; x &lt; 5\)</span></p></li>
+<li><p><strong>Left-open interval</strong>: This is when the left-hand endpoint is not included, but the right-hand endpoint is. This would be written as (1,5] in interval notation, and that interval would indicate any number <span class="math inline">\(x\)</span> where <span class="math inline">\(1 &lt; x \leq 5\)</span></p></li>
+<li><p><strong>Right-open interval</strong>: When the right-hand endpoint isn’t included but the left endpoint is, you have a right-open interval. This would be written as [1,5) in interval notation and would indicate any number <span class="math inline">\(x\)</span> where <span class="math inline">\(1 \leq x &lt; 5\)</span>.</p></li>
 </ul>
 <p>We will be working with the right-open interval format, and we can specify that in <code>cut()</code>.</p>
 <p>Now, let’s return to our task at hand.</p>
@@ -438,7 +467,7 @@ Note
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_ord =</span> <span class="fu">cut</span>(</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      age,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">36</span>, <span class="dv">51</span>, <span class="cn">Inf</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">36</span>, <span class="dv">50</span>, <span class="cn">Inf</span>),</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">right =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Younger"</span>, <span class="st">"Middle Age"</span>, <span class="st">"Older"</span>),</span>
