@@ -63,7 +63,8 @@ dino |>
       base_size = 24,
       axis_text_size = 24,
       axis_title_size = 24,
-      plot_title_size = 30) +
+      plot_title_size = 30,
+      strip_text_size = 24) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
     )
@@ -79,19 +80,20 @@ Let's just go ahead and plot the actual data over our regression lines.
 dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
   ggplot(
   aes(x=x, y=y, color=dataset)) +
-    geom_smooth(method="lm")+
+    #geom_smooth(method="lm")+
     guides(color = "none") +
     ylim(0,100)+
-    geom_point()+
+    geom_point(size = .5)+
     theme(legend.position = "none") +
     labs(caption = "(Data from the R package 'datasauRus')") +
     facet_wrap(~dataset, nrow=3) +
     theme_ft_rc(
-      base_size = 24,
-      axis_text_size = 24,
-      axis_title_size = 24,
-      plot_title_size = 30,
-      caption_size = 12) +
+      base_size = 14,
+      axis_text_size = 14,
+      axis_title_size = 16,
+      #plot_title_size = 30,
+      caption_size = 14,
+      strip_text_size = 20) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
     )
