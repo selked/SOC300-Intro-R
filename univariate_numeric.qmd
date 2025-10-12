@@ -87,12 +87,18 @@ ggplot(d, aes(y)) +
   geom_vline(aes(xintercept = mean(y), color = "mean")) +
   geom_vline(aes(xintercept = median(y), color = "median"), linetype="dashed") +
   scale_color_manual(name = "stat", values = c(mean = "brown", median = "orange")) +
-  theme_ft_rc() +
+  theme_ft_rc(
+      axis_text_size = 11,
+      axis_title_size = 14,
+      plot_title_size = 16) +
+    theme(
+      plot.margin = unit(c(.25,.25,.25,.25), "cm")
+    ) +
   labs(
     title = "Normal distribution; n = 10,000",
     x = "Response value",
-    y = "Frequency"
-  )
+    y = "Frequency")
+  
 ```
 
 In this case, we can't even really tell the mean and median apart. In fact, in a completely normal distribution, all three measures of central tendency will be equal. Remember that real-world data will rarely exhibit perfect normality, but as long as it's approximately normal, we can follow convention and report the mean.
@@ -115,7 +121,12 @@ ggplot(our_gss, aes(realrinc)) +
   geom_vline(aes(xintercept = mean(realrinc, na.rm = TRUE), color = "mean")) +
   geom_vline(aes(xintercept = median(realrinc, na.rm = TRUE), color = "median"), linetype="dashed") +
   scale_color_manual(name = "stat", values = c(mean = "brown", median = "orange")) +
-  theme_ft_rc() +
+  theme_ft_rc(axis_text_size = 11,
+      axis_title_size = 14,
+      plot_title_size = 16) +
+    theme(
+      plot.margin = unit(c(.25,.25,.25,.25), "cm")
+    ) +
   labs(
     title = "Income distribution of 2022 GSS Respondents",
     x = "Respondent's income in dollars",
@@ -254,7 +265,12 @@ ggplot(
        y = "Proportion of responses",
        fill = "none") +
   scale_fill_manual(values = c("orange", "brown"), labels = c("High SD", "Low SD" )) +
-  theme_ft_rc() +
+  theme_ft_rc(axis_text_size = 11,
+      axis_title_size = 14,
+      plot_title_size = 16) +
+    theme(
+      plot.margin = unit(c(.25,.25,.25,.25), "cm")
+    ) +
   theme(legend.title = element_blank())
 ```
 

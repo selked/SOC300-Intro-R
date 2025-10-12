@@ -1,4 +1,5 @@
 # Introduction {.unnumbered}
+
 ```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
 library(sysfonts)
 sysfonts::font_add_google("Roboto Condensed")
@@ -10,6 +11,7 @@ library(scales)
 library(wesanderson)
 showtext_auto()
 ```
+
 Up to this point, we have worked with pretty simple visualizations, just so we can quickly glean important information about our statistical models without spending too much time focusing on the aesthetics of the visuals.
 
 In this lab, we will learn a bit more about R's graphical capability---especially through tidyverse's `ggplot`---which provides us with incredible customizability. We will learn how to fine-tune some of the visuals we have already worked with, and we will preview some other common visual styles that can manage with `ggplot`.
@@ -56,7 +58,13 @@ dino |>
     ylim(0,100)+
     theme(legend.position = "none") +
     facet_wrap(~dataset, nrow=3) + 
-    theme_ft_rc()
+    theme_ft_rc(
+      axis_text_size = 11,
+      axis_title_size = 14,
+      plot_title_size = 16) +
+    theme(
+      plot.margin = unit(c(.25,.25,.25,.25), "cm")
+    )
 ```
 
 Okay. This is not revealing much either. All the lines seem to have the same slope, which shows a (slight) negative relationship where y decreases as x increases. The correlations aren't revealing any notable distinctions.
@@ -74,9 +82,15 @@ dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
     ylim(0,100)+
     geom_point()+
     theme(legend.position = "none") +
-    labs(subtitle = "(Data from the R package 'datasauRus')") +
+    labs(caption = "(Data from the R package 'datasauRus')") +
     facet_wrap(~dataset, nrow=3) +
-    theme_ft_rc()
+    theme_ft_rc(
+      axis_text_size = 11,
+      axis_title_size = 14,
+      plot_title_size = 16) +
+    theme(
+      plot.margin = unit(c(.25,.25,.25,.25), "cm")
+    )
 
 ```
 
