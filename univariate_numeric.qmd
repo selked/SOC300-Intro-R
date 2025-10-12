@@ -123,12 +123,15 @@ ggplot(our_gss, aes(realrinc)) +
   geom_vline(aes(xintercept = mean(realrinc, na.rm = TRUE), color = "mean")) +
   geom_vline(aes(xintercept = median(realrinc, na.rm = TRUE), color = "median"), linetype="dashed") +
   scale_color_manual(name = "stat", values = c(mean = "brown", median = "orange")) +
-  scale_x_continuous(labels = dollar_format()) +
+  scale_x_continuous(
+    breaks = seq(0,150000,25000),
+    labels = dollar_format()) +
   theme_ft_rc(
       base_size = 24,
       axis_text_size = 24,
       axis_title_size = 24,
-      plot_title_size = 30) +
+      plot_title_size = 30,
+      ticks = TRUE) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
     ) +
