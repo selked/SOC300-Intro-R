@@ -9,7 +9,6 @@ library(hrbrthemes)
 library(tidyverse)
 library(scales)
 library(wesanderson)
-showtext_auto()
 ```
 
 Up to this point, we have worked with pretty simple visualizations, just so we can quickly glean important information about our statistical models without spending too much time focusing on the aesthetics of the visuals.
@@ -50,6 +49,8 @@ knitr::kable(dino_mean)
 Well, there's not much we can say here. All the summary statistics are identical. Why don't we try modeling a linear relationship between the x and y variables. Maybe looking at the correlations will tell us something. I'll display the linear regression lines for each data set below.
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE}
+showtext_auto()
+
 dino |> 
   ggplot(
   aes(x=x, y=y, color=dataset)) +
@@ -59,9 +60,10 @@ dino |>
     theme(legend.position = "none") +
     facet_wrap(~dataset, nrow=3) + 
     theme_ft_rc(
-      axis_text_size = 11,
-      axis_title_size = 14,
-      plot_title_size = 16) +
+      base_size = 14,
+      axis_text_size = 14,
+      axis_title_size = 16,
+      plot_title_size = 22) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
     )
@@ -85,9 +87,11 @@ dino |> # filter (dataset %in% c("bullseye", "star", "dino", "dots")) |>
     labs(caption = "(Data from the R package 'datasauRus')") +
     facet_wrap(~dataset, nrow=3) +
     theme_ft_rc(
-      axis_text_size = 11,
-      axis_title_size = 14,
-      plot_title_size = 16) +
+      base_size = 14,
+      axis_text_size = 14,
+      axis_title_size = 16,
+      plot_title_size = 22,
+      caption_size = 12) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
     )

@@ -27,7 +27,6 @@ library(hrbrthemes)
 library(tidyverse)
 library(scales)
 library(wesanderson)
-showtext_auto()
 ```
 
 
@@ -82,15 +81,18 @@ ndist <- rnorm(10000)
 
 d <- data.frame(x = 1:length(ndist), y = ndist)
 
+showtext_auto()
+
 ggplot(d, aes(y)) + 
   geom_histogram(binwidth = .1) +
   geom_vline(aes(xintercept = mean(y), color = "mean")) +
   geom_vline(aes(xintercept = median(y), color = "median"), linetype="dashed") +
   scale_color_manual(name = "stat", values = c(mean = "brown", median = "orange")) +
   theme_ft_rc(
-      axis_text_size = 11,
-      axis_title_size = 14,
-      plot_title_size = 16) +
+      base_size = 14,
+      axis_text_size = 14,
+      axis_title_size = 16,
+      plot_title_size = 24) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
     ) +
@@ -98,7 +100,7 @@ ggplot(d, aes(y)) +
     title = "Normal distribution; n = 10,000",
     x = "Response value",
     y = "Frequency")
-  
+
 ```
 
 In this case, we can't even really tell the mean and median apart. In fact, in a completely normal distribution, all three measures of central tendency will be equal. Remember that real-world data will rarely exhibit perfect normality, but as long as it's approximately normal, we can follow convention and report the mean.
@@ -121,9 +123,11 @@ ggplot(our_gss, aes(realrinc)) +
   geom_vline(aes(xintercept = mean(realrinc, na.rm = TRUE), color = "mean")) +
   geom_vline(aes(xintercept = median(realrinc, na.rm = TRUE), color = "median"), linetype="dashed") +
   scale_color_manual(name = "stat", values = c(mean = "brown", median = "orange")) +
-  theme_ft_rc(axis_text_size = 11,
-      axis_title_size = 14,
-      plot_title_size = 16) +
+  theme_ft_rc(
+      base_size = 14,
+      axis_text_size = 14,
+      axis_title_size = 16,
+      plot_title_size = 22) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
     ) +
@@ -135,6 +139,8 @@ ggplot(our_gss, aes(realrinc)) +
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank()
   )
+
+showtext_auto()
 ```
 
 In the case of `realrinc`, we definitely do not have much normality going on. For one, there are some apparent outlier cases. Much of our data seems to be concentrated within about \$0 - \$75,000, but then we have a bunch of values at roughly double the maximum of that narrower range. And even within the range where most of our responses are clustered, we have some clear right-skew.
@@ -245,8 +251,8 @@ max(our_gss$realrinc, na.rm = TRUE)
 This is one of the more commonly reported dispersion metrics for numeric data. The standard deviation is a measure of how much the average value varies from the mean. In plainer terms, it's a measure that tells us how spread out the distribution is.
 
 ```{r, eval = TRUE, echo = FALSE}
-high_sd <- rnorm(10000, 0, 4)
-low_sd <- rnorm(10000, 0, 1)
+high_sd <- rnorm(10000, 0, 2)
+low_sd <- rnorm(10000, 0, .5)
 
 
 
@@ -255,6 +261,8 @@ d <- data.frame(label = "high_sd", value = high_sd)
 d2 <- data.frame(label = "low_sd", value = low_sd)
 
 sd_examples <- rbind(d, d2)
+
+showtext_auto()
 
 ggplot(
   sd_examples,
@@ -265,9 +273,11 @@ ggplot(
        y = "Proportion of responses",
        fill = "none") +
   scale_fill_manual(values = c("orange", "brown"), labels = c("High SD", "Low SD" )) +
-  theme_ft_rc(axis_text_size = 11,
-      axis_title_size = 14,
-      plot_title_size = 16) +
+  theme_ft_rc(
+      base_size = 20,
+      axis_text_size = 20,
+      axis_title_size = 20,
+      plot_title_size = 30) +
     theme(
       plot.margin = unit(c(.25,.25,.25,.25), "cm")
     ) +
