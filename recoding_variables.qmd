@@ -153,7 +153,7 @@ our_gss <- our_gss |>
   )
 ```
 
-Go ahead and take a look at `our_gss`, and our new column should bring us to 10 variables instead of 9. I'll use the `str()` function here so we can confirm that our factor was ordered and added to the data frame.
+Go ahead and take a look at `our_gss`, and we should now have an additional variable column. I'll use the `str()` function here so we can confirm that our factor was ordered and added to the data frame.
 
 ```{r}
 str(our_gss)
@@ -179,7 +179,7 @@ count(our_gss, partyid)
 
 Let's go ahead and collapse these into categories of "Democrat", "Independent", "Other Party", and "Republican". We'll use `mutate()` to make a new variable column called `partyid_recoded`. For the calculation of our new variable, we can use the `fct_collapse()` function. This function allows us to first give the name of a new factor level, and then we can give a character vector of the names of levels that want to be collapses into a single category.
 
-So, to collapse our 3 Democrat levels into a single factor level, we would give the following input for `fct_collapse()`:
+So, to collapse our 2 Democrat levels into a single factor level, we would give the following input for `fct_collapse()`:
 
 `"Democrat" = c("strong democrat", "not very strong democrat")`
 

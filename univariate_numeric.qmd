@@ -148,9 +148,9 @@ showtext_auto(enable = FALSE)
 
 In the case of `realrinc`, we definitely do not have much normality going on. For one, there are some apparent outlier cases. Much of our data seems to be concentrated within about \$0 - \$75,000, but then we have a bunch of values at roughly double the maximum of that narrower range. And even within the range where most of our responses are clustered, we have some clear right-skew.
 
-As we can see, because the mean takes all values into account, this makes it susceptible to non-normal distributions. It gets pulled in the direction of the outlier, which, in this case, is also the direction of the skew.
+As we can see, because the mean takes all values into account, this makes it susceptible to non-normal distributions. It gets pulled in the direction of the skew.
 
-So, in any case where your numeric variable contains clear outliers and/or exhibits notable skew in either direction, you should report the median rather than the mean.
+The median is much more resistant to skew, so, in any case where your numeric variable contains clear outliers and/or exhibits notable skew in either direction, you should report the median rather than the mean.
 
 ### The Mode
 
@@ -213,7 +213,7 @@ Now, let's talk about dispersion. This is the last major element of a univariate
 
 This is perhaps the simplest measure of dispersion and comprises the minimum and maximum values of the distribution.
 
-R has a built in range function, so we can simply provide one of our variables as the input. We'll work with `realrinc` again. As we have done before, we will also need to provide `na.rm = TRUE`, as this variable column includes NAs and will confuse R otherwise.
+R has a built in `range()` function, so we can simply provide one of our variables as the input. We'll work with `realrinc` again. As we have done before, we will also need to provide `na.rm = TRUE`, as this variable column includes NAs and will confuse R otherwise.
 
 ```{r}
 range(our_gss$realrinc, na.rm = TRUE)
