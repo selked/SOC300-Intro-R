@@ -351,7 +351,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>In this case, we can’t even really tell the mean and median apart. In fact, in a completely normal distribution, all three measures of central tendency will be equal. Remember that real-world data will rarely exhibit perfect normality, but as long as it’s approximately normal, we can follow convention and report the mean.</p>
+<p>In this case, they appear to be overlapping. In fact, in a completely normal distribution, all three measures of central tendency will be equal. Though, remember that real-world data will rarely exhibit perfect normality. As long as it’s approximately normal, we can default to the mean because it accounts for every data point in the variable’s distribution.</p>
 <p>Now, let’s look back at <code>realrinc</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -363,8 +363,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>In the case of <code>realrinc</code>, we definitely do not have much normality going on. For one, there are some apparent outlier cases. Much of our data seems to be concentrated within about $0 - $75,000, but then we have a bunch of values at roughly double the maximum of that narrower range. And even within the range where most of our responses are clustered, we have some clear right-skew.</p>
-<p>As we can see, because the mean takes all values into account, this makes it susceptible to non-normal distributions. It gets pulled in the direction of the outlier, which, in this case, is also the direction of the skew.</p>
-<p>So, in any case where your numeric variable contains clear outliers and/or exhibits notable skew in either direction, you should report the median rather than the mean.</p>
+<p>In general, it’s ideal that the mean includes every data point, but this also makes it susceptible to non-normal distributions. As we can see, the mean will be pulled in the direction of the skew.</p>
+<p>In this case, it becomes an advantage that the median does not take every data point into account. This makes it more resistant to skew, so, in any case where your numeric variable contains clear outliers and/or exhibits notable skew in either direction, you should report the median rather than the mean.</p>
 </section>
 <section id="the-mode" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="the-mode"><span class="header-section-number">5.2.2</span> The Mode</h3>
@@ -433,7 +433,7 @@ Critical bandwidth: 2.543659</code></pre>
 <section id="range" class="level3" data-number="5.3.1">
 <h3 data-number="5.3.1" class="anchored" data-anchor-id="range"><span class="header-section-number">5.3.1</span> Range</h3>
 <p>This is perhaps the simplest measure of dispersion and comprises the minimum and maximum values of the distribution.</p>
-<p>R has a built in range function, so we can simply provide one of our variables as the input. We’ll work with <code>realrinc</code> again. As we have done before, we will also need to provide <code>na.rm = TRUE</code>, as this variable column includes NAs and will confuse R otherwise.</p>
+<p>R has a built in <code>range()</code> function, so we can simply provide one of our variables as the input. We’ll work with <code>realrinc</code> again. As we have done before, we will also need to provide <code>na.rm = TRUE</code>, as this variable column includes NAs and will confuse R otherwise.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

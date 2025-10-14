@@ -103,7 +103,7 @@ ggplot(d, aes(y)) +
 
 ```
 
-In this case, we can't even really tell the mean and median apart. In fact, in a completely normal distribution, all three measures of central tendency will be equal. Remember that real-world data will rarely exhibit perfect normality, but as long as it's approximately normal, we can follow convention and report the mean.
+In this case, they appear to be overlapping. In fact, in a completely normal distribution, all three measures of central tendency will be equal. Though, remember that real-world data will rarely exhibit perfect normality. As long as it's approximately normal, we can default to the mean because it accounts for every data point in the variable's distribution.
 
 Now, let's look back at `realrinc`.
 
@@ -148,9 +148,9 @@ showtext_auto(enable = FALSE)
 
 In the case of `realrinc`, we definitely do not have much normality going on. For one, there are some apparent outlier cases. Much of our data seems to be concentrated within about \$0 - \$75,000, but then we have a bunch of values at roughly double the maximum of that narrower range. And even within the range where most of our responses are clustered, we have some clear right-skew.
 
-As we can see, because the mean takes all values into account, this makes it susceptible to non-normal distributions. It gets pulled in the direction of the skew.
+In general, it's ideal that the mean includes every data point, but this also makes it susceptible to non-normal distributions. As we can see, the mean will be pulled in the direction of the skew.
 
-The median is much more resistant to skew, so, in any case where your numeric variable contains clear outliers and/or exhibits notable skew in either direction, you should report the median rather than the mean.
+In this case, it becomes an advantage that the median does not take every data point into account. This makes it more resistant to skew, so, in any case where your numeric variable contains clear outliers and/or exhibits notable skew in either direction, you should report the median rather than the mean.
 
 ### The Mode
 
