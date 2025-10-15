@@ -1,19 +1,20 @@
 # Univariate: Categorical
 
-Before we start examining the relationships between multiple variables, we have to look under the hood of our variables individually and make sure we have a good sense of what they are like. 
+Before we start examining the relationships between multiple variables, we have to look under the hood of our variables individually and make sure we have a good sense of what they are like.
 
-We want to know the frequency distribution of the response values, the measures of central tendency, and the dispersion. In other words, we want to see how many respondents chose each response value, which response values are most typical for each variable, and the extent to which the response values vary. 
+We want to know the frequency distribution of the response values, the measures of central tendency, and the dispersion. In other words, we want to see how many respondents chose each response value, which response values are most typical for each variable, and the extent to which the response values vary.
 
 Luckily for us, R has plenty of tools for generating these quantitative summaries, as well as visualizing them in the form of barplots, histograms, and other common styles for displaying data.
 
 This tutorial will cover each of these elements, and I will highlight any differences specific to certain levels of measurement along the way.
 
 ## Frequency Distributions
-Let's start with categorical variables. We will start with frequency distributions by way of frequency tables and bar plots. Then, we will talk about measures of tendency and observe when they are appropriate for categorical data. 
+
+Let's start with categorical variables. We will start with frequency distributions by way of frequency tables and bar plots. Then, we will talk about measures of tendency and observe when they are appropriate for categorical data.
 
 ### Frequency tables
 
-Frequency tables are the most effective way to report the frequency distributions for categorical variables. There are actually a ton of different ways to produce this kind of table in R, but we are going to use some convenient functions from the `janitor` package, so let's go ahead and load that in. 
+Frequency tables are the most effective way to report the frequency distributions for categorical variables. There are actually a ton of different ways to produce this kind of table in R, but we are going to use some convenient functions from the `janitor` package, so let's go ahead and load that in.
 
 If you are on a lab computer, try to load it with `library()` first. If you get an error, go ahead and install it with `install.packages()` and then load it in.
 
@@ -25,7 +26,7 @@ library(tidyverse)
 load("our_gss.rda")
 ```
 
-Let's go ahead and work with one of our `partyid` recodes from last time. We'll use `partyid_recoded`, where we retained all the party choices but collapsed the categories of degree (e.g. strong democrat + not very strong democrat = Democrat). 
+Let's go ahead and work with one of our `partyid` recodes from last time. We'll use `partyid_recoded`, where we retained all the party choices but collapsed the categories of degree (e.g. strong democrat + not very strong democrat = Democrat).
 
 ```{r, eval = TRUE, echo = FALSE}
 our_gss <- our_gss |>
@@ -46,6 +47,7 @@ All we need to do is give our data frame as the first argument, and then our par
 # Without pipe operator
 tabyl(our_gss, partyid_recoded)
 ```
+
 ```{r}
 # With pipe operator
 our_gss |>
@@ -54,15 +56,15 @@ our_gss |>
 
 Now, we have a frequency table for `partyid_recoded`!
 
-Each row is a level of `partyid_recoded`. The `n` column refers to the sample size, so, for example, 1,565 respondents indicated that they were Independents. 
+Each row is a level of `partyid_recoded`. The `n` column refers to the sample size, so, for example, 1,565 respondents indicated that they were Independents.
 
-We then have two different columns for percentages. The `percent` column is the proportion of all respondents that chose each response value---while including NA values. Often, we want to get a proportion for only the sample of those who actually answered the question. This is what the `valid_percent` column indicates and is what we are often looking for. 
+We then have two different columns for percentages. The `percent` column is the proportion of all respondents that chose each response value---while including NA values. Often, we want to get a proportion for only the sample of those who actually answered the question. This is what the `valid_percent` column indicates and is what we are often looking for.
 
-Let's break it down a little for clarity. 
+Let's break it down a little for clarity.
 
-The total number of respondents is the sum of the 'n' column. 
+The total number of respondents is the sum of the 'n' column.
 
-1565 + 1046 + 792 + 106 + 35 = 3,544 
+1565 + 1046 + 792 + 106 + 35 = 3,544
 
 Note that this is also the number of observations in our data frame
 
@@ -91,7 +93,7 @@ independents / all_minus_na
 
 ```
 
-In this case, there really aren't that many NA values, so it does not change too much. In general, we will often discard NA categories in analyses we do for the course, but they give us important information about the survey and can be useful for some questions, so it's important to keep track of them nonetheless. 
+In this case, there really aren't that many NA values, so it does not change too much. In general, we will often discard NA categories in analyses we do for the course, but they give us important information about the survey and can be useful for some questions, so it's important to keep track of them nonetheless.
 
 Now, let's clean a couple things up with the `adorn_()` functions.
 
@@ -104,11 +106,12 @@ our_gss |>
   adorn_pct_formatting() |>
   adorn_rounding(digits = 2)
 ```
+
 We don't need to supply any input for `adorn_pct_formatting()`---which changes the proportions to percentages---but a couple of these functions do require inputs.
 
 For `adorn_totals()`, we give "row" for the `where` input, which tells the function that we want the totals column to appear as a row.
 
-For `adorn_rounding()`, we give an input for `digits`, which is the number of digits we want after the decimal point. We'll keep 2 and thereby round to the hundredth. 
+For `adorn_rounding()`, we give an input for `digits`, which is the number of digits we want after the decimal point. We'll keep 2 and thereby round to the hundredth.
 
 Lastly, if we want, we can also make the column names a little nicer. It may not be obvious because we've just been displaying this table rather than storing it as an object, but it's actually a data frame, so we can edit the column names directly.
 
@@ -117,7 +120,7 @@ Let's save it as an object so that's easier to see.
 ```{r}
 our_table <- our_gss |>
   tabyl(partyid_recoded) |>
-  adorn_totals(where = "row", na.rm = TRUE) |>
+  adorn_totals(where = "row") |>
   adorn_pct_formatting() |>
   adorn_rounding(digits = 2)
 ```
@@ -127,8 +130,8 @@ We can then use the `colnames()` function. Let's supply our table data frame as 
 ```{r}
 colnames(our_table)
 ```
-It lists out the character vector of the 4 column names, and we can actually just write over them by supplying our desired column names as a character vector. If we assign that character vector to `colnames(our_table)`, it will overwrite the column names. Make sure the labels are in the same order as they appear in the data frame.
 
+It lists out the character vector of the 4 column names, and we can actually just write over them by supplying our desired column names as a character vector. If we assign that character vector to `colnames(our_table)`, it will overwrite the column names. Make sure the labels are in the same order as they appear in the data frame.
 
 ```{r}
 colnames(our_table) <- c(
@@ -140,17 +143,18 @@ colnames(our_table) <- c(
 
 our_table
 ```
+
 Excellent! We'll learn how to make this even nicer a bit later in the semester, but this looks pretty good for now.
 
 Let's look at one last visualization technique for categorical variables.
 
 ### Bar plots
 
-For categorical data, bar plots are often the way to go. These typically have the response values on the x axis, and the count or percentage of each response value is tracked on the Y axis. 
+For categorical data, bar plots are often the way to go. These typically have the response values on the x axis, and the count or percentage of each response value is tracked on the Y axis.
 
 Much like with tables, we'll learn some fancier ways to do this later in the semester. But, in the meanwhile, base R has some great plotting functions that can be used very easily without much specification. They're not the prettiest out of the box, but they will do everything we need.
 
-For `barplot()`, we just need the variable column that we are trying to plot. But, there's one thing to remember when you are trying to get a barplot this way---you have to provide the result of `summary(my_variable)` rather than the variable column directly. 
+For `barplot()`, we just need the variable column that we are trying to plot. But, there's one thing to remember when you are trying to get a barplot this way---you have to provide the result of `summary(my_variable)` rather than the variable column directly.
 
 I'll show you a couple ways to do that, which all do the exact same thing.
 
@@ -177,9 +181,9 @@ barplot(my_summary)
 
 Now, as I mentioned, we won't spend too much time adjusting these plots for now, but there are a couple things we can do to make this a little better to look at for now.
 
-For one, our response labels (Democrat, Republican, Independent, etc) Actually look pretty good in the display here, but it's not uncommon for these to get cut off if we have several response categories or the response names are especially long. So, I'll show you how to reduce the font size as one potential fix for that. 
+For one, our response labels (Democrat, Republican, Independent, etc) Actually look pretty good in the display here, but it's not uncommon for these to get cut off if we have several response categories or the response names are especially long. So, I'll show you how to reduce the font size as one potential fix for that.
 
-We can add the `cex.names` argument to `barplot()`. This argument takes a number, and the number should reflect an intended ratio of the default font size for our value labels on the x-axis. So, for example, I would enter '2' if I wanted the font to be twice as big. For our purposes, I want to reduce the font a bit, so we'll enter '.75' to reduce the font size by 1/4. 
+We can add the `cex.names` argument to `barplot()`. This argument takes a number, and the number should reflect an intended ratio of the default font size for our value labels on the x-axis. So, for example, I would enter '2' if I wanted the font to be twice as big. For our purposes, I want to reduce the font a bit, so we'll enter '.75' to reduce the font size by 1/4.
 
 ```{r}
 our_gss$partyid_recoded |>
@@ -215,14 +219,16 @@ our_gss$partyid_recoded |>
 ```
 
 ## Measures of Central Tendency
+
 Now, let's talk about measures of central tendency. Because there is no mathematically meaningful relationship between the different levels of a categorical variable, our options for reporting measures of central tendency are a little more limited.
 
-The classic central tendency measures are the mode, the median, and the mean. For categorical variables, it is not ever meaningful to take the mean. As we saw back on our first day with R, you will get a warning message if you try to run `mean()` on a character or factor variable. 
+The classic central tendency measures are the mode, the median, and the mean. For categorical variables, it is not ever meaningful to take the mean. As we saw back on our first day with R, you will get a warning message if you try to run `mean()` on a character or factor variable.
 
 Our options are limited to the mode or the median, depending on the distribution of responses.
 
 ### Nominal variables
-In the case nominal variables, there is no semblance of meaningful arrangement to the categories. In this case, we can only report the mode. 
+
+In the case nominal variables, there is no semblance of meaningful arrangement to the categories. In this case, we can only report the mode.
 
 Often times, we can just glean this from the frequency tables, or even just the `summary()` output. Let's stick with `partyid_recoded` as an example.
 
@@ -230,9 +236,9 @@ Often times, we can just glean this from the frequency tables, or even just the 
 summary(our_gss$partyid_recoded)
 ```
 
-Remember that the mode is just the value with the most occurrences. So, the mode here is 'Independent'. 
+Remember that the mode is just the value with the most occurrences. So, the mode here is 'Independent'.
 
-This is likely sufficient for the variables we will work with, but you may also want a method that's a little more exacting and does not depend on visually scanning for the mode. 
+This is likely sufficient for the variables we will work with, but you may also want a method that's a little more exacting and does not depend on visually scanning for the mode.
 
 R does not actually have a built-in `mode()` function like it does for `mean()` and `median()`. Well, it does have `mode()`, but it evaluates the 'mode' of the data, which, in this case, is actually the 'storage mode', or the data type. This is not particularly helpful for us, but we can use another convenient package called `DescTools`.
 
@@ -245,6 +251,7 @@ library(DescTools)
 Then, we can just use the `Mode()` function within DescTools. Make sure you capitalize the 'M', as this is what distinguishes the DescTools function from the base R function.
 
 Also, be sure to include `na.rm = TRUE`, as R will not know what to do with the NA values when calculating the mode, so we need to tell it to disregard them.
+
 ```{r}
 Mode(our_gss$partyid_recoded, na.rm = TRUE)
 ```
@@ -261,10 +268,11 @@ While ordinal variables are still categorical and thus unamenable to mathematica
 
 However, we can only do so when the variable is normally distributed. If there is significant skew in the distribution of responses, then we will need to report the mode for an ordinal variable.
 
-Let's refresh our memory on distributions before we take some central tendency measures of ordinal variables in the GSS. 
+Let's refresh our memory on distributions before we take some central tendency measures of ordinal variables in the GSS.
 
 ##### Distribution assumptions
-If the responses of an ordinal variable are normally distributed, we can take the median. 
+
+If the responses of an ordinal variable are normally distributed, we can take the median.
 
 In the ideal form of the normal distribution, you have a mean of 0 and a standard deviation of 1, where roughly 68% of values are within 1 standard deviation in either direction of the mean, and roughly 95% of values are within 2 standard deviations in either direction.
 
@@ -272,8 +280,8 @@ However, in practice, our distributions are unlikely to reflect the ideal normal
 
 I'll display a few distributions here as a reminder, starting with the classic normal distribution. If you produce a barplot and find the data looks generally like this---where the majority of variables are concentrated around the middle of the distribution---then you can report the median response rather than the mode.
 
-
 Here's the normal distribution
+
 ```{r, eval = TRUE, echo = FALSE}
 hist(
   rnorm(10000),
@@ -292,7 +300,7 @@ hist(
 )
 ```
 
-Lastly, here's a right-skewed distribution. As you can probably guess from the description of a left-skewed distribution, a right-skew occurs when we have a long tail through most of the right-hand side of the distribution. In other words, most values are concentrated on the left-hand side. 
+Lastly, here's a right-skewed distribution. As you can probably guess from the description of a left-skewed distribution, a right-skew occurs when we have a long tail through most of the right-hand side of the distribution. In other words, most values are concentrated on the left-hand side.
 
 ```{r, eval = TRUE, echo = FALSE}
 hist(
@@ -332,7 +340,7 @@ our_gss$age_ord |>
   )
 ```
 
-Well, hold on now. In the case of `age_ord`, it looks like we'd actually want to take the mode, because it's a bit left-skewed. 
+Well, hold on now. In the case of `age_ord`, it looks like we'd actually want to take the mode, because it's a bit left-skewed.
 
 Let's try the `happy` variable. This is an ordinal variable in our subset that we haven't used yet. We'll see if its normally distributed.
 
@@ -345,28 +353,29 @@ Let's try the `happy` variable. This is an ordinal variable in our subset that w
     xlab = "Response value"
   )
 ```
+
 Perfect. The distribution is exactly what we want to see. Most of the variables are concentrated at the midpoint of the distribution, with tails on either side. So, as it's roughly normally distributed, `happy` will serve as a good example of a case where taking the median of an ordinal variable is appropriate.
 
 Now, the median response value is fairly apparent in this case, but I'll show you a method that you can use to calculate the median of any ordinal variable you might come across.
 
-While R has a built-in `median()` function, it actually only works with numeric data. Fear not, however, as we can also use the `DescTools` again. 
+While R has a built-in `median()` function, it actually only works with numeric data. Fear not, however, as we can also use the `DescTools` again.
 
 In order to distinguish itself from the default `median()` function, the DescTools package uses a capitalized 'M'. So, make sure you use `Median()` when you are working with an ordinal variable.
 
 We also need to assure that NAs are not included for the calculation. As we have seen a few times, R will not know what to do with these if we don't tell it to exclude them.
+
 ```{r}
 Median(our_gss$happy, na.rm = TRUE)
 ```
-Perfect! Looks like our median is 'pretty happy'. 
+
+Perfect! Looks like our median is 'pretty happy'.
 
 And now we have all we need to report a univariate analysis of a categorical variable in this course:
 
-- A frequency table
-- A bar plot
-- A median or mode
+-   A frequency table
+-   A bar plot
+-   A median or mode
 
 For now, it's just important that you can accurately identify the median or mode of a categorical value. We'll talk about ways to implement it in the tables a little later on when we focus on publication-ready tables and figures.
 
 Now, let's talk about presenting a univariate analysis of numeric data.
-
-
