@@ -312,30 +312,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_gss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      year            id              age           race          sex      
- Min.   :2022   Min.   :   1.0   Min.   :18.00   white:2514   female:1897  
- 1st Qu.:2022   1st Qu.: 886.8   1st Qu.:34.00   other: 412   male  :1627  
- Median :2022   Median :1772.5   Median :48.00   black: 565   NA's  :  20  
- Mean   :2022   Mean   :1772.5   Mean   :49.18   NA's :  53                
- 3rd Qu.:2022   3rd Qu.:2658.2   3rd Qu.:64.00                             
- Max.   :2022   Max.   :3545.0   Max.   :89.00                             
-                                 NA's   :208                               
+<pre><code>      year            id            age           race          sex      
+ Min.   :2022   1      :   1   Min.   :18.00   black: 775   female:2216  
+ 1st Qu.:2022   2      :   1   1st Qu.:33.00   other: 659   male  :1910  
+ Median :2022   3      :   1   Median :47.00   white:2651   NA's  :  23  
+ Mean   :2022   4      :   1   Mean   :48.24   NA's :  64                
+ 3rd Qu.:2022   5      :   1   3rd Qu.:63.00                             
+ Max.   :2022   6      :   1   Max.   :89.00                             
+                (Other):4143   NA's   :256                               
     realrinc                                      partyid   
- Min.   :   204.5   independent (neither, no response):835  
- 1st Qu.:  8691.2   strong democrat                   :595  
- Median : 18405.0   not very strong democrat          :451  
- Mean   : 27835.3   strong republican                 :431  
- 3rd Qu.: 33742.5   independent, close to democrat    :400  
- Max.   :141848.3   (Other)                           :797  
- NA's   :1554       NA's                              : 35  
-           happy     
- not too happy: 799  
- pretty happy :1942  
- very happy   : 779  
- NA's         :  24  
-                     
-                     
-                     </code></pre>
+ Min.   :   204.5   independent (neither, no response):971  
+ 1st Qu.:  9713.8   strong democrat                   :710  
+ Median : 18405.0   not very strong democrat          :593  
+ Mean   : 28332.2   independent, close to democrat    :479  
+ 3rd Qu.: 33742.5   strong republican                 :459  
+ Max.   :141848.3   (Other)                           :901  
+ NA's   :1804       NA's                              : 36  
+           happy               marital    
+ not too happy: 976   divorced     : 669  
+ pretty happy :2268   married      :1737  
+ very happy   : 878   never married:1333  
+ NA's         :  27   separated    : 121  
+                      widowed      : 273  
+                      NA's         :  16  
+                                          </code></pre>
 </div>
 </div>
 </section>
@@ -353,14 +353,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sex_inc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       id             sex          realrinc       
- Min.   :   1.0   female:1897   Min.   :   204.5  
- 1st Qu.: 886.8   male  :1627   1st Qu.:  8691.2  
- Median :1772.5   NA's  :  20   Median : 18405.0  
- Mean   :1772.5                 Mean   : 27835.3  
- 3rd Qu.:2658.2                 3rd Qu.: 33742.5  
- Max.   :3545.0                 Max.   :141848.3  
-                                NA's   :1554      </code></pre>
+<pre><code>       id           sex          realrinc       
+ 1      :   1   female:2216   Min.   :   204.5  
+ 2      :   1   male  :1910   1st Qu.:  9713.8  
+ 3      :   1   NA's  :  23   Median : 18405.0  
+ 4      :   1                 Mean   : 28332.2  
+ 5      :   1                 3rd Qu.: 33742.5  
+ 6      :   1                 Max.   :141848.3  
+ (Other):4143                 NA's   :1804      </code></pre>
 </div>
 </div>
 </section>
@@ -376,13 +376,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fem_inc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       id           sex          realrinc       
- Min.   :   1   female:1897   Min.   :   204.5  
- 1st Qu.: 879   male  :   0   1st Qu.:  7668.8  
- Median :1783                 Median : 15337.5  
- Mean   :1772                 Mean   : 22702.1  
- 3rd Qu.:2664                 3rd Qu.: 27607.5  
- Max.   :3544                 Max.   :141848.3  
-                              NA's   :883       </code></pre>
+ 1      :   1   female:2216   Min.   :   204.5  
+ 3      :   1   male  :   0   1st Qu.:  7668.8  
+ 4      :   1                 Median : 15337.5  
+ 7      :   1                 Mean   : 23116.9  
+ 9      :   1                 3rd Qu.: 27607.5  
+ 10     :   1                 Max.   :141848.3  
+ (Other):2210                 NA's   :1022      </code></pre>
 </div>
 </div>
 </section>
@@ -409,15 +409,17 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mean_inc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  mean_inc
-1 27835.33</code></pre>
+<pre><code># A tibble: 1 × 1
+  mean_inc
+     &lt;dbl&gt;
+1   28332.</code></pre>
 </div>
 </div>
 <p>Now, this is not really all that impressive when we are asking for a broad summary like this. In fact, if all we wanted was to see the average income, we could get that more easily, e.g.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 27835.33</code></pre>
+<pre><code>[1] 28332.18</code></pre>
 </div>
 </div>
 <p>The true power of <code>summarize()</code> comes from chaining it together with other tidyverse functions. However, in order to do that, we will need to learn about one more new R operation. I’ll show you that in a moment, but let’s take a look at one more helpful tidyverse function.</p>
@@ -443,15 +445,15 @@ Note
 <pre><code># A tibble: 9 × 2
   partyid                            mean_inc
   &lt;fct&gt;                                 &lt;dbl&gt;
-1 strong democrat                      30677.
-2 independent (neither, no response)   21570.
-3 not very strong republican           29101.
-4 not very strong democrat             31743.
-5 independent, close to democrat       27916.
-6 other party                          23891.
-7 independent, close to republican     26825.
-8 strong republican                    32376.
-9 &lt;NA&gt;                                 16922.</code></pre>
+1 independent (neither, no response)   22334.
+2 independent, close to democrat       28651.
+3 independent, close to republican     28596.
+4 not very strong democrat             30863.
+5 not very strong republican           31030.
+6 other party                          25658.
+7 strong democrat                      30489.
+8 strong republican                    31972.
+9 &lt;NA&gt;                                 17744.</code></pre>
 </div>
 </div>
 <p>We ran the same <code>summarize()</code> command as before, but now it reflects the grouping structure that we imposed.</p>
@@ -508,22 +510,22 @@ Note
 # Groups:   sex [2]
    sex    partyid                            mean_inc
    &lt;fct&gt;  &lt;fct&gt;                                 &lt;dbl&gt;
- 1 female strong democrat                      30111.
- 2 female independent (neither, no response)   17923.
- 3 female not very strong republican           22448.
- 4 female not very strong democrat             24300.
- 5 female independent, close to democrat       19961.
- 6 female other party                          26595.
- 7 female independent, close to republican     20095.
- 8 female strong republican                    21584.
- 9 male   strong democrat                      31600.
-10 male   independent (neither, no response)   25474.
-11 male   not very strong republican           34544.
-12 male   not very strong democrat             41233.
-13 male   independent, close to democrat       36947.
-14 male   other party                          22450.
-15 male   independent, close to republican     31393.
-16 male   strong republican                    40210.</code></pre>
+ 1 female independent (neither, no response)   18001.
+ 2 female independent, close to democrat       21890.
+ 3 female independent, close to republican     23227.
+ 4 female not very strong democrat             24805.
+ 5 female not very strong republican           23702.
+ 6 female other party                          26576.
+ 7 female strong democrat                      28622.
+ 8 female strong republican                    21269.
+ 9 male   independent (neither, no response)   26853.
+10 male   independent, close to democrat       36689.
+11 male   independent, close to republican     32219.
+12 male   not very strong democrat             38289.
+13 male   not very strong republican           37017.
+14 male   other party                          25393.
+15 male   strong democrat                      33548.
+16 male   strong republican                    39553.</code></pre>
 </div>
 </div>
 <p>So, using <code>dplyr</code>, we can quickly subset and manipulate data frames in just a few lines of relatively straightforward code. Here we have all the means for each value of <code>sex</code> and <code>partyid</code>, which would have been a tedious task had we calculated them all manually.</p>

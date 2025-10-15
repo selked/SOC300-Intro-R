@@ -413,14 +413,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Estimated location
-Modes:  32.4301  66.25356 
-Antimode: 50.89506 
+Modes: 32.62397  60.81952 
+Antimode:  51.0689 
 
 Estimated value of the density
-Modes: 0.01938966  0.01730832 
-Antimode: 0.01444287 
+Modes: 0.02097547  0.01670797 
+Antimode: 0.01420887 
 
-Critical bandwidth: 2.543659</code></pre>
+Critical bandwidth: 2.481123</code></pre>
 </div>
 </div>
 <p>We only really need to pay attention to the modes that it gives us (32.43 and 66.25), but it looks like this function spotted these values pretty effectively.</p>
@@ -445,7 +445,7 @@ Critical bandwidth: 2.543659</code></pre>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_gss<span class="sc">$</span>realrinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
-   204.5   8691.2  18405.0  27835.3  33742.5 141848.3     1554 </code></pre>
+   204.5   9713.8  18405.0  28332.2  33742.5 141848.3     1804 </code></pre>
 </div>
 </div>
 <p>For a numeric variable, <code>summary()</code> will show us the minimum &amp; maximum, as well as the mean &amp; median, and the 1st &amp; 3rd quartiles.</p>
@@ -486,7 +486,7 @@ Critical bandwidth: 2.543659</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 31962.34</code></pre>
+<pre><code>[1] 32331.6</code></pre>
 </div>
 </div>
 <p>Now, let’s talk about putting all this together in our reporting of a univariate analysis for numeric data.</p>
@@ -507,8 +507,10 @@ Critical bandwidth: 2.543659</code></pre>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SD"</span> <span class="ot">=</span> <span class="fu">sd</span>(realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  Minimum Median  Maximum       SD
-1   204.5  18405 141848.3 31962.34</code></pre>
+<pre><code># A tibble: 1 × 4
+  Minimum Median Maximum     SD
+    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1    204.  18405 141848. 32332.</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
