@@ -308,12 +308,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(partyid_recoded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> partyid_recoded    n    percent valid_percent
-     Independent 1816 0.43769583    0.44152687
-        Democrat 1303 0.31405158    0.31680039
-      Republican  876 0.21113521    0.21298322
-     Other Party  118 0.02844059    0.02868952
-            &lt;NA&gt;   36 0.00867679            NA</code></pre>
+<pre><code> partyid_recoded    n     percent valid_percent
+        Democrat 1046 0.295146727    0.29809062
+     Independent 1565 0.441591422    0.44599601
+      Republican  792 0.223476298    0.22570533
+     Other Party  106 0.029909707    0.03020804
+            &lt;NA&gt;   35 0.009875847            NA</code></pre>
 </div>
 </div>
 <p>Now, we have a frequency table for <code>partyid_recoded</code>!</p>
@@ -359,12 +359,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_rounding</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> partyid_recoded    n percent valid_percent
-     Independent 1816   43.8%         44.2%
-        Democrat 1303   31.4%         31.7%
-      Republican  876   21.1%         21.3%
-     Other Party  118    2.8%          2.9%
-            &lt;NA&gt;   36    0.9%             -
-           Total 4149  100.0%        100.0%</code></pre>
+        Democrat 1046   29.5%         29.8%
+     Independent 1565   44.2%         44.6%
+      Republican  792   22.3%         22.6%
+     Other Party  106    3.0%          3.0%
+            &lt;NA&gt;   35    1.0%             -
+           Total 3544  100.0%        100.0%</code></pre>
 </div>
 </div>
 <p>We don’t need to supply any input for <code>adorn_pct_formatting()</code>—which changes the proportions to percentages—but a couple of these functions do require inputs.</p>
@@ -398,12 +398,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>our_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Political Party Frequency Percent Valid Percent
-     Independent      1816   43.8%         44.2%
-        Democrat      1303   31.4%         31.7%
-      Republican       876   21.1%         21.3%
-     Other Party       118    2.8%          2.9%
-            &lt;NA&gt;        36    0.9%             -
-           Total      4149  100.0%        100.0%</code></pre>
+        Democrat      1046   29.5%         29.8%
+     Independent      1565   44.2%         44.6%
+      Republican       792   22.3%         22.6%
+     Other Party       106    3.0%          3.0%
+            &lt;NA&gt;        35    1.0%             -
+           Total      3544  100.0%        100.0%</code></pre>
 </div>
 </div>
 <p>Excellent! We’ll learn how to make this even nicer a bit later in the semester, but this looks pretty good for now.</p>
@@ -505,8 +505,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_gss<span class="sc">$</span>partyid_recoded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Independent    Democrat  Republican Other Party        NA's 
-       1816        1303         876         118          36 </code></pre>
+<pre><code>   Democrat Independent  Republican Other Party        NA's 
+       1046        1565         792         106          35 </code></pre>
 </div>
 </div>
 <p>Remember that the mode is just the value with the most occurrences. So, the mode here is ‘Independent’.</p>
@@ -523,8 +523,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] Independent
 attr(,"freq")
-[1] 1816
-Levels: Independent Democrat Republican Other Party</code></pre>
+[1] 1565
+Levels: Democrat Independent Republican Other Party</code></pre>
 </div>
 </div>
 <p>So, this also gives us our mode, and is a bit more precise a way of doing so—especially when we have a bunch of possible response values.</p>
