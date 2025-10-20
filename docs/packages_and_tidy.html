@@ -210,8 +210,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Day 3: Bivariate Analysis with the GSS</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Day 3: Bivariate Analysis with the GSS</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bivariate_categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bivariate: Categorical</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -328,14 +341,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  3rd Qu.: 33742.5   independent, close to democrat    :400  
  Max.   :141848.3   (Other)                           :797  
  NA's   :1554       NA's                              : 35  
-           happy               marital    
- not too happy: 799   divorced     : 608  
- pretty happy :1942   married      :1468  
- very happy   : 779   never married:1095  
- NA's         :  24   separated    : 103  
-                      widowed      : 255  
-                      NA's         :  15  
-                                          </code></pre>
+           happy               marital                            attend    
+ not too happy: 799   divorced     : 608   never                     :1149  
+ pretty happy :1942   married      :1468   about once or twice a year: 464  
+ very happy   : 779   never married:1095   every week                : 441  
+ NA's         :  24   separated    : 103   less than once a year     : 416  
+                      widowed      : 255   several times a year      : 346  
+                      NA's         :  15   (Other)                   : 693  
+                                           NA's                      :  35  
+    cappun    
+ favor :2013  
+ oppose:1327  
+ NA's  : 204  
+              
+              
+              
+              </code></pre>
 </div>
 </div>
 </section>

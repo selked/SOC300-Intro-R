@@ -1,17 +1,19 @@
 # Bivariate: Categorical
 
-Now that we know how to peek under the hood of our variables individually, it's time to start looking at them in combination. 
+Now that we know how to peek under the hood of our variables individually, it's time to start looking at them in combination.
 
-We will start with bivariate analysis, or the association between two variables. 
+We will start with bivariate analysis, or the association between two variables.
 
-Let's begin with the procedure for categorical variables. We will start with the basic display of two categorical variables and then get some practice with the chi-squared test, which is a common statistical test that assumes both variables are categorical. 
+Let's begin with the procedure for categorical variables. We will start with the basic display of two categorical variables and then get some practice with the chi-square test, which is a common statistical test that assumes both variables are categorical.
 
-We will learn to recognize associations in the contingency table, and then we'll use the chi-squared test to estimate the likelihood that the relationship we find is genuine or merely an artifact of random chance. 
+We will learn to recognize associations in the contingency table, and then we'll use the chi-square test to estimate the likelihood that the relationship we find is genuine or merely an artifact of random chance.
 
 ## Contingency Tables
-Also known as cross-tabulations---or crosstabs for short---contingency tables are quite similar to frequency tables. Rather than showing the distribution of a single variable, they show us the distribution of our dependent variable across the levels of our independent variable. 
+
+Also known as cross-tabulations---or crosstabs for short---contingency tables are quite similar to contingency tables. Rather than showing the distribution of a single variable, they show us the distribution of our dependent variable across the levels of our independent variable.
 
 Let's dig in with an example. We'll keep working with our GSS subset, so let's go ahead and set up our workspace by loading in our packages & data. We will need both `tidyverse` and `janitor` for this tutorial.
+
 ```{r, warning = FALSE, message = FALSE}
 library(tidyverse)
 library(janitor)
@@ -19,19 +21,22 @@ load("our_gss.rda")
 ```
 
 ### Creating our table
-We'll set up a simple hypothesis to illustrate. Let's say that, based on theory, we predict a person's gender will impact their likelihood of identifying as a Democrat or a Republican.
 
-Now, there's enough literature on gender and political affiliation that we would probably be justified in making a more specific hypothesis about the predicted direction of the association, but let's just say we simply predict that political-party affiliation will vary across categories of `sex`. 
+We'll set up a simple hypothesis to illustrate. Let's say that, based on theory, we predict that a person's likelihood of supporting the death penalty will vary according to their political affiliation.
 
-This would be our alternative hypothesis, and its respective null hypothesis is that women and men are equally likely to identify with both political parties. 
+Now, there's enough literature on capital punishment and political affiliation that we would probably be justified in making a more specific hypothesis about the predicted direction of the association, but let's just say we simply predict that rates of approval for the death penalty will vary across categories of Democrat and Republican.
 
-In other words, the alternative hypothesis is that the proportion of men and women will be different across political parties. The null hypothesis is that there will be no such difference. 
+This would be our alternative hypothesis, and its respective null hypothesis is that Democrats & Republicans are equally likely to approve of the death penalty.
 
-We'll work with the `dem_rep` variable that we created when learning about variable re-coding, as well as the `sex` variable. 
+In other words, the alternative hypothesis is that the proportion of approval for the death penalty will be different across political parties. The null hypothesis is that there will be no such difference.
+
+We'll work with the `dem_rep` variable that we created when learning about variable re-coding, as well as the `cappun` variable.
 
 Thankfully, we can use a familiar function in `tabyl()`, which we used to create our frequency table. We can simply add a second variable to produce a crosstab, though we will need to specify a couple of things so that the variables are properly formatted in terms of rows and columns.
 
-```{r, eval = TRUE, echo = FALSE}
+If you did not save `our_gss.rda` after creating this variable in a previous exercise, you can go ahead and recreate it with the following code:
+
+```{r}
 our_gss <- our_gss |>
   mutate(
     partyid_recoded=fct_collapse(partyid, 
@@ -50,110 +55,293 @@ our_gss <- our_gss |>
 
 ```{r}
 our_gss |>
-  drop_na(sex, dem_rep) |>
+  drop_na(dem_rep, cappun) |>
   tabyl(
-    var1 = dem_rep,
-    var2 = sex
+    var1 = cappun,
+    var2 = dem_rep
   )
   
 ```
-::: {.callout-caution}
+
+::: {.callout-warning}
 Whenever you make a two-way crosstab like this, make sure that you always give your dependent variable as `var1` and your independent variable as `var2`. This will make sure your dependent variable appears as rows and your independent variable as columns, which makes everything much easier to parse for our purposes.
 :::
+
+For each cell, the count of that particular category intersection is displayed. So, for example, row 1 tells us that of those who indicated that they favor the death penalty, 426 are Democrats and 633 are Republicans.
 
 Now, let's clean it up a little bit with the `adorn_()` functions like we did before.
 
 First, let's add a `totals` row at the bottom, which will tell us how many respondents are in each category of the independent variable. Note that we always need to add `adorn_totals()` before all other `adorn_()` functions. It requires the raw counts as input, and these will be transformed by most other `adorn_()` functions, so we will get an error if we try to run `adorn_totals()` afterwards.
 
-We'll give one input to `adorn_totals()`, which will be `where = "row"`, to indicate that we want the totals to appear as a row. 
+We'll give one input to `adorn_totals()`, which will be `where = "row"`, to indicate that we want the totals to appear as a row.
+
 ```{r}
 our_gss |>
-  drop_na(sex, dem_rep) |>
+  drop_na(cappun, dem_rep) |>
   tabyl(
-    var1 = dem_rep,
-    var2 = sex) |>
+    var1 = cappun,
+    var2 = dem_rep) |>
   adorn_totals(where = "row")
 ```
 
 Now, let's convert counts to proportions. Somewhat misleadingly, this is done with the `adorn_percentages()` function, and then we can add the `adorn_pct_formatting()` function to turn them into percentages proper.
+
 ```{r}
 our_gss |>
-  drop_na(sex, dem_rep) |>
+  drop_na(cappun, dem_rep) |>
   tabyl(
-    var1 = dem_rep,
-    var2 = sex) |>
+    var1 = cappun,
+    var2 = dem_rep) |>
   adorn_totals(where = "row") |>
   adorn_percentages() |>
   adorn_pct_formatting()
 ```
 
 While percentages help give important context, it's important that we still complement the percentages with the raw numbers. Thankfully, we can add those back in alongside the percentages with `adorn_ns()`
+
 ```{r}
 our_gss |>
-  drop_na(sex, dem_rep) |>
+  drop_na(cappun, dem_rep) |>
   tabyl(
-    var1 = dem_rep,
-    var2 = sex) |>
+    var1 = cappun,
+    var2 = dem_rep) |>
   adorn_totals(where = "row") |>
   adorn_percentages() |>
   adorn_pct_formatting() |>
   adorn_ns(position = "front")
 ```
+
 Great. For our final adornment, let's add some better labels for the variables. We'll use `adorn_title()` for this, and we'll supply `placement = top` to let the function know we want the labels on top of each variable column. Then we can provide custom label names with `row_name =` and `col_name =`.
+
 ```{r}
 our_gss |>
-  drop_na(sex, dem_rep) |>
+  drop_na(cappun, dem_rep) |>
   tabyl(
-    var1 = dem_rep,
-    var2 = sex) |>
+    var1 = cappun,
+    var2 = dem_rep) |>
   adorn_totals(where = "row") |>
   adorn_percentages() |>
   adorn_pct_formatting() |>
   adorn_ns(position = "rear") |>
   adorn_title(
     placement = "top",
-    row_name = "Political Party",
-    col_name = "Sex")
+    row_name = "Death Penalty Attitude",
+    col_name = "Political Party") 
 
 ```
+
 Great! Like our other visualizations, we'll clean this up a bit more later on, but this will do for now.
 
 ### Reading our table
-Now that have our two-way crosstab, let's go ahead and think about what this means for our hypothesis. 
+
+Now that have our two-way crosstab, let's go ahead and think about what this means for our hypothesis.
+
 ```{r, eval = TRUE, echo = FALSE}
 our_gss |>
-  drop_na(sex, dem_rep) |>
+  drop_na(cappun, dem_rep) |>
   tabyl(
-    var1 = dem_rep,
-    var2 = sex) |>
+    var1 = cappun,
+    var2 = dem_rep) |>
   adorn_totals(where = "row") |>
   adorn_percentages() |>
   adorn_pct_formatting() |>
   adorn_ns(position = "rear") |>
   adorn_title(
     placement = "top",
-    row_name = "Political Party",
-    col_name = "Sex")
+    row_name = "Death Penalty Attitude",
+    col_name = "Political Party") |>
+  knitr::kable()
 ```
+
 Because our dependent variable makes up the rows, we can simply read across each row to get a sense of the patterns.
 
-Reading across the Democrat row, we can see that about 60% of Dems are women, and about 40% of Dems are men. So, there a decent-sized difference there.
+Reading across the 'approve' row, we can see that about 40% of those who favor the death penalty are Democrats, whereas \~60% of those who favor the death penalty are Republicans. The contrast is sharper for those who oppose the death penalty, where 82.5% are Democrats and 17.5% are Republicans. The imbalance there is a consequence of the recoding strategy, as the original `partyid` variable also includes Independents and an Other Party category. Nonetheless, a general pattern clearly emerges: Democrats are more likely to oppose the death penalty than Republicans.
 
-If we read across the Republican row, we can see that 47% are women compared to 53% men. This is not a big a difference as we see with Democrats, but, across both rows, it seems to be the case that women are more likely to be Democrats, and men are more likely to be Republicans
+But how can we feel good about whether this association is likely to be reflective of something real, and not just an artifact of our particular sample or simply random chance? For this, we need to employ a statistical test.
 
-However, in order to test whether this apparent association is statistically significant, we need to make use of the chi-squared test.
+Specifically, we will leverage the Chi-square test. This is used when both of the variables we're interested in are categorical.
 
-## Chi-squared Test
+## Chi-square Test
+
+Let's have a little refresher on what goes into the Chi-square test and the corresponding Chi-square value, which serves as a key indicator of the statistical significance for our findings.
+
+### What the test tells us
+
+Given the sample size of our data, the number of variables we are comparing, and the number of categories within those variables, we can calculate an **expected** distribution of those variables for the case where the variables are completely unrelated. This would give us a contingency table where our sample size is distributed across cells in a random fashion.
+
+The Chi-square test involves estimating the extent to which the cell counts we actually **observe** in our contingency table are significantly different from the cell counts we **expect** if the variables are unrelated.
+
+$\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}$
+
+This is the formal equation for the Chi-square test (slightly modified for interpretive simplicity). You will almost never need to calculate this by hand, but I will explain what the equation means in order to help us get a conceptual understanding of the test.
+
+On the left-hand side of the equation, we have $\chi^{2}$, which is the symbol for Chi-square---Chi being in reference to the letter of the Greek alphabet.
+
+On the right-hand side, we have ${\frac{(o - e)^{2}}{e}}$, which is the heart of the calculation
+
+The ${\sum}$ operator tells us that we will be taking a sum. So, we need to calculate ${\frac{(o - e)^{2}}{e}}$ for each cell in the contingency table, and then add all these values together.
+
+-   o: observed valued
+-   e: expected value
+
+For each cell, we take the value that we find in our contingency table, subtract the value we expect if there's no relationship between the variables, square that difference, and then divide by the expected value.
+
+So, the observed value is easy enough---it's just the value we actually see in our contingency table. So, for example, in the contingency table we have here:
+
 ```{r}
 our_gss |>
-  drop_na(sex, dem_rep) |>
+  drop_na(cappun, dem_rep) |>
   tabyl(
-    var1 = dem_rep,
-    var2 = sex) |>
+    var1 = cappun,
+    var2 = dem_rep) |>
+  adorn_totals(where = "row") |>
+  adorn_percentages() |>
+  adorn_pct_formatting() |>
+  adorn_ns(position = "rear") |>
+  adorn_title(
+    placement = "top",
+    row_name = "Death Penalty Attitude",
+    col_name = "Political Party") |>
+  knitr::kable()
+```
+
+The observed value of the cell in the first row of the first column is 426. Now, this raises the question of how exactly we calculate the expected values.
+
+$Expected Count = {\frac{(RowTotal) \cdot (ColumnTotal)}{GrandTotal}}$
+
+In other words, for each cell, you take the sum of the values in that row, then take the sum of the values in that column, and then multiply these together. Then, you divide that value by the grand total.
+
+Let's work through an example from our table.
+
+```{r, echo = FALSE}
+our_gss |>
+  drop_na(cappun, dem_rep) |>
+  tabyl(
+    var1 = cappun,
+    var2 = dem_rep) |>
+  adorn_totals(where = c("row", "col")) |>
+  adorn_percentages() |>
+  adorn_pct_formatting() |>
+  adorn_ns(position = "rear") |>
+  adorn_title(
+    placement = "top",
+    row_name = "Death Penalty Attitude",
+    col_name = "Political Party") |>
+  knitr::kable()
+```
+
+The expected count for Democrats who favor the death penalty would be: $\frac{(426+633)\cdot(426+569)}{1749}$
+
+```{r, eval = TRUE, echo = FALSE}
+((426 + 633) * (426 + 569)) / 1749
+```
+
+This calculation is actually a slight variation on a principle from probability theory that describes the joint probability of independent events: $P(A\&B) = P(A)\cdot P(B)$
+
+What this means is that, if two variables are independent, then the probability of any combination of these variables occurring simultaneously is equivalent to the product of each event's individual probability.
+
+So, consider an example from our data:
+
+The $P(Democrat\&Favor) = P(Democrat)\cdot P(Favor)$
+
+The probability of favoring the death penalty and being a democrat is equal to the probability of being a democrat multiplied by the probability of favoring the death penalty.
+
+```{r}
+# Total of our sample
+grand_total <- 1749
+
+# Number of democrats
+num_dems <- 995
+
+# Number of people who favor the death penalty
+num_favs <- 1059
+
+# Probability of being a democrat
+dem_prob <- num_dems/grand_total 
+
+# Probability of favoring the death penalty
+fav_prob <- num_favs/grand_total
+
+# Expected probability of Favor/Democrat
+exp_dem_fav <- dem_prob * fav_prob
+
+# Expected count of Favor/Democrat
+exp_dem_fav * grand_total
+
+```
+
+There it is worked out in a little more detail. The $Expected Count = {\frac{(RowTotal) \cdot (ColumnTotal)}{GrandTotal}}$ equation is written to output the counts directly, but hopefully that helps clarify what exactly the concept of 'expected' counts is getting at.
+
+Now, all we'd need to do is plus these expected values into this formula: $\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}$
+
+Then you can use a look-up table for the corresponding p-values of Chi-squared statistics. You will need to know your degrees of freedom, which, for the Chi-square test, is $(RowNumbers-1)\cdot (ColumnNumbers-1)$. So, for our 2x2 contingency table, this would be:
+
+```{r}
+total_rows <- 2
+total_columns <- 2
+
+# Degrees of freedom
+(total_rows - 1) * (total_columns - 1)
+```
+
+You can then use a look-up table for p-values that correspond with a given Chi-square test value. [Here's an example from the University of Sussex](https://users.sussex.ac.uk/~grahamh/RM1web/ChiSquareTable2005.pdf).
+
+All you have to do is take your Chi-squared value & your degrees of freedom and then locate the column corresponding to the alpha level you are hoping for. In most cases, this will be an alpha of 0.05. We want a p-value below this alpha level for statistical significance, which means that we want less than a 5% chance of a false positive (i.e. returning a statistically significant result when there actually is no association).
+
+With an alpha of 0.05 and 1 degree of freedom, we need our Chi-squared value to be greater than 3.84 in order to claim statistical significance. In our case, we do have this, and I'll show you a much simpler way of sussing all this out below.
+
+### Performing the test
+
+I went about working through that example to make sure we all have a good idea of what's going on underneath the hood of the Chi-squared test.
+
+Thankfully for all of us, you will rarely if ever need to actually go about manually calculating all of this stuff. As usual, R has a nifty function that we can run directly on our contingency table, which will automatically run all of these calculations and output a corresponding p-value. :::{callout-caution} Note here that I am running this on a bare-bones table without any of the `adorn_()` functions that we have used to dress up our `tabyl()` output. Because this adds a bunch more information beyond the simple frequency counts, this will throw off `chisq.test()`, which will not know what to do with the extra info (e.g. the percents & totals row). Make sure you leave out any adornments when running the Chi-square test. :::
+
+```{r}
+our_gss |>
+  drop_na(cappun, dem_rep) |>
+  tabyl(
+    var1 = cappun,
+    var2 = dem_rep) |>
   chisq.test()
 ```
 
+This gives us our Chi-squared value (302.18), our degrees of freedom (1), and a corresponding p-value. Note that this is scientific notation, but it's an extraordinarily small number---far below our 0.05 alpha threshold. I'll display it in full so you can see for yourself
+
 ```{r}
+format(2.2e-16, scientific = FALSE)
+```
+
+So, 2.2e-16 indicates the number 22 following 16 zeros (including one before the decimal place).
+
+In the case that it is this small, it's common convention to simply report that your p-value is \< 0.001.
+
+One other nifty thing we can do with `chisq.test()` is store it as an object.
+
+```{r}
+our_chisq <- our_gss |>
+  drop_na(cappun, dem_rep) |>
+  tabyl(
+    var1 = cappun,
+    var2 = dem_rep) |>
+  chisq.test()
+```
+
+If we look inside this object, we'll see a bunch of the information used to calculate these various statistics. Notably, it has the table of both observed and expected counts, so we can easily compare the two.
+
+```{r}
+our_chisq$expected
+our_chisq$observed
+```
+
+As you can see, far fewer Democrats favor the death penalty than would be expected in the case that this is independent from one's political affiliation. Similarly, many more Republicans favor the death penalty that we would expect in the conjoint distribution of two independent variables.
+
+So, what does this mean substantively?
+
+With a Chi-squared value of 302.18 at 1 degree of freedom, we find evidence to support our hypothesis that there is an association between death-penalty attitudes and political-party affiliation. Our p-value of \<0.001 suggests it is exceedingly unlikely that the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.
+
+The conjoint distribution of `cappun` and `dem_rep` shows us that Democrats are more likely to oppose the death penalty than Republicans. Of those who oppose the death penalty, 82.% are Democrats and only 17.5% are Republicans. On the other hand, of those who favor the death penalty, only 40.2% are Democrats, whereas 59.8% are Republicans.
+
+```{r, eval = FALSE, echo = FALSE}
 library(gtsummary)
 
 our_gss |>
@@ -166,3 +354,26 @@ select(sex, dem_rep) |>
   
 ```
 
+```{r, eval = FALSE, echo = FALSE}
+# Some code for grouped barplots with the lattice package
+
+
+# Make a quick and dirty contingency table with base R & then turn that into a data frame
+
+# The variable order should be table(dependent_variable, independent_variable)
+my_tab <- table(our_gss$cappun, our_gss$dem_rep) |>
+  as.data.frame()
+
+# Overwrite the column names of this new data frame to make them more intelligible
+colnames(my_tab) <- c("Capital_Punishment", "Political_Party", "Frequency")
+
+# Plot our barplot of capital punishment attitudes grouped by political party
+barchart(
+  Frequency ~ Capital_Punishment, 
+  groups = Political_Party, 
+  data = my_tab, 
+  auto.key = TRUE,
+  xlab = "Respondent's opinion of capital punishment",
+  main = "Capital Punishment Attitudes by Political Party")
+
+```

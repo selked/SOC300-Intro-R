@@ -239,8 +239,21 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Day 3: Bivariate Analysis with the GSS</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Day 3: Bivariate Analysis with the GSS</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bivariate_categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bivariate: Categorical</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -333,7 +346,7 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(our_gss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   3544 obs. of  9 variables:
+<pre><code>'data.frame':   3544 obs. of  11 variables:
  $ year    : num  2022 2022 2022 2022 2022 ...
  $ id      : Factor w/ 4149 levels "1","2","3","4",..: 1 2 3 4 5 6 7 8 9 10 ...
  $ age     : num  72 80 57 23 62 27 20 47 31 72 ...
@@ -342,7 +355,9 @@ window.Quarto = {
  $ realrinc: num  40900 NA 18405 2250 NA ...
  $ partyid : Factor w/ 8 levels "strong democrat",..: 1 2 3 1 2 4 5 1 5 1 ...
  $ happy   : Ord.factor w/ 3 levels "not too happy"&lt;..: 1 1 1 1 2 2 2 2 2 2 ...
- $ marital : Factor w/ 5 levels "divorced","married",..: 1 2 1 3 3 3 3 2 3 3 ...</code></pre>
+ $ marital : Factor w/ 5 levels "divorced","married",..: 1 2 1 3 3 3 3 2 3 3 ...
+ $ attend  : Factor w/ 9 levels "never","less than once a year",..: 3 3 1 5 3 1 2 2 1 8 ...
+ $ cappun  : Factor w/ 2 levels "favor","oppose": 2 1 1 2 2 2 2 2 1 NA ...</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -414,14 +429,22 @@ Note
  3rd Qu.: 33742.5   independent, close to democrat    :400  
  Max.   :141848.3   (Other)                           :797  
  NA's   :1554       NA's                              : 35  
-           happy               marital        hr_wage        
- not too happy: 799   divorced     : 608   Min.   : 0.09832  
- pretty happy :1942   married      :1468   1st Qu.: 4.17849  
- very happy   : 779   never married:1095   Median : 8.84856  
- NA's         :  24   separated    : 103   Mean   :13.38237  
-                      widowed      : 255   3rd Qu.:16.22236  
-                      NA's         :  15   Max.   :68.19631  
-                                           NA's   :1554      </code></pre>
+           happy               marital                            attend    
+ not too happy: 799   divorced     : 608   never                     :1149  
+ pretty happy :1942   married      :1468   about once or twice a year: 464  
+ very happy   : 779   never married:1095   every week                : 441  
+ NA's         :  24   separated    : 103   less than once a year     : 416  
+                      widowed      : 255   several times a year      : 346  
+                      NA's         :  15   (Other)                   : 693  
+                                           NA's                      :  35  
+    cappun        hr_wage        
+ favor :2013   Min.   : 0.09832  
+ oppose:1327   1st Qu.: 4.17849  
+ NA's  : 204   Median : 8.84856  
+               Mean   :13.38237  
+               3rd Qu.:16.22236  
+               Max.   :68.19631  
+               NA's   :1554      </code></pre>
 </div>
 </div>
 <p>So, we can use <code>mutate()</code> to add a new column that contains our recoded variable. We just need a way to specify a calculation that takes into account the specific intervals we want for our ordinal labels. For this, we need one more function.</p>
@@ -480,7 +503,7 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(our_gss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   3544 obs. of  11 variables:
+<pre><code>'data.frame':   3544 obs. of  13 variables:
  $ year    : num  2022 2022 2022 2022 2022 ...
  $ id      : Factor w/ 4149 levels "1","2","3","4",..: 1 2 3 4 5 6 7 8 9 10 ...
  $ age     : num  72 80 57 23 62 27 20 47 31 72 ...
@@ -490,6 +513,8 @@ Note
  $ partyid : Factor w/ 8 levels "strong democrat",..: 1 2 3 1 2 4 5 1 5 1 ...
  $ happy   : Ord.factor w/ 3 levels "not too happy"&lt;..: 1 1 1 1 2 2 2 2 2 2 ...
  $ marital : Factor w/ 5 levels "divorced","married",..: 1 2 1 3 3 3 3 2 3 3 ...
+ $ attend  : Factor w/ 9 levels "never","less than once a year",..: 3 3 1 5 3 1 2 2 1 8 ...
+ $ cappun  : Factor w/ 2 levels "favor","oppose": 2 1 1 2 2 2 2 2 1 NA ...
  $ hr_wage : num  19.66 NA 8.85 1.08 NA ...
  $ age_ord : Ord.factor w/ 3 levels "Younger"&lt;"Middle Age"&lt;..: 3 3 3 1 3 1 1 2 1 3 ...</code></pre>
 </div>
