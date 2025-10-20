@@ -293,8 +293,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#chi-square-test" id="toc-chi-square-test" class="nav-link" data-scroll-target="#chi-square-test"><span class="header-section-number">6.2</span> Chi-square Test</a>
   <ul class="collapse">
-  <li><a href="#what-the-test-tells-us" id="toc-what-the-test-tells-us" class="nav-link" data-scroll-target="#what-the-test-tells-us"><span class="header-section-number">6.2.1</span> What the test tells us</a></li>
-  <li><a href="#performing-the-test" id="toc-performing-the-test" class="nav-link" data-scroll-target="#performing-the-test"><span class="header-section-number">6.2.2</span> Performing the test</a></li>
+  <li><a href="#how-the-test-works" id="toc-how-the-test-works" class="nav-link" data-scroll-target="#how-the-test-works"><span class="header-section-number">6.2.1</span> How the test works</a></li>
+  <li><a href="#the-chisq.test-function" id="toc-the-chisq.test-function" class="nav-link" data-scroll-target="#the-chisq.test-function"><span class="header-section-number">6.2.2</span> The chisq.test() function</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -514,8 +514,8 @@ Warning
 <section id="chi-square-test" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="chi-square-test"><span class="header-section-number">6.2</span> Chi-square Test</h2>
 <p>Let’s have a little refresher on what goes into the Chi-square test and the corresponding Chi-square value, which serves as a key indicator of the statistical significance for our findings.</p>
-<section id="what-the-test-tells-us" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="what-the-test-tells-us"><span class="header-section-number">6.2.1</span> What the test tells us</h3>
+<section id="how-the-test-works" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="how-the-test-works"><span class="header-section-number">6.2.1</span> How the test works</h3>
 <p>Given the sample size of our data, the number of variables we are comparing, and the number of categories within those variables, we can calculate an <strong>expected</strong> distribution of those variables for the case where the variables are completely unrelated. This would give us a contingency table where our sample size is distributed across cells in a random fashion.</p>
 <p>The Chi-square test involves estimating the extent to which the cell counts we actually <strong>observe</strong> in our contingency table are significantly different from the cell counts we <strong>expect</strong> if the variables are unrelated.</p>
 <p><span class="math display">\[\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}\]</span></p>
@@ -643,13 +643,13 @@ Warning
 <pre><code>[1] 1</code></pre>
 </div>
 </div>
-<p>You can then use a look-up table for p-values that correspond with a given Chi-square test value. <a href="https://users.sussex.ac.uk/~grahamh/RM1web/ChiSquareTable2005.pdf">Here’s an example from the University of Sussex</a>.</p>
+<p><a href="https://users.sussex.ac.uk/~grahamh/RM1web/ChiSquareTable2005.pdf">Here’s an example of a Chi-square look-up table from the University of Sussex</a>.</p>
 <p>All you have to do is take your Chi-squared value &amp; your degrees of freedom and then locate the column corresponding to the alpha level you are hoping for. In most cases, this will be an alpha of 0.05, which is standard across the social sciences. We want a p-value below this alpha level for statistical significance, which means that we want less than a 5% chance of a false positive (i.e.&nbsp;returning a statistically significant result when there actually is no association).</p>
 <p>With an alpha of 0.05 and 1 degree of freedom, we need our Chi-squared value to be greater than 3.84 in order to claim statistical significance. In our case, our value of 302.18 is well above this, so we do indeed have a statistically significant finding.</p>
 <p>Finally, let’s learn a much simpler way to do all of this.</p>
 </section>
-<section id="performing-the-test" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="performing-the-test"><span class="header-section-number">6.2.2</span> Performing the test</h3>
+<section id="the-chisq.test-function" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="the-chisq.test-function"><span class="header-section-number">6.2.2</span> The chisq.test() function</h3>
 <p>I went about working through that example to make sure we all have a good idea of what’s going on underneath the hood of the Chi-squared test.</p>
 <p>Thankfully for all of us, you will rarely if ever need to actually go about manually calculating all of this stuff. As usual, R has a nifty function that we can run directly on our contingency table—the <code>chisq.test()</code> function—which will automatically run all of these calculations and output a corresponding p-value. We just need to provide the function a contingency table as input, and the output of <code>tabyl()</code> will work for us here. I’m simply going to borrow some code from above and then add one more pipe operator to pass the table into the <code>chisq.test()</code> function.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
