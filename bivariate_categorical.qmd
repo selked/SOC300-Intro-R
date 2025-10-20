@@ -277,7 +277,7 @@ chi_numerator <- (obs_val - exp_val)^2
 
 chi_denominator <- exp_val
 
-dev_fav_chisq <- chi_numerator/chi_denominator
+chi_numerator/chi_denominator
 ```
 
 Then we do this for the three other cells in our table, add these 4 values together, and voila---we have our Chi-square statistic.
@@ -286,7 +286,7 @@ I won't go through the trouble here of manually calculating all the others, but 
 
 Then you can use a look-up table for the corresponding p-values of Chi-squared statistics. You will need to know your degrees of freedom, which, for the Chi-square test, is:
 
-$$df = (RowNumbers-1)\cdot (ColumnNumbers-1)$$. 
+$$df = (RowNumbers-1)\cdot (ColumnNumbers-1)$$ 
 
 So, for our 2x2 contingency table, this would be:
 
