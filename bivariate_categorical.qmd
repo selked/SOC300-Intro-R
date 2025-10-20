@@ -172,7 +172,7 @@ Specifically, we will leverage the Chi-square test. This is used when both of th
 
 Let's have a little refresher on what goes into the Chi-square test and the corresponding Chi-square value, which serves as a key indicator of the statistical significance for our findings.
 
-### What the test tells us
+### How the test works
 
 Given the sample size of our data, the number of variables we are comparing, and the number of categories within those variables, we can calculate an **expected** distribution of those variables for the case where the variables are completely unrelated. This would give us a contingency table where our sample size is distributed across cells in a random fashion.
 
@@ -298,7 +298,7 @@ total_columns <- 2
 (total_rows - 1) * (total_columns - 1)
 ```
 
-You can then use a look-up table for p-values that correspond with a given Chi-square test value. [Here's an example from the University of Sussex](https://users.sussex.ac.uk/~grahamh/RM1web/ChiSquareTable2005.pdf).
+[Here's an example of a Chi-square look-up table from the University of Sussex](https://users.sussex.ac.uk/~grahamh/RM1web/ChiSquareTable2005.pdf).
 
 All you have to do is take your Chi-squared value & your degrees of freedom and then locate the column corresponding to the alpha level you are hoping for. In most cases, this will be an alpha of 0.05, which is standard across the social sciences. We want a p-value below this alpha level for statistical significance, which means that we want less than a 5% chance of a false positive (i.e. returning a statistically significant result when there actually is no association).
 
@@ -306,7 +306,7 @@ With an alpha of 0.05 and 1 degree of freedom, we need our Chi-squared value to 
 
 Finally, let's learn a much simpler way to do all of this.
 
-### Performing the test
+### The chisq.test() function
 I went about working through that example to make sure we all have a good idea of what's going on underneath the hood of the Chi-squared test.
 
 Thankfully for all of us, you will rarely if ever need to actually go about manually calculating all of this stuff. As usual, R has a nifty function that we can run directly on our contingency table---the `chisq.test()` function---which will automatically run all of these calculations and output a corresponding p-value. We just need to provide the function a contingency table as input, and the output of `tabyl()` will work for us here. I'm simply going to borrow some code from above and then add one more pipe operator to pass the table into the `chisq.test()` function.
@@ -356,7 +356,7 @@ As you can see, far fewer Democrats favor the death penalty than would be expect
 
 So, what does this mean substantively?
 
-With a Chi-squared value of 302.18 at 1 degree of freedom, we find evidence to support our hypothesis that there is an association between death-penalty attitudes and political-party affiliation. Our Chi-square value is associated p-value of \<0.001, which is statistically significant at our alpha of 0.05. This suggests that it is exceedingly unlikely the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.
+With a Chi-squared value of 302.18 at 1 degree of freedom, we find evidence to support our hypothesis that there is an association between death-penalty attitudes and political-party affiliation. Our Chi-square value is associated with a p-value of \<0.001, which is statistically significant at our alpha of 0.05. This suggests that it is exceedingly unlikely the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.
 
 The conjoint distribution of `cappun` and `dem_rep` shows us that Democrats are more likely to oppose the death penalty than Republicans. Of those who oppose the death penalty, 82.% are Democrats and only 17.5% are Republicans. On the other hand, of those who favor the death penalty, only 40.2% are Democrats, whereas 59.8% are Republicans.
 
