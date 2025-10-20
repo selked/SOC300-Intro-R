@@ -327,7 +327,7 @@ window.Quarto = {
 <p>We will learn to recognize associations in the contingency table, and then we’ll use the chi-square test to estimate the likelihood that the relationship we find is genuine or merely an artifact of random chance.</p>
 <section id="contingency-tables" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="contingency-tables"><span class="header-section-number">6.1</span> Contingency Tables</h2>
-<p>Also known as cross-tabulations—or crosstabs for short—contingency tables are quite similar to contingency tables. Rather than showing the distribution of a single variable, they show us the distribution of our dependent variable across the levels of our independent variable.</p>
+<p>Also known as cross-tabulations—or crosstabs for short—contingency tables are quite similar to frequency tables. Rather than showing the distribution of a single variable, they show us the distribution of our dependent variable across the levels of our independent variable. In technical terms, we can call this the conjoint distribution of two variables.</p>
 <p>Let’s dig in with an example. We’ll keep working with our GSS subset, so let’s go ahead and set up our workspace by loading in our packages &amp; data. We will need both <code>tidyverse</code> and <code>janitor</code> for this tutorial.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -342,7 +342,7 @@ window.Quarto = {
 <p>In other words, the alternative hypothesis is that the proportion of approval for the death penalty will be different across political parties. The null hypothesis is that there will be no such difference.</p>
 <p>We’ll work with the <code>dem_rep</code> variable that we created when learning about variable re-coding, as well as the <code>cappun</code> variable.</p>
 <p>Thankfully, we can use a familiar function in <code>tabyl()</code>, which we used to create our frequency table. We can simply add a second variable to produce a crosstab, though we will need to specify a couple of things so that the variables are properly formatted in terms of rows and columns.</p>
-<p>If you did not save <code>our_gss.rda</code> after creating this variable in a previous exercise, you can go ahead and recreate it with the following code:</p>
+<p>If you did not save <code>our_gss.rda</code> after creating <code>dem_rep</code> in a previous exercise, you can go ahead and recreate it with the following code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="ot">&lt;-</span> our_gss <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -359,6 +359,7 @@ window.Quarto = {
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">NULL=</span><span class="st">"Other Party"</span>, </span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">NULL=</span><span class="st">"Independent"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>And then we can make a simple cross-tab like so:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(dem_rep, cappun) <span class="sc">|&gt;</span></span>
@@ -524,43 +525,9 @@ Warning
 <li>e: expected value</li>
 </ul>
 <p>For each cell, we take the value that we find in our contingency table, subtract the value we expect if there’s no relationship between the variables, square that difference, and then divide by the expected value.</p>
-<p>So, the observed value is easy enough—it’s just the value we actually see in our contingency table. So, for example, in the contingency table we have here:</p>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: left;">Political Party</th>
-<th style="text-align: left;"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Death Penalty Attitude</td>
-<td style="text-align: left;">Democrat</td>
-<td style="text-align: left;">Republican</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">favor</td>
-<td style="text-align: left;">40.2% (426)</td>
-<td style="text-align: left;">59.8% (633)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">oppose</td>
-<td style="text-align: left;">82.5% (569)</td>
-<td style="text-align: left;">17.5% (121)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Total</td>
-<td style="text-align: left;">56.9% (995)</td>
-<td style="text-align: left;">43.1% (754)</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>The observed value of the cell in the first row of the first column is 426. Now, this raises the question of how exactly we calculate the expected values.</p>
+<p>So, the observed value is easy enough—it’s just the value we actually see in our contingency table.</p>
+<p>The observed value of the cell in the first row of the first column is 426.</p>
+<p>Now, this raises the question of how exactly we calculate the expected values.</p>
 <p><span class="math display">\[Expected Count = {\frac{(RowTotal) \cdot (ColumnTotal)}{GrandTotal}}\]</span></p>
 <p>In other words, for each cell, you take the sum of the values in that row, then take the sum of the values in that column, and then multiply these together. Then, you divide that value by the grand total.</p>
 <p>Let’s work through an example from our table.</p>
@@ -612,9 +579,9 @@ Warning
 </div>
 <p>This calculation is actually a slight variation on a principle from probability theory that describes the joint probability of independent events: <span class="math display">\[P(A\&amp;B) = P(A)\cdot P(B)\]</span></p>
 <p>What this means is that, if two variables are independent, then the probability of any combination of these variables occurring simultaneously is equivalent to the product of each event’s individual probability.</p>
-<p>So, consider an example from our data:</p>
-<p>The <span class="math display">\[P(Democrat\&amp;Favor) = P(Democrat)\cdot P(Favor)\]</span></p>
-<p>The probability of favoring the death penalty and being a democrat is equal to the probability of being a democrat multiplied by the probability of favoring the death penalty.</p>
+<p>Let’s put this in context of our data:</p>
+<p><span class="math display">\[P(Democrat\&amp;Favor) = P(Democrat)\cdot P(Favor)\]</span></p>
+<p>If the two variables are unrelated, we expect that the probability of favoring the death penalty and being a democrat is equal to the probability of being a democrat multiplied by the probability of favoring the death penalty.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Total of our sample</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>grand_total <span class="ot">&lt;-</span> <span class="dv">1749</span></span>
@@ -641,8 +608,10 @@ Warning
 </div>
 </div>
 <p>There it is worked out in a little more detail. The <span class="math inline">\(Expected Count = {\frac{(RowTotal) \cdot (ColumnTotal)}{GrandTotal}}\)</span> equation is written to output the counts directly, but hopefully that helps clarify what exactly the concept of ‘expected’ counts is getting at.</p>
-<p>Now, all we’d need to do is plus these expected values into this formula: <span class="math display">\[\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}\]</span></p>
-<p>Then you can use a look-up table for the corresponding p-values of Chi-squared statistics. You will need to know your degrees of freedom, which, for the Chi-square test, is <span class="math inline">\((RowNumbers-1)\cdot (ColumnNumbers-1)\)</span>. So, for our 2x2 contingency table, this would be:</p>
+<p>Now, all we’d need to do is plug these expected values into this formula: <span class="math display">\[\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}\]</span></p>
+<p>Then you can use a look-up table for the corresponding p-values of Chi-squared statistics. You will need to know your degrees of freedom, which, for the Chi-square test, is:</p>
+<p><span class="math display">\[df = (RowNumbers-1)\cdot (ColumnNumbers-1)\]</span>.</p>
+<p>So, for our 2x2 contingency table, this would be:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>total_rows <span class="ot">&lt;-</span> <span class="dv">2</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>total_columns <span class="ot">&lt;-</span> <span class="dv">2</span></span>
@@ -655,7 +624,7 @@ Warning
 </div>
 <p>You can then use a look-up table for p-values that correspond with a given Chi-square test value. <a href="https://users.sussex.ac.uk/~grahamh/RM1web/ChiSquareTable2005.pdf">Here’s an example from the University of Sussex</a>.</p>
 <p>All you have to do is take your Chi-squared value &amp; your degrees of freedom and then locate the column corresponding to the alpha level you are hoping for. In most cases, this will be an alpha of 0.05. We want a p-value below this alpha level for statistical significance, which means that we want less than a 5% chance of a false positive (i.e.&nbsp;returning a statistically significant result when there actually is no association).</p>
-<p>With an alpha of 0.05 and 1 degree of freedom, we need our Chi-squared value to be greater than 3.84 in order to claim statistical significance. In our case, we do have this, and I’ll show you a much simpler way of sussing all this out below.</p>
+<p>With an alpha of 0.05 and 1 degree of freedom, we need our Chi-squared value to be greater than 3.84 in order to claim statistical significance. In our case, we do have this, and now I’ll show you a much simpler way of sussing all this out below.</p>
 </section>
 <section id="performing-the-test" class="level3" data-number="6.2.2">
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="performing-the-test"><span class="header-section-number">6.2.2</span> Performing the test</h3>
@@ -671,7 +640,7 @@ Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note here that I am running this on a bare-bones table without any of the <code>adorn_()</code> functions that we have used to dress up our <code>tabyl()</code> output. Because this adds a bunch more information beyond the simple frequency counts, this will throw off <code>chisq.test()</code>, which will not know what to do with the extra info (e.g.&nbsp;the percents &amp; totals row). Make sure you leave out any adornments when running the Chi-square test.</p>
+<p>Note here that I am running this on a bare-bones table without any of the <code>adorn_()</code> functions that we have used to dress up our <code>tabyl()</code> output. Because those functions add a bunch more information beyond the simple frequency counts, this will throw off <code>chisq.test()</code>, which will not know what to do with the extra info (e.g.&nbsp;the percents &amp; totals row). Make sure you leave out any adornments when running the Chi-square test.</p>
 </div>
 </div>
 <div class="cell">

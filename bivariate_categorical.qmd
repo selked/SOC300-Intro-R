@@ -10,7 +10,7 @@ We will learn to recognize associations in the contingency table, and then we'll
 
 ## Contingency Tables
 
-Also known as cross-tabulations---or crosstabs for short---contingency tables are quite similar to contingency tables. Rather than showing the distribution of a single variable, they show us the distribution of our dependent variable across the levels of our independent variable.
+Also known as cross-tabulations---or crosstabs for short---contingency tables are quite similar to frequency tables. Rather than showing the distribution of a single variable, they show us the distribution of our dependent variable across the levels of our independent variable. In technical terms, we can call this the conjoint distribution of two variables.
 
 Let's dig in with an example. We'll keep working with our GSS subset, so let's go ahead and set up our workspace by loading in our packages & data. We will need both `tidyverse` and `janitor` for this tutorial.
 
@@ -34,7 +34,7 @@ We'll work with the `dem_rep` variable that we created when learning about varia
 
 Thankfully, we can use a familiar function in `tabyl()`, which we used to create our frequency table. We can simply add a second variable to produce a crosstab, though we will need to specify a couple of things so that the variables are properly formatted in terms of rows and columns.
 
-If you did not save `our_gss.rda` after creating this variable in a previous exercise, you can go ahead and recreate it with the following code:
+If you did not save `our_gss.rda` after creating `dem_rep` in a previous exercise, you can go ahead and recreate it with the following code:
 
 ```{r}
 our_gss <- our_gss |>
@@ -53,6 +53,7 @@ our_gss <- our_gss |>
     NULL="Independent"))
 ```
 
+And then we can make a simple cross-tab like so:
 ```{r}
 our_gss |>
   drop_na(dem_rep, cappun) |>
@@ -186,26 +187,11 @@ The ${\sum}$ operator tells us that we will be taking a sum. So, we need to calc
 
 For each cell, we take the value that we find in our contingency table, subtract the value we expect if there's no relationship between the variables, square that difference, and then divide by the expected value.
 
-So, the observed value is easy enough---it's just the value we actually see in our contingency table. So, for example, in the contingency table we have here:
+So, the observed value is easy enough---it's just the value we actually see in our contingency table. 
 
-```{r, eval = TRUE, echo = FALSE}
-our_gss |>
-  drop_na(cappun, dem_rep) |>
-  tabyl(
-    var1 = cappun,
-    var2 = dem_rep) |>
-  adorn_totals(where = "row") |>
-  adorn_percentages() |>
-  adorn_pct_formatting() |>
-  adorn_ns(position = "rear") |>
-  adorn_title(
-    placement = "top",
-    row_name = "Death Penalty Attitude",
-    col_name = "Political Party") |>
-  knitr::kable()
-```
+The observed value of the cell in the first row of the first column is 426.
 
-The observed value of the cell in the first row of the first column is 426. Now, this raises the question of how exactly we calculate the expected values.
+Now, this raises the question of how exactly we calculate the expected values.
 
 $$Expected Count = {\frac{(RowTotal) \cdot (ColumnTotal)}{GrandTotal}}$$
 
@@ -240,11 +226,11 @@ This calculation is actually a slight variation on a principle from probability 
 
 What this means is that, if two variables are independent, then the probability of any combination of these variables occurring simultaneously is equivalent to the product of each event's individual probability.
 
-So, consider an example from our data:
+Let's put this in context of our data:
 
-The $$P(Democrat\&Favor) = P(Democrat)\cdot P(Favor)$$
+$$P(Democrat\&Favor) = P(Democrat)\cdot P(Favor)$$
 
-The probability of favoring the death penalty and being a democrat is equal to the probability of being a democrat multiplied by the probability of favoring the death penalty.
+If the two variables are unrelated, we expect that the probability of favoring the death penalty and being a democrat is equal to the probability of being a democrat multiplied by the probability of favoring the death penalty.
 
 ```{r}
 # Total of our sample
@@ -272,9 +258,13 @@ exp_dem_fav * grand_total
 
 There it is worked out in a little more detail. The $Expected Count = {\frac{(RowTotal) \cdot (ColumnTotal)}{GrandTotal}}$ equation is written to output the counts directly, but hopefully that helps clarify what exactly the concept of 'expected' counts is getting at.
 
-Now, all we'd need to do is plus these expected values into this formula: $$\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}$$
+Now, all we'd need to do is plug these expected values into this formula: $$\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}$$
 
-Then you can use a look-up table for the corresponding p-values of Chi-squared statistics. You will need to know your degrees of freedom, which, for the Chi-square test, is $(RowNumbers-1)\cdot (ColumnNumbers-1)$. So, for our 2x2 contingency table, this would be:
+Then you can use a look-up table for the corresponding p-values of Chi-squared statistics. You will need to know your degrees of freedom, which, for the Chi-square test, is:
+
+$$df = (RowNumbers-1)\cdot (ColumnNumbers-1)$$. 
+
+So, for our 2x2 contingency table, this would be:
 
 ```{r}
 total_rows <- 2
@@ -288,7 +278,7 @@ You can then use a look-up table for p-values that correspond with a given Chi-s
 
 All you have to do is take your Chi-squared value & your degrees of freedom and then locate the column corresponding to the alpha level you are hoping for. In most cases, this will be an alpha of 0.05. We want a p-value below this alpha level for statistical significance, which means that we want less than a 5% chance of a false positive (i.e. returning a statistically significant result when there actually is no association).
 
-With an alpha of 0.05 and 1 degree of freedom, we need our Chi-squared value to be greater than 3.84 in order to claim statistical significance. In our case, we do have this, and I'll show you a much simpler way of sussing all this out below.
+With an alpha of 0.05 and 1 degree of freedom, we need our Chi-squared value to be greater than 3.84 in order to claim statistical significance. In our case, we do have this, and now I'll show you a much simpler way of sussing all this out below.
 
 ### Performing the test
 
@@ -297,7 +287,7 @@ I went about working through that example to make sure we all have a good idea o
 Thankfully for all of us, you will rarely if ever need to actually go about manually calculating all of this stuff. As usual, R has a nifty function that we can run directly on our contingency table, which will automatically run all of these calculations and output a corresponding p-value.
 
 ::: callout-caution
-Note here that I am running this on a bare-bones table without any of the `adorn_()` functions that we have used to dress up our `tabyl()` output. Because this adds a bunch more information beyond the simple frequency counts, this will throw off `chisq.test()`, which will not know what to do with the extra info (e.g. the percents & totals row). Make sure you leave out any adornments when running the Chi-square test.
+Note here that I am running this on a bare-bones table without any of the `adorn_()` functions that we have used to dress up our `tabyl()` output. Because those functions add a bunch more information beyond the simple frequency counts, this will throw off `chisq.test()`, which will not know what to do with the extra info (e.g. the percents & totals row). Make sure you leave out any adornments when running the Chi-square test.
 :::
 
 ```{r}
@@ -337,7 +327,7 @@ our_chisq$expected
 our_chisq$observed
 ```
 
-As you can see, far fewer Democrats favor the death penalty than would be expected in the case that this is independent from one's political affiliation. Similarly, many more Republicans favor the death penalty that we would expect in the conjoint distribution of two independent variables.
+As you can see, far fewer Democrats favor the death penalty than would be expected in the case that this is independent from one's political affiliation. Similarly, many more Republicans favor the death penalty that we would expect in the conjoint distribution of two independent variables. 
 
 So, what does this mean substantively?
 
