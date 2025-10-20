@@ -674,7 +674,20 @@ Warning
 <section id="performing-the-test" class="level3" data-number="6.2.2">
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="performing-the-test"><span class="header-section-number">6.2.2</span> Performing the test</h3>
 <p>I went about working through that example to make sure we all have a good idea of what’s going on underneath the hood of the Chi-squared test.</p>
-<p>Thankfully for all of us, you will rarely if ever need to actually go about manually calculating all of this stuff. As usual, R has a nifty function that we can run directly on our contingency table, which will automatically run all of these calculations and output a corresponding p-value. :::{callout-caution} Note here that I am running this on a bare-bones table without any of the <code>adorn_()</code> functions that we have used to dress up our <code>tabyl()</code> output. Because this adds a bunch more information beyond the simple frequency counts, this will throw off <code>chisq.test()</code>, which will not know what to do with the extra info (e.g.&nbsp;the percents &amp; totals row). Make sure you leave out any adornments when running the Chi-square test. :::</p>
+<p>Thankfully for all of us, you will rarely if ever need to actually go about manually calculating all of this stuff. As usual, R has a nifty function that we can run directly on our contingency table, which will automatically run all of these calculations and output a corresponding p-value.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note here that I am running this on a bare-bones table without any of the <code>adorn_()</code> functions that we have used to dress up our <code>tabyl()</code> output. Because this adds a bunch more information beyond the simple frequency counts, this will throw off <code>chisq.test()</code>, which will not know what to do with the extra info (e.g.&nbsp;the percents &amp; totals row). Make sure you leave out any adornments when running the Chi-square test.</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun, dem_rep) <span class="sc">|&gt;</span></span>

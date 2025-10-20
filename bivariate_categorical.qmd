@@ -63,7 +63,7 @@ our_gss |>
   
 ```
 
-::: {.callout-warning}
+::: callout-warning
 Whenever you make a two-way crosstab like this, make sure that you always give your dependent variable as `var1` and your independent variable as `var2`. This will make sure your dependent variable appears as rows and your independent variable as columns, which makes everything much easier to parse for our purposes.
 :::
 
@@ -294,7 +294,11 @@ With an alpha of 0.05 and 1 degree of freedom, we need our Chi-squared value to 
 
 I went about working through that example to make sure we all have a good idea of what's going on underneath the hood of the Chi-squared test.
 
-Thankfully for all of us, you will rarely if ever need to actually go about manually calculating all of this stuff. As usual, R has a nifty function that we can run directly on our contingency table, which will automatically run all of these calculations and output a corresponding p-value. :::{callout-caution} Note here that I am running this on a bare-bones table without any of the `adorn_()` functions that we have used to dress up our `tabyl()` output. Because this adds a bunch more information beyond the simple frequency counts, this will throw off `chisq.test()`, which will not know what to do with the extra info (e.g. the percents & totals row). Make sure you leave out any adornments when running the Chi-square test. :::
+Thankfully for all of us, you will rarely if ever need to actually go about manually calculating all of this stuff. As usual, R has a nifty function that we can run directly on our contingency table, which will automatically run all of these calculations and output a corresponding p-value.
+
+::: callout-caution
+Note here that I am running this on a bare-bones table without any of the `adorn_()` functions that we have used to dress up our `tabyl()` output. Because this adds a bunch more information beyond the simple frequency counts, this will throw off `chisq.test()`, which will not know what to do with the extra info (e.g. the percents & totals row). Make sure you leave out any adornments when running the Chi-square test.
+:::
 
 ```{r}
 our_gss |>
