@@ -227,7 +227,7 @@ The expected count for Democrats who favor the death penalty would be: $$\frac{(
 ```{r, eval = TRUE, echo = FALSE}
 ((426 + 633) * (426 + 569)) / 1749
 ```
-You can get a sense right here that we may indeed be picking up on something in our cross-tab here. Democrats appear to oppose the death penalty more so than Republicans, based on the raw frequencies. Now we can see that our observed value for Democrats who favor the death penalty (426) is quite a bit lower than what we would expect if that variable were unrelated to political affiliation (602.46). This is promising, but there's a couple more things we need to do.
+You can get a sense right here that we may indeed be picking up on something in our cross-tab. Democrats appear to oppose the death penalty more so than Republicans, based on the raw frequencies. Now we can see that our observed value for Democrats who favor the death penalty (426) is quite a bit lower than what we would expect if that variable were unrelated to political affiliation (602.46). This is promising, but there's a couple more things we need to do.
 
 This calculation for the expected counts is actually downstream of a principle from probability theory that describes the joint probability of independent events: $$P(A\&B) = P(A)\cdot P(B)$$
 
