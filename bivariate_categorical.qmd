@@ -171,7 +171,7 @@ Given the sample size of our data, the number of variables we are comparing, and
 
 The Chi-square test involves estimating the extent to which the cell counts we actually **observe** in our contingency table are significantly different from the cell counts we **expect** if the variables are unrelated.
 
-$\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}$
+$$\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}$$
 
 This is the formal equation for the Chi-square test (slightly modified for interpretive simplicity). You will almost never need to calculate this by hand, but I will explain what the equation means in order to help us get a conceptual understanding of the test.
 
@@ -188,7 +188,7 @@ For each cell, we take the value that we find in our contingency table, subtract
 
 So, the observed value is easy enough---it's just the value we actually see in our contingency table. So, for example, in the contingency table we have here:
 
-```{r}
+```{r, eval = TRUE, echo = FALSE}
 our_gss |>
   drop_na(cappun, dem_rep) |>
   tabyl(
@@ -207,7 +207,7 @@ our_gss |>
 
 The observed value of the cell in the first row of the first column is 426. Now, this raises the question of how exactly we calculate the expected values.
 
-$Expected Count = {\frac{(RowTotal) \cdot (ColumnTotal)}{GrandTotal}}$
+$$Expected Count = {\frac{(RowTotal) \cdot (ColumnTotal)}{GrandTotal}}$$
 
 In other words, for each cell, you take the sum of the values in that row, then take the sum of the values in that column, and then multiply these together. Then, you divide that value by the grand total.
 
@@ -230,19 +230,19 @@ our_gss |>
   knitr::kable()
 ```
 
-The expected count for Democrats who favor the death penalty would be: $\frac{(426+633)\cdot(426+569)}{1749}$
+The expected count for Democrats who favor the death penalty would be: $$\frac{(426+633)\cdot(426+569)}{1749}$$
 
 ```{r, eval = TRUE, echo = FALSE}
 ((426 + 633) * (426 + 569)) / 1749
 ```
 
-This calculation is actually a slight variation on a principle from probability theory that describes the joint probability of independent events: $P(A\&B) = P(A)\cdot P(B)$
+This calculation is actually a slight variation on a principle from probability theory that describes the joint probability of independent events: $$P(A\&B) = P(A)\cdot P(B)$$
 
 What this means is that, if two variables are independent, then the probability of any combination of these variables occurring simultaneously is equivalent to the product of each event's individual probability.
 
 So, consider an example from our data:
 
-The $P(Democrat\&Favor) = P(Democrat)\cdot P(Favor)$
+The $$P(Democrat\&Favor) = P(Democrat)\cdot P(Favor)$$
 
 The probability of favoring the death penalty and being a democrat is equal to the probability of being a democrat multiplied by the probability of favoring the death penalty.
 
@@ -272,7 +272,7 @@ exp_dem_fav * grand_total
 
 There it is worked out in a little more detail. The $Expected Count = {\frac{(RowTotal) \cdot (ColumnTotal)}{GrandTotal}}$ equation is written to output the counts directly, but hopefully that helps clarify what exactly the concept of 'expected' counts is getting at.
 
-Now, all we'd need to do is plus these expected values into this formula: $\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}$
+Now, all we'd need to do is plus these expected values into this formula: $$\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}$$
 
 Then you can use a look-up table for the corresponding p-values of Chi-squared statistics. You will need to know your degrees of freedom, which, for the Chi-square test, is $(RowNumbers-1)\cdot (ColumnNumbers-1)$. So, for our 2x2 contingency table, this would be:
 
