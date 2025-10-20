@@ -28,7 +28,7 @@ Now, there's enough literature on capital punishment and political affiliation t
 
 Hypotheses are where we turn our research questions into very specific expectations about the data. If certain theoretical expectations are true, then we should find evidence in the data for the relationships suggested by theory. This is where we predict what the distribution of variables should look like in the event that these theoretical expectations are true.
 
-And emember that our hypotheses are generally going to be tested against a null hypothesis, which assumes that whatever relationship you predict is not the case.
+And remember that our hypotheses are generally going to be tested against a null hypothesis, which assumes that whatever relationship you predict is not the case.
 
 **Null hypothesis:** $$H_{0} = There \ will \ be \ no \ difference \ in \ rates \ of \ death \ penalty \ approval \ among \ Democrats \ and \ Republicans $$
 
@@ -332,7 +332,7 @@ format(2.2e-16, scientific = FALSE)
 
 So, 2.2e-16 indicates the number 22 following 16 zeros (including one before the decimal place).
 
-In the case that your p-value is this small, it's common convention to simply report that your it is \< 0.001.
+In the case that your p-value is this small, it's common convention to simply report that it is \< 0.001.
 
 One other nifty thing we can do with `chisq.test()` is store it as an object.
 
@@ -352,11 +352,11 @@ our_chisq$expected
 our_chisq$observed
 ```
 
-As you can see, far fewer Democrats favor the death penalty than would be expected in the case that this is independent from one's political affiliation. Similarly, many more Republicans favor the death penalty that we would expect in the conjoint distribution of two independent variables. Now that we have assessed this difference with the Chi-square test, we can feel confident that the association originally suggested by our reading of the contingency tables---that Democrats are more likely to oppose the death penalty than Republicans---is statistically significant.  
+As you can see, far fewer Democrats favor the death penalty than would be expected in the case that this is independent from one's political affiliation. Similarly, many more Republicans favor the death penalty than we would expect in the conjoint distribution of two independent variables. Now that we have assessed this difference with the Chi-square test, we can feel confident that the association originally suggested by our reading of the contingency tables---that Democrats are more likely to oppose the death penalty than Republicans---is statistically significant.  
 
 So, what does this mean substantively?
 
-With a Chi-squared value of 302.18 at 1 degree of freedom, we find evidence to support our hypothesis that there is an association between death-penalty attitudes and political-party affiliation. Our p-value of \<0.001 is statistically significant, which suggests that it is exceedingly unlikely the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.
+With a Chi-squared value of 302.18 at 1 degree of freedom, we find evidence to support our hypothesis that there is an association between death-penalty attitudes and political-party affiliation. Our Chi-square value is associated p-value of \<0.001, which is statistically significant at our alpha of 0.05. This suggests that it is exceedingly unlikely the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.
 
 The conjoint distribution of `cappun` and `dem_rep` shows us that Democrats are more likely to oppose the death penalty than Republicans. Of those who oppose the death penalty, 82.% are Democrats and only 17.5% are Republicans. On the other hand, of those who favor the death penalty, only 40.2% are Democrats, whereas 59.8% are Republicans.
 
