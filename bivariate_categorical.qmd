@@ -221,16 +221,17 @@ The expected count for Democrats who favor the death penalty would be: $$\frac{(
 ```{r, eval = TRUE, echo = FALSE}
 ((426 + 633) * (426 + 569)) / 1749
 ```
+You can get a sense right here that we may indeed be picking up on something in our cross-tab here. Democrats appear to oppose the death penalty more so than Republicans, based on the raw frequencies. Now we can see that our observed value for Democrats who favor the death penalty (426) is quite a bit lower than what we would expect if that variable were unrelated to political affiliation (602.46). This is promising, but there's a couple more things we need to do.
 
-This calculation is actually a slight variation on a principle from probability theory that describes the joint probability of independent events: $$P(A\&B) = P(A)\cdot P(B)$$
+This calculation for the expected counts is actually a slight variation on a principle from probability theory that describes the joint probability of independent events: $$P(A\&B) = P(A)\cdot P(B)$$
 
-What this means is that, if two variables are independent, then the probability of any combination of these variables occurring simultaneously is equivalent to the product of each event's individual probability.
+What this means is that, if two variables are independent, then the probability of any combination of these variables' response values occurring simultaneously is equivalent to the product of each event's individual probability.
 
 Let's put this in context of our data:
 
 $$P(Democrat\&Favor) = P(Democrat)\cdot P(Favor)$$
 
-If the two variables are unrelated, we expect that the probability of favoring the death penalty and being a democrat is equal to the probability of being a democrat multiplied by the probability of favoring the death penalty.
+If the two variables are unrelated, we expect that the probability of both being a democrat and favoring the death penalty is equal to the probability of being a democrat multiplied by the probability of favoring the death penalty.
 
 ```{r}
 # Total of our sample
@@ -299,7 +300,7 @@ our_gss |>
   chisq.test()
 ```
 
-This gives us our Chi-squared value (302.18), our degrees of freedom (1), and a corresponding p-value. Note that this is scientific notation, but it's an extraordinarily small number---far below our 0.05 alpha threshold. I'll display it in full so you can see for yourself
+This gives us our Chi-squared value (302.18), our degrees of freedom (1), and a corresponding p-value. Note that this is in scientific notation, but it's an extraordinarily small number---far below our 0.05 alpha threshold. I'll display it in full so you can see for yourself
 
 ```{r}
 format(2.2e-16, scientific = FALSE)
