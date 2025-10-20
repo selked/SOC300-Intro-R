@@ -26,9 +26,15 @@ We'll set up a simple hypothesis to illustrate. Let's say that, based on theory,
 
 Now, there's enough literature on capital punishment and political affiliation that we would probably be justified in making a more specific hypothesis about the predicted direction of the association, but let's just say we simply predict that rates of approval for the death penalty will vary across categories of Democrat and Republican.
 
-This would be our alternative hypothesis, and its respective null hypothesis is that Democrats & Republicans are equally likely to approve of the death penalty.
+Hypotheses are where we turn our research questions into very specific expectations about the data. If certain theoretical expectations are true, then we should find evidence in the data for the relationships suggested by theory. This is where we predict what the distribution of variables should look like in the event that these theoretical expectations are true.
 
-In other words, the alternative hypothesis is that the proportion of approval for the death penalty will be different across political parties. The null hypothesis is that there will be no such difference.
+And emember that our hypotheses are generally going to be tested against a null hypothesis, which assumes that whatever relationship you predict is not the case.
+
+**Null hypothesis:** $$H_{0} = There \ will \ be \ no \ difference \ in \ rates \ of \ death \ penalty \ approval \ among \ Democrats \ and \ Republicans $$
+
+**Alternative hypothesis:** $$H_{1} = Democrats \ and \ Republicans \ will \ have \ different \ rates \ of \ death \ penalty \ approval$$
+
+In sum, the alternative hypothesis is that the proportion of approval for the death penalty will be different across political parties. The null hypothesis is that there will be no such difference. Though the peculiarities of many statistical tests differ, this general idea is true for a great number of statistical procedures. You will estimate the distribution of values that would be the case under the null hypothesis and then evaluate the statistical significance of the extent to which your data deviates from a null distribution.
 
 We'll work with the `dem_rep` variable that we created when learning about variable re-coding, as well as the `cappun` variable.
 
@@ -223,9 +229,9 @@ The expected count for Democrats who favor the death penalty would be: $$\frac{(
 ```
 You can get a sense right here that we may indeed be picking up on something in our cross-tab here. Democrats appear to oppose the death penalty more so than Republicans, based on the raw frequencies. Now we can see that our observed value for Democrats who favor the death penalty (426) is quite a bit lower than what we would expect if that variable were unrelated to political affiliation (602.46). This is promising, but there's a couple more things we need to do.
 
-This calculation for the expected counts is actually a slight variation on a principle from probability theory that describes the joint probability of independent events: $$P(A\&B) = P(A)\cdot P(B)$$
+This calculation for the expected counts is actually downstream of a principle from probability theory that describes the joint probability of independent events: $$P(A\&B) = P(A)\cdot P(B)$$
 
-What this means is that, if two variables are independent, then the probability of any combination of these variables' response values occurring simultaneously is equivalent to the product of each event's individual probability.
+What this means is that, if two variables are independent, then the probability of any combination of these variables' response values occurring simultaneously is equivalent to the product of each value's individual probability.
 
 Let's put this in context of our data:
 
@@ -261,6 +267,23 @@ There it is worked out in a little more detail. The $Expected Count = {\frac{(Ro
 
 Now, all we'd need to do is plug these expected values into this formula: $$\chi^{2} = {\sum}{\frac{(o - e)^{2}}{e}}$$
 
+I'll calculate the Chi-square value of the cell for Democrats who favor the death penalty as an example.
+```{r}
+exp_val <- 602.4614
+
+obs_val <- 426
+
+chi_numerator <- (obs_val - exp_val)^2
+
+chi_denominator <- exp_val
+
+dev_fav_chisq <- chi_numerator/chi_denominator
+```
+
+Then we do this for the three other cells in our table, add these 4 values together, and voila---we have our Chi-square statistic.
+
+I won't go through the trouble here of manually calculating all the others, but know that our value is 302.18.
+
 Then you can use a look-up table for the corresponding p-values of Chi-squared statistics. You will need to know your degrees of freedom, which, for the Chi-square test, is:
 
 $$df = (RowNumbers-1)\cdot (ColumnNumbers-1)$$. 
@@ -277,15 +300,16 @@ total_columns <- 2
 
 You can then use a look-up table for p-values that correspond with a given Chi-square test value. [Here's an example from the University of Sussex](https://users.sussex.ac.uk/~grahamh/RM1web/ChiSquareTable2005.pdf).
 
-All you have to do is take your Chi-squared value & your degrees of freedom and then locate the column corresponding to the alpha level you are hoping for. In most cases, this will be an alpha of 0.05. We want a p-value below this alpha level for statistical significance, which means that we want less than a 5% chance of a false positive (i.e. returning a statistically significant result when there actually is no association).
+All you have to do is take your Chi-squared value & your degrees of freedom and then locate the column corresponding to the alpha level you are hoping for. In most cases, this will be an alpha of 0.05, which is standard across the social sciences. We want a p-value below this alpha level for statistical significance, which means that we want less than a 5% chance of a false positive (i.e. returning a statistically significant result when there actually is no association).
 
-With an alpha of 0.05 and 1 degree of freedom, we need our Chi-squared value to be greater than 3.84 in order to claim statistical significance. In our case, we do have this, and now I'll show you a much simpler way of sussing all this out below.
+With an alpha of 0.05 and 1 degree of freedom, we need our Chi-squared value to be greater than 3.84 in order to claim statistical significance. In our case, our value of 302.18 is well above this, so we do indeed have a statistically significant finding. 
+
+Finally, let's learn a much simpler way to do all of this.
 
 ### Performing the test
-
 I went about working through that example to make sure we all have a good idea of what's going on underneath the hood of the Chi-squared test.
 
-Thankfully for all of us, you will rarely if ever need to actually go about manually calculating all of this stuff. As usual, R has a nifty function that we can run directly on our contingency table, which will automatically run all of these calculations and output a corresponding p-value.
+Thankfully for all of us, you will rarely if ever need to actually go about manually calculating all of this stuff. As usual, R has a nifty function that we can run directly on our contingency table---the `chisq.test()` function---which will automatically run all of these calculations and output a corresponding p-value. We just need to provide the function a contingency table as input, and the output of `tabyl()` will work for us here. I'm simply going to borrow some code from above and then add one more pipe operator to pass the table into the `chisq.test()` function.
 
 ::: callout-caution
 Note here that I am running this on a bare-bones table without any of the `adorn_()` functions that we have used to dress up our `tabyl()` output. Because those functions add a bunch more information beyond the simple frequency counts, this will throw off `chisq.test()`, which will not know what to do with the extra info (e.g. the percents & totals row). Make sure you leave out any adornments when running the Chi-square test.
@@ -308,7 +332,7 @@ format(2.2e-16, scientific = FALSE)
 
 So, 2.2e-16 indicates the number 22 following 16 zeros (including one before the decimal place).
 
-In the case that it is this small, it's common convention to simply report that your p-value is \< 0.001.
+In the case that your p-value is this small, it's common convention to simply report that your it is \< 0.001.
 
 One other nifty thing we can do with `chisq.test()` is store it as an object.
 
@@ -328,11 +352,11 @@ our_chisq$expected
 our_chisq$observed
 ```
 
-As you can see, far fewer Democrats favor the death penalty than would be expected in the case that this is independent from one's political affiliation. Similarly, many more Republicans favor the death penalty that we would expect in the conjoint distribution of two independent variables. 
+As you can see, far fewer Democrats favor the death penalty than would be expected in the case that this is independent from one's political affiliation. Similarly, many more Republicans favor the death penalty that we would expect in the conjoint distribution of two independent variables. Now that we have assessed this difference with the Chi-square test, we can feel confident that the association originally suggested by our reading of the contingency tables---that Democrats are more likely to oppose the death penalty than Republicans---is statistically significant.  
 
 So, what does this mean substantively?
 
-With a Chi-squared value of 302.18 at 1 degree of freedom, we find evidence to support our hypothesis that there is an association between death-penalty attitudes and political-party affiliation. Our p-value of \<0.001 suggests it is exceedingly unlikely that the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.
+With a Chi-squared value of 302.18 at 1 degree of freedom, we find evidence to support our hypothesis that there is an association between death-penalty attitudes and political-party affiliation. Our p-value of \<0.001 is statistically significant, which suggests that it is exceedingly unlikely the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.
 
 The conjoint distribution of `cappun` and `dem_rep` shows us that Democrats are more likely to oppose the death penalty than Republicans. Of those who oppose the death penalty, 82.% are Democrats and only 17.5% are Republicans. On the other hand, of those who favor the death penalty, only 40.2% are Democrats, whereas 59.8% are Republicans.
 
