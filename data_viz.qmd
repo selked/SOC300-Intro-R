@@ -228,19 +228,14 @@ colnames(our_tab) <- c("Death Penalty Approval", "Frequency", "Percent", "Valid 
 # Check that it worked
 our_tab
 ```
-We can actually do the same thing with the rownames as well. In this case, we could capitalize 'favor' and 'oppose' and leave the rest as is.
-```{r}
-# Check the row names 
-rownames(our_tab)
-
-# Overwrite the row names with our own
-rownames(our_tab) <- c("Favor", "Oppose", "NA", "Total")
-```
 
 Now, all we have to do is pipe `our_tab` into the `gt()` function
 ```{r}
 our_tab <- our_tab |>
   gt()
+
+# Check it out
+our_tab
 ```
 This is not too bad for our purposes. This cleans the table up a hair while converting it into a format that we can see in the RStudio file viewer. This also allows us to copy it to our clipboard or export it as an image file.
 
