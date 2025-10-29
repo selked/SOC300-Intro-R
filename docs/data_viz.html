@@ -525,2031 +525,114 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="tables" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="tables"><span class="header-section-number">8.3</span> Tables</h2>
-<p>Now, let’s learn a way to get some pretty snazzy frequency tables and cross-tabs using the <code>gtsummary</code> package, which is designed specifically for quickly producing publication-ready tables.</p>
-<p>I’ll load it in below. If you need to install it, you can run <code>install.packages("gtsummary")</code></p>
+<p>Now, let’s learn a way to get some pretty snazzy frequency tables and cross-tabs using the <code>gt</code> and <code>gtsummary</code> package, which are designed specifically for quickly producing publication-ready tables.</p>
+<p>I’ll load them in below. If you need to install them, you can run <code>install.packages("gtsummary")</code> <code>install.packages("gt")</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="frequency-tables" class="level3" data-number="8.3.1">
 <h3 data-number="8.3.1" class="anchored" data-anchor-id="frequency-tables"><span class="header-section-number">8.3.1</span> Frequency tables</h3>
-<p>The function we’ll get the most mileage out of here is called <code>tbl_summary()</code>. It really does an incredible amount of stuff right out of the box, but it also offers a great deal of customizability. I’ll note that <code>gtsummary()</code> can be a little idiosyncratic compared to some of the functions we’ve learned about already, and you can really get into the weeds with it. But I’ll try to focus us here on just the things from which we can really get a lot of value.</p>
-<p>It takes a data frame as it’s first input, so, like ggplot, it plays well with the pipe operator.</p>
-<p>We’ll make a simple frequency table for univariate analysis of <code>cappun</code>. I’ll first pass <code>cappun</code> through <code>drop_na()</code>, and then we’ll pipe the output of that right into <code>tbl_summary()</code>. To get started, we just need to provide the variable we want to include, which has a straightforward enough input.</p>
+<p>First, we’ll use <code>gt</code> to convert our <code>tabyl()</code> output from earlier into a cleaned up format that we can view outside of the R console, as well as easily export or even copy to our clipboard.</p>
+<p>These will be relatively easy.</p>
+<p>First, let’s bring back some familiar code from a previous session.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">include =</span> cappun)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="qnjwwkmxso" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qnjwwkmxso table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#qnjwwkmxso thead, #qnjwwkmxso tbody, #qnjwwkmxso tfoot, #qnjwwkmxso tr, #qnjwwkmxso td, #qnjwwkmxso th {
-  border-style: none;
-}
-
-#qnjwwkmxso p {
-  margin: 0;
-  padding: 0;
-}
-
-#qnjwwkmxso .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#qnjwwkmxso .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#qnjwwkmxso .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#qnjwwkmxso .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#qnjwwkmxso .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#qnjwwkmxso .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#qnjwwkmxso .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#qnjwwkmxso .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#qnjwwkmxso .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#qnjwwkmxso .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#qnjwwkmxso .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#qnjwwkmxso .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#qnjwwkmxso .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#qnjwwkmxso .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#qnjwwkmxso .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#qnjwwkmxso .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#qnjwwkmxso .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#qnjwwkmxso .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#qnjwwkmxso .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#qnjwwkmxso .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#qnjwwkmxso .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#qnjwwkmxso .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#qnjwwkmxso .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#qnjwwkmxso .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#qnjwwkmxso .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#qnjwwkmxso .gt_left {
-  text-align: left;
-}
-
-#qnjwwkmxso .gt_center {
-  text-align: center;
-}
-
-#qnjwwkmxso .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#qnjwwkmxso .gt_font_normal {
-  font-weight: normal;
-}
-
-#qnjwwkmxso .gt_font_bold {
-  font-weight: bold;
-}
-
-#qnjwwkmxso .gt_font_italic {
-  font-style: italic;
-}
-
-#qnjwwkmxso .gt_super {
-  font-size: 65%;
-}
-
-#qnjwwkmxso .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#qnjwwkmxso .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#qnjwwkmxso .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#qnjwwkmxso .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#qnjwwkmxso .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#qnjwwkmxso .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#qnjwwkmxso .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#qnjwwkmxso .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#qnjwwkmxso div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="gt_col_headings header">
-<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
-<th id="stat_0" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N = 3,340</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">cappun</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;favor</td>
-<td class="gt_row gt_center" headers="stat_0">2,013 (60%)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;oppose</td>
-<td class="gt_row gt_center" headers="stat_0">1,327 (40%)</td>
-</tr>
-</tbody><tfoot class="gt_footnotes">
-<tr class="odd">
-<td colspan="2" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> n (%)</td>
-</tr>
-</tfoot>
-
-</table>
-
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(cappun) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_rounding</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> cappun    n percent valid_percent
+  favor 2013   56.8%         60.3%
+ oppose 1327   37.4%         39.7%
+   &lt;NA&gt;  204    5.8%             -
+  Total 3544  100.0%        100.0%</code></pre>
 </div>
 </div>
-</div>
-<p>Excellent. This has some good detail right away. It automatically shows counts and percentages, and also gives the grand total while adding a footnote that this is what the percentages refer to. There are at least two things we’ll want to customize.</p>
-<p>For one, you might want to change ‘Characteristic’ to something like ‘Variable.’ We can do that like so:</p>
+<p>Here is our frequency table for <code>cappun</code> using <code>tabyl()</code>. There’s one more thing we need to do before we bring in <code>gt</code>.</p>
+<p>Remember that we can save this <code>tabyl()</code> output as an object. Let’s do that again now. We’ll save it as an object called <code>our_tab</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun) <span class="sc">|&gt;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">include =</span> cappun) <span class="sc">|&gt;</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_header</span>(label <span class="sc">~</span> <span class="st">"Variable"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="btpuaueusb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#btpuaueusb table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#btpuaueusb thead, #btpuaueusb tbody, #btpuaueusb tfoot, #btpuaueusb tr, #btpuaueusb td, #btpuaueusb th {
-  border-style: none;
-}
-
-#btpuaueusb p {
-  margin: 0;
-  padding: 0;
-}
-
-#btpuaueusb .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#btpuaueusb .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#btpuaueusb .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#btpuaueusb .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#btpuaueusb .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#btpuaueusb .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#btpuaueusb .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#btpuaueusb .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#btpuaueusb .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#btpuaueusb .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#btpuaueusb .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#btpuaueusb .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#btpuaueusb .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#btpuaueusb .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#btpuaueusb .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#btpuaueusb .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#btpuaueusb .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#btpuaueusb .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#btpuaueusb .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#btpuaueusb .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#btpuaueusb .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#btpuaueusb .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#btpuaueusb .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#btpuaueusb .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#btpuaueusb .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#btpuaueusb .gt_left {
-  text-align: left;
-}
-
-#btpuaueusb .gt_center {
-  text-align: center;
-}
-
-#btpuaueusb .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#btpuaueusb .gt_font_normal {
-  font-weight: normal;
-}
-
-#btpuaueusb .gt_font_bold {
-  font-weight: bold;
-}
-
-#btpuaueusb .gt_font_italic {
-  font-style: italic;
-}
-
-#btpuaueusb .gt_super {
-  font-size: 65%;
-}
-
-#btpuaueusb .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#btpuaueusb .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#btpuaueusb .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#btpuaueusb .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#btpuaueusb .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#btpuaueusb .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#btpuaueusb .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#btpuaueusb .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#btpuaueusb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="gt_col_headings header">
-<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Variable</th>
-<th id="stat_0" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N = 3,340</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">cappun</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;favor</td>
-<td class="gt_row gt_center" headers="stat_0">2,013 (60%)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;oppose</td>
-<td class="gt_row gt_center" headers="stat_0">1,327 (40%)</td>
-</tr>
-</tbody><tfoot class="gt_footnotes">
-<tr class="odd">
-<td colspan="2" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> n (%)</td>
-</tr>
-</tfoot>
-
-</table>
-
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>our_tab <span class="ot">&lt;-</span> our_gss <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(cappun) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_rounding</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-<p>Note the use of the tilde symbol <code>~</code> here. Without getting too into the weeds, this is one of the idiosyncratic things about <code>gtsummary</code> I alluded to above. For our purposes, just observe that we need to do that here and don’t worry too much about it.</p>
-<p>However, observe that ‘Variable’ replaces ‘Characteristic’, but it’s no longer bold. Thankfully, <code>gtsummary</code> has some font formatting conventions for us to take advantage of. If we simply place the quoted text between two asterisk (*), the text will be bolded</p>
+<p>This table has all the right info we need, but it would be nicer if we didn’t have the ‘cappun’ shorthand for the variable name. The other columns could be capitalized, and we could also stand to lose the underscore in ‘valid_percent’.</p>
+<p>The <code>tabyl()</code> function actually produces a data frame, which we have just saved a moment ago. Let’s take a look at the column names like we did before, and then change these to look a little nicer.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">include =</span> cappun) <span class="sc">|&gt;</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_header</span>(label <span class="sc">~</span> <span class="st">"**Variable**"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fydcujcgvv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fydcujcgvv table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#fydcujcgvv thead, #fydcujcgvv tbody, #fydcujcgvv tfoot, #fydcujcgvv tr, #fydcujcgvv td, #fydcujcgvv th {
-  border-style: none;
-}
-
-#fydcujcgvv p {
-  margin: 0;
-  padding: 0;
-}
-
-#fydcujcgvv .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#fydcujcgvv .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#fydcujcgvv .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#fydcujcgvv .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#fydcujcgvv .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#fydcujcgvv .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#fydcujcgvv .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#fydcujcgvv .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#fydcujcgvv .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#fydcujcgvv .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#fydcujcgvv .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#fydcujcgvv .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#fydcujcgvv .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#fydcujcgvv .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#fydcujcgvv .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#fydcujcgvv .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#fydcujcgvv .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#fydcujcgvv .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#fydcujcgvv .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#fydcujcgvv .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#fydcujcgvv .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#fydcujcgvv .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#fydcujcgvv .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#fydcujcgvv .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#fydcujcgvv .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#fydcujcgvv .gt_left {
-  text-align: left;
-}
-
-#fydcujcgvv .gt_center {
-  text-align: center;
-}
-
-#fydcujcgvv .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#fydcujcgvv .gt_font_normal {
-  font-weight: normal;
-}
-
-#fydcujcgvv .gt_font_bold {
-  font-weight: bold;
-}
-
-#fydcujcgvv .gt_font_italic {
-  font-style: italic;
-}
-
-#fydcujcgvv .gt_super {
-  font-size: 65%;
-}
-
-#fydcujcgvv .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#fydcujcgvv .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#fydcujcgvv .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#fydcujcgvv .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#fydcujcgvv .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#fydcujcgvv .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#fydcujcgvv .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#fydcujcgvv .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#fydcujcgvv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="gt_col_headings header">
-<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Variable</strong></th>
-<th id="stat_0" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N = 3,340</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">cappun</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;favor</td>
-<td class="gt_row gt_center" headers="stat_0">2,013 (60%)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;oppose</td>
-<td class="gt_row gt_center" headers="stat_0">1,327 (40%)</td>
-</tr>
-</tbody><tfoot class="gt_footnotes">
-<tr class="odd">
-<td colspan="2" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> n (%)</td>
-</tr>
-</tfoot>
-
-</table>
-
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the column names</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(our_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "cappun"        "n"             "percent"       "valid_percent"</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># OVerwrite the column names</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(our_tab) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Death Penalty Approval"</span>, <span class="st">"Frequency"</span>, <span class="st">"Percent"</span>, <span class="st">"Valid Percent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>Good. Now we’ll want a better variable label than ‘cappun’. Let’s change that up.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun) <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">include =</span> cappun,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">cappun =</span> <span class="st">"Death Penalty Attitude"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_header</span>(label <span class="sc">~</span> <span class="st">"**Variable**"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="zkdthflyvd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zkdthflyvd table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#zkdthflyvd thead, #zkdthflyvd tbody, #zkdthflyvd tfoot, #zkdthflyvd tr, #zkdthflyvd td, #zkdthflyvd th {
-  border-style: none;
-}
-
-#zkdthflyvd p {
-  margin: 0;
-  padding: 0;
-}
-
-#zkdthflyvd .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#zkdthflyvd .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#zkdthflyvd .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#zkdthflyvd .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#zkdthflyvd .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#zkdthflyvd .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#zkdthflyvd .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#zkdthflyvd .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#zkdthflyvd .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#zkdthflyvd .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#zkdthflyvd .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#zkdthflyvd .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#zkdthflyvd .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#zkdthflyvd .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#zkdthflyvd .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#zkdthflyvd .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#zkdthflyvd .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#zkdthflyvd .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#zkdthflyvd .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#zkdthflyvd .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#zkdthflyvd .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#zkdthflyvd .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#zkdthflyvd .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#zkdthflyvd .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#zkdthflyvd .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#zkdthflyvd .gt_left {
-  text-align: left;
-}
-
-#zkdthflyvd .gt_center {
-  text-align: center;
-}
-
-#zkdthflyvd .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#zkdthflyvd .gt_font_normal {
-  font-weight: normal;
-}
-
-#zkdthflyvd .gt_font_bold {
-  font-weight: bold;
-}
-
-#zkdthflyvd .gt_font_italic {
-  font-style: italic;
-}
-
-#zkdthflyvd .gt_super {
-  font-size: 65%;
-}
-
-#zkdthflyvd .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#zkdthflyvd .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#zkdthflyvd .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#zkdthflyvd .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#zkdthflyvd .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#zkdthflyvd .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#zkdthflyvd .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#zkdthflyvd .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#zkdthflyvd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="gt_col_headings header">
-<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Variable</strong></th>
-<th id="stat_0" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N = 3,340</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">Death Penalty Attitude</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;favor</td>
-<td class="gt_row gt_center" headers="stat_0">2,013 (60%)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;oppose</td>
-<td class="gt_row gt_center" headers="stat_0">1,327 (40%)</td>
-</tr>
-</tbody><tfoot class="gt_footnotes">
-<tr class="odd">
-<td colspan="2" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> n (%)</td>
-</tr>
-</tfoot>
-
-</table>
-
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that it worked</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>our_tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Death Penalty Approval Frequency Percent Valid Percent
+                  favor      2013   56.8%         60.3%
+                 oppose      1327   37.4%         39.7%
+                   &lt;NA&gt;       204    5.8%             -
+                  Total      3544  100.0%        100.0%</code></pre>
 </div>
 </div>
+<p>We can actually do the same thing with the rownames as well. In this case, we could capitalize ‘favor’ and ‘oppose’ and leave the rest as is.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the row names </span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(our_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1" "2" "3" "4"</code></pre>
 </div>
-<p>Within the <code>tbl_summary()</code> function, we just need to add a ‘label’ input. Then you can specify your variable name and give a character vector for the label that we want. Because the ‘label’ input is designed to label multiple variables at once, it expects that you will give it a list of things. So, even if you’re only working with one variable, you will need to put the label inside of <code>list()</code>.</p>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overwrite the row names with our own</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(our_tab) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Favor"</span>, <span class="st">"Oppose"</span>, <span class="st">"NA"</span>, <span class="st">"Total"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, all we have to do is pipe <code>our_tab</code> into the <code>gt()</code> function</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>our_tab <span class="ot">&lt;-</span> our_tab <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is not too bad for our purposes. This cleans the table up a hair while converting it into a format that we can see in the RStudio file viewer. This also allows us to copy it to our clipboard or export it as an image file.</p>
 </section>
 <section id="contingency-tables" class="level3" data-number="8.3.2">
 <h3 data-number="8.3.2" class="anchored" data-anchor-id="contingency-tables"><span class="header-section-number">8.3.2</span> Contingency tables</h3>
-<p>We can also make a quick and easy contingency table for bivariate analysis. Let’s re-create our <code>cappun</code> x <code>dem_rep</code> table.</p>
-<p>There’s a nifty function called <code>tbl_cross()</code> which basically does the same thing as <code>tbl_summary()</code> but is more specific to contingency tables.</p>
+<p>For contingency tables, we will use an extension of the <code>gt</code> package called <code>gtsummary</code>. I’ll note that this package can be a little idiosyncratic compared to some of the ones we’ve learned about already, and you can really get into the weeds with it. But I’ll try to focus us here on just the things from which we can really get a lot of value. can also make a quick and easy contingency table for bivariate analysis. Let’s re-create our <code>cappun</code> x <code>dem_rep</code> table.</p>
+<p>There’s a nifty function called <code>tbl_cross()</code> That includes a bunch of preset options intended for cross-tabs.</p>
 <p>Remember to always provide your dependent variable to the ‘rows’ input.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun, dem_rep) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> cappun,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> dem_rep,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent =</span> <span class="st">"row"</span>,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">c</span>(<span class="st">"column"</span>, <span class="st">"row"</span>),</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">cappun =</span> <span class="st">"Death Penalty Attitude"</span>,</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">dem_rep =</span> <span class="st">"Political Party"</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> cappun,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> dem_rep,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent =</span> <span class="st">"row"</span>,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">c</span>(<span class="st">"column"</span>, <span class="st">"row"</span>),</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">cappun =</span> <span class="st">"Death Penalty Attitude"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">dem_rep =</span> <span class="st">"Political Party"</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="hokotvlcmz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hokotvlcmz table {
+<div id="vrvmighkvc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vrvmighkvc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hokotvlcmz thead, #hokotvlcmz tbody, #hokotvlcmz tfoot, #hokotvlcmz tr, #hokotvlcmz td, #hokotvlcmz th {
+#vrvmighkvc thead, #vrvmighkvc tbody, #vrvmighkvc tfoot, #vrvmighkvc tr, #vrvmighkvc td, #vrvmighkvc th {
   border-style: none;
 }
 
-#hokotvlcmz p {
+#vrvmighkvc p {
   margin: 0;
   padding: 0;
 }
 
-#hokotvlcmz .gt_table {
+#vrvmighkvc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2575,12 +658,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_caption {
+#vrvmighkvc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hokotvlcmz .gt_title {
+#vrvmighkvc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2592,7 +675,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#hokotvlcmz .gt_subtitle {
+#vrvmighkvc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2604,7 +687,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#hokotvlcmz .gt_heading {
+#vrvmighkvc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2616,13 +699,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_bottom_border {
+#vrvmighkvc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_col_headings {
+#vrvmighkvc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2637,7 +720,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_col_heading {
+#vrvmighkvc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2657,7 +740,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#hokotvlcmz .gt_column_spanner_outer {
+#vrvmighkvc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2669,15 +752,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#hokotvlcmz .gt_column_spanner_outer:first-child {
+#vrvmighkvc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hokotvlcmz .gt_column_spanner_outer:last-child {
+#vrvmighkvc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hokotvlcmz .gt_column_spanner {
+#vrvmighkvc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2689,11 +772,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#hokotvlcmz .gt_spanner_row {
+#vrvmighkvc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hokotvlcmz .gt_group_heading {
+#vrvmighkvc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2719,7 +802,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#hokotvlcmz .gt_empty_group_heading {
+#vrvmighkvc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2734,15 +817,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#hokotvlcmz .gt_from_md > :first-child {
+#vrvmighkvc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hokotvlcmz .gt_from_md > :last-child {
+#vrvmighkvc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hokotvlcmz .gt_row {
+#vrvmighkvc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2761,7 +844,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#hokotvlcmz .gt_stub {
+#vrvmighkvc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2774,7 +857,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#hokotvlcmz .gt_stub_row_group {
+#vrvmighkvc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2788,15 +871,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#hokotvlcmz .gt_row_group_first td {
+#vrvmighkvc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hokotvlcmz .gt_row_group_first th {
+#vrvmighkvc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hokotvlcmz .gt_summary_row {
+#vrvmighkvc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2806,16 +889,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#hokotvlcmz .gt_first_summary_row {
+#vrvmighkvc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_first_summary_row.thick {
+#vrvmighkvc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hokotvlcmz .gt_last_summary_row {
+#vrvmighkvc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2825,7 +908,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_grand_summary_row {
+#vrvmighkvc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2835,7 +918,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#hokotvlcmz .gt_first_grand_summary_row {
+#vrvmighkvc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2845,7 +928,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_last_grand_summary_row_top {
+#vrvmighkvc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2855,11 +938,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_striped {
+#vrvmighkvc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hokotvlcmz .gt_table_body {
+#vrvmighkvc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2868,7 +951,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_footnotes {
+#vrvmighkvc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2882,7 +965,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_footnote {
+#vrvmighkvc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2891,7 +974,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#hokotvlcmz .gt_sourcenotes {
+#vrvmighkvc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2905,7 +988,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#hokotvlcmz .gt_sourcenote {
+#vrvmighkvc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2913,72 +996,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#hokotvlcmz .gt_left {
+#vrvmighkvc .gt_left {
   text-align: left;
 }
 
-#hokotvlcmz .gt_center {
+#vrvmighkvc .gt_center {
   text-align: center;
 }
 
-#hokotvlcmz .gt_right {
+#vrvmighkvc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hokotvlcmz .gt_font_normal {
+#vrvmighkvc .gt_font_normal {
   font-weight: normal;
 }
 
-#hokotvlcmz .gt_font_bold {
+#vrvmighkvc .gt_font_bold {
   font-weight: bold;
 }
 
-#hokotvlcmz .gt_font_italic {
+#vrvmighkvc .gt_font_italic {
   font-style: italic;
 }
 
-#hokotvlcmz .gt_super {
+#vrvmighkvc .gt_super {
   font-size: 65%;
 }
 
-#hokotvlcmz .gt_footnote_marks {
+#vrvmighkvc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hokotvlcmz .gt_asterisk {
+#vrvmighkvc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hokotvlcmz .gt_indent_1 {
+#vrvmighkvc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hokotvlcmz .gt_indent_2 {
+#vrvmighkvc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hokotvlcmz .gt_indent_3 {
+#vrvmighkvc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hokotvlcmz .gt_indent_4 {
+#vrvmighkvc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hokotvlcmz .gt_indent_5 {
+#vrvmighkvc .gt_indent_5 {
   text-indent: 25px;
 }
 
-#hokotvlcmz .katex-display {
+#vrvmighkvc .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#hokotvlcmz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#vrvmighkvc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3044,36 +1127,36 @@ Political Party
 <p>Now, a really neat feature of <code>tbl_summary()</code> is that it will automatically detect the type of variables that we have, and it will perform an appropriate statistical test. There’s a lot of customization that you can do here, but this will work great out of the box for us.</p>
 <p>All we have to do is pipe the command we just produced into <code>add_p()</code>, which will automatically calculate a p-value using a relevant statistical test.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun, dem_rep) <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> cappun,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> dem_rep,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent =</span> <span class="st">"row"</span>,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">c</span>(<span class="st">"column"</span>, <span class="st">"row"</span>),</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">cappun =</span> <span class="st">"Death Penalty Attitude"</span>,</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">dem_rep =</span> <span class="st">"Political Party"</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_p</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> cappun,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> dem_rep,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent =</span> <span class="st">"row"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">c</span>(<span class="st">"column"</span>, <span class="st">"row"</span>),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">cappun =</span> <span class="st">"Death Penalty Attitude"</span>,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">dem_rep =</span> <span class="st">"Political Party"</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_p</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="qkrztytqif" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qkrztytqif table {
+<div id="hqquxklyvu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hqquxklyvu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qkrztytqif thead, #qkrztytqif tbody, #qkrztytqif tfoot, #qkrztytqif tr, #qkrztytqif td, #qkrztytqif th {
+#hqquxklyvu thead, #hqquxklyvu tbody, #hqquxklyvu tfoot, #hqquxklyvu tr, #hqquxklyvu td, #hqquxklyvu th {
   border-style: none;
 }
 
-#qkrztytqif p {
+#hqquxklyvu p {
   margin: 0;
   padding: 0;
 }
 
-#qkrztytqif .gt_table {
+#hqquxklyvu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3099,12 +1182,12 @@ Political Party
   border-left-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_caption {
+#hqquxklyvu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qkrztytqif .gt_title {
+#hqquxklyvu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3116,7 +1199,7 @@ Political Party
   border-bottom-width: 0;
 }
 
-#qkrztytqif .gt_subtitle {
+#hqquxklyvu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3128,7 +1211,7 @@ Political Party
   border-top-width: 0;
 }
 
-#qkrztytqif .gt_heading {
+#hqquxklyvu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3140,13 +1223,13 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_bottom_border {
+#hqquxklyvu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_col_headings {
+#hqquxklyvu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3161,7 +1244,7 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_col_heading {
+#hqquxklyvu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3181,7 +1264,7 @@ Political Party
   overflow-x: hidden;
 }
 
-#qkrztytqif .gt_column_spanner_outer {
+#hqquxklyvu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3193,15 +1276,15 @@ Political Party
   padding-right: 4px;
 }
 
-#qkrztytqif .gt_column_spanner_outer:first-child {
+#hqquxklyvu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qkrztytqif .gt_column_spanner_outer:last-child {
+#hqquxklyvu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qkrztytqif .gt_column_spanner {
+#hqquxklyvu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3213,11 +1296,11 @@ Political Party
   width: 100%;
 }
 
-#qkrztytqif .gt_spanner_row {
+#hqquxklyvu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qkrztytqif .gt_group_heading {
+#hqquxklyvu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3243,7 +1326,7 @@ Political Party
   text-align: left;
 }
 
-#qkrztytqif .gt_empty_group_heading {
+#hqquxklyvu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3258,15 +1341,15 @@ Political Party
   vertical-align: middle;
 }
 
-#qkrztytqif .gt_from_md > :first-child {
+#hqquxklyvu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qkrztytqif .gt_from_md > :last-child {
+#hqquxklyvu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qkrztytqif .gt_row {
+#hqquxklyvu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3285,7 +1368,7 @@ Political Party
   overflow-x: hidden;
 }
 
-#qkrztytqif .gt_stub {
+#hqquxklyvu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3298,7 +1381,7 @@ Political Party
   padding-right: 5px;
 }
 
-#qkrztytqif .gt_stub_row_group {
+#hqquxklyvu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3312,15 +1395,15 @@ Political Party
   vertical-align: top;
 }
 
-#qkrztytqif .gt_row_group_first td {
+#hqquxklyvu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qkrztytqif .gt_row_group_first th {
+#hqquxklyvu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qkrztytqif .gt_summary_row {
+#hqquxklyvu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3330,16 +1413,16 @@ Political Party
   padding-right: 5px;
 }
 
-#qkrztytqif .gt_first_summary_row {
+#hqquxklyvu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_first_summary_row.thick {
+#hqquxklyvu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qkrztytqif .gt_last_summary_row {
+#hqquxklyvu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3349,7 +1432,7 @@ Political Party
   border-bottom-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_grand_summary_row {
+#hqquxklyvu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3359,7 +1442,7 @@ Political Party
   padding-right: 5px;
 }
 
-#qkrztytqif .gt_first_grand_summary_row {
+#hqquxklyvu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3369,7 +1452,7 @@ Political Party
   border-top-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_last_grand_summary_row_top {
+#hqquxklyvu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3379,11 +1462,11 @@ Political Party
   border-bottom-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_striped {
+#hqquxklyvu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qkrztytqif .gt_table_body {
+#hqquxklyvu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3392,7 +1475,7 @@ Political Party
   border-bottom-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_footnotes {
+#hqquxklyvu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3406,7 +1489,7 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_footnote {
+#hqquxklyvu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3415,7 +1498,7 @@ Political Party
   padding-right: 5px;
 }
 
-#qkrztytqif .gt_sourcenotes {
+#hqquxklyvu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3429,7 +1512,7 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#qkrztytqif .gt_sourcenote {
+#hqquxklyvu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3437,72 +1520,72 @@ Political Party
   padding-right: 5px;
 }
 
-#qkrztytqif .gt_left {
+#hqquxklyvu .gt_left {
   text-align: left;
 }
 
-#qkrztytqif .gt_center {
+#hqquxklyvu .gt_center {
   text-align: center;
 }
 
-#qkrztytqif .gt_right {
+#hqquxklyvu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qkrztytqif .gt_font_normal {
+#hqquxklyvu .gt_font_normal {
   font-weight: normal;
 }
 
-#qkrztytqif .gt_font_bold {
+#hqquxklyvu .gt_font_bold {
   font-weight: bold;
 }
 
-#qkrztytqif .gt_font_italic {
+#hqquxklyvu .gt_font_italic {
   font-style: italic;
 }
 
-#qkrztytqif .gt_super {
+#hqquxklyvu .gt_super {
   font-size: 65%;
 }
 
-#qkrztytqif .gt_footnote_marks {
+#hqquxklyvu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qkrztytqif .gt_asterisk {
+#hqquxklyvu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qkrztytqif .gt_indent_1 {
+#hqquxklyvu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qkrztytqif .gt_indent_2 {
+#hqquxklyvu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qkrztytqif .gt_indent_3 {
+#hqquxklyvu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qkrztytqif .gt_indent_4 {
+#hqquxklyvu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qkrztytqif .gt_indent_5 {
+#hqquxklyvu .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qkrztytqif .katex-display {
+#hqquxklyvu .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qkrztytqif div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hqquxklyvu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3577,37 +1660,37 @@ Political Party
 </div>
 <p>Very neat! This automatically recognized that we have categorical variables, ran a chi-squared test, and reported the p-value. Note that it doesn’t give the actual chi-squared value by default, but that information is in there. We can manually add a column like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun, dem_rep) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> cappun,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> dem_rep,</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent =</span> <span class="st">"row"</span>,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">c</span>(<span class="st">"column"</span>, <span class="st">"row"</span>),</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">cappun =</span> <span class="st">"Death Penalty Attitude"</span>,</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">dem_rep =</span> <span class="st">"Political Party"</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_p</span>() <span class="sc">|&gt;</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_header</span>(statistic <span class="sc">~</span> <span class="st">"Chi-square value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> cappun,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> dem_rep,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent =</span> <span class="st">"row"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">c</span>(<span class="st">"column"</span>, <span class="st">"row"</span>),</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">cappun =</span> <span class="st">"Death Penalty Attitude"</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">dem_rep =</span> <span class="st">"Political Party"</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_p</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_header</span>(statistic <span class="sc">~</span> <span class="st">"Chi-square value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="wuksmivqcz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wuksmivqcz table {
+<div id="bfovtzaveb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bfovtzaveb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wuksmivqcz thead, #wuksmivqcz tbody, #wuksmivqcz tfoot, #wuksmivqcz tr, #wuksmivqcz td, #wuksmivqcz th {
+#bfovtzaveb thead, #bfovtzaveb tbody, #bfovtzaveb tfoot, #bfovtzaveb tr, #bfovtzaveb td, #bfovtzaveb th {
   border-style: none;
 }
 
-#wuksmivqcz p {
+#bfovtzaveb p {
   margin: 0;
   padding: 0;
 }
 
-#wuksmivqcz .gt_table {
+#bfovtzaveb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3633,12 +1716,12 @@ Political Party
   border-left-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_caption {
+#bfovtzaveb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wuksmivqcz .gt_title {
+#bfovtzaveb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3650,7 +1733,7 @@ Political Party
   border-bottom-width: 0;
 }
 
-#wuksmivqcz .gt_subtitle {
+#bfovtzaveb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3662,7 +1745,7 @@ Political Party
   border-top-width: 0;
 }
 
-#wuksmivqcz .gt_heading {
+#bfovtzaveb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3674,13 +1757,13 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_bottom_border {
+#bfovtzaveb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_col_headings {
+#bfovtzaveb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3695,7 +1778,7 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_col_heading {
+#bfovtzaveb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3715,7 +1798,7 @@ Political Party
   overflow-x: hidden;
 }
 
-#wuksmivqcz .gt_column_spanner_outer {
+#bfovtzaveb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3727,15 +1810,15 @@ Political Party
   padding-right: 4px;
 }
 
-#wuksmivqcz .gt_column_spanner_outer:first-child {
+#bfovtzaveb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wuksmivqcz .gt_column_spanner_outer:last-child {
+#bfovtzaveb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wuksmivqcz .gt_column_spanner {
+#bfovtzaveb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3747,11 +1830,11 @@ Political Party
   width: 100%;
 }
 
-#wuksmivqcz .gt_spanner_row {
+#bfovtzaveb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wuksmivqcz .gt_group_heading {
+#bfovtzaveb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3777,7 +1860,7 @@ Political Party
   text-align: left;
 }
 
-#wuksmivqcz .gt_empty_group_heading {
+#bfovtzaveb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3792,15 +1875,15 @@ Political Party
   vertical-align: middle;
 }
 
-#wuksmivqcz .gt_from_md > :first-child {
+#bfovtzaveb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wuksmivqcz .gt_from_md > :last-child {
+#bfovtzaveb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wuksmivqcz .gt_row {
+#bfovtzaveb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3819,7 +1902,7 @@ Political Party
   overflow-x: hidden;
 }
 
-#wuksmivqcz .gt_stub {
+#bfovtzaveb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3832,7 +1915,7 @@ Political Party
   padding-right: 5px;
 }
 
-#wuksmivqcz .gt_stub_row_group {
+#bfovtzaveb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3846,15 +1929,15 @@ Political Party
   vertical-align: top;
 }
 
-#wuksmivqcz .gt_row_group_first td {
+#bfovtzaveb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wuksmivqcz .gt_row_group_first th {
+#bfovtzaveb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wuksmivqcz .gt_summary_row {
+#bfovtzaveb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3864,16 +1947,16 @@ Political Party
   padding-right: 5px;
 }
 
-#wuksmivqcz .gt_first_summary_row {
+#bfovtzaveb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_first_summary_row.thick {
+#bfovtzaveb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wuksmivqcz .gt_last_summary_row {
+#bfovtzaveb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3883,7 +1966,7 @@ Political Party
   border-bottom-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_grand_summary_row {
+#bfovtzaveb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3893,7 +1976,7 @@ Political Party
   padding-right: 5px;
 }
 
-#wuksmivqcz .gt_first_grand_summary_row {
+#bfovtzaveb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3903,7 +1986,7 @@ Political Party
   border-top-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_last_grand_summary_row_top {
+#bfovtzaveb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3913,11 +1996,11 @@ Political Party
   border-bottom-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_striped {
+#bfovtzaveb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wuksmivqcz .gt_table_body {
+#bfovtzaveb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3926,7 +2009,7 @@ Political Party
   border-bottom-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_footnotes {
+#bfovtzaveb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3940,7 +2023,7 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_footnote {
+#bfovtzaveb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3949,7 +2032,7 @@ Political Party
   padding-right: 5px;
 }
 
-#wuksmivqcz .gt_sourcenotes {
+#bfovtzaveb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3963,7 +2046,7 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#wuksmivqcz .gt_sourcenote {
+#bfovtzaveb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3971,72 +2054,72 @@ Political Party
   padding-right: 5px;
 }
 
-#wuksmivqcz .gt_left {
+#bfovtzaveb .gt_left {
   text-align: left;
 }
 
-#wuksmivqcz .gt_center {
+#bfovtzaveb .gt_center {
   text-align: center;
 }
 
-#wuksmivqcz .gt_right {
+#bfovtzaveb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wuksmivqcz .gt_font_normal {
+#bfovtzaveb .gt_font_normal {
   font-weight: normal;
 }
 
-#wuksmivqcz .gt_font_bold {
+#bfovtzaveb .gt_font_bold {
   font-weight: bold;
 }
 
-#wuksmivqcz .gt_font_italic {
+#bfovtzaveb .gt_font_italic {
   font-style: italic;
 }
 
-#wuksmivqcz .gt_super {
+#bfovtzaveb .gt_super {
   font-size: 65%;
 }
 
-#wuksmivqcz .gt_footnote_marks {
+#bfovtzaveb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wuksmivqcz .gt_asterisk {
+#bfovtzaveb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wuksmivqcz .gt_indent_1 {
+#bfovtzaveb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wuksmivqcz .gt_indent_2 {
+#bfovtzaveb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wuksmivqcz .gt_indent_3 {
+#bfovtzaveb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wuksmivqcz .gt_indent_4 {
+#bfovtzaveb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wuksmivqcz .gt_indent_5 {
+#bfovtzaveb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wuksmivqcz .katex-display {
+#bfovtzaveb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wuksmivqcz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#bfovtzaveb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4118,7 +2201,7 @@ Political Party
 </div>
 </div>
 </div>
-<p>Good stuff. Lots of great detail here, so this is pretty much good to go.</p>
+<p>Good stuff. I’ll point out that we use the <code>~</code> symbol above, but don’t worry too much about that. It’s one of the pecularities I alluded to about <code>gtsummary</code>. Just know that we have to use <code>~</code> there. Otherwise, there’s lots of great detail here, so this is pretty much good to go.</p>
 </section>
 <section id="elaboration-model" class="level3" data-number="8.3.4">
 <h3 data-number="8.3.4" class="anchored" data-anchor-id="elaboration-model"><span class="header-section-number">8.3.4</span> Elaboration Model</h3>
@@ -4126,42 +2209,42 @@ Political Party
 <p>In our set up here, we have <code>cappun</code> as our dependent variable and <code>dem_rep</code> as our independent variable. Let’s add <code>sex</code> as a test variable, and see whether sex has any effect on the relationship we have observed between death penalty attitudes and political party.</p>
 <p>For this, we need the <code>tbl_strata()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cappun, sex, dem_rep) <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun, sex, dem_rep) <span class="sc">|&gt;</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_strata</span>(</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">strata =</span> sex,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.tbl_fun =</span> </span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> .x <span class="sc">|&gt;</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tbl_cross</span>(</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> cappun,</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> dem_rep,</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent =</span> <span class="st">"row"</span>,</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">c</span>(<span class="st">"column"</span>, <span class="st">"row"</span>),</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">cappun =</span> <span class="st">"Death Penalty Attitude"</span>,</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">dem_rep =</span> <span class="st">"Political Party"</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_p</span>()</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cappun, sex, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun, sex, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_strata</span>(</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">strata =</span> sex,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.tbl_fun =</span> </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> .x <span class="sc">|&gt;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tbl_cross</span>(</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> cappun,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> dem_rep,</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent =</span> <span class="st">"row"</span>,</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">c</span>(<span class="st">"column"</span>, <span class="st">"row"</span>),</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">cappun =</span> <span class="st">"Death Penalty Attitude"</span>,</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">dem_rep =</span> <span class="st">"Political Party"</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_p</span>()</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="redrozsdpr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#redrozsdpr table {
+<div id="fmwdjuwrjg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fmwdjuwrjg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#redrozsdpr thead, #redrozsdpr tbody, #redrozsdpr tfoot, #redrozsdpr tr, #redrozsdpr td, #redrozsdpr th {
+#fmwdjuwrjg thead, #fmwdjuwrjg tbody, #fmwdjuwrjg tfoot, #fmwdjuwrjg tr, #fmwdjuwrjg td, #fmwdjuwrjg th {
   border-style: none;
 }
 
-#redrozsdpr p {
+#fmwdjuwrjg p {
   margin: 0;
   padding: 0;
 }
 
-#redrozsdpr .gt_table {
+#fmwdjuwrjg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -4187,12 +2270,12 @@ Political Party
   border-left-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_caption {
+#fmwdjuwrjg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#redrozsdpr .gt_title {
+#fmwdjuwrjg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4204,7 +2287,7 @@ Political Party
   border-bottom-width: 0;
 }
 
-#redrozsdpr .gt_subtitle {
+#fmwdjuwrjg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4216,7 +2299,7 @@ Political Party
   border-top-width: 0;
 }
 
-#redrozsdpr .gt_heading {
+#fmwdjuwrjg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4228,13 +2311,13 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_bottom_border {
+#fmwdjuwrjg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_col_headings {
+#fmwdjuwrjg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4249,7 +2332,7 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_col_heading {
+#fmwdjuwrjg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4269,7 +2352,7 @@ Political Party
   overflow-x: hidden;
 }
 
-#redrozsdpr .gt_column_spanner_outer {
+#fmwdjuwrjg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4281,15 +2364,15 @@ Political Party
   padding-right: 4px;
 }
 
-#redrozsdpr .gt_column_spanner_outer:first-child {
+#fmwdjuwrjg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#redrozsdpr .gt_column_spanner_outer:last-child {
+#fmwdjuwrjg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#redrozsdpr .gt_column_spanner {
+#fmwdjuwrjg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4301,11 +2384,11 @@ Political Party
   width: 100%;
 }
 
-#redrozsdpr .gt_spanner_row {
+#fmwdjuwrjg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#redrozsdpr .gt_group_heading {
+#fmwdjuwrjg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4331,7 +2414,7 @@ Political Party
   text-align: left;
 }
 
-#redrozsdpr .gt_empty_group_heading {
+#fmwdjuwrjg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4346,15 +2429,15 @@ Political Party
   vertical-align: middle;
 }
 
-#redrozsdpr .gt_from_md > :first-child {
+#fmwdjuwrjg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#redrozsdpr .gt_from_md > :last-child {
+#fmwdjuwrjg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#redrozsdpr .gt_row {
+#fmwdjuwrjg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4373,7 +2456,7 @@ Political Party
   overflow-x: hidden;
 }
 
-#redrozsdpr .gt_stub {
+#fmwdjuwrjg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4386,7 +2469,7 @@ Political Party
   padding-right: 5px;
 }
 
-#redrozsdpr .gt_stub_row_group {
+#fmwdjuwrjg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4400,15 +2483,15 @@ Political Party
   vertical-align: top;
 }
 
-#redrozsdpr .gt_row_group_first td {
+#fmwdjuwrjg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#redrozsdpr .gt_row_group_first th {
+#fmwdjuwrjg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#redrozsdpr .gt_summary_row {
+#fmwdjuwrjg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4418,16 +2501,16 @@ Political Party
   padding-right: 5px;
 }
 
-#redrozsdpr .gt_first_summary_row {
+#fmwdjuwrjg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_first_summary_row.thick {
+#fmwdjuwrjg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#redrozsdpr .gt_last_summary_row {
+#fmwdjuwrjg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4437,7 +2520,7 @@ Political Party
   border-bottom-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_grand_summary_row {
+#fmwdjuwrjg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4447,7 +2530,7 @@ Political Party
   padding-right: 5px;
 }
 
-#redrozsdpr .gt_first_grand_summary_row {
+#fmwdjuwrjg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4457,7 +2540,7 @@ Political Party
   border-top-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_last_grand_summary_row_top {
+#fmwdjuwrjg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4467,11 +2550,11 @@ Political Party
   border-bottom-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_striped {
+#fmwdjuwrjg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#redrozsdpr .gt_table_body {
+#fmwdjuwrjg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4480,7 +2563,7 @@ Political Party
   border-bottom-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_footnotes {
+#fmwdjuwrjg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4494,7 +2577,7 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_footnote {
+#fmwdjuwrjg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4503,7 +2586,7 @@ Political Party
   padding-right: 5px;
 }
 
-#redrozsdpr .gt_sourcenotes {
+#fmwdjuwrjg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4517,7 +2600,7 @@ Political Party
   border-right-color: #D3D3D3;
 }
 
-#redrozsdpr .gt_sourcenote {
+#fmwdjuwrjg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4525,72 +2608,72 @@ Political Party
   padding-right: 5px;
 }
 
-#redrozsdpr .gt_left {
+#fmwdjuwrjg .gt_left {
   text-align: left;
 }
 
-#redrozsdpr .gt_center {
+#fmwdjuwrjg .gt_center {
   text-align: center;
 }
 
-#redrozsdpr .gt_right {
+#fmwdjuwrjg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#redrozsdpr .gt_font_normal {
+#fmwdjuwrjg .gt_font_normal {
   font-weight: normal;
 }
 
-#redrozsdpr .gt_font_bold {
+#fmwdjuwrjg .gt_font_bold {
   font-weight: bold;
 }
 
-#redrozsdpr .gt_font_italic {
+#fmwdjuwrjg .gt_font_italic {
   font-style: italic;
 }
 
-#redrozsdpr .gt_super {
+#fmwdjuwrjg .gt_super {
   font-size: 65%;
 }
 
-#redrozsdpr .gt_footnote_marks {
+#fmwdjuwrjg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#redrozsdpr .gt_asterisk {
+#fmwdjuwrjg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#redrozsdpr .gt_indent_1 {
+#fmwdjuwrjg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#redrozsdpr .gt_indent_2 {
+#fmwdjuwrjg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#redrozsdpr .gt_indent_3 {
+#fmwdjuwrjg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#redrozsdpr .gt_indent_4 {
+#fmwdjuwrjg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#redrozsdpr .gt_indent_5 {
+#fmwdjuwrjg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#redrozsdpr .katex-display {
+#fmwdjuwrjg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#redrozsdpr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fmwdjuwrjg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

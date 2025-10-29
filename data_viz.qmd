@@ -178,64 +178,77 @@ our_gss |>
 Not too shabby. This is a great way to complement the presentation of a bivariate analysis, and it's also great for quickly getting a sense of the relationship among variables of interest.
 
 ## Tables
-Now, let's learn a way to get some pretty snazzy frequency tables and cross-tabs using the `gtsummary` package, which is designed specifically for quickly producing publication-ready tables.
+Now, let's learn a way to get some pretty snazzy frequency tables and cross-tabs using the `gt` and `gtsummary` package, which are designed specifically for quickly producing publication-ready tables.
 
-I'll load it in below. If you need to install it, you can run `install.packages("gtsummary")`
+I'll load them in below. If you need to install them, you can run `install.packages("gtsummary")`
+`install.packages("gt")`
 
 ```{r}
 library(gtsummary)
+library(gt)
 ```
 
 ### Frequency tables
-The function we'll get the most mileage out of here is called `tbl_summary()`. It really does an incredible amount of stuff right out of the box, but it also offers a great deal of customizability. I'll note that `gtsummary()` can be a little idiosyncratic compared to some of the functions we've learned about already, and you can really get into the weeds with it. But I'll try to focus us here on just the things from which we can really get a lot of value.
+First, we'll use `gt` to convert our `tabyl()` output from earlier into a cleaned up format that we can view outside of the R console, as well as easily export or even copy to our clipboard.
 
-It takes a data frame as it's first input, so, like ggplot, it plays well with the pipe operator. 
+These will be relatively easy.
 
-We'll make a simple frequency table for univariate analysis of `cappun`. I'll first pass `cappun` through `drop_na()`, and then we'll pipe the output of that right into `tbl_summary()`. To get started, we just need to provide the variable we want to include, which has a straightforward enough input.
-
-```{r}
-our_gss |>
-  drop_na(cappun) |>
-  tbl_summary(
-    include = cappun)
-```
-Excellent. This has some good detail right away. It automatically shows counts and percentages, and also gives the grand total while adding a footnote that this is what the percentages refer to. There are at least two things we'll want to customize.
-
-For one, you might want to change 'Characteristic' to something like 'Variable.' We can do that like so:
-```{r}
-our_gss |>
-  drop_na(cappun) |>
-  tbl_summary(
-    include = cappun) |>
-  modify_header(label ~ "Variable")
-```
-Note the use of the tilde symbol `~` here. Without getting too into the weeds, this is one of the idiosyncratic things about `gtsummary` I alluded to above. For our purposes, just observe that we need to do that here and don't worry too much about it.
-
-However, observe that 'Variable' replaces 'Characteristic', but it's no longer bold. Thankfully, `gtsummary` has some font formatting conventions for us to take advantage of. If we simply place the quoted text between two asterisk (*), the text will be bolded
+First, let's bring back some familiar code from a previous session.
 
 ```{r}
 our_gss |>
-  drop_na(cappun) |>
-  tbl_summary(
-    include = cappun) |>
-  modify_header(label ~ "**Variable**")
+    tabyl(cappun) |>
+  adorn_totals(where = "row") |>
+  adorn_pct_formatting() |>
+  adorn_rounding(digits = 2)
 ```
-Good. Now we'll want a better variable label than 'cappun'. Let's change that up.
+Here is our frequency table for `cappun` using `tabyl()`. There's one more thing we need to do before we bring in `gt`. 
+
+Remember that we can save this `tabyl()` output as an object. Let's do that again now. We'll save it as an object called `our_tab`.
+
 ```{r}
-our_gss |>
-  drop_na(cappun) |>
-  tbl_summary(
-    include = cappun,
-    label = list(
-      cappun = "Death Penalty Attitude")) |>
-  modify_header(label ~ "**Variable**")
+our_tab <- our_gss |>
+    tabyl(cappun) |>
+  adorn_totals(where = "row") |>
+  adorn_pct_formatting() |>
+  adorn_rounding(digits = 2)
 ```
-Within the `tbl_summary()` function, we just need to add a 'label' input. Then you can specify your variable name and give a character vector for the label that we want. Because the 'label' input is designed to label multiple variables at once, it expects that you will give it a list of things. So, even if you're only working with one variable, you will need to put the label inside of `list()`.
+This table has all the right info we need, but it would be nicer if we didn't have the 'cappun' shorthand for the variable name. The other columns could be capitalized, and we could also stand to lose the underscore in 'valid_percent'. 
+
+The `tabyl()` function actually produces a data frame, which we have just saved a moment ago. Let's take a look at the column names like we did before, and then change these to look a little nicer.
+
+```{r}
+# Check the column names
+colnames(our_tab)
+
+# OVerwrite the column names
+colnames(our_tab) <- c("Death Penalty Approval", "Frequency", "Percent", "Valid Percent")
+```
+```{r}
+# Check that it worked
+our_tab
+```
+We can actually do the same thing with the rownames as well. In this case, we could capitalize 'favor' and 'oppose' and leave the rest as is.
+```{r}
+# Check the row names 
+rownames(our_tab)
+
+# Overwrite the row names with our own
+rownames(our_tab) <- c("Favor", "Oppose", "NA", "Total")
+```
+
+Now, all we have to do is pipe `our_tab` into the `gt()` function
+```{r}
+our_tab <- our_tab |>
+  gt()
+```
+This is not too bad for our purposes. This cleans the table up a hair while converting it into a format that we can see in the RStudio file viewer. This also allows us to copy it to our clipboard or export it as an image file.
+
 
 ### Contingency tables
-We can also make a quick and easy contingency table for bivariate analysis. Let's re-create our `cappun` x `dem_rep` table.
+For contingency tables, we will use an extension of the `gt` package called `gtsummary`. I'll note that this package can be a little idiosyncratic compared to some of the ones we've learned about already, and you can really get into the weeds with it. But I'll try to focus us here on just the things from which we can really get a lot of value. can also make a quick and easy contingency table for bivariate analysis. Let's re-create our `cappun` x `dem_rep` table.
 
-There's a nifty function called `tbl_cross()` which basically does the same thing as `tbl_summary()` but is more specific to contingency tables.
+There's a nifty function called `tbl_cross()` That includes a bunch of preset options intended for cross-tabs.
 
 Remember to always provide your dependent variable to the 'rows' input.
 
@@ -288,7 +301,7 @@ our_gss |>
   add_p() |>
   modify_header(statistic ~ "Chi-square value")
 ```
-Good stuff. Lots of great detail here, so this is pretty much good to go.
+Good stuff. I'll point out that we use the `~` symbol above, but don't worry too much about that. It's one of the pecularities I alluded to about `gtsummary`. Just know that we have to use `~` there. Otherwise, there's lots of great detail here, so this is pretty much good to go.
 
 ### Elaboration Model
 Lastly, this also gives us an easy way to automatically produce a 3-way cross-tab for multivariate analysis. We'll need to change a couple of things around, but this can be done without too much work in `gtsummary`.
