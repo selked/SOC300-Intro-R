@@ -4,7 +4,7 @@ In this last portion of our in-class lab sessions on quantitative analysis, we'l
 ## Setting up our workspace
 Because ggplot comes with tidyverse, we just need to load in `tidyverse` like we've often done. We're also going to need `janitor`, and, as usual, we'll also pull in our GSS data.
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 library(tidyverse)
 library(janitor)
 load("our_gss.rda")
@@ -177,5 +177,150 @@ our_gss |>
 ```
 Not too shabby. This is a great way to complement the presentation of a bivariate analysis, and it's also great for quickly getting a sense of the relationship among variables of interest.
 
+## Tables
+Now, let's learn a way to get some pretty snazzy frequency tables and cross-tabs using the `gtsummary` package, which is designed specifically for quickly producing publication-ready tables.
 
+I'll load it in below. If you need to install it, you can run `install.packages("gtsummary")`
+
+```{r}
+library(gtsummary)
+```
+
+### Frequency tables
+The function we'll get the most mileage out of here is called `tbl_summary()`. It really does an incredible amount of stuff right out of the box, but it also offers a great deal of customizability. I'll note that `gtsummary()` can be a little idiosyncratic compared to some of the functions we've learned about already, and you can really get into the weeds with it. But I'll try to focus us here on just the things from which we can really get a lot of value.
+
+It takes a data frame as it's first input, so, like ggplot, it plays well with the pipe operator. 
+
+We'll make a simple frequency table for univariate analysis of `cappun`. I'll first pass `cappun` through `drop_na()`, and then we'll pipe the output of that right into `tbl_summary()`. To get started, we just need to provide the variable we want to include, which has a straightforward enough input.
+
+```{r}
+our_gss |>
+  drop_na(cappun) |>
+  tbl_summary(
+    include = cappun)
+```
+Excellent. This has some good detail right away. It automatically shows counts and percentages, and also gives the grand total while adding a footnote that this is what the percentages refer to. There are at least two things we'll want to customize.
+
+For one, you might want to change 'Characteristic' to something like 'Variable.' We can do that like so:
+```{r}
+our_gss |>
+  drop_na(cappun) |>
+  tbl_summary(
+    include = cappun) |>
+  modify_header(label ~ "Variable")
+```
+Note the use of the tilde symbol `~` here. Without getting too into the weeds, this is one of the idiosyncratic things about `gtsummary` I alluded to above. For our purposes, just observe that we need to do that here and don't worry too much about it.
+
+However, observe that 'Variable' replaces 'Characteristic', but it's no longer bold. Thankfully, `gtsummary` has some font formatting conventions for us to take advantage of. If we simply place the quoted text between two asterisk (*), the text will be bolded
+
+```{r}
+our_gss |>
+  drop_na(cappun) |>
+  tbl_summary(
+    include = cappun) |>
+  modify_header(label ~ "**Variable**")
+```
+Good. Now we'll want a better variable label than 'cappun'. Let's change that up.
+```{r}
+our_gss |>
+  drop_na(cappun) |>
+  tbl_summary(
+    include = cappun,
+    label = list(
+      cappun = "Death Penalty Attitude")) |>
+  modify_header(label ~ "**Variable**")
+```
+Within the `tbl_summary()` function, we just need to add a 'label' input. Then you can specify your variable name and give a character vector for the label that we want. Because the 'label' input is designed to label multiple variables at once, it expects that you will give it a list of things. So, even if you're only working with one variable, you will need to put the label inside of `list()`.
+
+### Contingency tables
+We can also make a quick and easy contingency table for bivariate analysis. Let's re-create our `cappun`/`dem_rep` table.
+
+```{r}
+our_gss |>
+  drop_na(cappun, dem_rep) |>
+  tbl_summary(
+    by = cappun,
+    include = dem_rep,
+    label = list(
+      dem_rep = "Political Party")) |>
+  modify_header(label ~ "**Variable**")
+```
+Notice that, for a contingency table, we give our dependent variable with the `by =` input, and then we include our independent variable with the `include =` we saw above. I've changed the 'Characteristic' label like we did before, and I've changed the label argument to reflect the label for `dem_rep`.
+
+One last thing we can do is add a spanning head for `dem_rep`. 
+
+```{r}
+our_gss |>
+  drop_na(cappun, dem_rep) |>
+  tbl_summary(
+    by = cappun,
+    include = dem_rep,
+    label = list(
+      dem_rep = "Political Party")) |>
+  modify_header(label ~ "**Variable**") |>
+  modify_spanning_header(all_stat_cols() ~ "**Political Party**") 
+```
+We use the `modify_spanning_head()` function for this. Within that function, we can use `all_stat_cols()`, which will let the function know that we want the label for this header to span across all of our table columns. Then, I use the same formatting with the tilde and bolding that we saw in `modify_header()`.
+
+
+### Chi-squared test
+Now, a really neat feature of `tbl_summary()` is that it will automatically detect the type of variables that we have, and it will perform an appropriate statistical test. There's a lot of customization that you can do here, but this will work great out of the box for us.
+
+All we have to do is pipe the command we just produced into `add_p()`, which will automatically calculate a p-value using a relevant statistical test.
+```{r}
+our_gss |>
+  drop_na(cappun, dem_rep) |>
+  tbl_summary(
+    by = cappun,
+    include = dem_rep,
+    label = list(
+      dem_rep = "Political Party")) |>
+  modify_header(label ~ "**Variable**") |>
+  modify_spanning_header(all_stat_cols() ~ "**Political Party**") |>
+  add_p()
+```
+Very neat! This automatically recognized that we have categorical variables, ran a chi-squared test, and reported the p-value. Note that it doesn't give the actual chi-squared value by default, but that information is in there. We can manually add a column like so:
+```{r}
+our_gss |>
+  drop_na(cappun, dem_rep) |>
+  tbl_summary(
+    by = cappun,
+    include = dem_rep,
+    label = list(
+      dem_rep = "Political Party")) |>
+  modify_header(label ~ "**Variable**") |>
+  modify_spanning_header(all_stat_cols() ~ "**Political Party**") |>
+  add_p() |>
+  modify_header(statistic ~ "**Chi-square value**")
+```
+Good stuff. Lots of great detail here, so this is pretty much good to go.
+
+### Elaboration Model
+Lastly, this also gives us an easy way to automatically produce a 3-way cross-tab for multivariate analysis. We'll need to change a couple of things around, but this can be done without too much work in `gtsummary`.
+
+In our set up here, we have `cappun` as our dependent variable and `dem_rep` as our independent variable. Let's add `sex` as a test variable, and see whether sex has any effect on the relationship we have observed between death penalty attitudes and political party.
+
+For this, we need the `tbl_strata()` function.
+
+```{r}
+our_gss |>
+  select(cappun, sex, dem_rep) |>
+  drop_na(cappun, sex, dem_rep) |>
+  tbl_strata(
+    strata = sex,
+    .tbl_fun = 
+      ~ .x |>
+      tbl_summary(
+        by = cappun, 
+        include = dem_rep,
+        label = list(
+          dem_rep = "Political Party"
+        )) |>
+      modify_header(label ~ "**Variable**") |>
+      modify_spanning_header(all_stat_cols() ~ "**Death Penalty Approval**") |>
+      add_n() |>
+      add_p()
+      
+  )
+```
 
