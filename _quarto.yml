@@ -27,8 +27,7 @@ book:
     - part: "Day 3: Bivariate Analysis with the GSS"
       chapters:
         - bivariate_categorical.qmd
-    - part: "Day 4: Multivariable Analysis and Elaboration"
-    - part: "Day 5: Making Better Visualizations"
+    - part: "Day 4: Making Better Visualizations"
       chapters:
         - viz_introduction.qmd
         - data_viz.qmd
