@@ -1,4 +1,4 @@
-# Introduction {.unnumbered}
+# Introduction
 
 ```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
 library(sysfonts)
