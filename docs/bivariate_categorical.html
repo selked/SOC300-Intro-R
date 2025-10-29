@@ -274,6 +274,12 @@ window.Quarto = {
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Publication Ready Visuals</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -527,7 +533,7 @@ Warning
 <li>o: observed valued</li>
 <li>e: expected value</li>
 </ul>
-<p>For each cell, we take the value that we find in our contingency table, subtract the value we expect if there’s no relationship between the variables, square that difference, and then divide by the expected value.</p>
+<p>For each cell, we take the count value that we find in our contingency table, subtract the count we would expect if there’s no relationship between the variables, square that difference, and then divide by the expected value.</p>
 <p>So, the observed value is easy enough—it’s just the value we actually see in our contingency table.</p>
 <p>The observed value of the cell in the first row of the first column is 426.</p>
 <p>Now, this raises the question of how exactly we calculate the expected values.</p>
@@ -714,9 +720,11 @@ X-squared = 302.18, df = 1, p-value &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>As you can see, far fewer Democrats favor the death penalty than would be expected in the case that this is independent from one’s political affiliation. Similarly, many more Republicans favor the death penalty than we would expect in the conjoint distribution of two independent variables. Now that we have assessed this difference with the Chi-square test, we can feel confident that the association originally suggested by our reading of the contingency tables—that Democrats are more likely to oppose the death penalty than Republicans—is statistically significant.</p>
-<p>So, what does this mean substantively?</p>
-<p>With a Chi-squared value of 302.18 at 1 degree of freedom, we find evidence to support our hypothesis that there is an association between death-penalty attitudes and political-party affiliation. Our Chi-square value is associated with a p-value of &lt;0.001, which is statistically significant at our alpha of 0.05. This suggests that it is exceedingly unlikely the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.</p>
-<p>The conjoint distribution of <code>cappun</code> and <code>dem_rep</code> shows us that Democrats are more likely to oppose the death penalty than Republicans. Of those who oppose the death penalty, 82.% are Democrats and only 17.5% are Republicans. On the other hand, of those who favor the death penalty, only 40.2% are Democrats, whereas 59.8% are Republicans.</p>
+<p>So, how can we interpret this in terms of our hypotheses?</p>
+<p><strong>Null hypothesis:</strong> <span class="math display">\[H_{0} = There \ will \ be \ no \ difference \ in \ rates \ of \ death \ penalty \ approval \ among \ Democrats \ and \ Republicans \]</span></p>
+<p><strong>Alternative hypothesis:</strong> <span class="math display">\[H_{1} = Democrats \ and \ Republicans \ will \ have \ different \ rates \ of \ death \ penalty \ approval\]</span></p>
+<p>With a Chi-squared value of 302.18 at 1 degree of freedom, we can reject the null hypotheses that these two variables are unrelated. Instead, we find support for our hypothesis that political affiliation is associated with death-penalty attitudes. Our Chi-square value is associated with a p-value of &lt;0.001, which is statistically significant at an alpha threshold of 0.05. This suggests that it is exceedingly unlikely the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.</p>
+<p>The conjoint distribution of <code>cappun</code> and <code>dem_rep</code> shows us that Democrats are more likely to oppose the death penalty than Republicans. Of those who oppose the death penalty, 82.5% are Democrats and only 17.5% are Republicans. On the other hand, of those who favor the death penalty, only 40.2% are Democrats, whereas 59.8% are Republicans.</p>
 
 
 </section>

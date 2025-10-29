@@ -1,0 +1,22 @@
+# Multivariate: Categorical
+
+In the previous section, we learned how to analyze and interpret the the direct association between our independent and dependent variables. In terms of the Elaboration Model, that would be our **zero-order relationship**. 
+
+With respect to the prerequisites for causal interpretation, this is always one of the first steps we need to undertake--demonstration of an association between our key variables. 
+
+The logic of the Elaboration Model helps us further characterize the other two causal pre-requisites: ruling out spuriousness and accounting for temporality.
+
+After we show our zero-order relationship, we then introduce our test variables. These allow us to investigate whether the zero-order relationship survives after controlling for other possible explanations of the original relationship. Elaboration also helps us draw more detailed inferences about what it means when the zero-order relationship is affected by the introduction of a test variable. 
+
+In this section, I will use our GSS data to show some examples of the possible outcomes of this process. After we introduce a test variable, the zero-order relationship may: 
+
+- remain unchanged
+- disappear
+- only hold under certain circumstances
+
+We can then interpret these outcomes in terms of the Elaboration Model---as either replication, explanation, specification, or interpretation.
+
+
+## 
+
+

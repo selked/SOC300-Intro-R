@@ -1,0 +1,181 @@
+# Publication Ready Visuals
+In this last portion of our in-class lab sessions on quantitative analysis, we'll learn how to make some familiar visuals in new and exciting ways. For the most part, this will involve learning the graphing package of tidyverse, commonly known as `ggplot`. There are a couple of things to get used to with ggplot, but once you get a handle on its syntax, it will offer simple and extensive customizability that translates across a wide expanse of use cases. Even some of the graphics that we've seen in empirical papers for class have been produced using ggplot! 
+
+## Setting up our workspace
+Because ggplot comes with tidyverse, we just need to load in `tidyverse` like we've often done. We're also going to need `janitor`, and, as usual, we'll also pull in our GSS data.
+
+```{r}
+library(tidyverse)
+library(janitor)
+load("our_gss.rda")
+```
+
+## Categorical Variables
+
+Specific to categorical variables, we learned about two key plot-types: histograms and barplots. We'll start our foray into `ggplot` by using it to recreate some figures in these styles.
+
+### Barplots & Basics of ggplot
+
+The structure of figures made with ggplot is quite regular. The name 'ggplot' is actually a reference to the idea of a **g**rammar of **g**raphics, and though there are some specifics across the various plot types, we will offer ggplot mostly the same kind of information regardless.
+
+First, ggplot expects that we will give it a dataframe. This is good because it also means that ggplot plays well with the pipe operator.
+
+Next, ggplot needs input for your **aesthetic mappings**, shortened to `aes()` within the function. This might sound a little hoighty toighty, but it simply refers to the specification of some key parameters for our figure. We want our data to be visually mapped in a certain sort of way, and this is where we set that up. 
+
+The simplest aesthetic mappings we can provide are the variables we want associated with the x & y columns. Let's try with `sex` as an example. Because we are making a barplot, our y-axis will reflect the frequency of the values of the y-axis.
+
+We'll need to manually calculate this and add it to our data frame, which is thankfully simple enough.
+
+```{r}
+our_gss |>
+  drop_na(sex) |>
+  ggplot(
+    aes(x = sex))
+```
+Now, you might be asking yourself: what's the deal? We only see the labels of the x-axis there.
+
+The syntax of ggplot is often explained by making an analogy with paintings. You start by setting up a basic canvas with your `aes()` specifications, and then you add on different layers reflecting the shape of your data and various customizations to its appearance. 
+
+The first layer we typically add is a **geometric object** specification---shorted to `geom` in ggplot language. You can think of this as the place where you tell ggplot what kind of figure you want. There are a great many geoms, and you can read more about the full extent of them [here](https://ggplot2.tidyverse.org/reference/index.html). 
+
+In our case, we want a barplot, so we can add `geom_bar()` as an additional layer. We can simply add each new layer after a '+' operator
+
+```{r}
+our_gss |>
+  drop_na(sex) |>
+  ggplot(
+    aes(x = sex)) +
+      geom_bar()
+  
+```
+
+Voila! There's a pretty decent barplot. There are other kinds of statistical summaries we can take advantage of in ggplot, but the default behavior of `geom_bar()` will calculate the summary counts of the values of the x variable. 
+
+Now we tweak a couple things to make things a bit nicer and illustrate some of the perks of ggplot's customizability.
+
+Let's add a little color. We can indicate this back up at the `aes()` layer. This works by adding a fill aesthetic, and then we specify a variable. What we do there is tell R that we want the fill-color of the bars to vary on the basis of that variable. So, each bar will be filled with a different color for each response category of `sex` in our case. 
+
+```{r}
+our_gss |>
+  drop_na(sex) |>
+  ggplot(
+    aes(x = sex, fill = sex)) +
+      geom_bar()
+```
+Neat! This looks much better, and we'll play around with this more later, but now let's see how to add some axis & legend labels along with a title. The legend label actually works out fine as it is with `sex`, but the shorthand variable names often do not translate well as legend titles (imagine if it were 'realrinc', for example). So, I'll show you how to customize it just in case.
+
+For the axis labels and title, we can add the `labs` layer
+```{r}
+our_gss |>
+  drop_na(sex) |>
+  ggplot(
+    aes(x = sex, fill = sex)) +
+      geom_bar() +
+  labs(
+    title = "Sex distribution of 2022 GSS Respondents",
+    x = "Sex", 
+    y = "Frequency") 
+
+```
+
+Then we can add the `guides` layer to customize the legend title for the `fill` aesthetic. 
+```{r}
+our_gss |>
+  drop_na(sex) |>
+  ggplot(
+    aes(x = sex, fill = sex)) +
+  geom_bar() +
+  labs(
+    title = "Sex distribution of 2022 GSS Respondents",
+    x = "Sex", 
+    y = "Frequency") +
+  guides(fill = guide_legend(title="Respondent's sex"))
+
+```
+Lastly on this point, I'll also show you how to get rid of the legend entirely. You'll often want to customize the legend in the fashion I laid out above, but we actually don't really need it in this case. It's redundant with the x-axis labels. So, you can always get rid of a legend by adding the `guides()` layer and simply setting `fill` to 'none'.
+```{r}
+our_gss |>
+  drop_na(sex) |>
+  ggplot(
+    aes(x = sex, fill = sex)) +
+  geom_bar() +
+  labs(
+    title = "Sex distribution of 2022 GSS Respondents",
+    x = "Sex", 
+    y = "Frequency") +
+  guides(fill = "none")
+
+```
+
+
+
+### Bivariate Barplots
+The `fill` aesthetic actually allows us to quite easily create a bivariate version of the barplot.
+
+Let's consider our bivariate analysis from a previous session: `cappun` and `dem_rep`.
+
+If you need to recreate `dem_rep` from `partyid`, go ahead and run the following code:
+```{r}
+our_gss <- our_gss |>
+  mutate(
+    partyid_recoded=fct_collapse(partyid, 
+"Democrat" = c("strong democrat", "not very strong democrat"),
+"Republican" = c("strong republican","not very strong republican"),
+"Independent" = c("independent, close to democrat", "independent (neither, no response)", "independent, close to republican"),
+"Other Party" = c("other party")
+)) |>
+  mutate(dem_rep = fct_recode(
+    partyid_recoded, 
+    NULL="Other Party", 
+    NULL="Independent"))
+```
+As a reminder, here is the cross-tab for that conjoint distribution:
+```{r, eval = TRUE, echo = FALSE}
+our_gss |>
+  drop_na(cappun, dem_rep) |>
+  tabyl(
+    var1 = cappun,
+    var2 = dem_rep) |>
+  adorn_totals(where = "row") |>
+  adorn_percentages() |>
+  adorn_pct_formatting() |>
+  adorn_ns(position = "rear") |>
+  adorn_title(
+    placement = "top",
+    row_name = "Death Penalty Attitude",
+    col_name = "Political Party") |>
+  knitr::kable()
+```
+
+Now, we'll use our same barplot code from above, but this time we will set our x variable to `cappun` and swap out  the `fill` aesthetic to `dem_rep`. This means we want the fill-color of the bars to vary on the basis of the categories in `dem_rep`. I'll also add `cappun` and `dem_rep` to `drop_na()` and update the labels & title.
+
+```{r}
+our_gss |>
+  drop_na(sex, cappun, dem_rep) |>
+  ggplot(
+    aes(x = cappun, fill = dem_rep)) +
+  geom_bar() +
+  labs(
+    title = "Death Penalty Attitudes by Sex and Political Party",
+    x = "Death penalty attitude", 
+    y = "Frequency") +
+  guides(fill = guide_legend(title="Political party"))
+
+```
+Good stuff! This is a stacked barplot and is a common way to display multivariate categorical data. I personally find it a little easier to intrepret when the columns are side-by-side rather than stacked on top of each other, so I'll show you how to do that too. This just requires setting a `position` mapping within `geom_bar()`. We set the position to 'dodge', which might sound a little counter-intuitive, which is because it actually has a more general purpose. The idea is that you want overlapping objects to 'dodge' one another, which will cause them to appear side by side rather than on top of one another. So, by doing so, we will un-nest our stacked bar charts and have each bar appear adjacent to one another.
+```{r}
+our_gss |>
+  drop_na(sex, cappun, dem_rep) |>
+  ggplot(
+    aes(x = cappun, fill = dem_rep)) +
+  geom_bar(position = "dodge") +
+  labs(
+    title = "Death Penalty Attitudes by Political Party",
+    x = "Death penalty attitude", 
+    y = "Frequency") +
+  guides(fill = guide_legend(title="Political party"))
+```
+Not too shabby. This is a great way to complement the presentation of a bivariate analysis, and it's also great for quickly getting a sense of the relationship among variables of interest.
+
+
+

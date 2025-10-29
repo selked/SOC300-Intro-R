@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Univariate: Numeric – Introduction to R for Quantitative Social Science Research</title>
+<title>7&nbsp; Publication Ready Visuals – Introduction to R for Quantitative Social Science Research</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./bivariate_categorical.html" rel="next">
-<link href="./univariate_categorical.html" rel="prev">
+<link href="./viz_introduction.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -117,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding_variables.html">Day 2: Survey Data and Univariate Analysis</a></li><li class="breadcrumb-item"><a href="./univariate_numeric.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Univariate: Numeric</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 5: Making Better Visualizations</a></li><li class="breadcrumb-item"><a href="./data_viz.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Publication Ready Visuals</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -203,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./univariate_numeric.html" class="sidebar-item-text sidebar-link active">
+  <a href="./univariate_numeric.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Univariate: Numeric</span></span></a>
   </div>
 </li>
@@ -247,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data_viz.html" class="sidebar-item-text sidebar-link">
+  <a href="./data_viz.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Publication Ready Visuals</span></span></a>
   </div>
 </li>
@@ -263,30 +262,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#frequency-distributions" id="toc-frequency-distributions" class="nav-link active" data-scroll-target="#frequency-distributions"><span class="header-section-number">5.1</span> Frequency Distributions</a>
+  <li><a href="#setting-up-our-workspace" id="toc-setting-up-our-workspace" class="nav-link active" data-scroll-target="#setting-up-our-workspace"><span class="header-section-number">7.1</span> Setting up our workspace</a></li>
+  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link" data-scroll-target="#categorical-variables"><span class="header-section-number">7.2</span> Categorical Variables</a>
   <ul class="collapse">
-  <li><a href="#histograms" id="toc-histograms" class="nav-link" data-scroll-target="#histograms"><span class="header-section-number">5.1.1</span> Histograms</a></li>
+  <li><a href="#barplots-basics-of-ggplot" id="toc-barplots-basics-of-ggplot" class="nav-link" data-scroll-target="#barplots-basics-of-ggplot"><span class="header-section-number">7.2.1</span> Barplots &amp; Basics of ggplot</a></li>
+  <li><a href="#bivariate-barplots" id="toc-bivariate-barplots" class="nav-link" data-scroll-target="#bivariate-barplots"><span class="header-section-number">7.2.2</span> Bivariate Barplots</a></li>
   </ul></li>
-  <li><a href="#central-tendency" id="toc-central-tendency" class="nav-link" data-scroll-target="#central-tendency"><span class="header-section-number">5.2</span> Central Tendency</a>
-  <ul class="collapse">
-  <li><a href="#mean-or-median" id="toc-mean-or-median" class="nav-link" data-scroll-target="#mean-or-median"><span class="header-section-number">5.2.1</span> Mean or Median?</a></li>
-  <li><a href="#the-mode" id="toc-the-mode" class="nav-link" data-scroll-target="#the-mode"><span class="header-section-number">5.2.2</span> The Mode</a></li>
-  </ul></li>
-  <li><a href="#dispersion" id="toc-dispersion" class="nav-link" data-scroll-target="#dispersion"><span class="header-section-number">5.3</span> Dispersion</a>
-  <ul class="collapse">
-  <li><a href="#range" id="toc-range" class="nav-link" data-scroll-target="#range"><span class="header-section-number">5.3.1</span> Range</a></li>
-  <li><a href="#standard-deviation" id="toc-standard-deviation" class="nav-link" data-scroll-target="#standard-deviation"><span class="header-section-number">5.3.2</span> Standard Deviation</a></li>
-  </ul></li>
-  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together"><span class="header-section-number">5.4</span> Putting It All Together</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding_variables.html">Day 2: Survey Data and Univariate Analysis</a></li><li class="breadcrumb-item"><a href="./univariate_numeric.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Univariate: Numeric</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 5: Making Better Visualizations</a></li><li class="breadcrumb-item"><a href="./data_viz.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Publication Ready Visuals</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Univariate: Numeric</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Publication Ready Visuals</span></h1>
 </div>
 
 
@@ -303,254 +293,254 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>While we also want to report on the frequency distribution and central tendency of numeric variables, there are some differences in the way we go about that relative to the techniques we just learned about for categorical variables.</p>
-<p>Additionally, we will need to report on some measures of dispersion that can only be reported for numeric data, such as the standard deviation.</p>
-<p>This section will walk us through the process of calculating and reporting necessary elements of a univariate analysis of numeric data.</p>
-<section id="frequency-distributions" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="frequency-distributions"><span class="header-section-number">5.1</span> Frequency Distributions</h2>
-<p>As we saw when we were recoding <code>age</code> earlier in the unit, a frequency table is not really appropriate for numeric data. When there are upwards of 71 different response values—as we have with <code>age</code>—a table would be both spatially unwieldy and difficult to interpret.</p>
-<p>So, let’s start with a style of plotting data that is essentially the barplot of numeric data.</p>
-<p>First, let’s go ahead and set up our environment by loading in our data and <code>tidyverse</code> per usual.</p>
+<p>In this last portion of our in-class lab sessions on quantitative analysis, we’ll learn how to make some familiar visuals in new and exciting ways. For the most part, this will involve learning the graphing package of tidyverse, commonly known as <code>ggplot</code>. There are a couple of things to get used to with ggplot, but once you get a handle on its syntax, it will offer simple and extensive customizability that translates across a wide expanse of use cases. Even some of the graphics that we’ve seen in empirical papers for class have been produced using ggplot!</p>
+<section id="setting-up-our-workspace" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="setting-up-our-workspace"><span class="header-section-number">7.1</span> Setting up our workspace</h2>
+<p>Because ggplot comes with tidyverse, we just need to load in <code>tidyverse</code> like we’ve often done. We’re also going to need <code>janitor</code>, and, as usual, we’ll also pull in our GSS data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"our_gss.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.2
+✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<section id="histograms" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="histograms"><span class="header-section-number">5.1.1</span> Histograms</h3>
-<p>A histogram is the result of taking a numeric variable, slicing it up into equal, ordinal intervals, and then plotting the frequency of each interval.</p>
-<p>There are plenty of other ways for plotting numeric data—some of which we will see later when we focus on visualization—but for now, this is a simple and effective way to get a sense of the distribution of a numeric variable. This is especially important when we need to decide on an appropriate measure of central tendency.</p>
-<p>We can create these easily using the <code>hist()</code> function, which is in the same family of base R plotting functions as <code>barplot()</code>, so much of what we learned for that function will also apply with <code>hist()</code>. This function will automatically apply a commonly used method called Sturges’s rule to divide our numeric variable into equal bins, so we do not have to specify anything in that regard.</p>
-<p>All we need to do is give the <code>hist()</code> function our numeric variable. Let’s work with the <code>realrinc</code> variable for this example.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(our_gss<span class="sc">$</span>realrinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="univariate_numeric_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Much like we did with <code>barplot()</code>, we can clean this up a little by adding a title and a better label for the x axis</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  our_gss<span class="sc">$</span>realrinc,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Income distribution of GSS Respondents"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Respondent's income in dollars"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="univariate_numeric_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Now we have our histogram!</p>
-<p>However, this visualization does suggest that we need to do some thinking about the appropriate measure of central tendency for <code>realrinc</code>.</p>
-</section>
-</section>
-<section id="central-tendency" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="central-tendency"><span class="header-section-number">5.2</span> Central Tendency</h2>
-<p>For numeric data, any of the 3 common measures of central tendency can be reported. However, the preferred measure for a given variable depends on its distribution.</p>
-<p>The mean is the gold standard for numeric data, because it takes into account every single data point in its calculation, and is thus the most comprehensive index of central tendency.</p>
-<p>However, the mean can be misleading in some cases. The distribution should be (basically) normal in order for you to report the mean, and you will want to report the median in most other cases.</p>
-<p>I will first cover the choice of mean or median by revisiting some basics of distributions, and then I will address the rare circumstance where the mode is appropriate.</p>
-<section id="mean-or-median" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="mean-or-median"><span class="header-section-number">5.2.1</span> Mean or Median?</h3>
-<p>In most cases, we will be making a decision between the mean and the median. When the distribution is normal, you should report the mean—otherwise, report the median. We’ll see one exception to this later, but that’s generally our task.</p>
-<p>We saw some typical distributions in our last section on uivariate analysis of categorical data. We’ll return to some discussion of those basic distribution types but add a little more context for numeric data that will help us see the impact of making the wrong decision.</p>
-<p>I’m going to display a normal distribution, but this time, I’ll draw a vertical line indicating the location of the mean and median.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="univariate_numeric_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>In this case, they appear to be overlapping. In fact, in a completely normal distribution, all three measures of central tendency will be equal. Though, remember that real-world data will rarely exhibit perfect normality. As long as it’s approximately normal, we can default to the mean because it accounts for every data point in the variable’s distribution.</p>
-<p>Now, let’s look back at <code>realrinc</code>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="univariate_numeric_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>In the case of <code>realrinc</code>, we definitely do not have much normality going on. For one, there are some apparent outlier cases. Much of our data seems to be concentrated within about $0 - $75,000, but then we have a bunch of values at roughly double the maximum of that narrower range. And even within the range where most of our responses are clustered, we have some clear right-skew.</p>
-<p>In general, it’s ideal that the mean includes every data point, but this also makes it susceptible to non-normal distributions. As we can see, the mean will be pulled in the direction of the skew.</p>
-<p>In this case, it becomes an advantage that the median does not take every data point into account. This makes it more resistant to skew, so, in any case where your numeric variable contains clear outliers and/or exhibits notable skew in either direction, you should report the median rather than the mean.</p>
-</section>
-<section id="the-mode" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="the-mode"><span class="header-section-number">5.2.2</span> The Mode</h3>
-<p>By and large, the mode is more appropriate for categorical data. But there are some circumstances where it makes sense to report the mode for numeric data.</p>
-<p>Let’s take a look at the original <code>age</code> variable to see an example.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  our_gss<span class="sc">$</span>age,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Age distribution of 2022 GSS Respondents"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Respondent age in years"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="univariate_numeric_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>This isn’t quite a normal distribution, but it’s not exactly skewed in either direction either. And there are no apparent outliers.</p>
-<p>What we have here is a <strong>bimodal</strong> distribution.</p>
-<p>This is what happens when we have multiple peaks in a distribution—two, in this case. We have seen several different distributions so far, but they all had only one peak in the distribution. They were differentiated on the basis of that single peak’s location in the distribution. In the case of a multimodal distribution, we want to report on any notable peak.</p>
-<p>This may be a peculiarity of the 2022 survey wave, because we wouldn’t necessarily expect this, but it looks like there are two distinct central tendencies for <code>age</code>. In this case, we want to capture the two distinct peaks, meaning we need to calculate two modes.</p>
-<p>Thankfully, there’s a convenient function for this, but we need to install a new package, so let’s install and load in <code>multimode</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"multimode"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multimode)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Then, we just need to provide a few arguments to the <code>locmodes()</code> function.</p>
-<p>First, we give the variable for which we want to calculate multiple modes.</p>
-<p>Then we give an input for <code>mod0</code>, which asks us how many modes the function should be looking for. This should be based on visual inspection of the data. We have two peaks in our distribution, so we will enter ‘2’ for this input.</p>
-<p>Lastly, we will set <code>display</code> to ‘TRUE’, which will show us a plot of the estimated modes superimposed onto the frequency distribution of the variable. This will let us evaluate whether the modes estimated by the function are plausible. They should match up with the visible peaks in the frequency distribution.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">locmodes</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  our_gss<span class="sc">$</span>age,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mod0 =</span> <span class="dv">2</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">display =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="univariate_numeric_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
 <pre><code>
-Estimated location
-Modes:  32.4301  66.25356 
-Antimode: 50.89506 
+Attaching package: 'janitor'
 
-Estimated value of the density
-Modes: 0.01938966  0.01730832 
-Antimode: 0.01444287 
+The following objects are masked from 'package:stats':
 
-Critical bandwidth: 2.543659</code></pre>
+    chisq.test, fisher.test</code></pre>
 </div>
-</div>
-<p>We only really need to pay attention to the modes that it gives us (32.43 and 66.25), but it looks like this function spotted these values pretty effectively.</p>
-<p>For a bimodal distribution like this, we can report both modes for the measure of central tendency. I don’t expect we will run into too much of this, but go ahead and deal with it like this in the event that you do.</p>
-</section>
-</section>
-<section id="dispersion" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="dispersion"><span class="header-section-number">5.3</span> Dispersion</h2>
-<p>Now, let’s talk about dispersion. This is the last major element of a univariate analysis of numeric data. Actually calculating this information is quite simple in R, so we will practice with some of our GSS variables and then talk about putting all of this information together.</p>
-<section id="range" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="range"><span class="header-section-number">5.3.1</span> Range</h3>
-<p>This is perhaps the simplest measure of dispersion and comprises the minimum and maximum values of the distribution.</p>
-<p>R has a built in <code>range()</code> function, so we can simply provide one of our variables as the input. We’ll work with <code>realrinc</code> again. As we have done before, we will also need to provide <code>na.rm = TRUE</code>, as this variable column includes NAs and will confuse R otherwise.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]    204.5 141848.3</code></pre>
-</div>
-</div>
-<p>At this point, I’ll also offer a reminder about the <code>summary()</code> function, which we can use to see a variety of information about the dispersion (in an addition to the central tendency).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(our_gss<span class="sc">$</span>realrinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
-   204.5   8691.2  18405.0  27835.3  33742.5 141848.3     1554 </code></pre>
-</div>
-</div>
-<p>For a numeric variable, <code>summary()</code> will show us the minimum &amp; maximum, as well as the mean &amp; median, and the 1st &amp; 3rd quartiles.</p>
-<p>We can actually think of most of these elements in terms of percentiles.</p>
-<ul>
-<li><p>The minimum value is the 0th percentile of the distribution</p></li>
-<li><p>The 1st quartile is the 25th percentile.</p></li>
-<li><p>The median is the 50th percentile</p></li>
-<li><p>The 3rd quartile is the 75th percentile</p></li>
-<li><p>And the maximum is the 100th percentile.</p></li>
-</ul>
-<p><code>summary()</code> is great for quickly assessing some of these descriptive statistics, but it’s a little less convenient for exporting this information into something like a table for our own univariate analysis.</p>
-<p>So, I’ll also highlight the <code>min()</code> and <code>max()</code> functions, which will come in hand for us shortly. They work simply enough—we just need to provide our variable column, and they will output the minimum and maximum, respectively.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 204.5</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 141848.3</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"our_gss.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="standard-deviation" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="standard-deviation"><span class="header-section-number">5.3.2</span> Standard Deviation</h3>
-<p>This is one of the more commonly reported dispersion metrics for numeric data. The standard deviation is a measure of how much the average value varies from the mean. In plainer terms, it’s a measure that tells us how spread out the distribution is.</p>
+<section id="categorical-variables" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="categorical-variables"><span class="header-section-number">7.2</span> Categorical Variables</h2>
+<p>Specific to categorical variables, we learned about two key plot-types: histograms and barplots. We’ll start our foray into <code>ggplot</code> by using it to recreate some figures in these styles.</p>
+<section id="barplots-basics-of-ggplot" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="barplots-basics-of-ggplot"><span class="header-section-number">7.2.1</span> Barplots &amp; Basics of ggplot</h3>
+<p>The structure of figures made with ggplot is quite regular. The name ‘ggplot’ is actually a reference to the idea of a <strong>g</strong>rammar of <strong>g</strong>raphics, and though there are some specifics across the various plot types, we will offer ggplot mostly the same kind of information regardless.</p>
+<p>First, ggplot expects that we will give it a dataframe. This is good because it also means that ggplot plays well with the pipe operator.</p>
+<p>Next, ggplot needs input for your <strong>aesthetic mappings</strong>, shortened to <code>aes()</code> within the function. This might sound a little hoighty toighty, but it simply refers to the specification of some key parameters for our figure. We want our data to be visually mapped in a certain sort of way, and this is where we set that up.</p>
+<p>The simplest aesthetic mappings we can provide are the variables we want associated with the x &amp; y columns. Let’s try with <code>sex</code> as an example. Because we are making a barplot, our y-axis will reflect the frequency of the values of the y-axis.</p>
+<p>We’ll need to manually calculate this and add it to our data frame, which is thankfully simple enough.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> sex))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="univariate_numeric_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>We can grab the standard deviation quite easily with the <code>sd()</code> function</p>
+<p>Now, you might be asking yourself: what’s the deal? We only see the labels of the x-axis there.</p>
+<p>The syntax of ggplot is often explained by making an analogy with paintings. You start by setting up a basic canvas with your <code>aes()</code> specifications, and then you add on different layers reflecting the shape of your data and various customizations to its appearance.</p>
+<p>The first layer we typically add is a <strong>geometric object</strong> specification—shorted to <code>geom</code> in ggplot language. You can think of this as the place where you tell ggplot what kind of figure you want. There are a great many geoms, and you can read more about the full extent of them <a href="https://ggplot2.tidyverse.org/reference/index.html">here</a>.</p>
+<p>In our case, we want a barplot, so we can add <code>geom_bar()</code> as an additional layer. We can simply add each new layer after a ‘+’ operator</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(our_gss<span class="sc">$</span>realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 31962.34</code></pre>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> sex)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>Now, let’s talk about putting all this together in our reporting of a univariate analysis for numeric data.</p>
-</section>
-</section>
-<section id="putting-it-all-together" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="putting-it-all-together"><span class="header-section-number">5.4</span> Putting It All Together</h2>
-<p>Now that we have worked through how to calculate all of these key statistics with R, let’s revisit some of the first <code>tidyverse</code> functions we learned about back on the first day.</p>
-<p>We can use a combination of <code>select()</code> and <code>summarize</code> to quickly compile several bits of important information, such as the range, the central tendency, and the standard deviation.</p>
-<p>Let’s do this for <code>realrinc</code>.</p>
+</div>
+<p>Voila! There’s a pretty decent barplot. There are other kinds of statistical summaries we can take advantage of in ggplot, but the default behavior of <code>geom_bar()</code> will calculate the summary counts of the values of the x variable.</p>
+<p>Now we tweak a couple things to make things a bit nicer and illustrate some of the perks of ggplot’s customizability.</p>
+<p>Let’s add a little color. We can indicate this back up at the <code>aes()</code> layer. This works by adding a fill aesthetic, and then we specify a variable. What we do there is tell R that we want the fill-color of the bars to vary on the basis of that variable. So, each bar will be filled with a different color for each response category of <code>sex</code> in our case.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(realrinc) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Minimum"</span> <span class="ot">=</span> <span class="fu">min</span>(realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Median"</span> <span class="ot">=</span> <span class="fu">median</span>(realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Maximum"</span> <span class="ot">=</span> <span class="fu">max</span>(realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SD"</span> <span class="ot">=</span> <span class="fu">sd</span>(realrinc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Minimum Median  Maximum       SD
-1   204.5  18405 141848.3 31962.34</code></pre>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
-Note
+<p>Neat! This looks much better, and we’ll play around with this more later, but now let’s see how to add some axis &amp; legend labels along with a title. The legend label actually works out fine as it is with <code>sex</code>, but the shorthand variable names often do not translate well as legend titles (imagine if it were ‘realrinc’, for example). So, I’ll show you how to customize it just in case.</p>
+<p>For the axis labels and title, we can add the <code>labs</code> layer</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Sex distribution of 2022 GSS Respondents"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Sex"</span>, </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>You might notice that there’s an attribute for each column that looks like <code>&lt;dbl&gt;</code>. This is short for ‘double’, which is itself shorthand for ‘double-precision floating-point format’. This is in reference to the underlying data type that R uses to store continuous numeric values. You really don’t need to know anything more about double-precision floating point than that for our purposes, but I mention it here because you might run into <dbl> or ‘double’ in R. When you do, just think ‘numeric data’.</dbl></p>
+</div>
+<p>Then we can add the <code>guides</code> layer to customize the legend title for the <code>fill</code> aesthetic.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Sex distribution of 2022 GSS Respondents"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Sex"</span>, </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Respondent's sex"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>If you have a numeric variable where the mean is more appropriate, you can just swap <code>median()</code> with <code>mean()</code> in the code template above. Be sure to also change the column name as well.</p>
-<p>And that should do us! For any univariate analysis you report in this course, you will just need to produce</p>
-<ul>
-<li>a histogram displaying the variable’s frequency distribution</li>
-<li>a table like the one above (with the appropriate measure of central tendency).</li>
-</ul>
+</div>
+<p>Lastly on this point, I’ll also show you how to get rid of the legend entirely. You’ll often want to customize the legend in the fashion I laid out above, but we actually don’t really need it in this case. It’s redundant with the x-axis labels. So, you can always get rid of a legend by adding the <code>guides()</code> layer and simply setting <code>fill</code> to ‘none’.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Sex distribution of 2022 GSS Respondents"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Sex"</span>, </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bivariate-barplots" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="bivariate-barplots"><span class="header-section-number">7.2.2</span> Bivariate Barplots</h3>
+<p>The <code>fill</code> aesthetic actually allows us to quite easily create a bivariate version of the barplot.</p>
+<p>Let’s consider our bivariate analysis from a previous session: <code>cappun</code> and <code>dem_rep</code>.</p>
+<p>If you need to recreate <code>dem_rep</code> from <code>partyid</code>, go ahead and run the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="ot">&lt;-</span> our_gss <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">partyid_recoded=</span><span class="fu">fct_collapse</span>(partyid, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">"Democrat"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"strong democrat"</span>, <span class="st">"not very strong democrat"</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">"Republican"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"strong republican"</span>,<span class="st">"not very strong republican"</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">"Independent"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"independent, close to democrat"</span>, <span class="st">"independent (neither, no response)"</span>, <span class="st">"independent, close to republican"</span>),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">"Other Party"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"other party"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dem_rep =</span> <span class="fu">fct_recode</span>(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    partyid_recoded, </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">NULL=</span><span class="st">"Other Party"</span>, </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">NULL=</span><span class="st">"Independent"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As a reminder, here is the cross-tab for that conjoint distribution:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Political Party</th>
+<th style="text-align: left;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Death Penalty Attitude</td>
+<td style="text-align: left;">Democrat</td>
+<td style="text-align: left;">Republican</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">favor</td>
+<td style="text-align: left;">40.2% (426)</td>
+<td style="text-align: left;">59.8% (633)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">oppose</td>
+<td style="text-align: left;">82.5% (569)</td>
+<td style="text-align: left;">17.5% (121)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Total</td>
+<td style="text-align: left;">56.9% (995)</td>
+<td style="text-align: left;">43.1% (754)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Now, we’ll use our same barplot code from above, but this time we will set our x variable to <code>cappun</code> and swap out the <code>fill</code> aesthetic to <code>dem_rep</code>. This means we want the fill-color of the bars to vary on the basis of the categories in <code>dem_rep</code>. I’ll also add <code>cappun</code> and <code>dem_rep</code> to <code>drop_na()</code> and update the labels &amp; title.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex, cappun, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> cappun, <span class="at">fill =</span> dem_rep)) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Death Penalty Attitudes by Sex and Political Party"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Death penalty attitude"</span>, </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Political party"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Good stuff! This is a stacked barplot and is a common way to display multivariate categorical data. I personally find it a little easier to intrepret when the columns are side-by-side rather than stacked on top of each other, so I’ll show you how to do that too. This just requires setting a <code>position</code> mapping within <code>geom_bar()</code>. We set the position to ‘dodge’, which might sound a little counter-intuitive, which is because it actually has a more general purpose. The idea is that you want overlapping objects to ‘dodge’ one another, which will cause them to appear side by side rather than on top of one another. So, by doing so, we will un-nest our stacked bar charts and have each bar appear adjacent to one another.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex, cappun, dem_rep) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> cappun, <span class="at">fill =</span> dem_rep)) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Death Penalty Attitudes by Political Party"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Death penalty attitude"</span>, </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Political party"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Not too shabby. This is a great way to complement the presentation of a bivariate analysis, and it’s also great for quickly getting a sense of the relationship among variables of interest.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -955,14 +945,11 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./univariate_categorical.html" class="pagination-link" aria-label="Univariate: Categorical">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Univariate: Categorical</span></span>
+      <a href="./viz_introduction.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./bivariate_categorical.html" class="pagination-link" aria-label="Bivariate: Categorical">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bivariate: Categorical</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

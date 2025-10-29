@@ -31,6 +31,7 @@ book:
     - part: "Day 5: Making Better Visualizations"
       chapters:
         - viz_introduction.qmd
+        - data_viz.qmd
 
 
 bibliography: references.bib

@@ -191,7 +191,7 @@ The ${\sum}$ operator tells us that we will be taking a sum. So, we need to calc
 -   o: observed valued
 -   e: expected value
 
-For each cell, we take the value that we find in our contingency table, subtract the value we expect if there's no relationship between the variables, square that difference, and then divide by the expected value.
+For each cell, we take the count value that we find in our contingency table, subtract the count we would expect if there's no relationship between the variables, square that difference, and then divide by the expected value.
 
 So, the observed value is easy enough---it's just the value we actually see in our contingency table. 
 
@@ -354,11 +354,16 @@ our_chisq$observed
 
 As you can see, far fewer Democrats favor the death penalty than would be expected in the case that this is independent from one's political affiliation. Similarly, many more Republicans favor the death penalty than we would expect in the conjoint distribution of two independent variables. Now that we have assessed this difference with the Chi-square test, we can feel confident that the association originally suggested by our reading of the contingency tables---that Democrats are more likely to oppose the death penalty than Republicans---is statistically significant.  
 
-So, what does this mean substantively?
+So, how can we interpret this in terms of our hypotheses?
 
-With a Chi-squared value of 302.18 at 1 degree of freedom, we find evidence to support our hypothesis that there is an association between death-penalty attitudes and political-party affiliation. Our Chi-square value is associated with a p-value of \<0.001, which is statistically significant at our alpha of 0.05. This suggests that it is exceedingly unlikely the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.
+**Null hypothesis:** $$H_{0} = There \ will \ be \ no \ difference \ in \ rates \ of \ death \ penalty \ approval \ among \ Democrats \ and \ Republicans $$
 
-The conjoint distribution of `cappun` and `dem_rep` shows us that Democrats are more likely to oppose the death penalty than Republicans. Of those who oppose the death penalty, 82.% are Democrats and only 17.5% are Republicans. On the other hand, of those who favor the death penalty, only 40.2% are Democrats, whereas 59.8% are Republicans.
+**Alternative hypothesis:** $$H_{1} = Democrats \ and \ Republicans \ will \ have \ different \ rates \ of \ death \ penalty \ approval$$
+
+
+With a Chi-squared value of 302.18 at 1 degree of freedom, we can reject the null hypotheses that these two variables are unrelated. Instead, we find support for our hypothesis that political affiliation is associated with death-penalty attitudes. Our Chi-square value is associated with a p-value of \<0.001, which is statistically significant at an alpha threshold of 0.05. This suggests that it is exceedingly unlikely the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.
+
+The conjoint distribution of `cappun` and `dem_rep` shows us that Democrats are more likely to oppose the death penalty than Republicans. Of those who oppose the death penalty, 82.5% are Democrats and only 17.5% are Republicans. On the other hand, of those who favor the death penalty, only 40.2% are Democrats, whereas 59.8% are Republicans.
 
 ```{r, eval = FALSE, echo = FALSE}
 library(gtsummary)
@@ -377,7 +382,7 @@ select(sex, dem_rep) |>
 # Some code for grouped barplots with the lattice package
 
 
-# Make a quick and dirty contingency table with base R & then turn that into a data frame
+# Make a quick and easy contingency table with base R & then turn that into a data frame
 
 # The variable order should be table(dependent_variable, independent_variable)
 my_tab <- table(our_gss$cappun, our_gss$dem_rep) |>
