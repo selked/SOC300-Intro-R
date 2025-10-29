@@ -2,7 +2,7 @@
 In this last portion of our in-class lab sessions on quantitative analysis, we'll learn how to make some familiar visuals in new and exciting ways. For the most part, this will involve learning the graphing package of tidyverse, commonly known as `ggplot`, as well as `gtsummary`, a helpful package for producing tables. There are a couple of things to get used to with ggplot, but once you get a handle on its syntax, it will offer simple and extensive customizability that translates across a wide expanse of use cases. Even some of the graphics that we've seen in empirical papers for class have been produced using ggplot! 
 
 ## Setting up our workspace
-Because ggplot comes with tidyverse, we just need to load in `tidyverse` like we've often done. We're also going to need `janitor`, and, as usual, we'll also pull in our GSS data.
+Because ggplot comes with tidyverse, we just need to load that in like we've often done. We're also going to need `janitor`, and, as usual, we'll also pull in our GSS data.
 
 ```{r, warning = FALSE, message = FALSE}
 library(tidyverse)
@@ -12,19 +12,17 @@ load("our_gss.rda")
 
 ## Figures
 
-Specific to categorical variables, we learned about two key plot-types: histograms and barplots. We'll start our foray into `ggplot` by using it to recreate some figures in these styles.
+Specific to categorical variables, we learned about one key plot type: barplots. We'll start our foray into `ggplot` by using it to recreate some figures in this style.
 
 ### Barplots & Basics of ggplot
 
-The structure of figures made with ggplot is quite regular. The name 'ggplot' is actually a reference to the idea of a **g**rammar of **g**raphics, and though there are some specifics across the various plot types, we will offer ggplot mostly the same kind of information regardless.
+The structure of figures made with ggplot is quite regular. The name 'ggplot' is actually a reference to the broader idea of a **g**rammar of **g**raphics, and though there are some specifics across the various plot types, we will offer ggplot mostly the same kind of information regardless. It's certainly not necessary, but if you are curious, you can [read some more about the grammar of graphics here](https://info5940.infosci.cornell.edu/notes/dataviz/grammar-of-graphics/)
 
 First, ggplot expects that we will give it a dataframe. This is good because it also means that ggplot plays well with the pipe operator.
 
 Next, ggplot needs input for your **aesthetic mappings**, shortened to `aes()` within the function. This might sound a little hoighty toighty, but it simply refers to the specification of some key parameters for our figure. We want our data to be visually mapped in a certain sort of way, and this is where we set that up. 
 
-The simplest aesthetic mappings we can provide are the variables we want associated with the x & y columns. Let's try with `sex` as an example. Because we are making a barplot, our y-axis will reflect the frequency of the values of the y-axis.
-
-We'll need to manually calculate this and add it to our data frame, which is thankfully simple enough.
+The simplest aesthetic mappings we can provide are the variables we want associated with the x & y axes. Let's try with `sex` as an example. Because we are making a barplot, our y-axis will reflect the frequency of the values of the y-axis. We'll see that ggplot can actually automatically count these for us, so we only need to specify the x-axis variable for a barplot in ggplot.
 
 ```{r}
 our_gss |>
@@ -51,9 +49,9 @@ our_gss |>
 
 Voila! There's a pretty decent barplot. There are other kinds of statistical summaries we can take advantage of in ggplot, but the default behavior of `geom_bar()` will calculate the summary counts of the values of the x variable. 
 
-Now we tweak a couple things to make things a bit nicer and illustrate some of the perks of ggplot's customizability.
+Now we tweak a couple things to make these a bit nicer and illustrate some of the perks of ggplot's customizability.
 
-Let's add a little color. We can indicate this back up at the `aes()` layer. This works by adding a fill aesthetic, and then we specify a variable. What we do there is tell R that we want the fill-color of the bars to vary on the basis of that variable. So, each bar will be filled with a different color for each response category of `sex` in our case. 
+Let's add a little color. We can indicate this back up at the `aes()` layer. This works by adding a 'fill' aesthetic, and then we specify a variable. What we do there is tell R that we want the fill-color of the bars to vary on the basis of that variable. So, each bar will be filled with a different color for each response category of `sex`, in our case. 
 
 ```{r}
 our_gss |>
@@ -156,7 +154,7 @@ our_gss |>
     aes(x = cappun, fill = dem_rep)) +
   geom_bar() +
   labs(
-    title = "Death Penalty Attitudes by Sex and Political Party",
+    title = "Death Penalty Attitudes by Political Party",
     x = "Death penalty attitude", 
     y = "Frequency") +
   guides(fill = guide_legend(title="Political party"))
@@ -221,7 +219,7 @@ The `tabyl()` function actually produces a data frame, which we have just saved 
 # Check the column names
 colnames(our_tab)
 
-# OVerwrite the column names
+# Overwrite the column names
 colnames(our_tab) <- c("Death Penalty Approval", "Frequency", "Percent", "Valid Percent")
 ```
 ```{r}
@@ -245,7 +243,7 @@ For contingency tables, we will use an extension of the `gt` package called `gts
 
 There's a nifty function called `tbl_cross()` That includes a bunch of preset options intended for cross-tabs.
 
-Remember to always provide your dependent variable to the 'rows' input.
+Remember to always provide your dependent variable to the 'row' input.
 
 ```{r}
 our_gss |>
