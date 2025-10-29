@@ -235,35 +235,24 @@ Within the `tbl_summary()` function, we just need to add a 'label' input. Then y
 ### Contingency tables
 We can also make a quick and easy contingency table for bivariate analysis. Let's re-create our `cappun` x `dem_rep` table.
 
-Always remember to give your independent variable to the `by =` input, and you dependent variables to the `include =` input.
+There's a nifty function called `tbl_cross()` which basically does the same thing as `tbl_summary()` but is more specific to contingency tables.
+
+Remember to always provide your dependent variable to the 'rows' input.
 
 ```{r}
 our_gss |>
   drop_na(cappun, dem_rep) |>
-  tbl_summary(
-    by = dem_rep,
-    include = cappun,
+  tbl_cross(
+    row = cappun,
+    col = dem_rep,
+    percent = "cell",
+    margin = c("column", "row"),
     label = list(
-      cappun = "Death Penalty Attitude")) |>
-  modify_header(label ~ "**Variable**")
+      cappun = "Death Penalty Attitude",
+      dem_rep = "Political Party"
+    ))
 ```
-Notice that, for a contingency table, we give our dependent variable with the `by =` input, and then we include our independent variable with the `include =` we saw above. I've changed the 'Characteristic' label like we did before, and I've changed the label argument to reflect the label for `dem_rep`.
-
-One last thing we can do is add a spanning head for `dem_rep`. 
-
-```{r}
-our_gss |>
-  drop_na(cappun, dem_rep) |>
-  tbl_summary(
-    by = dem_rep,
-    include = cappun,
-    label = list(
-      cappun = "Death Penalty Attitude")) |>
-  modify_header(label ~ "**Variable**") |>
-  modify_spanning_header(all_stat_cols() ~ "**Political Party**") 
-```
-We use the `modify_spanning_head()` function for this. Within that function, we can use `all_stat_cols()`, which will let the function know that we want the label for this header to span across all of our table columns. Then, I use the same formatting with the tilde and bolding that we saw in `modify_header()`.
-
+So, for `tbl_cross()` we provide our row variable and our column variable. If we had `percent = "cell"`, each cell will include a percentage in addition to a count. For `margin = c("column", "row")`, we're telling the function that we want totals for both columns and rows. Lastly, we give some better labels for our variables.
 
 ### Chi-squared test
 Now, a really neat feature of `tbl_summary()` is that it will automatically detect the type of variables that we have, and it will perform an appropriate statistical test. There's a lot of customization that you can do here, but this will work great out of the box for us.
@@ -272,28 +261,32 @@ All we have to do is pipe the command we just produced into `add_p()`, which wil
 ```{r}
 our_gss |>
   drop_na(cappun, dem_rep) |>
-  tbl_summary(
-    by = dem_rep,
-    include = cappun,
+  tbl_cross(
+    row = cappun,
+    col = dem_rep,
+    percent = "cell",
+    margin = c("column", "row"),
     label = list(
-      cappun = "Death Penalty Attitude")) |>
-  modify_header(label ~ "**Variable**") |>
-  modify_spanning_header(all_stat_cols() ~ "**Political Party**") |>
+      cappun = "Death Penalty Attitude",
+      dem_rep = "Political Party"
+    )) |>
   add_p()
 ```
 Very neat! This automatically recognized that we have categorical variables, ran a chi-squared test, and reported the p-value. Note that it doesn't give the actual chi-squared value by default, but that information is in there. We can manually add a column like so:
 ```{r}
 our_gss |>
   drop_na(cappun, dem_rep) |>
-  tbl_summary(
-    by = dem_rep,
-    include = cappun,
+  tbl_cross(
+    row = cappun,
+    col = dem_rep,
+    percent = "cell",
+    margin = c("column", "row"),
     label = list(
-      cappun = "Death Penalty Attitude")) |>
-  modify_header(label ~ "**Variable**") |>
-  modify_spanning_header(all_stat_cols() ~ "**Political Party**") |>
+      cappun = "Death Penalty Attitude",
+      dem_rep = "Political Party"
+    )) |>
   add_p() |>
-  modify_header(statistic ~ "**Chi-square value**")
+  modify_header(statistic ~ "Chi-square value")
 ```
 Good stuff. Lots of great detail here, so this is pretty much good to go.
 
@@ -312,22 +305,37 @@ our_gss |>
     strata = sex,
     .tbl_fun = 
       ~ .x |>
-      tbl_summary(
-        by = dem_rep, 
-        include = cappun,
-        label = list(
-          cappun = "Death Penalty Attitude"
-        )) |>
-      modify_header(label ~ "**Variable**") |>
-      add_n() |>
-      add_p()
-      
-  )
+    tbl_cross(
+    row = cappun,
+    col = dem_rep,
+    percent = "cell",
+    margin = c("column", "row"),
+    label = list(
+      cappun = "Death Penalty Attitude",
+      dem_rep = "Political Party"
+    )) |>
+    add_p()
+)
 ```
+This is starting to sprawl a little, but it's basically the same command as before, except that now we have put our `tbl_cross()` command inside of the `tbl_strata()` function. Here's the `tbl_strata()` function as it's used in our code (note that the parentheses isn't closed until the very bottom of our command up above):
+
+tbl_strata(
+    strata = sex,
+    .tbl_fun = 
+      ~ .x
+      
+So, the 'strata' input is where we indicate our test variable. The effect of `strata = sex` is somewhat similar to `group_by()` from tidyverse---it groups the data by our test variable.
+
+`.tbl_fun = ~.x` probably looks a little strange. This gets a little into the weeds, so don't worry about it too much, but I'll give a little context. 
+
+.tbl_fun is shorthand for "table function", and `.x` is an R-specific placeholder for function inputs. Essentially, we are saying "group the data by our `strata` variable, and then pass that stratified data frame into another function of my choosing." 
+
+Then, we can just give our `tbl_cross()` function from before, and this will be calculated according with the grouping structure of the test variable in mind.
+
 Now, as an exercise, let's think about what we have here. 
 
 We have our original relationship predicting death-penalty attitudes based on political affiliation. But now we can see this relationship for both men and women. The female group has 941 respondents and the male group has 804.
 
-If we look at the percentages for both the male & female groups, they are really quite similar. It seems like the relationship is basically the same. Not only this, but we can see that a chi-squared test has been run for both the male and female subgroups. Both of these tests returned statistically significant p-values, as we can see in the table. 
+If we look at the percentages for both the male & female groups, they are relatively similar and the basic relationship is about the same: Democrats are more likely to oppose the death penalty and less likely to favor the death penalty, regardless of sex. Not only this, but we can see that a chi-squared test has been run for both the male and female subgroups. Both of these tests returned statistically significant p-values, as we can see in the table. 
 
 So, this would be a case of replication. We have replication when our zero-order relationship remains statistically significant after introducing our test variable. In this case, we observed a statistically significant relationship between political affiliation and death-penalty attitudes. After we added `sex` as a test variable, this original relationship remained statistically significant across the two response categories of `sex`. If the percentages were markedly different across males and females, we could say that this was specification, as that would suggest that---even if political affiliation is predictive of death penalty attitudes---the relationship is different for men and women. 
