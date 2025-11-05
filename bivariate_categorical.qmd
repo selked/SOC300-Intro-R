@@ -74,7 +74,7 @@ our_gss |>
 Whenever you make a two-way crosstab like this, make sure that you always give your dependent variable as `var1` and your independent variable as `var2`. This will make sure your dependent variable appears as rows and your independent variable as columns, which makes everything much easier to parse for our purposes.
 :::
 
-For each cell, the count of that particular category intersection is displayed. So, for example, row 1 tells us that of those who indicated that they favor the death penalty, 426 are Democrats and 633 are Republicans.
+For each cell, the count of that particular category intersection is displayed. So, for example, row 1 tells us that 426 Democrats favor the death penalty compared to 569 Democrats opposing the death penalty. By contrast, 633 Republicans favored the death penalty as oposed 121 Republicans who opposed the death penalty.
 
 Now, let's clean it up a little bit with the `adorn_()` functions like we did before.
 
@@ -92,6 +92,8 @@ our_gss |>
 ```
 
 Now, let's convert counts to proportions. Somewhat misleadingly, this is done with the `adorn_percentages()` function, and then we can add the `adorn_pct_formatting()` function to turn them into percentages proper.
+
+We will also add the input `"col"` to `adorn_percentages()`, which will give us percentages that sum by column. This will make interpretation a little more convenient for us later on.
 
 ```{r}
 our_gss |>
@@ -115,7 +117,7 @@ our_gss |>
   adorn_totals(where = "row") |>
   adorn_percentages("col") |>
   adorn_pct_formatting() |>
-  adorn_ns(position = "front")
+  adorn_ns()
 ```
 
 Great. For our final adornment, let's add some better labels for the variables. We'll use `adorn_title()` for this, and we'll supply `placement = top` to let the function know we want the labels on top of each variable column. Then we can provide custom label names with `row_name =` and `col_name =`.
@@ -129,7 +131,7 @@ our_gss |>
   adorn_totals(where = "row") |>
   adorn_percentages("col") |>
   adorn_pct_formatting() |>
-  adorn_ns(position = "rear") |>
+  adorn_ns() |>
   adorn_title(
     placement = "top",
     row_name = "Death Penalty Attitude",
@@ -152,7 +154,7 @@ our_gss |>
   adorn_totals(where = "row") |>
   adorn_percentages("col") |>
   adorn_pct_formatting() |>
-  adorn_ns(position = "rear") |>
+  adorn_ns() |>
   adorn_title(
     placement = "top",
     row_name = "Death Penalty Attitude",
@@ -162,14 +164,15 @@ our_gss |>
 
 Because our dependent variable makes up the rows, we can simply read across each row to get a sense of the patterns.
 
-Reading across the 'approve' row, we can see that about 40% of those who favor the death penalty are Democrats, whereas \~60% of those who favor the death penalty are Republicans. The contrast is sharper for those who oppose the death penalty, where 82.5% are Democrats and 17.5% are Republicans. The imbalance there is a consequence of the recoding strategy, as the original `partyid` variable also includes Independents and an Other Party category. Nonetheless, a general pattern clearly emerges: Democrats are more likely to oppose the death penalty than Republicans.
+Reading across the 'favor' row, we can see that 42.8% of all Democrats in our sample favor the death penalty and 84% of all Republicans favor the death penalty. Reading across the 'oppose' row, we can see that 57.2% of all Democrats oppose the death penalty compared to 16% of all Republicans.
+
+In sum, a much greater proportion of Republicans favor the death penalty compared to Democrats (84% vs. 42.8%). Conversely, a much greater proportion of Democrats oppose the death penalty compared to Republicans (57.2% vs. 16%). Thus, based on our sample, it seems like being a Democrat is associated with a greater likelihood of opposing the death penalty.
 
 But how can we feel good about whether this association is likely to be reflective of something real, and not just an artifact of our particular sample or simply random chance? For this, we need to employ a statistical test.
 
 Specifically, we will leverage the Chi-square test. This is used when both of the variables we're interested in are categorical.
 
 ## Chi-square Test
-
 Let's have a little refresher on what goes into the Chi-square test and the corresponding Chi-square value, which serves as a key indicator of the statistical significance for our findings.
 
 ### How the test works
@@ -231,7 +234,7 @@ You can get a sense right here that we may indeed be picking up on something in 
 
 This calculation for the expected counts is actually downstream of a principle from probability theory that describes the joint probability of independent events: $$P(A\&B) = P(A)\cdot P(B)$$
 
-What this means is that, if two variables are independent, then the probability of any combination of these variables' response values occurring simultaneously is equivalent to the product of each value's individual probability.
+What this means is that, if two variables are independent, then the probability of any combination of these variables' occurring simultaneously is equivalent to the product of each value's individual probability.
 
 Let's put this in context of our data:
 
@@ -241,13 +244,13 @@ If the two variables are unrelated, we expect that the probability of both being
 
 ```{r}
 # Total of our sample
-grand_total <- 1749
+grand_total <- (426 + 633 + 569 + 121)
 
 # Number of democrats
-num_dems <- 995
+num_dems <- (426 + 569)
 
 # Number of people who favor the death penalty
-num_favs <- 1059
+num_favs <- (426 + 633)
 
 # Probability of being a democrat
 dem_prob <- num_dems/grand_total 
@@ -275,9 +278,7 @@ obs_val <- 426
 
 chi_numerator <- (obs_val - exp_val)^2
 
-chi_denominator <- exp_val
-
-chi_numerator/chi_denominator
+chi_numerator/exp_val
 ```
 
 Then we do this for the three other cells in our table, add these 4 values together, and voila---we have our Chi-square statistic.
@@ -363,7 +364,7 @@ So, how can we interpret this in terms of our hypotheses?
 
 With a Chi-squared value of 302.18 at 1 degree of freedom, we can reject the null hypotheses that these two variables are unrelated. Instead, we find support for our hypothesis that political affiliation is associated with death-penalty attitudes. Our Chi-square value is associated with a p-value of \<0.001, which is statistically significant at an alpha threshold of 0.05. This suggests that it is exceedingly unlikely the relationship we observe in our cross-tabulation is the result of random chance or peculiarities of our sample.
 
-The conjoint distribution of `cappun` and `dem_rep` shows us that Democrats are more likely to oppose the death penalty than Republicans. Of those who oppose the death penalty, 82.5% are Democrats and only 17.5% are Republicans. On the other hand, of those who favor the death penalty, only 40.2% are Democrats, whereas 59.8% are Republicans.
+The conjoint distribution of `cappun` and `dem_rep` shows us that Democrats are more likely to oppose the death penalty than Republicans. 57.2% of all Democrats oppose the death penalty compared to only 16% of all Republicans. Conversely, Democrats are less likely to favor the death penalty, as only 42.8% of all Democrats support the death penalty compared to 84% of all Republicans.
 
 ```{r, eval = FALSE, echo = FALSE}
 library(gtsummary)
