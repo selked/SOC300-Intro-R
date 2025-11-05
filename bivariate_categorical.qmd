@@ -74,7 +74,7 @@ our_gss |>
 Whenever you make a two-way crosstab like this, make sure that you always give your dependent variable as `var1` and your independent variable as `var2`. This will make sure your dependent variable appears as rows and your independent variable as columns, which makes everything much easier to parse for our purposes.
 :::
 
-For each cell, the count of that particular category intersection is displayed. So, for example, row 1 tells us that 426 Democrats favor the death penalty compared to 569 Democrats opposing the death penalty. By contrast, 633 Republicans favored the death penalty as oposed 121 Republicans who opposed the death penalty.
+For each cell, the count of that particular category intersection is displayed. So, for example, row 1 tells us that 426 Democrats favor the death penalty compared to 633 Republicans who favor the death penalty. In the second row, we can see that 569 Democrats oppose the death penalty compared to 121 Republicans who oppose the death penalty.
 
 Now, let's clean it up a little bit with the `adorn_()` functions like we did before.
 
@@ -90,6 +90,7 @@ our_gss |>
     var2 = dem_rep) |>
   adorn_totals(where = "row")
 ```
+Now we can see that there are 995 Democrats in our sample and 754 Republicans. 
 
 Now, let's convert counts to proportions. Somewhat misleadingly, this is done with the `adorn_percentages()` function, and then we can add the `adorn_pct_formatting()` function to turn them into percentages proper.
 
