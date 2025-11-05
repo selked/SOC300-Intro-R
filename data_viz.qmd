@@ -327,9 +327,9 @@ This is starting to sprawl a little, but it's basically the same command as befo
       
 `tbl_strata`, first takes the 'strata' input, which is where we indicate our test variable. It's the variable by which we want to *stratify* our data. The effect of `strata = sex` is somewhat similar to `group_by()` from tidyverse---it groups the data by our test variable.
 
-`.tbl_fun = ~.x` probably looks a little strange. This gets a little into the weeds, so don't worry about it too much, but I'll give a little context. 
+`.tbl_fun = ~.x` probably looks a little strange. This gets a little into the weeds, so don't worry about it too much. To make use of this sample `tbl_strata()` code with your own data, you will just need to make sure you give your test variable to the `strata = ` input. You can always leave the `.tbl_fun = ~.x` part the same, but I'll give a little context for reference. 
 
-.tbl_fun is shorthand for "table function", and `.x` is an R-specific placeholder for function inputs. Essentially, we are saying "group the data by our `strata` variable, and then pass that stratified data into another function of my choosing." 
+`.tbl_fun` is shorthand for "table function", and `.x` is an R-specific placeholder for function inputs. Essentially, we are saying "group the data by our `strata` variable, and then pass that stratified data into another function of our choosing." 
 
 Then, we can just give our `tbl_cross()` function from before, and this will be calculated according to the grouping structure of the test variable we provide.
 
