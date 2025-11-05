@@ -251,7 +251,7 @@ our_gss |>
   tbl_cross(
     row = cappun,
     col = dem_rep,
-    percent = "row",
+    percent = "column",
     margin = c("column", "row"),
     label = list(
       cappun = "Death Penalty Attitude",
@@ -270,7 +270,7 @@ our_gss |>
   tbl_cross(
     row = cappun,
     col = dem_rep,
-    percent = "row",
+    percent = "column",
     margin = c("column", "row"),
     label = list(
       cappun = "Death Penalty Attitude",
@@ -285,7 +285,7 @@ our_gss |>
   tbl_cross(
     row = cappun,
     col = dem_rep,
-    percent = "row",
+    percent = "column",
     margin = c("column", "row"),
     label = list(
       cappun = "Death Penalty Attitude",
@@ -294,7 +294,7 @@ our_gss |>
   add_p() |>
   modify_header(statistic ~ "Chi-square value")
 ```
-Good stuff. I'll point out that we use the `~` symbol above, but don't worry too much about that. It's one of the pecularities I alluded to about `gtsummary`. Just know that we have to use `~` there. Otherwise, there's lots of great detail here, so this is pretty much good to go.
+Good stuff. I'll point out that we use the `~` symbol above, but don't worry too much about that. It's one of the peculiarities I alluded to about `gtsummary`. Just know that we have to use `~` there. Otherwise, there's lots of great detail here, so this is pretty much good to go.
 
 ### Elaboration Model
 Lastly, this also gives us an easy way to automatically produce a 3-way cross-tab for multivariate analysis. We'll need to change a couple of things around, but this can be done without too much work in `gtsummary`.
@@ -314,7 +314,7 @@ our_gss |>
     tbl_cross(
     row = cappun,
     col = dem_rep,
-    percent = "row",
+    percent = "column",
     margin = c("column", "row"),
     label = list(
       cappun = "Death Penalty Attitude",

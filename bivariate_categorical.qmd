@@ -100,7 +100,7 @@ our_gss |>
     var1 = cappun,
     var2 = dem_rep) |>
   adorn_totals(where = "row") |>
-  adorn_percentages() |>
+  adorn_percentages("col") |>
   adorn_pct_formatting()
 ```
 
@@ -113,7 +113,7 @@ our_gss |>
     var1 = cappun,
     var2 = dem_rep) |>
   adorn_totals(where = "row") |>
-  adorn_percentages() |>
+  adorn_percentages("col") |>
   adorn_pct_formatting() |>
   adorn_ns(position = "front")
 ```
@@ -127,7 +127,7 @@ our_gss |>
     var1 = cappun,
     var2 = dem_rep) |>
   adorn_totals(where = "row") |>
-  adorn_percentages() |>
+  adorn_percentages("col") |>
   adorn_pct_formatting() |>
   adorn_ns(position = "rear") |>
   adorn_title(
@@ -150,7 +150,7 @@ our_gss |>
     var1 = cappun,
     var2 = dem_rep) |>
   adorn_totals(where = "row") |>
-  adorn_percentages() |>
+  adorn_percentages("col") |>
   adorn_pct_formatting() |>
   adorn_ns(position = "rear") |>
   adorn_title(
@@ -212,7 +212,7 @@ our_gss |>
     var1 = cappun,
     var2 = dem_rep) |>
   adorn_totals(where = c("row", "col")) |>
-  adorn_percentages() |>
+  adorn_percentages("col") |>
   adorn_pct_formatting() |>
   adorn_ns(position = "rear") |>
   adorn_title(

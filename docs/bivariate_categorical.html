@@ -417,13 +417,13 @@ Warning
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">var1 =</span> cappun,</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">var2 =</span> dem_rep) <span class="sc">|&gt;</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_percentages</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_percentages</span>(<span class="st">"col"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> cappun Democrat Republican
-  favor    40.2%      59.8%
- oppose    82.5%      17.5%
-  Total    56.9%      43.1%</code></pre>
+  favor    42.8%      84.0%
+ oppose    57.2%      16.0%
+  Total   100.0%     100.0%</code></pre>
 </div>
 </div>
 <p>While percentages help give important context, it’s important that we still complement the percentages with the raw numbers. Thankfully, we can add those back in alongside the percentages with <code>adorn_ns()</code></p>
@@ -434,14 +434,14 @@ Warning
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">var1 =</span> cappun,</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">var2 =</span> dem_rep) <span class="sc">|&gt;</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_percentages</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_percentages</span>(<span class="st">"col"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_ns</span>(<span class="at">position =</span> <span class="st">"front"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> cappun    Democrat  Republican
-  favor 426 (40.2%) 633 (59.8%)
- oppose 569 (82.5%) 121 (17.5%)
-  Total 995 (56.9%) 754 (43.1%)</code></pre>
+<pre><code> cappun     Democrat   Republican
+  favor 426  (42.8%) 633  (84.0%)
+ oppose 569  (57.2%) 121  (16.0%)
+  Total 995 (100.0%) 754 (100.0%)</code></pre>
 </div>
 </div>
 <p>Great. For our final adornment, let’s add some better labels for the variables. We’ll use <code>adorn_title()</code> for this, and we’ll supply <code>placement = top</code> to let the function know we want the labels on top of each variable column. Then we can provide custom label names with <code>row_name =</code> and <code>col_name =</code>.</p>
@@ -452,7 +452,7 @@ Warning
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">var1 =</span> cappun,</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">var2 =</span> dem_rep) <span class="sc">|&gt;</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_percentages</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_percentages</span>(<span class="st">"col"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_ns</span>(<span class="at">position =</span> <span class="st">"rear"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_title</span>(</span>
@@ -460,11 +460,11 @@ Warning
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">row_name =</span> <span class="st">"Death Penalty Attitude"</span>,</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_name =</span> <span class="st">"Political Party"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                        Political Party            
- Death Penalty Attitude        Democrat  Republican
-                  favor     40.2% (426) 59.8% (633)
-                 oppose     82.5% (569) 17.5% (121)
-                  Total     56.9% (995) 43.1% (754)</code></pre>
+<pre><code>                        Political Party             
+ Death Penalty Attitude        Democrat   Republican
+                  favor     42.8% (426)  84.0% (633)
+                 oppose     57.2% (569)  16.0% (121)
+                  Total    100.0% (995) 100.0% (754)</code></pre>
 </div>
 </div>
 <p>Great! Like our other visualizations, we’ll clean this up a bit more later on, but this will do for now.</p>
@@ -490,18 +490,18 @@ Warning
 </tr>
 <tr class="even">
 <td style="text-align: left;">favor</td>
-<td style="text-align: left;">40.2% (426)</td>
-<td style="text-align: left;">59.8% (633)</td>
+<td style="text-align: left;">42.8% (426)</td>
+<td style="text-align: left;">84.0% (633)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">oppose</td>
-<td style="text-align: left;">82.5% (569)</td>
-<td style="text-align: left;">17.5% (121)</td>
+<td style="text-align: left;">57.2% (569)</td>
+<td style="text-align: left;">16.0% (121)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Total</td>
-<td style="text-align: left;">56.9% (995)</td>
-<td style="text-align: left;">43.1% (754)</td>
+<td style="text-align: left;">100.0% (995)</td>
+<td style="text-align: left;">100.0% (754)</td>
 </tr>
 </tbody>
 </table>
@@ -556,20 +556,20 @@ Warning
 </tr>
 <tr class="even">
 <td style="text-align: left;">favor</td>
-<td style="text-align: left;">40.2% (426)</td>
-<td style="text-align: left;">59.8% (633)</td>
-<td style="text-align: left;">100.0% (1,059)</td>
+<td style="text-align: left;">42.8% (426)</td>
+<td style="text-align: left;">84.0% (633)</td>
+<td style="text-align: left;">60.5% (1,059)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">oppose</td>
-<td style="text-align: left;">82.5% (569)</td>
-<td style="text-align: left;">17.5% (121)</td>
-<td style="text-align: left;">100.0% (690)</td>
+<td style="text-align: left;">57.2% (569)</td>
+<td style="text-align: left;">16.0% (121)</td>
+<td style="text-align: left;">39.5% (690)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Total</td>
-<td style="text-align: left;">56.9% (995)</td>
-<td style="text-align: left;">43.1% (754)</td>
+<td style="text-align: left;">100.0% (995)</td>
+<td style="text-align: left;">100.0% (754)</td>
 <td style="text-align: left;">100.0% (1,749)</td>
 </tr>
 </tbody>
