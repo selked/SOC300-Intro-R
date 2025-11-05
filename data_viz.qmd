@@ -135,7 +135,7 @@ our_gss |>
     var1 = cappun,
     var2 = dem_rep) |>
   adorn_totals(where = "row") |>
-  adorn_percentages() |>
+  adorn_percentages("col") |>
   adorn_pct_formatting() |>
   adorn_ns(position = "rear") |>
   adorn_title(
@@ -211,7 +211,7 @@ our_tab <- our_gss |>
   adorn_pct_formatting() |>
   adorn_rounding(digits = 2)
 ```
-This table has all the right info we need, but it would be nicer if we didn't have the 'cappun' shorthand for the variable name. The other columns could be capitalized, and we could also stand to lose the underscore in 'valid_percent'. 
+This table has all the info we need, but it would be nicer if we didn't have the 'cappun' shorthand for the variable name. The other columns could be capitalized, and we could also stand to lose the underscore in 'valid_percent'. 
 
 The `tabyl()` function actually produces a data frame, which we have just saved a moment ago. Let's take a look at the column names like we did before, and then change these to look a little nicer.
 
