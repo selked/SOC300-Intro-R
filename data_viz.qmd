@@ -1,5 +1,5 @@
 # Plotting and Counting
-In this last portion of our in-class lab sessions on quantitative analysis, we'll learn how to make some familiar visuals in new and exciting ways. For the most part, this will involve learning the graphing package of tidyverse, commonly known as `ggplot`, as well as `gtsummary`, a helpful package for producing tables. There are a couple of things to get used to with ggplot, but once you get a handle on its syntax, it will offer simple and extensive customizability that translates across a wide expanse of use cases. Even some of the graphics that we've seen in empirical papers for class have been produced using ggplot! 
+In this last portion of our in-class lab sessions on quantitative analysis, we'll learn how to make some familiar visuals in new and exciting ways. For the most part, this will involve learning the graphing package of tidyverse, commonly known as `ggplot`, as well as `gt` and `gtsummary`, two helpful packages for producing tables. There are a couple of things to get used to with ggplot, but once you get a handle on its syntax, it will offer simple and extensive customizability that translates across a wide expanse of use cases. Even some of the graphics that we've seen in empirical papers for class have been produced using ggplot! 
 
 ## Setting up our workspace
 Because ggplot comes with tidyverse, we just need to load that in like we've often done. We're also going to need `janitor`, and, as usual, we'll also pull in our GSS data.
@@ -149,7 +149,7 @@ Now, we'll use our same barplot code from above, but this time we will set our x
 
 ```{r}
 our_gss |>
-  drop_na(sex, cappun, dem_rep) |>
+  drop_na(cappun, dem_rep) |>
   ggplot(
     aes(x = cappun, fill = dem_rep)) +
   geom_bar() +
@@ -163,7 +163,7 @@ our_gss |>
 Good stuff! This is a stacked barplot and is a common way to display multivariate categorical data. I personally find it a little easier to intrepret when the columns are side-by-side rather than stacked on top of each other, so I'll show you how to do that too. This just requires setting a `position` mapping within `geom_bar()`. We set the position to 'dodge', which might sound a little counter-intuitive, which is because it actually has a more general purpose. The idea is that you want overlapping objects to 'dodge' one another, which will cause them to appear side by side rather than on top of one another. So, by doing so, we will un-nest our stacked bar charts and have each bar appear adjacent to one another.
 ```{r}
 our_gss |>
-  drop_na(sex, cappun, dem_rep) |>
+  drop_na(cappun, dem_rep) |>
   ggplot(
     aes(x = cappun, fill = dem_rep)) +
   geom_bar(position = "dodge") +
