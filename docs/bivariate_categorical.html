@@ -356,13 +356,11 @@ window.Quarto = {
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">"Republican"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"strong republican"</span>,<span class="st">"not very strong republican"</span>),</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">"Independent"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"independent, close to democrat"</span>, <span class="st">"independent (neither, no response)"</span>, <span class="st">"independent, close to republican"</span>),</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">"Other Party"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"other party"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>our_gss <span class="ot">&lt;-</span> our_gss <span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dem_rep =</span> <span class="fu">fct_recode</span>(</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    partyid_recoded, </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">NULL=</span><span class="st">"Other Party"</span>, </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">NULL=</span><span class="st">"Independent"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dem_rep =</span> <span class="fu">fct_recode</span>(</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    partyid_recoded, </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">NULL=</span><span class="st">"Other Party"</span>, </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">NULL=</span><span class="st">"Independent"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And then we can make a simple cross-tab like so:</p>
 <div class="cell">
@@ -412,6 +410,8 @@ Warning
 <p>Now we can see that there are 995 Democrats in our sample and 754 Republicans.</p>
 <p>Now, let’s convert counts to proportions. Somewhat misleadingly, this is done with the <code>adorn_percentages()</code> function, and then we can add the <code>adorn_pct_formatting()</code> function to turn them into percentages proper.</p>
 <p>We will also add the input <code>"col"</code> to <code>adorn_percentages()</code>, which will give us percentages that sum by column. This will make interpretation a little more convenient for us later on.</p>
+<p>For example, in the following table, the first column (labeled ‘Democrat’) tells us that 42.8% of all Democrats in the sample favor the death penalty and 57.2% of all Democrats oppose the death penalty. This adds to 100% of all Democrats we sampled.</p>
+<p>To interpret the relationship between variables, we can read across the rows. Only 42.8% of Democrats favor the death penalty whereas 84% of Republicans favor the death penalty. Comparing these proportions gives us a clear picture of the nature of the association, or, in other words, the political party that is more associated with favoring or opposing the death penalty.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>our_gss <span class="sc">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(cappun, dem_rep) <span class="sc">|&gt;</span></span>

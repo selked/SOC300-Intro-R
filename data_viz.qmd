@@ -258,7 +258,7 @@ our_gss |>
       dem_rep = "Political Party"
     ))
 ```
-So, for `tbl_cross()` we provide our row variable and our column variable. If we  set `percent = "column"`, we will get percentages for each cell that will total across the rows---this is what we want. For `margin = c("column", "row")`, we're telling the function that we want totals for both columns and rows. Lastly, we give some better labels for our variables.
+So, for `tbl_cross()` we provide our row variable and our column variable. If we  set `percent = "column"`, we will get percentages for each cell that will total with respect to the the columns---this is what we did with our `tabyl()` output, as it allows for more intuitive interpretation of the relationship between our variables. For `margin = c("column", "row")`, we're telling the function that we want totals for both columns and rows. Lastly, we give some better labels for our variables. The `labels =` input is designed to work for multiple variables, so it expects that we will give it a `list()` object. Even if you only need a label for one variable, you will need to put it inside the `list()` function.
 
 ### Chi-squared test
 Now, a really neat feature of `tbl_summary()` is that it will automatically detect the type of variables that we have, and it will perform an appropriate statistical test. There's a lot of customization that you can do here, but this will work great out of the box for us.
@@ -305,7 +305,6 @@ For this, we need the `tbl_strata()` function.
 
 ```{r}
 our_gss |>
-  select(cappun, sex, dem_rep) |>
   drop_na(cappun, sex, dem_rep) |>
   tbl_strata(
     strata = sex,
