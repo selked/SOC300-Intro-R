@@ -1,0 +1,123 @@
+# General Linear Model
+```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+library(sysfonts)
+sysfonts::font_add_google("Roboto Condensed")
+sysfonts::font_add("Arial Narrow", regular = "ARIALN.ttf")
+library(showtext)
+library(hrbrthemes)
+library(tidyverse)
+library(scales)
+library(wesanderson)
+showtext.auto()
+```
+
+In the last section, we explored some common techniques for displaying and interpreting the bivariate distribution when all our variables are categorical.
+
+That's a situation you will often find yourself as a data analyst, but the Chi-square test also represents a simple framework for learning and applying the general logic underlying the vast majority of statistical inferences---the comparison of our observed distribution to an estimated null distribution. 
+
+However, we also very often need to work with data that comprise a much wider variety of measurement levels. While any interval-ratio variable can be re-coded into an ordinal or nominal variable, we often want our statistical models to preserve the finer granularity of information captured by interval-ratio variables. Additionally, multivariate analyses quickly become quite cumbersome beyond 3 variables. It will not be long before you are utterly drowning in contingency tables. 
+
+For these situations---when we have a mixture of numeric & categorical variables or multiple control variables---we often call on the **General Linear Model** (GLM).
+
+This is not something that we will work with much in our own projects for this course, only because it's a bit more involved than we have the time cover in the depth it deserves. We could easily spend the entire semester covering the GLM and its various permutations. While it offers us a great deal of statistical power, we have to account for a wider array of underlying assumptions than something like the Chi-square test.
+
+As such, I will use this section to provide a largely conceptual overview of two more commonly encountered use-cases of the GLM: 
+
+- modeling continuous dependent variables (ordinal least squares regression)
+- modeling binary categorical variables with mixed predictor variables (logistic regression)
+
+I will you show you some of the code used to create our regression models, but, as we will not focus as much on these methods in lab, I will not go into as much detail on these commands, and I'll obscure most of my code for the visualizations, so as not to bog you down in some unfamiliar R functions. However, you will get to work with some of the graphing tools I use here in our next unit.
+
+## Logic of the GLM
+The GLM is the underlying statistical architecture behind the broader family of **regression modeling** techniques. 
+
+If you haven't had much experience with statistics up to this point, that all may sound a little ethereal, but it really all follows from a simple algebraic principle you likely encountered in high-school math.
+
+$$Y = mX + b$$
+This is the basic linear equation that we can use to describe just about any straight line. Mathematical notation is not always especially intuitive, so I'll clarify the symbols here.
+
+- $Y$ = The value of our y-axis variable
+- $m$ = The slope of the line, which we often learn as ${\frac{rise}{run}}$
+- $X$ = The value of the x-axis variable
+- $b$ = The y-intercept, i.e. the value of $Y$ when $X = 0$. This tells us where the line begins in our coordinate plane
+
+Let's take a very simple example to illustrate the point. I'm going to create a dataframe with an 'x' column and a 'y' column. Each of these variables will be made up of the same vector of values, which will be the sequence of 0:5.
+
+```{r, echo = FALSE, eval = TRUE}
+x <- 0:5
+y <- 0:5
+
+df <- data.frame(
+  x,
+  y
+)
+
+knitr::kable(df)
+```
+Now, we'll treat these as coordinates and plot them.
+```{r}
+df |>
+  ggplot(
+    aes(x, y)) +
+  geom_point(color = "yellow") +
+  geom_line(color = "green") +
+  labs(
+    title = "Simple line demonstration"
+  ) +
+  coord_cartesian(
+    xlim = c(-5,5),
+    ylim = c(-5,5)) +
+  geom_hline(yintercept = 0, color = "gray") +
+  geom_vline(xintercept = 0, color = "gray") +
+  scale_x_continuous(breaks = seq(-5,5,1)) +
+  scale_y_continuous(breaks = seq(-5,5,1)) +
+  annotate(
+      "segment",
+      x = 2,
+      xend = 3,
+      y = 2,
+  colour = "orange") +
+  annotate(
+    "segment",
+    x = 3,
+    y = 2,
+    yend = 3,
+    color = "orange") +
+  annotate(
+    "text",
+    x = 2.5,
+    y = 1.5,
+    label = "run"
+  ) +
+  annotate(
+    "text",
+    x = 3.5,
+    y = 2.5,
+    label = "rise"
+  ) +
+  theme_ft_rc(
+    base_size = 24,
+      axis_text_size = 24,
+      axis_title_size = 24,
+      plot_title_size = 30,
+      strip_text_size = 24)
+```
+
+So, here's the simple line segment that results from the linear combination of our x & y variables. 
+
+The **y-intercept** here is 0. That's the value of $Y$ when $X = 0$
+
+And the **slope coefficient** is 1. To calculate the slope, we focus on the distance between two points. The 'run' is the distance we travel along the x-axis to get from the first point to the second, and the 'rise' is the distance we travel along the y-axis. Here, we travel +1 unit on the x-axis, and +1 unit on the y-axis. Thus, ${\frac{1}{1} = 1}$, and $1$ is then our slope coefficient. 
+
+Now we can plug these values into $Y = mX + b$. This allows us to describe the **conditional distribution** of these two variables. In other words, we can assess the value of $Y$ *given* our slope and any specific value of $X$. 
+
+For example, if we know that $X = 4$, we can plug that into our equation
+
+$$Y = (1)\cdot (5) + 0$$
+And naturally we find that
+
+$$Y = 5$$
+
+This is trivial for our case, given that our example line has very few data points and an incredibly simple relation (where $X = Y$). 
+
+However, this general principle of describing a linear relationship between variables provides the basis of some very powerful tools in statistical inference.

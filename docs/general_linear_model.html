@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Introduction – Introduction to R for Quantitative Social Science Research</title>
+<title>7&nbsp; General Linear Model – Introduction to R for Quantitative Social Science Research</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./data_viz.html" rel="next">
-<link href="./general_linear_model.html" rel="prev">
+<link href="./viz_introduction.html" rel="next">
+<link href="./bivariate_categorical.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -70,6 +105,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -82,7 +146,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 4: Making Better Visualizations</a></li><li class="breadcrumb-item"><a href="./viz_introduction.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bivariate_categorical.html">Day 3: Bivariate Analysis with the GSS</a></li><li class="breadcrumb-item"><a href="./general_linear_model.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General Linear Model</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -191,7 +255,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./general_linear_model.html" class="sidebar-item-text sidebar-link">
+  <a href="./general_linear_model.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General Linear Model</span></span></a>
   </div>
 </li>
@@ -208,7 +272,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./viz_introduction.html" class="sidebar-item-text sidebar-link active">
+  <a href="./viz_introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -230,18 +294,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#visualization-and-analytical-thinking" id="toc-visualization-and-analytical-thinking" class="nav-link active" data-scroll-target="#visualization-and-analytical-thinking"><span class="header-section-number">8.1</span> Visualization and Analytical Thinking</a></li>
-  <li><a href="#thirteen-data-sets" id="toc-thirteen-data-sets" class="nav-link" data-scroll-target="#thirteen-data-sets"><span class="header-section-number">8.2</span> Thirteen Data Sets</a></li>
-  <li><a href="#in-sum" id="toc-in-sum" class="nav-link" data-scroll-target="#in-sum"><span class="header-section-number">8.3</span> In Sum</a></li>
+  <li><a href="#logic-of-the-glm" id="toc-logic-of-the-glm" class="nav-link active" data-scroll-target="#logic-of-the-glm"><span class="header-section-number">7.1</span> Logic of the GLM</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./viz_introduction.html">Day 4: Making Better Visualizations</a></li><li class="breadcrumb-item"><a href="./viz_introduction.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bivariate_categorical.html">Day 3: Bivariate Analysis with the GSS</a></li><li class="breadcrumb-item"><a href="./general_linear_model.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General Linear Model</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General Linear Model</span></h1>
 </div>
 
 
@@ -258,142 +320,131 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Up to this point, we have worked with pretty simple visualizations, just so we can quickly glean important information about our statistical models without spending too much time focusing on the aesthetics of the visuals.</p>
-<p>In this lab, we will learn a bit more about R’s graphical capability—especially through tidyverse’s <code>ggplot</code>—which provides us with incredible customizability. We will learn how to fine-tune some of the visuals we have already worked with, and we will preview some other common visual styles that can manage with <code>ggplot</code>.</p>
-<section id="visualization-and-analytical-thinking" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="visualization-and-analytical-thinking"><span class="header-section-number">8.1</span> Visualization and Analytical Thinking</h2>
-<p>Before we start working with some of these new visual tools, I want to take an opportunity to stress the importance of visualization more generally. It’s easy to see the process of presenting visuals as something somewhat superficial, but visualization can be critical for defining the kind of questions we can ask about our data.</p>
-<p>For now, I’m going to obscure the code I’m using for this document. We will learn more about the kind of commands I used to generate the following figures, but I don’t want anyone to get bogged down initially. I’ll use these visuals to help impart an important lesson about data visualization’s in the research process.</p>
-</section>
-<section id="thirteen-data-sets" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="thirteen-data-sets"><span class="header-section-number">8.2</span> Thirteen Data Sets</h2>
-<p>Let’s take a look at a collection of thirteen different data sets. Each data set has 142 observations with 2 columns, labeled x &amp; y.</p>
-<p>I’ll use some tidyverse commands to get some summary statistics for each of the data sets, including the mean of both variables and their standard deviations. Let’s see what seems to distinguish some of these data sets from one another.</p>
+<p>In the last section, we explored some common techniques for displaying and interpreting the bivariate distribution when all our variables are categorical.</p>
+<p>That’s a situation you will often find yourself as a data analyst, but the Chi-square test also represents a simple framework for learning and applying the general logic underlying the vast majority of statistical inferences—the comparison of our observed distribution to an estimated null distribution.</p>
+<p>However, we also very often need to work with data that comprise a much wider variety of measurement levels. While any interval-ratio variable can be re-coded into an ordinal or nominal variable, we often want our statistical models to preserve the finer granularity of information captured by interval-ratio variables. Additionally, multivariate analyses quickly become quite cumbersome beyond 3 variables. It will not be long before you are utterly drowning in contingency tables.</p>
+<p>For these situations—when we have a mixture of numeric &amp; categorical variables or multiple control variables—we often call on the <strong>General Linear Model</strong> (GLM).</p>
+<p>This is not something that we will work with much in our own projects for this course, only because it’s a bit more involved than we have the time cover in the depth it deserves. We could easily spend the entire semester covering the GLM and its various permutations. While it offers us a great deal of statistical power, we have to account for a wider array of underlying assumptions than something like the Chi-square test.</p>
+<p>As such, I will use this section to provide a largely conceptual overview of two more commonly encountered use-cases of the GLM:</p>
+<ul>
+<li>modeling continuous dependent variables (ordinal least squares regression)</li>
+<li>modeling binary categorical variables with mixed predictor variables (logistic regression)</li>
+</ul>
+<p>I will you show you some of the code used to create our regression models, but, as we will not focus as much on these methods in lab, I will not go into as much detail on these commands, and I’ll obscure most of my code for the visualizations, so as not to bog you down in some unfamiliar R functions. However, you will get to work with some of the graphing tools I use here in our next unit.</p>
+<section id="logic-of-the-glm" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="logic-of-the-glm"><span class="header-section-number">7.1</span> Logic of the GLM</h2>
+<p>The GLM is the underlying statistical architecture behind the broader family of <strong>regression modeling</strong> techniques.</p>
+<p>If you haven’t had much experience with statistics up to this point, that all may sound a little ethereal, but it really all follows from a simple algebraic principle you likely encountered in high-school math.</p>
+<p><span class="math display">\[Y = mX + b\]</span> This is the basic linear equation that we can use to describe just about any straight line. Mathematical notation is not always especially intuitive, so I’ll clarify the symbols here.</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> = The value of our y-axis variable</li>
+<li><span class="math inline">\(m\)</span> = The slope of the line, which we often learn as <span class="math inline">\({\frac{rise}{run}}\)</span></li>
+<li><span class="math inline">\(X\)</span> = The value of the x-axis variable</li>
+<li><span class="math inline">\(b\)</span> = The y-intercept, i.e.&nbsp;the value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X = 0\)</span>. This tells us where the line begins in our coordinate plane</li>
+</ul>
+<p>Let’s take a very simple example to illustrate the point. I’m going to create a dataframe with an ‘x’ column and a ‘y’ column. Each of these variables will be made up of the same vector of values, which will be the sequence of 0:5.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: right;">Mean (x)</th>
-<th style="text-align: right;">Mean (y)</th>
-<th style="text-align: right;">SD (x)</th>
-<th style="text-align: right;">SD (y)</th>
+<th style="text-align: right;">x</th>
+<th style="text-align: right;">y</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">54.3</td>
-<td style="text-align: right;">47.8</td>
-<td style="text-align: right;">16.8</td>
-<td style="text-align: right;">26.9</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>Well, there’s not much we can say here. All the summary statistics are identical. Why don’t we try modeling a linear relationship between the x and y variables. Maybe looking at the correlations will tell us something. I’ll display the linear regression lines for each data set below.</p>
+<p>Now, we’ll treat these as coordinates and plot them.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"yellow"</span>) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"green"</span>) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Simple line demonstration"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">"segment"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="dv">2</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">xend =</span> <span class="dv">3</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="dv">2</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> <span class="st">"orange"</span>) <span class="sc">+</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"segment"</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">3</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="dv">2</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> <span class="dv">3</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"orange"</span>) <span class="sc">+</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">2.5</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">1.5</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"run"</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">3.5</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">2.5</span>,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"rise"</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ft_rc</span>(</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">24</span>,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis_text_size =</span> <span class="dv">24</span>,</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis_title_size =</span> <span class="dv">24</span>,</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot_title_size =</span> <span class="dv">30</span>,</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip_text_size =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="viz_introduction_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="general_linear_model_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Okay. This is not revealing much either. All the lines seem to have the same slope, which shows a (slight) negative relationship where y decreases as x increases. The correlations aren’t revealing any notable distinctions.</p>
-<p>But wait. One thing we can see here is that, while the correlations appear to be about the same, there are some differences in the ranges of values. Note that the regression lines don’t extend across the same range of x-axis values in each data set. Maybe there is something here after all.</p>
-<p>Let’s just go ahead and plot the actual data.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="viz_introduction_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Now there’s some distinction!</p>
-<p>This is a tongue in cheek data set known as the <a href="https://jumpingrivers.github.io/datasauRus/">‘datasaurus dozen’</a>. It’s often used in intro statistical classes to help illustrate the importance of visualization. It’s inspired by another conceptually similar data set known as <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">‘Anscombe’s quartet’</a> which likewise stresses the role of plotting data in producing well informed analyses.</p>
-</section>
-<section id="in-sum" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="in-sum"><span class="header-section-number">8.3</span> In Sum</h2>
-<p>So, take this as a showcase of the importance of visualizing your data. This isn’t to discount summary statistics and other numeric description of data—those are still invaluable for us.</p>
-<p>Rather, cases like Datasaurus or Anscombe’s quartet highlight the necessity of understanding the shape of your data. This will determine the kind of questions you can ask with the data, as well as the kind of statistical tools you need to describe it.</p>
-<p>For example, in the case we just examined, those x and y variables do not have any kind of clear linear relationship. In that case, tools like standard OLS regression that assume linearity are not appropriate. Any relationship between the variables could only be explored through other statistical means.</p>
-<p>So, making our figures and tables look aesthetically pleasing is indeed valuable in its own right, but don’t underestimate the utility of good visualization for the analytic process itself.</p>
+<p>So, here’s the simple line segment that results from the linear combination of our x &amp; y variables.</p>
+<p>The <strong>y-intercept</strong> here is 0. That’s the value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X = 0\)</span></p>
+<p>And the <strong>slope coefficient</strong> is 1. To calculate the slope, we focus on the distance between two points. The ‘run’ is the distance we travel along the x-axis to get from the first point to the second, and the ‘rise’ is the distance we travel along the y-axis. Here, we travel +1 unit on the x-axis, and +1 unit on the y-axis. Thus, <span class="math inline">\({\frac{1}{1} = 1}\)</span>, and <span class="math inline">\(1\)</span> is then our slope coefficient.</p>
+<p>Now we can plug these values into <span class="math inline">\(Y = mX + b\)</span>. This allows us to describe the <strong>conditional distribution</strong> of these two variables. In other words, we can assess the value of <span class="math inline">\(Y\)</span> <em>given</em> our slope and any specific value of <span class="math inline">\(X\)</span>.</p>
+<p>For example, if we know that <span class="math inline">\(X = 4\)</span>, we can plug that into our equation</p>
+<p><span class="math display">\[Y = (1)\cdot (5) + 0\]</span> And naturally we find that</p>
+<p><span class="math display">\[Y = 5\]</span></p>
+<p>This is trivial for our case, given that our example line has very few data points and an incredibly simple relation (where <span class="math inline">\(X = Y\)</span>).</p>
+<p>However, this general principle of describing a linear relationship between variables provides the basis of some very powerful tools in statistical inference.</p>
 
 
 </section>
@@ -800,13 +851,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./general_linear_model.html" class="pagination-link" aria-label="General Linear Model">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General Linear Model</span></span>
+      <a href="./bivariate_categorical.html" class="pagination-link" aria-label="Bivariate: Categorical">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bivariate: Categorical</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./data_viz.html" class="pagination-link" aria-label="Plotting and Counting">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Plotting and Counting</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./viz_introduction.html" class="pagination-link" aria-label="Introduction">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

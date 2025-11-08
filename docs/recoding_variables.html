@@ -253,6 +253,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bivariate: Categorical</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./general_linear_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General Linear Model</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -267,13 +273,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./viz_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data_viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Plotting and Counting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Plotting and Counting</span></span></a>
   </div>
 </li>
       </ul>
@@ -348,7 +354,7 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(our_gss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   3544 obs. of  11 variables:
+<pre><code>'data.frame':   3544 obs. of  12 variables:
  $ year    : num  2022 2022 2022 2022 2022 ...
  $ id      : Factor w/ 4149 levels "1","2","3","4",..: 1 2 3 4 5 6 7 8 9 10 ...
  $ age     : num  72 80 57 23 62 27 20 47 31 72 ...
@@ -359,7 +365,8 @@ window.Quarto = {
  $ happy   : Ord.factor w/ 3 levels "not too happy"&lt;..: 1 1 1 1 2 2 2 2 2 2 ...
  $ marital : Factor w/ 5 levels "divorced","married",..: 1 2 1 3 3 3 3 2 3 3 ...
  $ attend  : Factor w/ 9 levels "never","less than once a year",..: 3 3 1 5 3 1 2 2 1 8 ...
- $ cappun  : Factor w/ 2 levels "favor","oppose": 2 1 1 2 2 2 2 2 1 NA ...</code></pre>
+ $ cappun  : Factor w/ 2 levels "favor","oppose": 2 1 1 2 2 2 2 2 1 NA ...
+ $ polhitok: Factor w/ 2 levels "yes","no": 1 NA NA NA NA 1 NA NA NA NA ...</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -439,14 +446,14 @@ Note
                       widowed      : 255   several times a year      : 346  
                       NA's         :  15   (Other)                   : 693  
                                            NA's                      :  35  
-    cappun        hr_wage        
- favor :2013   Min.   : 0.09832  
- oppose:1327   1st Qu.: 4.17849  
- NA's  : 204   Median : 8.84856  
-               Mean   :13.38237  
-               3rd Qu.:16.22236  
-               Max.   :68.19631  
-               NA's   :1554      </code></pre>
+    cappun     polhitok       hr_wage        
+ favor :2013   yes : 761   Min.   : 0.09832  
+ oppose:1327   no  : 406   1st Qu.: 4.17849  
+ NA's  : 204   NA's:2377   Median : 8.84856  
+                           Mean   :13.38237  
+                           3rd Qu.:16.22236  
+                           Max.   :68.19631  
+                           NA's   :1554      </code></pre>
 </div>
 </div>
 <p>So, we can use <code>mutate()</code> to add a new column that contains our recoded variable. We just need a way to specify a calculation that takes into account the specific intervals we want for our ordinal labels. For this, we need one more function.</p>
@@ -505,7 +512,7 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(our_gss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   3544 obs. of  13 variables:
+<pre><code>'data.frame':   3544 obs. of  14 variables:
  $ year    : num  2022 2022 2022 2022 2022 ...
  $ id      : Factor w/ 4149 levels "1","2","3","4",..: 1 2 3 4 5 6 7 8 9 10 ...
  $ age     : num  72 80 57 23 62 27 20 47 31 72 ...
@@ -517,6 +524,7 @@ Note
  $ marital : Factor w/ 5 levels "divorced","married",..: 1 2 1 3 3 3 3 2 3 3 ...
  $ attend  : Factor w/ 9 levels "never","less than once a year",..: 3 3 1 5 3 1 2 2 1 8 ...
  $ cappun  : Factor w/ 2 levels "favor","oppose": 2 1 1 2 2 2 2 2 1 NA ...
+ $ polhitok: Factor w/ 2 levels "yes","no": 1 NA NA NA NA 1 NA NA NA NA ...
  $ hr_wage : num  19.66 NA 8.85 1.08 NA ...
  $ age_ord : Ord.factor w/ 3 levels "Younger"&lt;"Middle Age"&lt;..: 3 3 3 1 3 1 1 2 1 3 ...</code></pre>
 </div>

@@ -58,5 +58,8 @@
   },
   "data_viz.qmd": {
     "data_viz.html": "1a97ed65"
+  },
+  "general_linear_model.qmd": {
+    "general_linear_model.html": "7cf1f700"
   }
 }
