@@ -23,7 +23,7 @@ This is not something that we will work with much in our own projects for this c
 
 As such, I will use this section to provide a largely conceptual overview of two more commonly encountered use-cases of the GLM: 
 
-- modeling continuous dependent variables (ordinal least squares regression)
+- modeling continuous dependent variables (ordinary least squares regression)
 - modeling binary categorical variables with mixed predictor variables (logistic regression)
 
 I will you show you some of the code used to create our regression models, but, as we will not focus as much on these methods in lab, I will not go into as much detail on these commands, and I'll obscure most of my code for the visualizations, so as not to bog you down in some unfamiliar R functions. However, you will get to work with some of the graphing tools I use here in our next unit.
@@ -55,7 +55,7 @@ df <- data.frame(
 knitr::kable(df)
 ```
 Now, we'll treat these as coordinates and plot them.
-```{r}
+```{r, eval = TRUE, echo = FALSE}
 df |>
   ggplot(
     aes(x, y)) +
@@ -113,11 +113,11 @@ Now we can plug these values into $Y = mX + b$. This allows us to describe the *
 
 For example, if we know that $X = 4$, we can plug that into our equation
 
-$$Y = (1)\cdot (5) + 0$$
+$$Y = (1)\cdot (4) + 0$$
 And naturally we find that
 
-$$Y = 5$$
+$$Y = 4$$
 
-This is trivial for our case, given that our example line has very few data points and an incredibly simple relation (where $X = Y$). 
+This is trivial for our case, given that our example line has very few data points and an incredibly simple relationship (where $X = Y$). 
 
 However, this general principle of describing a linear relationship between variables provides the basis of some very powerful tools in statistical inference.
