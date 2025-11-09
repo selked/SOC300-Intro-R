@@ -259,7 +259,8 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#logic-of-the-glm" id="toc-logic-of-the-glm" class="nav-link active" data-scroll-target="#logic-of-the-glm"><span class="header-section-number">7.1</span> Logic of the GLM</a></li>
+  <li><a href="#linear-relationships" id="toc-linear-relationships" class="nav-link active" data-scroll-target="#linear-relationships"><span class="header-section-number">7.1</span> Linear Relationships</a></li>
+  <li><a href="#ordinary-least-squares" id="toc-ordinary-least-squares" class="nav-link" data-scroll-target="#ordinary-least-squares"><span class="header-section-number">7.2</span> Ordinary Least Squares</a></li>
   </ul>
 </nav>
     </div>
@@ -296,15 +297,16 @@ window.Quarto = {
 <li>modeling binary categorical variables with mixed predictor variables (logistic regression)</li>
 </ul>
 <p>I will you show you some of the code used to create our regression models, but, as we will not focus as much on these methods in lab, I will not go into as much detail on these commands, and I’ll obscure most of my code for the visualizations, so as not to bog you down in some unfamiliar R functions. However, you will get to work with some of the graphing tools I use here in our next unit.</p>
-<section id="logic-of-the-glm" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="logic-of-the-glm"><span class="header-section-number">7.1</span> Logic of the GLM</h2>
+<section id="linear-relationships" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="linear-relationships"><span class="header-section-number">7.1</span> Linear Relationships</h2>
 <p>The GLM is the underlying statistical architecture behind the broader family of <strong>regression modeling</strong> techniques.</p>
 <p>If you haven’t had much experience with statistics up to this point, that all may sound a little ethereal, but it really all follows from a simple algebraic principle you likely encountered in high-school math.</p>
-<p><span class="math display">\[Y = mX + b\]</span> This is the basic linear equation that we can use to describe just about any straight line. Mathematical notation is not always especially intuitive, so I’ll clarify the symbols here.</p>
+<p>I’ll show you the general equation that underlies the GLM, but first I’ll set set up some context with a refresher on linearity.</p>
+<p><span class="math display">\[Y = mX + b\]</span> This is the basic linear equation that we can use to describe any straight line. Mathematical notation is not always especially intuitive, so I’ll clarify the symbols here.</p>
 <ul>
-<li><span class="math inline">\(Y\)</span> = The value of our y-axis variable</li>
+<li><span class="math inline">\(Y\)</span> = The value of our y-axis variable (our dependent variable)</li>
 <li><span class="math inline">\(m\)</span> = The slope of the line, which we often learn as <span class="math inline">\({\frac{rise}{run}}\)</span></li>
-<li><span class="math inline">\(X\)</span> = The value of the x-axis variable</li>
+<li><span class="math inline">\(X\)</span> = The value of the x-axis variable (our independent variable)</li>
 <li><span class="math inline">\(b\)</span> = The y-intercept, i.e.&nbsp;the value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X = 0\)</span>. This tells us where the line begins in our coordinate plane</li>
 </ul>
 <p>Let’s take a very simple example to illustrate the point. I’m going to create a dataframe with an ‘x’ column and a ‘y’ column. Each of these variables will be made up of the same vector of values, which will be the sequence of 0:5.</p>
@@ -365,6 +367,524 @@ window.Quarto = {
 <p><span class="math display">\[Y = 4\]</span></p>
 <p>This is trivial for our case, given that our example line has very few data points and an incredibly simple relationship (where <span class="math inline">\(X = Y\)</span>).</p>
 <p>However, this general principle of describing a linear relationship between variables provides the basis of some very powerful tools in statistical inference.</p>
+</section>
+<section id="ordinary-least-squares" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="ordinary-least-squares"><span class="header-section-number">7.2</span> Ordinary Least Squares</h2>
+<p>While an example like the one above is helpful as an introduction to the logic of linear relationships between variables, we are very unlikely to ever work with data exhibiting relationships that straightforward. Particularly so in our case, as the social world is messy and multiplex.</p>
+<p>Let’s take a look at one such combination of variables.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="hhenulwehp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hhenulwehp table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#hhenulwehp thead, #hhenulwehp tbody, #hhenulwehp tfoot, #hhenulwehp tr, #hhenulwehp td, #hhenulwehp th {
+  border-style: none;
+}
+
+#hhenulwehp p {
+  margin: 0;
+  padding: 0;
+}
+
+#hhenulwehp .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#hhenulwehp .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#hhenulwehp .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#hhenulwehp .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#hhenulwehp .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#hhenulwehp .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#hhenulwehp .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#hhenulwehp .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#hhenulwehp .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#hhenulwehp .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#hhenulwehp .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#hhenulwehp .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#hhenulwehp .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#hhenulwehp .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#hhenulwehp .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hhenulwehp .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#hhenulwehp .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#hhenulwehp .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#hhenulwehp .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hhenulwehp .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#hhenulwehp .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hhenulwehp .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#hhenulwehp .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hhenulwehp .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hhenulwehp .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hhenulwehp .gt_left {
+  text-align: left;
+}
+
+#hhenulwehp .gt_center {
+  text-align: center;
+}
+
+#hhenulwehp .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#hhenulwehp .gt_font_normal {
+  font-weight: normal;
+}
+
+#hhenulwehp .gt_font_bold {
+  font-weight: bold;
+}
+
+#hhenulwehp .gt_font_italic {
+  font-style: italic;
+}
+
+#hhenulwehp .gt_super {
+  font-size: 65%;
+}
+
+#hhenulwehp .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#hhenulwehp .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#hhenulwehp .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#hhenulwehp .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#hhenulwehp .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#hhenulwehp .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#hhenulwehp .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#hhenulwehp .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#hhenulwehp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Variable</strong></th>
+<th id="stat_0_1" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N</strong></th>
+<th id="stat_0_2" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Mean (SD)</strong></th>
+<th id="stat_0_3" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Min</strong></th>
+<th id="stat_0_4" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Max</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">Warmth/Competence Scale</td>
+<td class="gt_row gt_center" headers="stat_0_1">5,526</td>
+<td class="gt_row gt_center" headers="stat_0_2">0.00 (1.00)</td>
+<td class="gt_row gt_center" headers="stat_0_3">-3.46</td>
+<td class="gt_row gt_center" headers="stat_0_4">3.56</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">Proportion of women</td>
+<td class="gt_row gt_center" headers="stat_0_1">5,526</td>
+<td class="gt_row gt_center" headers="stat_0_2">0.49 (0.23)</td>
+<td class="gt_row gt_center" headers="stat_0_3">0.03</td>
+<td class="gt_row gt_center" headers="stat_0_4">0.97</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>These two variables are taken from a dataframe containing information about 5,526 job advertisements scraped from <a href="https://usajobs.gov">USAJobs.gov</a>, the advertising site for federal US jobs. These represent all the job ads available during the summer of 2021.</p>
+<p>The <code>Proportion of women</code> variable is fairly straightforward. For each job advertisement, this is the corresponding proportion of women employees, as assessed through nationally representative occupational data.</p>
+<p>The ‘Warmth/Competence’ scale is a measure derived from word embeddings. Without getting too in the weeds, know that this is a measure of how prominently the language of a job ad engages the concepts of ‘warmth’ vs.&nbsp;‘competence’.</p>
+<p>In social psychology, the Stereotype Content Model has theorized that many of our stereotypical perceptions about people can be characterized along these two dimensions. <em>Competence</em> reflects agency, adeptness, leadership, and related qualities. <em>Warmth</em> can be thought of in terms of sociability, and is related to interpersonal people-skills, empathy, and deference.</p>
+<p>As this literature has shown, higher status groups tend to be perceived as higher in competence but lower in warmth, whereas lower status groups are often perceived as less competent but more warm. In simpler terms, higher status groups are often thought of us as smart but impersonal, while lower status groups are perceived as less capable but more amiable and sympathetic.</p>
+<p>Negative values on this scale indicate more engagement with warmth as opposed to competence, whereas positive values indicate more engagement with competence as opposed to warmth. Values at or near zero indicate that neither concept is more salient than the other.</p>
+<p>Let’s consider the association between the gender composition of the US federal workforce and the amount of warmth/competence language in job advertisements. As the US is a patriarchal society, masculinity is associated with higher status than femininity. We’ll predict that the language used to describe occupations with a greater proportion of women will contain a greater proportion of ‘warm’ language.</p>
+<p><span class="math display">\[H_0= There \ will \ be \ no \ relationship \ between \ the \ stereotype \ content \ of \ a \ job \ advertisement \ and \ the \ gender \ composition \ of \ the \ occupation\]</span> <span class="math display">\[H_1 = Jobs \ with \ a \ greater \ proportion \ of \ women \ will \ produce \ job \ ads \ with \ more \ engagement \ of \ warmth \ language\]</span> Let’s take a look at these two variables plotted against one another. We’re conceiving of the proportion of women as our independent variable and the warmth/competence scale as the dependent variable. So, the former will be on the x-axis and the latter will be on the y-axis.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="general_linear_model_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now, this is clearly a linear relationship that’s quite a bit more complex than our simplified example earlier. Let’s go ahead and draw a line that best characterizes the conjoint distribution of these variables.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="general_linear_model_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
