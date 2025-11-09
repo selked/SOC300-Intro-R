@@ -21,12 +21,12 @@ For these situations---when we have a mixture of numeric & categorical variables
 
 This is not something that we will work with much in our own projects for this course, only because it's a bit more involved than we have the time cover in the depth it deserves. We could easily spend the entire semester covering the GLM and its various permutations. While it offers us a great deal of statistical power, we have to account for a wider array of underlying assumptions than something like the Chi-square test.
 
-As such, I will use this section to provide a largely conceptual overview of two more commonly encountered use-cases of the GLM: 
+As such, I will use this section to provide a largely conceptual overview of one of the more commonly encountered use-cases of the GLM: 
 
-- modeling continuous dependent variables (ordinary least squares regression)
-- modeling binary categorical variables with mixed predictor variables (logistic regression)
+- modeling continuous dependent variables with a mix of numeric and categorical predictors (ordinary least squares regression)
 
-I will you show you some of the code used to create our regression models, but, as we will not focus as much on these methods in lab, I will not go into as much detail on these commands, and I'll obscure most of my code for the visualizations, so as not to bog you down in some unfamiliar R functions. However, you will get to work with some of the graphing tools I use here in our next unit.
+
+I will you show you some of the code used to create our regression models, but, as we will not focus as much on these methods in lab, I will not go into as much detail on these commands, and I'll obscure most of my code for the visualizations, so as not to bog you down in some unfamiliar R functions. However, you will get to learn about some of the graphing functions I use here in our next unit.
 
 ## Linear Relationships
 The GLM is the underlying statistical architecture behind the broader family of **regression modeling** techniques. 
@@ -105,7 +105,7 @@ df |>
       strip_text_size = 24)
 ```
 
-So, here's the simple line segment that results from the linear combination of our x & y variables. 
+So, here's the simple line segment that results from the linear combination of our $X$ and $Y$ variables. 
 
 The **y-intercept** here is 0. That's the value of $Y$ when $X = 0$
 
@@ -120,14 +120,16 @@ And naturally we find that
 
 $$Y = 4$$
 
-This is trivial for our case, given that our example line has very few data points and an incredibly simple relationship (where $X = Y$). 
+This is trivial for our case, given that our example line has very few data points and an incredibly simple relationship (where $X = Y$).
 
 However, this general principle of describing a linear relationship between variables provides the basis of some very powerful tools in statistical inference.
 
 ## Ordinary Least Squares
-While an example like the one above is helpful as an introduction to the logic of linear relationships between variables, we are very unlikely to ever work with data exhibiting relationships that straightforward. Particularly so in our case, as the social world is messy and multiplex.
+While we can use an example like the one above to learn and quickly verify the logic of the linear equation, we are very unlikely to ever work with data exhibiting relationships that straightforward. This is particularly so in our case, as the social world is messy and multiplex.
 
-Let's take a look at one such combination of variables.
+Let's take a look at some real-world variables and learn about one of the more common regression techniques: ordinary least squares (OLS) regression.
+
+### Gender and Job Ads
 
 ```{r, eval = TRUE, echo = FALSE}
 load("C:/Users/selke/Desktop/Scholarship/USAJobs Project/ja_reprocessed.rda")
@@ -163,15 +165,13 @@ These two variables are taken from a dataframe containing information about 5,52
 
 The `Proportion of women` variable is fairly straightforward. For each job advertisement, this is the corresponding proportion of women employees, as assessed through nationally representative occupational data.
 
-The 'Warmth/Competence' scale is a measure derived from word embeddings. Without getting too in the weeds, know that this is a measure of how prominently the language of a job ad engages the concepts of 'warmth' vs. 'competence'. 
+The 'Warmth/Competence' scale is a measure derived from word embeddings. Without getting too in the weeds, know that this is a measure of how prominently the language of a job ad engages the concepts of 'warmth' vs. 'competence'. Positive values indicate more competence language, and negative values indicate more warmth language. Values at or near 0 do not engage either concept more prominently than the other.
 
-In social psychology, the Stereotype Content Model has theorized that many of our stereotypical perceptions about people can be characterized along these two dimensions. *Competence* reflects agency, adeptness, leadership, and related qualities. *Warmth* can be thought of in terms of sociability, and is related to interpersonal people-skills, empathy, and deference. 
+In social psychology, the Stereotype Content Model posits that many of our stereotypical perceptions about people can be characterized along these two dimensions. *Competence* reflects agency, adeptness, leadership, and related qualities. *Warmth* can be thought of in terms of sociability, and is related to interpersonal people-skills, empathy, and deference. 
 
 As this literature has shown, higher status groups tend to be perceived as higher in competence but lower in warmth, whereas lower status groups are often perceived as less competent but more warm. In simpler terms, higher status groups are often thought of us as smart but impersonal, while lower status groups are perceived as less capable but more amiable and sympathetic. 
 
-Negative values on this scale indicate more engagement with warmth as opposed to competence, whereas positive values indicate more engagement with competence as opposed to warmth. Values at or near zero indicate that neither concept is more salient than the other.
-
-Let's consider the association between the gender composition of the US federal workforce and the amount of warmth/competence language in job advertisements. As the US is a patriarchal society, masculinity is associated with higher status than femininity. We'll predict that the language used to describe occupations with a greater proportion of women will contain a greater proportion of 'warm' language.
+Let's consider the association between the gender composition of the US federal workforce and the amount of warmth/competence language in job advertisements. As the US is a patriarchal society, masculinity is associated with higher status than femininity. We'll predict that the language used to describe occupations with a greater proportion of women will engage warmth language more than competence language.
 
 $$H_0= There \ will \ be \ no \ relationship \ between \ the \ stereotype \ content \ of \ a \ job \ advertisement \ and \ the \ gender \ composition \ of \ the \ occupation$$ 
 $$H_1 = Jobs \ with \ a \ greater \ proportion \ of \ women \ will \ produce \ job \ ads \ with \ more \ engagement \ of \ warmth \ language$$
@@ -197,7 +197,7 @@ workingjobs.df |>
       strip_text_size = 24)
 
 ```
-Now, this is clearly a linear relationship that's quite a bit more complex than our simplified example earlier. Let's go ahead and draw a line that best characterizes the conjoint distribution of these variables.
+Now, this is clearly a relationship that's quite a bit more complex than our simplified example earlier. Each point here is a single job ad, so we have 5,526 points on our graph. Eyeball the plot, it looks like there's a slight downward trend. Let's go ahead and draw a line that best characterizes the conjoint distribution of these variables.
 
 ```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
 library(scales)
@@ -224,10 +224,12 @@ workingjobs.df |>
 ```
 What I've plotted here is the **OLS regression line** for these two variables. This line solves for the following equation, which is the basis of many models in the GLM framework.
 
+### The OLS Equation
+
 $${\hat{Y} = {\hat{\beta}{_0}} + {\hat\beta}{_1}X_1 + \epsilon}$$
 Now, this may look a bit unfamiliar, but it actually contains much of the same information as the linear equation we reviewed above. We just have some new notation conventions to reckon with.
 
-For starters, we now have $\hat{}$ symbol appearing over several variables. This is called, funnily enough, the 'hat' symbol. This little 'hat' just tells us that the value in question is one we are estimating by solving for the equation rather than a value that appears directly in our data.
+For starters, we now have the  $\hat{}$  symbol appearing over several variables. This is called, funnily enough, the 'hat' symbol. This little 'hat' just tells us that the value in question is one we are estimating through regression rather than one that appears in our data.
 
 But roughly the first $\frac{3}{4}$ of the equation is just the linear equation we saw above.
 
@@ -245,7 +247,7 @@ The $\beta$ symbol stands for 'beta coefficient', which you can just think of as
 
 Now we can start to think about how these values are estimated, though I'm going to stay conceptual here. In ordinary least squares regression, the calculation takes our observed x and y values as input and then estimates the slope and intercept that produce a line reflecting the minimum possible distance between the line and all data points. 
 
-The math behind this can really get into the weeds, but I'll give a sense of how this line is derived. The least squares method starts by considering a completely horizontal line at the y-intercept of the data. This is likely to be a terrible fit for any data, but regression starts by estimating the collective distance of all points from this line. I won't get too into this value, but know that this distance metric is called **the sum of squared residuals** (SSR). The SSR is taken for this horizontal line at the y-intercept, and then the line is incrementally rotated, with the SSR being calculated many different times for many different rotations of the line. After this iterative cycle, we take the line with the lowest sum of squared residuals as the line best characterizing the linear relationship between $X$ and $Y$. 
+The math behind this can really get into the weeds, but I'll give a sense of how this line is derived. The least squares method starts by considering a completely horizontal line at the y-intercept of the data. This is likely to be a terrible fit for any data, but regression starts by estimating the collective distance of all points from this line. I won't get too into this value, but know that this distance metric is called **the sum of squared residuals** (SSR). The SSR is taken for this horizontal line at the y-intercept, and then the line is incrementally rotated, with the SSR being calculated many different times for many different rotations of the line. After this iterative cycle, we take the line with the lowest sum of squared residuals as the line best characterizing the linear relationship between $X$ and $Y$. That's also where we get the term "least squares" for this particular style of regression.
 
 I'll note there's a really excellent [StatQuest from Josh Starmer](https://www.youtube.com/watch?v=PaFPbb66DxQ) that gives a great primer on some of these concepts along with highly intuitive visuals.
 
@@ -255,9 +257,15 @@ To understand this term, we need to think big picture about the relationship we'
 
 But the reality is that, even if we do include indicators for all of these different concepts, social and mental phenomena are incredibly complex. We may still wind up missing indicators that would influence our dependent variable. In addition, it may also be the case that the variables we do have are insufficient in some way or another.
 
-So, we include the error term as a placeholder for all the variation in our dependent variable that is still unexplained after accounting for all of our independent and control variables. This helps give us better information about our model by characterizing the amount of variation in the dependent variable that is explained by the variables we anticipated as influential. Moreover, if we do not keep this error term in here, we will be guaranteed to erroneously estimate the association between $X$ and $Y$.
+So, we include the error term as a placeholder for all the variation in our dependent variable that is still unexplained after accounting for all of our independent and control variables. If the slope coefficient of our independent variable is the effect of $X$ on $Y$, then you can think of the error term as capturing the effect on $Y$ of everything else our model is incapable of accounting for. 
 
-In R, we can estimate this quite easily using the base R package `lm`. The syntax works as follows:
+This helps give us better information about our model by characterizing the amount of variation in the dependent variable that is explained by the variables we anticipated as influential. Moreover, if we do not keep this error term in here, we will be guaranteed to erroneously estimate the association between $X$ and $Y$, as the model will attribute random error to the $X$ variable and assume that it explains a lot more of the variance in $Y$ than it actually does.
+
+### OLS in R
+Thankfully, as with the Chi-square test, you will almost never need to hand-calculate any of this. In fact, that would very quickly become a monumental task in the case of most reasonably complex models. But, as always, it's important to look under the hood at least enough to get a feel for the concepts behind any statistical tool.
+
+
+In R, we can use the base R package `lm`. The syntax works as follows:
 ```{r, eval = TRUE, echo = FALSE}
 names(workingjobs.df)[61] <- "femaleu"
 
@@ -299,7 +307,12 @@ The value (-0.017) listed for 'Percentage of women' is the estimated slope coeff
 So, in the context of:
 
 $${\hat{Y} = {\hat{\beta}{_0}} + {\hat\beta}{_1}X_1 + \epsilon}$$
-We now have $\hat{\beta_0} = 0.846$ and ${\hat\beta}{_1}(PercentageWomen) = -0.017$
+We now have 
+
+$$\hat{\beta_0} = 0.846$$ 
+and 
+
+$${\hat\beta}{_1} = -0.017$$
 
 
 Now, let's touch on statistical significance. We can also see that the coefficients for both our y-intercept and the slope of 'Percentage of women' are noted as statistically significant using the star notation we have seen elsewhere. These p-values are calculated using what's known as a **t-test**. This is another case where I won't get much into the math, but know that this test also utilizes the logic of hypothesis-testing that we have seen in other cases. 
@@ -347,4 +360,6 @@ workingjobs.df |>
       plot_title_size = 30,
       strip_text_size = 24)
 ```
-What we have just worked through is the simplest case of OLS regression, where there is only one dependent variable and one predictor variable. These principles scale in the case of multiple regression, where we can observe the isolated effects of individual variables when all other predictors are held constant. We won't dig too much into this for sake of time, but you can expect to learn much about multiple regression and all other iterations of the GLM if you continue on in social-science research. There are special cases for modeling count data, modeling proportions, modeling non-linearity or curvilinearity, and so on and so on. While certain details in the model specification or interpretation can vary, the underlying logic will reflect many of the fundamentals we have explored in this unit.
+What we have just worked through is the simplest case of OLS regression, where there is only one dependent variable and one predictor variable. These principles scale in the case of multiple regression, where we can observe the isolated effects of individual variables when all other predictors are held constant. 
+
+We won't dig too much into this for sake of time, but you can expect to learn much about multiple regression and all other iterations of the GLM if you continue on in social-science research. There are special cases for modeling count data, modeling proportions, modeling non-linearity or curvilinearity, and so on and so on. While certain details in the model specification or interpretation can vary, the underlying logic will reflect many of the fundamentals we have explored in this unit.
