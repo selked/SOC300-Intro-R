@@ -258,7 +258,7 @@ But the reality is that, even if we do include indicators for all of these diffe
 So, we include the error term as a placeholder for all the variation in our dependent variable that is still unexplained after accounting for all of our independent and control variables. This helps give us better information about our model by characterizing the amount of variation in the dependent variable that is explained by the variables we anticipated as influential. Moreover, if we do not keep this error term in here, we will be guaranteed to erroneously estimate the association between $X$ and $Y$.
 
 In R, we can estimate this quite easily using the base R package `lm`. The syntax works as follows:
-```{r}
+```{r, eval = TRUE, echo = FALSE}
 names(workingjobs.df)[61] <- "femaleu"
 
 workingjobs.df <- workingjobs.df |>
@@ -266,7 +266,11 @@ workingjobs.df <- workingjobs.df |>
     female_perc = femaleu * 100
   )
 ```
-```{r}
+```{r, eval = FALSE, echo = TRUE
+our_model <- lm(`Warmth/Competence Scale` ~ `Percentage of women`, data = workingjobs.df)
+```
+
+```{r, eval = TRUE, echo = FALSE}
 our_model <- lm(`Warmth/Competence Scale` ~ female_perc, data = workingjobs.df)
 ```
 ```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
