@@ -278,11 +278,12 @@ library(huxtable)
 c_tab<-huxreg(
   our_model,
   statistics = c("Number of observations" = "nobs", "R-squared" = "r.squared"),
-  coefs = c("(Intercept)" = "(Intercept)", "Percentage of women" = "female_perc"))
+  coefs = c("(Intercept)" = "(Intercept)", "Percentage of women" = "female_perc")) |>
+  set_caption("OLS Regression Output")
 
 c_tab <- as_flextable(c_tab)
 
-c_tab <- color(c_tab, color = "white", part = "all")
+c_tab <- theme_vader(c_tab)
 
 c_tab
 
