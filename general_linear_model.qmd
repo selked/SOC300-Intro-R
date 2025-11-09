@@ -177,7 +177,7 @@ $$H_0= There \ will \ be \ no \ relationship \ between \ the \ stereotype \ cont
 $$H_1 = Jobs \ with \ a \ greater \ proportion \ of \ women \ will \ produce \ job \ ads \ with \ more \ engagement \ of \ warmth \ language$$
 Let's take a look at these two variables plotted against one another. We're conceiving of the proportion of women as our independent variable and the warmth/competence scale as the dependent variable. So, the former will be on the x-axis and the latter will be on the y-axis. 
 
-```{r, eval = TRUE, echo = FALSE}
+```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
 workingjobs.df |>
   ggplot(
     aes(x = `Proportion of women`, y = `Warmth/Competence Scale`)) +
@@ -196,16 +196,22 @@ workingjobs.df |>
 ```
 Now, this is clearly a linear relationship that's quite a bit more complex than our simplified example earlier. Let's go ahead and draw a line that best characterizes the conjoint distribution of these variables.
 
-```{r, eval = TRUE, echo = FALSE}
+```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+library(scales)
+
+
 workingjobs.df |>
   ggplot(
     aes(x = `Proportion of women`, y = `Warmth/Competence Scale`)) +
       geom_point(size = .5) +
-  geom_smooth(method = "lm", color = "yellow") +
+  geom_smooth(method = "lm", color = "yellow", linewidth = .75) +
   labs(
-    title = "Warmth/Competence Language by Proportion of Women",
-    x = "Proportion of women",
+    title = "Warmth/Competence Language by Percentage of Women",
+    x = "Percentage of women",
     y = "Warmth/Competence Score"
+  ) +
+  scale_x_continuous(
+    labels = percent_format()
   ) +
   theme_ft_rc(base_size = 24,
       axis_text_size = 24,
@@ -213,3 +219,120 @@ workingjobs.df |>
       plot_title_size = 30,
       strip_text_size = 24)
 ```
+What I've plotted here is the **OLS regression line** for these two variables. This line solves for the following equation, which is the basis of many models in the GLM framework.
+
+$${\hat{Y} = {\hat{\beta}{_0}} + {\hat\beta}{_1}X_1 + \epsilon}$$
+Now, this may look a bit unfamiliar, but it actually contains much of the same information as the linear equation we reviewed above. We just have some new notation conventions to reckon with.
+
+For starters, we now have $\hat{}$ symbol appearing over several variables. This is called, funnily enough, the 'hat' symbol. This little 'hat' just tells us that the value in question is one we are estimating by solving for the equation rather than a value that appears directly in our data.
+
+But roughly the first $\frac{3}{4}$ of the equation is just the linear equation we saw above.
+
+- $\hat{Y}$ is an estimated value of $Y$
+- $\hat{\beta{_0}}$ is an estimated y-intercept
+- $\hat{\beta{_1}}$ is an estimated slope coefficient for $X_1$, which is any given value of our independent variable
+
+So this part of the equation:
+
+$$\hat{Y} = {\hat{\beta}{_0}} + {\hat\beta}{_1}X_1$$
+Is basically just:
+
+$$Y = mX + b$$
+The $\beta$ symbol stands for 'beta coefficient', which you can just think of as a term-of-art for the values that we estimate through linear regression.
+
+Now we can start to think about how these values are estimated, though I'm going to stay conceptual here. In ordinary least squares regression, the calculation takes our observed x and y values as input and then estimates the slope and intercept that produce a line reflecting the minimum possible distance between the line and all data points. 
+
+The math behind this can really get into the weeds, but I'll give a sense of how this line is derived. The least squares method starts by considering a completely horizontal line at the y-intercept of the data. This is likely to be a terrible fit for any data, but regression starts by estimating the collective distance of all points from this line. I won't get too into this value, but know that this distance metric is called **the sum of squared residuals** (SSR). The SSR is taken for this horizontal line at the y-intercept, and then the line is incrementally rotated, with the SSR being calculated many different times for many different rotations of the line. After this iterative cycle, we take the line with the lowest sum of squared residuals as the line best characterizing the linear relationship between $X$ and $Y$. 
+
+I'll note there's a really excellent [StatQuest from Josh Starmer](https://www.youtube.com/watch?v=PaFPbb66DxQ) that gives a great primer on some of these concepts along with highly intuitive visuals.
+
+Now, this raises the question of the last part of the simple linear regression equation: the $\epsilon$ symbol. This is the symbol for what's commonly known as the $$error term$$. 
+
+To understand this term, we need to think big picture about the relationship we're modeling. We are assuming that the gender composition of the federal workforce influences the representation of these jobs in public-facing advertisements. Now, even if we are right that this influence exists, it's exceedingly unlikely that the proportion of men/women in a given job is the *only* thing that influences the way that job is represented in an advertisement. There are all manner of different possible influences---from the type of position it is, the salary, the racial composition of the workforce, the amount of training required for the position, and so on and so forth. 
+
+But the reality is that, even if we do include indicators for all of these different concepts, social and mental phenomena are incredibly complex. We may still wind up missing indicators that would influence our dependent variable. In addition, it may also be the case that the variables we do have are insufficient in some way or another.
+
+So, we include the error term as a placeholder for all the variation in our dependent variable that is still unexplained after accounting for all of our independent and control variables. This helps give us better information about our model by characterizing the amount of variation in the dependent variable that is explained by the variables we anticipated as influential. Moreover, if we do not keep this error term in here, we will be guaranteed to erroneously estimate the association between $X$ and $Y$.
+
+In R, we can estimate this quite easily using the base R package `lm`. The syntax works as follows:
+```{r}
+names(workingjobs.df)[61] <- "femaleu"
+
+workingjobs.df <- workingjobs.df |>
+  mutate(
+    female_perc = femaleu * 100
+  )
+
+our_model <- lm(`Warmth/Competence Scale` ~ female_perc, data = workingjobs.df)
+```
+```{r, eval = TRUE, echo = FALSE}
+library(flextable)
+library(huxtable)
+
+
+
+c_tab<-huxreg(
+  our_model,
+  statistics = c("Number of observations" = "nobs", "R-squared" = "r.squared"),
+  coefs = c("(Intercept)" = "(Intercept)", "Percentage of women" = "female_perc")) |>
+  set_caption("OLS Regression Output")
+
+c_tab <- as_flextable(c_tab)
+c_tab
+```
+Here we can see two of the key estimated values from our linear regression equation. The y-intercept is likely clear enough: 0.846. This is the estimated value of $Y$ when $X = 0$. In other words, this is the Warmth/Competence score predicted by our model for a job with no women at all (i.e. a proportion of 0). Note that this value is positive, indicating that an occupation with no women is estimated to have job-ad language that engages more prominently with competence language.
+
+The value (-0.017) listed for 'Percentage of women' is the estimated slope coefficient of this variable. The interpretation here is that, for every one-unit increase in the percentage of women, the Warmth/Competence score is estimated to *decrease* by (-0.017). A one-percentage point increase is fairly small in substantive terms, so we could always multiply this coefficient by 10 to get a broader slope. For example, if the Warmth/Competence scores is estimated to decrease by 0.017 for every additional percentage point, then we would expect the score to decrease by 0.17 for every 10-point increase in percentage.  
+
+So, in the context of:
+
+$${\hat{Y} = {\hat{\beta}{_0}} + {\hat\beta}{_1}X_1 + \epsilon}$$
+We now have $\hat{\beta_0} = 0.846$ and ${\hat\beta}{_1}(PercentageWomen) = -0.017$
+
+
+Now, let's touch on statistical significance. We can also see that the coefficients for both our y-intercept and the slope of 'Percentage of women' are noted as statistically significant using the star notation we have seen elsewhere. These p-values are calculated using what's known as a **t-test**. This is another case where I won't get much into the math, but know that this test also utilizes the logic of hypothesis-testing that we have seen in other cases. 
+
+In the case of associations between a predictor variable and a dependent variable in linear regression, a slope coefficient of 0 would indicate that there is no linear relationship between the variables. The t-test allows us to estimate the likelihood that the slope coefficient we observe is truly different from 0. In our case, this is so.
+
+Let's briefly discuss one of the other values given in our regression output: the R-squared value. 
+
+```{r, eval = TRUE, echo = FALSE}
+c_tab
+```
+
+I won't get too much into the details on the actual calculation here, but R-squared is one of the valuable bits of information we can gather by accounting for the error term (and thereby modeling the variation influenced by factors not captured in our predictor variables). R-squared reflects the proportion of variance in the dependent variable that is directly explained by the independent variable. So, an R-squared of $0.151$ indicates that roughly 15% of the variation we observe in the Warmth/Competence scores of job ads is explained by the percentage of women in those jobs. 
+
+This is fairly low for a couple of reasons. For one, as I've mentioned throughout, the social world is multiplex, often outside of our direct control, and difficult to model precisely. If you find yourself with an R-squared of even 0.4 - 0.5, that's generally considered fairly high. On the other hand, we would also expect this to be low in our case, as we have an incredibly simple model. We could include any number of different control variables that we would also expect to influence our dependent variable and this would likely boost our R-squared. We can also use this metric to help us choose between different model designs. 
+
+### In Sum
+Let's return now to the hypothesis that we started with. 
+
+$$H_0= There \ will \ be \ no \ relationship \ between \ the \ stereotype \ content \ of \ a \ job \ advertisement \ and \ the \ gender \ composition \ of \ the \ occupation$$ 
+$$H_1 = Jobs \ with \ a \ greater \ proportion \ of \ women \ will \ produce \ job \ ads \ with \ more \ engagement \ of \ warmth \ language$$
+```{r, eval = TRUE, echo = FALSE}
+c_tab
+```
+Given the results of our regression model, we can reject the null hypothesis, as we find evidence supporting our research hypothesis. The negative, statistically significant slope coefficient for 'Percentage of women' aligns with our hypothesis that there will be a positive relationship between the amount of 'warmth' language in a job advertisement and the percentage of women in the occupation being advertised. For each one-percentage-point increase in women at a given occupation, our model estimates a corresponding decrease of 0.017 in the Warmth/Competence score of the job ad. The more a job becomes populated women, the more predominantly warmth language is engaged by the corresponding job advertisement. 
+
+The slope coefficient that we calculated here is the one that we first saw visualized at the beginning of this section
+```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+workingjobs.df |>
+  ggplot(
+    aes(x = femaleu, y = `Warmth/Competence Scale`)) +
+      geom_point(size = .5) +
+  geom_smooth(method = "lm", color = "yellow", linewidth = .75) +
+  labs(
+    title = "Warmth/Competence Language by Percentage of Women",
+    x = "Percentage of women",
+    y = "Warmth/Competence Score"
+  ) +
+  scale_x_continuous(
+    labels = percent_format()
+  ) +
+  theme_ft_rc(base_size = 24,
+      axis_text_size = 24,
+      axis_title_size = 24,
+      plot_title_size = 30,
+      strip_text_size = 24)
+```
+What we have just worked through is the simplest case of OLS regression, where there is only one dependent variable and one predictor variable. These principles scale in the case of multiple regression, where we can observe the isolated effects of individual variables when all other predictors are held constant. We won't dig too much into this for sake of time, but you can expect to learn much about multiple regression and all other iterations of the GLM. There are special cases for modeling count data, modeling proportions, modeling non-linearity or curvilinearity, and so on and so on. While certain details in the model specification or interpretation can vary, the underlying logic will reflect many of the fundamentals we have explored in this unit.
