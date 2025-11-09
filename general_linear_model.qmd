@@ -135,7 +135,7 @@ Let's take a look at some real-world variables and learn about one of the more c
 load("C:/Users/selke/Desktop/Scholarship/USAJobs Project/ja_reprocessed.rda")
 library(gtsummary)
 
-names(workingjobs.df)[61] <- "Proportion of women"
+names(workingjobs.df)[61] <- "Percentage of women"
 names(workingjobs.df)[141] <- "Warmth/Competence Scale"
 
 stats <- c("N" = "{length}", 
@@ -147,7 +147,7 @@ tbl <-
   purrr::imap(
   stats,
   ~workingjobs.df |>
-    tbl_summary(include = c("Warmth/Competence Scale", "Proportion of women"), 
+    tbl_summary(include = c("Warmth/Competence Scale", "Percentage of women"), 
     missing = "no", 
     statistic = ~.x,
     digits = ~ list(
@@ -163,9 +163,9 @@ tbl
 ```
 These two variables are taken from a dataframe containing information about 5,526 job advertisements scraped from [USAJobs.gov](https://usajobs.gov), the advertising site for federal US jobs. These represent all the job ads available during the summer of 2021. 
 
-The `Proportion of women` variable is fairly straightforward. For each job advertisement, this is the corresponding proportion of women employees, as assessed through nationally representative occupational data.
+The `Percentage of women` variable is fairly straightforward. For each job advertisement, this is the corresponding proportion of women employees, as assessed through nationally representative occupational data.
 
-The 'Warmth/Competence' scale is a measure derived from word embeddings. Without getting too in the weeds, know that this is a measure of how prominently the language of a job ad engages the concepts of 'warmth' vs. 'competence'. Positive values indicate more competence language, and negative values indicate more warmth language. Values at or near 0 do not engage either concept more prominently than the other.
+The `'Warmth/Competence' scale` is a measure derived from word embeddings. Without getting too in the weeds, know that this is a measure of how prominently the language of a job ad engages the concepts of 'warmth' vs. 'competence'. Positive values indicate more competence language, and negative values indicate more warmth language. Values at or near 0 reflect ads that do not engage either concept more prominently than the other.
 
 In social psychology, the Stereotype Content Model posits that many of our stereotypical perceptions about people can be characterized along these two dimensions. *Competence* reflects agency, adeptness, leadership, and related qualities. *Warmth* can be thought of in terms of sociability, and is related to interpersonal people-skills, empathy, and deference. 
 
@@ -180,10 +180,10 @@ Let's take a look at these two variables plotted against one another. We're conc
 ```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
 workingjobs.df |>
   ggplot(
-    aes(x = `Proportion of women`, y = `Warmth/Competence Scale`)) +
+    aes(x = `Percentage of women`, y = `Warmth/Competence Scale`)) +
       geom_point(size = .5) +
   labs(
-    title = "Warmth/Competence Language by Proportion of Women",
+    title = "Warmth/Competence Language by Percentage of Women",
     x = "Percentage of women",
     y = "Warmth/Competence Score"
   ) +
@@ -205,7 +205,7 @@ library(scales)
 
 workingjobs.df |>
   ggplot(
-    aes(x = `Proportion of women`, y = `Warmth/Competence Scale`)) +
+    aes(x = `Percentage of women`, y = `Warmth/Competence Scale`)) +
       geom_point(size = .5) +
   geom_smooth(method = "lm", color = "yellow", linewidth = .75) +
   labs(
@@ -222,11 +222,13 @@ workingjobs.df |>
       plot_title_size = 30,
       strip_text_size = 24)
 ```
-What I've plotted here is the **OLS regression line** for these two variables. This line solves for the following equation, which is the basis of many models in the GLM framework.
+
 
 ### The OLS Equation
 
 $${\hat{Y} = {\hat{\beta}{_0}} + {\hat\beta}{_1}X_1 + \epsilon}$$
+What I've plotted here is the **OLS regression line** for these two variables. This line solves for the following equation, which is the basis of many models in the GLM framework.
+
 Now, this may look a bit unfamiliar, but it actually contains much of the same information as the linear equation we reviewed above. We just have some new notation conventions to reckon with.
 
 For starters, we now have the  $\hat{}$  symbol appearing over several variables. This is called, funnily enough, the 'hat' symbol. This little 'hat' just tells us that the value in question is one we are estimating through regression rather than one that appears in our data.
