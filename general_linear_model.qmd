@@ -184,8 +184,11 @@ workingjobs.df |>
       geom_point(size = .5) +
   labs(
     title = "Warmth/Competence Language by Proportion of Women",
-    x = "Proportion of women",
+    x = "Percentage of women",
     y = "Warmth/Competence Score"
+  ) +
+  scale_x_continuous(
+    labels = percent_format()
   ) +
   theme_ft_rc(base_size = 24,
       axis_text_size = 24,
@@ -246,7 +249,7 @@ The math behind this can really get into the weeds, but I'll give a sense of how
 
 I'll note there's a really excellent [StatQuest from Josh Starmer](https://www.youtube.com/watch?v=PaFPbb66DxQ) that gives a great primer on some of these concepts along with highly intuitive visuals.
 
-Now, this raises the question of the last part of the simple linear regression equation: the $\epsilon$ symbol. This is the symbol for what's commonly known as the $$error term$$. 
+Now, this raises the question of the last part of the simple linear regression equation: the $\epsilon$ symbol. This is the symbol for what's commonly known as the **error term**. 
 
 To understand this term, we need to think big picture about the relationship we're modeling. We are assuming that the gender composition of the federal workforce influences the representation of these jobs in public-facing advertisements. Now, even if we are right that this influence exists, it's exceedingly unlikely that the proportion of men/women in a given job is the *only* thing that influences the way that job is represented in an advertisement. There are all manner of different possible influences---from the type of position it is, the salary, the racial composition of the workforce, the amount of training required for the position, and so on and so forth. 
 
@@ -262,10 +265,11 @@ workingjobs.df <- workingjobs.df |>
   mutate(
     female_perc = femaleu * 100
   )
-
+```
+```{r}
 our_model <- lm(`Warmth/Competence Scale` ~ female_perc, data = workingjobs.df)
 ```
-```{r, eval = TRUE, echo = FALSE}
+```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
 library(flextable)
 library(huxtable)
 
@@ -274,11 +278,14 @@ library(huxtable)
 c_tab<-huxreg(
   our_model,
   statistics = c("Number of observations" = "nobs", "R-squared" = "r.squared"),
-  coefs = c("(Intercept)" = "(Intercept)", "Percentage of women" = "female_perc")) |>
-  set_caption("OLS Regression Output")
+  coefs = c("(Intercept)" = "(Intercept)", "Percentage of women" = "female_perc"))
 
 c_tab <- as_flextable(c_tab)
+
+c_tab <- color(c_tab, color = "white", part = "all")
+
 c_tab
+
 ```
 Here we can see two of the key estimated values from our linear regression equation. The y-intercept is likely clear enough: 0.846. This is the estimated value of $Y$ when $X = 0$. In other words, this is the Warmth/Competence score predicted by our model for a job with no women at all (i.e. a proportion of 0). Note that this value is positive, indicating that an occupation with no women is estimated to have job-ad language that engages more prominently with competence language.
 
