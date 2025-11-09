@@ -266,7 +266,7 @@ workingjobs.df <- workingjobs.df |>
     female_perc = femaleu * 100
   )
 ```
-```{r, eval = FALSE, echo = TRUE
+```{r, eval = FALSE, echo = TRUE}
 our_model <- lm(`Warmth/Competence Scale` ~ `Percentage of women`, data = workingjobs.df)
 ```
 
