@@ -181,7 +181,7 @@ Let's take a look at these two variables plotted against one another. We're conc
 workingjobs.df |>
   ggplot(
     aes(x = `Proportion of women`, y = `Warmth/Competence Scale`)) +
-      geom_point() +
+      geom_point(size = .5) +
   labs(
     title = "Warmth/Competence Language by Proportion of Women",
     x = "Proportion of women",
@@ -200,7 +200,7 @@ Now, this is clearly a linear relationship that's quite a bit more complex than 
 workingjobs.df |>
   ggplot(
     aes(x = `Proportion of women`, y = `Warmth/Competence Scale`)) +
-      geom_point() +
+      geom_point(size = .5) +
   geom_smooth(method = "lm", color = "yellow") +
   labs(
     title = "Warmth/Competence Language by Proportion of Women",
