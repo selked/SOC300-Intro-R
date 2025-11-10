@@ -524,7 +524,7 @@ means <- estimate_means(our_multimodel, by = "sal_ord")
 workingjobs.df |>
   ggplot(aes(x = sal_ord, y = comp_sim)) +
   # Add base data
-  geom_violin(aes(fill = sal_ord)) +
+  geom_violin(aes(color = sal_ord)) +
   geom_jitter(aes(color = sal_ord), width = 0.1, height = 0, alpha = 0.25, size = .75) +
   # Add pointrange and line for means
   geom_line(data = means, aes(y = Mean, group = 1), linewidth = 1) +
