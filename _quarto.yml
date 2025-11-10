@@ -27,11 +27,13 @@ book:
     - part: "Day 3: Bivariate Analysis with the GSS"
       chapters:
         - bivariate_categorical.qmd
-        - general_linear_model.qmd
     - part: "Day 4: Making Better Visualizations"
       chapters:
         - viz_introduction.qmd
         - data_viz.qmd
+    - part: "Bonus Lessons"
+      chapters:
+        - general_linear_model.qmd
 
 
 bibliography: references.bib

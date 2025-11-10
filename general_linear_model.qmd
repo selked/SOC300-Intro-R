@@ -578,13 +578,12 @@ p1 <- plot_model(our_multimodel, type = "pred", terms = "femaleu", show.data = T
 p2 <- workingjobs.df |>
   ggplot(
     aes(x = femaleu, y = comp_sim)) +
-      geom_point(size = .5) +
-  geom_smooth(method = "lm", color = "brown", linewidth = .75) +
+      geom_point(size = .5, alpha = .5) +
+  geom_smooth(method = "lm", color = "red", linewidth = .75) +
   labs(
     title = "No controls",
     x = "% Women",
-    y = "Predicted Warmth/Competence Score"
-  ) +
+    y = "Warmth/Competence Scale") +
   scale_x_continuous(
     labels = percent_format()
   ) +
