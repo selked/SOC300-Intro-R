@@ -557,9 +557,10 @@ workingjobs.df |>
 
 ```
 
-Next, we can see the line that our model estimates for the relationship between Warmth/Competence and Percentage of women while holding levels of Salary constant. This effect didn't change all that much after controlling for Salary, but I'm displaying this result from the multiple regression next to the line estimated from the simple regression (with no test variable) so you can get a sense of how controlling for Salary affected the estimation of the linear relationship between Warmth/Competence Score and the Percentag of women.
-
+Next, we can see the line that our model estimates for the relationship between Warmth/Competence and Percentage of women while holding levels of Salary constant. This effect didn't change all that much after controlling for Salary, but I'm displaying this result from the multiple regression next to the line estimated from the simple regression (with no test variable).
 ```{r, eval = TRUE, echo = FALSE, message = FALSE, warning = FALSE}
+# Some spare code from visualization brainstorming
+
 our_multimodel <- lm(comp_sim ~ femaleu + sal_ord, data =  workingjobs.df)
 
 p1 <- plot_model(our_multimodel, type = "pred", terms = "femaleu", show.data = TRUE, colors = "yellow", dot.size = .75) +
@@ -597,3 +598,41 @@ my_patch <- (p2 | p1)
 
 my_patch
 ```
+
+And finally, I will plot the coefficients themselves, so you can see more clearly how the association is influenced by controlling for salary. What follows is the delightfully named 'dot-and-whisker' plot. In our case, the x-axis tracks the slope estimates of our two models. The y-axis tracks the different slope estimates from our model that we're interested in plotting. In our case, we are just looking at the percentage of women, so we only have one variable. We will see two estimates plotted along the y-axis, because we are looking at estimates of Percentage Women for two different models---one with no controls and one controlling for salary.
+
+The 'dot' in our dot-and-whisker plot is the value of the slope coefficient estimated by each model. The 'whiskers' are the thin little tails on either side of the dot. These reflect the **standard errors**. The interpretation of these can get a little tricky, so I'll stay conceptual again. Our model predicts a specific slope coefficient, but it also uses information from our data to estimate the degree of uncertainty surrounding this specific estimation. The standard error, in technical terms, is the standard deviation of the estimated slope coefficient of our sample. In other words, the specific **point estimate** is the model's best estimation, and the standard error gives a picture of the slightly broader range of values in which we can be confident that the true population value will be found.
+
+These plots very succinctly capture differences in slope coefficients for different variables in a regression analysis, and they are also very simple to interpret when it comes to statistical significance. Because a slope of 0 indicates no linear relationship, any slope estimate whose whiskers (i.e range of standard error) do not cross '0' on the X-axis are statistically significant.
+
+
+```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+library(jtools)
+
+our_model <- lm(comp_sim ~ female_perc, workingjobs.df)
+our_multimodel <- lm(comp_sim ~ female_perc + sal_ord, workingjobs.df)
+
+plot_coefs(our_model, our_multimodel,
+            coefs = c("% Women" = "female_perc"),
+            scale = FALSE,
+            robust = TRUE, # robust standard errors when TRUE
+            legend.title = "Predicted Warmth/Competence Score",
+            model.names = c("No Controls","Controlling for Salary"),
+           point.size = 1) +
+    theme_ft_rc(base_size = 24,
+      axis_text_size = 24,
+      axis_title_size = 24,
+      plot_title_size = 30,
+      strip_text_size = 24) +
+  geom_vline(xintercept = 0, color = "yellow") +
+  xlim(-.02,0.005) +
+  labs(
+    title = "Predicted Slope Coefficient for % Women",
+    y = ""
+  ) +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_blank())
+```
+
+
