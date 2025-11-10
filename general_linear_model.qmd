@@ -15,7 +15,7 @@ library(patchwork)
 showtext.auto()
 ```
 
-In the last section, we explored some common techniques for displaying and interpreting the bivariate distribution when all our variables are categorical.
+In [Chapter 6](https://selked.github.io/SOC300-Intro-R/bivariate_categorical.html), we explored some common techniques for displaying and interpreting the bivariate distribution when all our variables are categorical.
 
 That's a situation you will often find yourself as a data analyst, but the Chi-square test also represents a simple framework for learning and applying the general logic underlying the vast majority of statistical inferences---the comparison of our observed distribution to an estimated null distribution.
 
