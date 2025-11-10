@@ -564,9 +564,9 @@ our_multimodel <- lm(comp_sim ~ femaleu + sal_ord, data =  workingjobs.df)
 
 p1 <- plot_model(our_multimodel, type = "pred", terms = "femaleu", show.data = TRUE, colors = "yellow", dot.size = .75) +
   labs(
-    title = "Predicted values of Warmth/Competence, controlling for Salary",
+    title = "Controlling for Salary",
     x = "% Women",
-    y = "Warmth/Competence Scale") +
+    y = "Predicted Warmth/Competence Scale") +
   scale_x_continuous(labels = percent_format()) +
   theme_ft_rc(
       base_size = 24,
@@ -581,9 +581,9 @@ p2 <- workingjobs.df |>
       geom_point(size = .5) +
   geom_smooth(method = "lm", color = "brown", linewidth = .75) +
   labs(
-    title = "Predicted Warmth/Competence Language, no controls",
-    x = "Percentage of women",
-    y = "Warmth/Competence Score"
+    title = "No controls",
+    x = "% Women",
+    y = "Predicted Warmth/Competence Score"
   ) +
   scale_x_continuous(
     labels = percent_format()
