@@ -518,7 +518,7 @@ Now, I'll leave you off with some visualizations of this 3-way relationship.
 
 Below, we can observe the model-estimated mean values for each level of `Salary`, where we can observe the positive relationship between `Warmth/Competence Score` and `Salary`.
 
-These are displayed in a new graphing style: the violin plot. These show us the range of the model estimations, and the width of the "violins" corresponds to the frequency of values across various points along the Y-axis. The white points in the middle of each violine correspond to the model-estimated mean value of each Salary category.
+These are displayed in a new graphing style: the violin plot. These show us the plotted points of our actual data, and the width of the "violins" corresponds to the frequency of values across various points along the Y-axis. So, areas that are wide along the violin indicate a high frequency of observations with that particular value of $Y$. The black points in the middle of each violin correspond to the model-estimated mean value of each Salary category.
 
 ```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
 means <- estimate_means(our_multimodel, by = "sal_ord")
@@ -529,12 +529,12 @@ workingjobs.df |>
   geom_violin(aes(fill = sal_ord), alpha = .5) +
   geom_jitter(aes(color = sal_ord), width = 0.1, height = 0, alpha = 0.25, size = .75) +
   # Add pointrange and line for means
-  geom_line(data = means, aes(y = Mean, group = 1), linewidth = 1) +
+  geom_line(data = means, aes(y = Mean, group = 1), linewidth = 1, color = "white") +
   geom_pointrange(
     data = means,
     aes(y = Mean, ymin = CI_low, ymax = CI_high),
-    size = 1,
-    color = "white"
+    size = .25,
+    color = "black"
   ) +
   labs(
     title = "Model Estimated Warmth/Competence Means for Levels of Salary",
@@ -545,8 +545,8 @@ workingjobs.df |>
     fill = "none",
     color = "none"
   ) +
-  scale_fill_manual(values = c("purple", "brown", "blue")) +
-  scale_color_manual(values = c("purple", "brown", "blue")) +
+  scale_fill_manual(values = wes_palette("AsteroidCity1")) +
+  scale_color_manual(values = wes_palette("AsteroidCity1")) +
   theme_ft_rc(base_size = 24,
       axis_text_size = 24,
       axis_title_size = 24,
@@ -569,7 +569,7 @@ pred_data |>
   geom_point(aes(x = femaleu, y = comp_sim), size = .5, alpha = .5) +
   geom_smooth(aes(x = femaleu, y = Predicted), method = lm, linewidth = .75, color = "yellow") +
   labs(
-    title = "Model Estimated Relationships Plotted against Observed Data",
+    title = "Effect of % Women on Warmth/Comp Scale Net of Predictors",
     y = "Predicted Warmth/Competence Scale",
     x = "Percentage of women") +
   scale_x_continuous(labels = percent_format()) +
