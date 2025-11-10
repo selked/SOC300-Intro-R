@@ -10,6 +10,8 @@ library(tidyverse)
 library(scales)
 library(wesanderson)
 library(modelbased)
+library(sjPlot)
+library(patchwork)
 showtext.auto()
 ```
 
@@ -555,29 +557,44 @@ workingjobs.df |>
 
 ```
 
-Next, we can see the line that our model estimates for the relationship between `Warmth/Competence` and `Percentage of women` while holding levels of `Salary` constant. This is very similar to the first visual we saw---of the simple linear regression of `Warmth/Competence Score` and `Percentage of women`, because controlling for `Salary` didn't ultimately effect this relationship very much
+Next, we can see the line that our model estimates for the relationship between Warmth/Competence and Percentage of women while holding levels of Salary constant. This effect didn't change all that much after controlling for Salary, but I'm displaying this result from the multiple regression next to the line estimated from the simple regression (with no test variable) so you can get a sense of how controlling for Salary affected the estimation of the linear relationship between Warmth/Competence Score and the Percentag of women.
 
 ```{r, eval = TRUE, echo = FALSE, message = FALSE, warning = FALSE}
 our_multimodel <- lm(comp_sim ~ femaleu + sal_ord, data =  workingjobs.df)
 
-pred_data <- estimate_expectation(our_multimodel)
-
-pred_data$comp_sim <- workingjobs.df$comp_sim
-
-pred_data |>
-  ggplot(aes(x = femaleu, y = Predicted)) +
-  geom_point(aes(x = femaleu, y = comp_sim), size = .5, alpha = .5) +
-  geom_smooth(aes(x = femaleu, y = Predicted), method = lm, linewidth = .75, color = "yellow") +
+p1 <- plot_model(our_multimodel, type = "pred", terms = "femaleu", show.data = TRUE, colors = "yellow", dot.size = .75) +
   labs(
-    title = "Effect of % Women on Warmth/Comp Scale Net of Predictors",
-    y = "Predicted Warmth/Competence Scale",
-    x = "Percentage of women") +
+    title = "Predicted values of Warmth/Competence, controlling for Salary",
+    x = "% Women",
+    y = "Warmth/Competence Scale") +
   scale_x_continuous(labels = percent_format()) +
-  #ylim(-2,2) +
-  guides(color = guide_legend(title = "Salary Level")) +
+  theme_ft_rc(
+      base_size = 24,
+      axis_text_size = 24,
+      axis_title_size = 24,
+      plot_title_size = 30,
+      strip_text_size = 24)
+
+p2 <- workingjobs.df |>
+  ggplot(
+    aes(x = femaleu, y = comp_sim)) +
+      geom_point(size = .5) +
+  geom_smooth(method = "lm", color = "brown", linewidth = .75) +
+  labs(
+    title = "Predicted Warmth/Competence Language, no controls",
+    x = "Percentage of women",
+    y = "Warmth/Competence Score"
+  ) +
+  scale_x_continuous(
+    labels = percent_format()
+  ) +
   theme_ft_rc(base_size = 24,
       axis_text_size = 24,
       axis_title_size = 24,
       plot_title_size = 30,
       strip_text_size = 24)
+
+my_patch <- (p2 | p1)
+
+my_patch
 ```
