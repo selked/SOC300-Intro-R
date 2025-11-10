@@ -8,6 +8,7 @@ library(hrbrthemes)
 library(tidyverse)
 library(scales)
 library(wesanderson)
+library(modelbased)
 showtext.auto()
 ```
 
@@ -225,9 +226,10 @@ workingjobs.df |>
 
 
 ### The OLS Equation
+What I've plotted here is the **OLS regression line** for these two variables. This line solves for the following equation, which is the basis of many models in the GLM framework.
 
 $${\hat{Y} = {\hat{\beta}{_0}} + {\hat\beta}{_1}X_1 + \epsilon}$$
-What I've plotted here is the **OLS regression line** for these two variables. This line solves for the following equation, which is the basis of many models in the GLM framework.
+
 
 Now, this may look a bit unfamiliar, but it actually contains much of the same information as the linear equation we reviewed above. We just have some new notation conventions to reckon with.
 
@@ -259,7 +261,7 @@ To understand this term, we need to think big picture about the relationship we'
 
 But the reality is that, even if we do include indicators for all of these different concepts, social and mental phenomena are incredibly complex. We may still wind up missing indicators that would influence our dependent variable. In addition, it may also be the case that the variables we do have are insufficient in some way or another.
 
-So, we include the error term as a placeholder for all the variation in our dependent variable that is still unexplained after accounting for all of our independent and control variables. If the slope coefficient of our independent variable is the effect of $X$ on $Y$, then you can think of the error term as capturing the effect on $Y$ of everything else our model is incapable of accounting for. 
+So, we include the error term as a placeholder to capture the influence of any variation in our dependent variable that is still unexplained after accounting for all of our independent and control variables. If the slope coefficient of our independent variable is the effect of $X$ on $Y$, then you can think of the error term as capturing the effect on $Y$ of everything else our model is incapable of accounting for. 
 
 This helps give us better information about our model by characterizing the amount of variation in the dependent variable that is explained by the variables we anticipated as influential. Moreover, if we do not keep this error term in here, we will be guaranteed to erroneously estimate the association between $X$ and $Y$, as the model will attribute random error to the $X$ variable and assume that it explains a lot more of the variance in $Y$ than it actually does.
 
@@ -364,4 +366,196 @@ workingjobs.df |>
 ```
 What we have just worked through is the simplest case of OLS regression, where there is only one dependent variable and one predictor variable. These principles scale in the case of multiple regression, where we can observe the isolated effects of individual variables when all other predictors are held constant. 
 
-We won't dig too much into this for sake of time, but you can expect to learn much about multiple regression and all other iterations of the GLM if you continue on in social-science research. There are special cases for modeling count data, modeling proportions, modeling non-linearity or curvilinearity, and so on and so on. While certain details in the model specification or interpretation can vary, the underlying logic will reflect many of the fundamentals we have explored in this unit.
+## Categorical Predictors
+We saw an example above of a continuous dependent variable predicted by another continuous predictor variable. But what happens when we have a continuous dependent variable and a categorical independent variable? How would that even work with non-numeric values? Believe it or not, with some inventive puckishness, we can use linear regression to estimate the effects of categorical variables.
+
+Let's regress our `Warmth/Competence Scale` on an ordinal salary variable rather than `Percentage of women`. This salary variable will have three levels: Lower-middle class, Middle class, and Upper class
+
+```{r, eval = FALSE, echo = TRUE}
+
+
+our_multimodel <- lm(`Warmth/Competence Scale` ~  `Ordinal Salary`, data = workingjobs.df)
+```
+
+```{r, eval = TRUE, echo = FALSE}
+names(workingjobs.df)[61] <- "femaleu"
+names(workingjobs.df)[141] <- "comp_sim"
+
+workingjobs.df <- workingjobs.df |>
+  mutate(sal_ord = cut(
+    sal_mean,
+    breaks = c(20000, 70000, 100000, Inf),
+    right = FALSE,
+    include.lowest = TRUE,
+    ordered_result = FALSE,
+    labels = c("Lower-middle class", "Middle class", "Upper class")
+  ))
+
+our_multimodel <- lm(comp_sim ~ sal_ord, data = workingjobs.df)
+
+
+
+```
+
+```{r, eval = TRUE, echo = FALSE}
+c_tab<-huxreg(
+  our_multimodel,
+  statistics = c("Number of observations" = "nobs", "R-squared" = "r.squared"),
+  coefs = c("(Intercept)" = "(Intercept)", "Salary: Middle Class" = "sal_ordMiddle class", "Salary: Upper Class" = "sal_ordUpper class")) |>
+  set_caption("OLS Regression Output")
+
+c_tab <- as_flextable(c_tab)
+
+c_tab <- theme_vader(c_tab)
+
+c_tab
+```
+### Categorical Slope Coefficients
+For starters, let's focus on the slope estimates for `Salary: Middle class` and `Salary: Upper class`.
+
+Now, estimating any kind of mathematically linear relationship using categorical variables involves a little creativity. Recall that the levels of our categorical variables are often encoded numerically in the back-end of our statistical software. So, the three levels of `Salary` are also represented as 0, 1, and 2. But, of course, it does not make sense to model these numerically. 
+
+The sleight of hand with categorical variables in OLS involves the creation of **dummy variables**. One level of the variable is left out of the model, and we call this the **reference level**. For us, our reference level is the level 'Lower-middle class', and this is the basis of comparison for the slope estimates that we see for the other two levels we have in our model output: 'Middle class' and 'Upper class'. 
+
+Let's take `Salary: Middle class`. This dummy variable is created by coding a new binary variable. Each observation is assigned a $1$ if it reflects a case where the job ad's `Salary` is in the `Middle class` category. This coding process assigns a $0$ to all other cases. R is very neat for automatically doing all of this for us whenever we include a factor variable in a regression, but know that this is what's happening on the back-end.
+
+Now, remember that when we interpreted the slope estimate of a continuous variable (Percentage of women), we saw that the estimate reflected the expected change in $Y$ after a *one-unit increase* in $X$. This is where we get inventive. Each dummy variable is now coded as $0$ and $1$, so our slope coefficients are now estimating the effect of being `Middle class` vs. any other level of `Salary`. This works out to the mean of $Y$ for the subset of observations where $Salary = Middle \ Class$
+
+The estimate for `Salary: Middle class` then comes through comparison with our reference level, which is `Lower middle class` in our case. We subtract the mean of $Y$ for the subset of `Lower middle class` observations from the mean of $Y$ for the `Middle class` cases. Substantively, this gives us the predicted change in the `Warmth/Competence Score` when going from a `Lower middle class` salary to a `Middle class` salary. 
+
+I'll show you this in a little detail with some code
+```{r}
+# Calculate the mean for the reference level
+
+workingjobs.df |>
+  filter(sal_ord == "Lower-middle class") |>
+  summarize(
+    mean_lower_middle = mean(comp_sim)
+  ) |>
+  knitr::kable()
+
+# Calculate the mean of Middle class
+
+workingjobs.df |>
+  filter(sal_ord == "Middle class") |>
+  summarize(
+    mean_middle = mean(comp_sim)
+  ) |>
+  knitr::kable()
+
+# Subtract the mean of 'lower-middle class' cases from the mean of 'middle class' cases
+
+(-0.06711311) - (-0.4523064)
+```
+And there you can see the slope coefficient estimated by our model above. 
+
+## A Multivariable Example
+Lastly, let's consider a multivariable example and reflect on the elaboration model in the OLS context.
+
+We'll posit a model where the `Warmth/Competence Score` is our dependent variable, the `Percentage of women` is our dependent variable, and `Ordinal Salary` is our test variable. We'll see if the negative relationship we observed in our zero-order relationship is affected after controlling for salary.
+
+```{r, eval = FALSE, echo = TRUE}
+our_multimodel <- lm(`Warmth/Competence Scale` ~  `Percentage of women` + `Ordinal Salary`, data = workingjobs.df)
+```
+
+```{r, eval = TRUE, echo = FALSE}
+our_multimodel <- lm(comp_sim ~ female_perc + sal_ord, data =  workingjobs.df)
+
+c_tab<-huxreg(
+  our_multimodel,
+  statistics = c("Number of observations" = "nobs", "R-squared" = "r.squared"),
+  coefs = c("(Intercept)" = "(Intercept)", "Percentage of women" = "female_perc", "Salary: Middle Class" = "sal_ordMiddle class", "Salary: Upper Class" = "sal_ordUpper class")) |>
+  set_caption("OLS Regression Output")
+
+c_tab <- as_flextable(c_tab)
+
+c_tab <- theme_vader(c_tab)
+
+c_tab
+```
+Now, the slope coefficients here for each of these variables are different than the one's we've seen so far. That's because they are being estimated slightly different. The slope coefficient of (-0.014) for `Percentage of women` reflects the expected change in the `Warmth/Competence Score` after a one-unit increase in `Percentage of women` *when holding all other variables constant*. 
+
+This is another one of those things for which I'm going to stay at the conceptual level. The math for this is very neat, but it's a bit beyond the scope of our foray. Just know that this process is carefully specified using information from our models, and this process of controlling for the other variables is what explains the differences in slope coefficients for our multiple regression model (as opposed to those we saw for the two simple models we ran above.)
+
+### Elaboration Model
+Now, let's think about this in terms of the elaboration model.
+```{r, eval = TRUE, echo = FALSE}
+c_tab
+```
+We can see that the effect of Salary is significant. So, going from a Lower-middle class salary to a Middle-class salary is associated with an expected increase of (0.181) in the mean `Warmth/Competence Score`, while holding the `Percentage of woman` constant. 
+
+The even larger slope coefficient of (0.545) for `Upper Class` tells us that there is an even larger expected increase in the mean `Warmth/Competence Score` when going from `Lower-middle class` to `Upper class`.
+
+In general, this tells us that jobs with higher salaries tend to more predominantly engage competence language as opposed to warmth language. In line with our status-related hypotheses, this certainly adds up. we can also see that these effects are both highly statistically significant (at p < 0.001).
+
+But the key for our elaboration interpretation resides with the `Percentage of women` results in our model output. We now know that our test variable is statistically significant. Salary does influence the Warmth/Competence Score, and there's a positive relationship. But note that the `Percentage of women` relationship is basically unchanged. After controlling for salary, we still find a statistically significant, negative association between `Percentage of women` and the `Warmth/Competence Score`. The coefficient is almost identical as well (-0.017 vs -0.014). 
+
+Because our zero-order relationship survives and remains essentially unchanged after holding our test variable constant, we find evidence of **Replication** in Elaboration terms.
+
+### Visualizing Elaboration
+Now, I'll leave you off with some visualizations of this 3-way relationship.
+
+Below, we can observe the model-estimated mean values for each level of `Salary`, where we can observe the positive relationship between `Warmth/Competence Score` and `Salary`
+
+```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+means <- estimate_means(our_multimodel, by = "sal_ord")
+
+workingjobs.df |>
+  ggplot(aes(x = sal_ord, y = comp_sim)) +
+  # Add base data
+  geom_violin(aes(fill = sal_ord)) +
+  geom_jitter(aes(color = sal_ord), width = 0.1, height = 0, alpha = 0.25, size = .75) +
+  # Add pointrange and line for means
+  geom_line(data = means, aes(y = Mean, group = 1), linewidth = 1) +
+  geom_pointrange(
+    data = means,
+    aes(y = Mean, ymin = CI_low, ymax = CI_high),
+    size = 1,
+    color = "white"
+  ) +
+  labs(
+    title = "Model Estimated Warmth/Competence Means for Levels of Salary",
+    x = "Salary Level",
+    y = "Warmth/Competence Scale"
+  ) +
+  guides(
+    fill = "none",
+    color = "none"
+  ) +
+  scale_fill_manual(values = c("purple", "brown", "blue")) +
+  scale_color_manual(values = c("purple", "brown", "blue")) +
+  theme_ft_rc(base_size = 24,
+      axis_text_size = 24,
+      axis_title_size = 24,
+      plot_title_size = 30,
+      strip_text_size = 24)
+
+```
+
+Next, we can see the line that our model estimates for the relationship between `Warmth/Competence` and `Percentage of women` while holding levels of `Salary` constant. This is very similar to the first visual we saw---of the simple linear regression of `Warmth/Competence Score` and `Percentage of women`, because controlling for `Salary` didn't ultimately effect this relationship very much
+
+```{r, eval = TRUE, echo = FALSE, message = FALSE, warning = FALSE}
+our_multimodel <- lm(comp_sim ~ femaleu + sal_ord, data =  workingjobs.df)
+
+pred_data <- estimate_expectation(our_multimodel)
+
+pred_data$comp_sim <- workingjobs.df$comp_sim
+
+pred_data |>
+  ggplot(aes(x = femaleu, y = Predicted)) +
+  geom_point(aes(x = femaleu, y = comp_sim), size = .5, alpha = .5) +
+  geom_smooth(aes(x = femaleu, y = Predicted), method = lm, linewidth = .75, color = "yellow") +
+  labs(
+    title = "Model Estimated Relationships Plotted against Observed Data",
+    y = "Predicted Warmth/Competence Scale",
+    x = "Percentage of women") +
+  scale_x_continuous(labels = percent_format()) +
+  #ylim(-2,2) +
+  guides(color = guide_legend(title = "Salary Level")) +
+  theme_ft_rc(base_size = 24,
+      axis_text_size = 24,
+      axis_title_size = 24,
+      plot_title_size = 30,
+      strip_text_size = 24)
+```
+
