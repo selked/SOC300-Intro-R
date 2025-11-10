@@ -516,7 +516,9 @@ Because our zero-order relationship survives and remains essentially unchanged a
 
 Now, I'll leave you off with some visualizations of this 3-way relationship.
 
-Below, we can observe the model-estimated mean values for each level of `Salary`, where we can observe the positive relationship between `Warmth/Competence Score` and `Salary`
+Below, we can observe the model-estimated mean values for each level of `Salary`, where we can observe the positive relationship between `Warmth/Competence Score` and `Salary`.
+
+These are displayed in a new graphing style: the violin plot. These show us the range of the model estimations, and the width of the "violins" corresponds to the frequency of values across various points along the Y-axis. The white points in the middle of each violine correspond to the model-estimated mean value of each Salary category.
 
 ```{r, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
 means <- estimate_means(our_multimodel, by = "sal_ord")
@@ -524,7 +526,7 @@ means <- estimate_means(our_multimodel, by = "sal_ord")
 workingjobs.df |>
   ggplot(aes(x = sal_ord, y = comp_sim)) +
   # Add base data
-  geom_violin(aes(color = sal_ord)) +
+  geom_violin(aes(fill = sal_ord), alpha = .5) +
   geom_jitter(aes(color = sal_ord), width = 0.1, height = 0, alpha = 0.25, size = .75) +
   # Add pointrange and line for means
   geom_line(data = means, aes(y = Mean, group = 1), linewidth = 1) +
