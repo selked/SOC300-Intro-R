@@ -314,7 +314,7 @@ c_tab <- mockdat |>
     intercept = TRUE) |>
   modify_header(label ~ "**Variable**") |>
   add_glance_table(include = "r.squared") |>
-  modify_caption(caption = "<div style='color: white; font-weight: bold'>OLS Regression Results</div>")
+  modify_footnote(text_interpret = "html")
   
 c_tab
 
@@ -437,8 +437,8 @@ c_tab <- mockdat |>
     estimate_fun = label_style_sigfig(digits = 3),
     intercept = TRUE) |>
   modify_header(label ~ "**Variable**") |>
-  add_glance_table(include = "r.squared") |>
-  modify_caption(caption = "<div style='color: white; font-weight: bold'>OLS Regression Results</div>")
+  modify_footnote(text_interpret = "html") |>
+  add_glance_table(include = "r.squared")
   
 c_tab
 ```
@@ -502,7 +502,7 @@ c_tab <- mockdat |>
   lm(`Warmth/Competence Scale` ~ `Percentage Women` + `Salary`, data = _) |>
   tbl_regression(intercept = TRUE, estimate_fun = label_style_sigfig(digits = 3)) |>
   modify_header(label ~ "**Variable**") |>
-  modify_caption(caption = "<div style='color: white; font-weight: bold'> OLS Regression Coefficients</div>")
+  modify_footnote(text_interpret = "html")
   
 c_tab
 ```
