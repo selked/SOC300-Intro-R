@@ -314,7 +314,8 @@ c_tab <- mockdat |>
     intercept = TRUE) |>
   modify_header(label ~ "**Variable**") |>
   add_glance_table(include = "r.squared") |>
-  modify_footnote(text_interpret = "html")
+  modify_footnote(text_interpret = "html") |>
+  as_kable_extra()
   
 c_tab
 
@@ -438,7 +439,8 @@ c_tab <- mockdat |>
     intercept = TRUE) |>
   modify_header(label ~ "**Variable**") |>
   modify_footnote(text_interpret = "html") |>
-  add_glance_table(include = "r.squared")
+  add_glance_table(include = "r.squared") |>
+  as_kable_extra()
   
 c_tab
 ```
@@ -502,7 +504,7 @@ c_tab <- mockdat |>
   lm(`Warmth/Competence Scale` ~ `Percentage Women` + `Salary`, data = _) |>
   tbl_regression(intercept = TRUE, estimate_fun = label_style_sigfig(digits = 3)) |>
   modify_header(label ~ "**Variable**") |>
-  modify_footnote(text_interpret = "html")
+  as_kable_extra()
   
 c_tab
 ```
