@@ -283,6 +283,11 @@ workingjobs.df <- workingjobs.df |>
   mutate(
     female_perc = femaleu * 100
   )
+
+mockdat <- workingjobs.df
+
+names(mockdat)[144] <- "Percentage Women"
+names(mockdat)[141] <- "Warmth/Competence Scale"
 ```
 
 ```{r, eval = FALSE, echo = TRUE}
@@ -297,18 +302,20 @@ our_model <- lm(`Warmth/Competence Scale` ~ female_perc, data = workingjobs.df)
 library(flextable)
 library(huxtable)
 
+theme_gtsummary_journal(
+  journal = "qjecon",
+  set_theme = TRUE
+)
 
-
-c_tab<-huxreg(
-  our_model,
-  statistics = c("Number of observations" = "nobs", "R-squared" = "r.squared"),
-  coefs = c("(Intercept)" = "(Intercept)", "Percentage of women" = "female_perc")) |>
-  set_caption("OLS Regression Output")
-
-c_tab <- as_flextable(c_tab)
-
-c_tab <- theme_vader(c_tab)
-
+c_tab <- mockdat |>
+  lm(`Warmth/Competence Scale` ~ `Percentage Women`, data = _) |>
+  tbl_regression(
+    estimate_fun = label_style_sigfig(digits = 3),
+    intercept = TRUE) |>
+  modify_header(label ~ "**Variable**") |>
+  add_glance_table(include = "r.squared") |>
+  modify_caption(caption = "<div style='color: white; font-weight: bold'>OLS Regression Results</div>")
+  
 c_tab
 
 ```
@@ -404,6 +411,19 @@ workingjobs.df <- workingjobs.df |>
     labels = c("Lower-middle class", "Middle class", "Upper class")
   ))
 
+mockdat <- mockdat |>
+  mutate(sal_ord = cut(
+    sal_mean,
+    breaks = c(20000, 70000, 100000, Inf),
+    right = FALSE,
+    include.lowest = TRUE,
+    ordered_result = FALSE,
+    labels = c("Lower-middle class", "Middle class", "Upper class")
+  ))
+
+names(mockdat)[145] <- "Salary"
+
+
 our_multimodel <- lm(comp_sim ~ sal_ord, data = workingjobs.df)
 
 
@@ -411,16 +431,15 @@ our_multimodel <- lm(comp_sim ~ sal_ord, data = workingjobs.df)
 ```
 
 ```{r, eval = TRUE, echo = FALSE}
-c_tab<-huxreg(
-  our_multimodel,
-  statistics = c("Number of observations" = "nobs", "R-squared" = "r.squared"),
-  coefs = c("(Intercept)" = "(Intercept)", "Salary: Middle Class" = "sal_ordMiddle class", "Salary: Upper Class" = "sal_ordUpper class")) |>
-  set_caption("OLS Regression Output")
-
-c_tab <- as_flextable(c_tab)
-
-c_tab <- theme_vader(c_tab)
-
+c_tab <- mockdat |>
+  lm(`Warmth/Competence Scale` ~ `Salary`, data = _) |>
+  tbl_regression(
+    estimate_fun = label_style_sigfig(digits = 3),
+    intercept = TRUE) |>
+  modify_header(label ~ "**Variable**") |>
+  add_glance_table(include = "r.squared") |>
+  modify_caption(caption = "<div style='color: white; font-weight: bold'>OLS Regression Results</div>")
+  
 c_tab
 ```
 
@@ -446,7 +465,7 @@ I'll show you this in a little detail with some code
 workingjobs.df |>
   filter(sal_ord == "Lower-middle class") |>
   summarize(
-    mean_lower_middle = mean(comp_sim)
+    "Mean (Lower middle class)" = mean(comp_sim)
   ) |>
   knitr::kable()
 
@@ -455,7 +474,7 @@ workingjobs.df |>
 workingjobs.df |>
   filter(sal_ord == "Middle class") |>
   summarize(
-    mean_middle = mean(comp_sim)
+    "Mean (Middle Class)" = mean(comp_sim)
   ) |>
   knitr::kable()
 
@@ -477,18 +496,14 @@ our_multimodel <- lm(`Warmth/Competence Scale` ~  `Percentage of women` + `Ordin
 ```
 
 ```{r, eval = TRUE, echo = FALSE}
-our_multimodel <- lm(comp_sim ~ female_perc + sal_ord, data =  workingjobs.df)
+#our_multimodel <- lm(comp_sim ~ female_perc + sal_ord, data =  workingjobs.df)
 
-c_tab<-huxreg(
-  our_multimodel,
-  statistics = c("Number of observations" = "nobs", "R-squared" = "r.squared"),
-  coefs = c("(Intercept)" = "(Intercept)", "Percentage of women" = "female_perc", "Salary: Middle Class" = "sal_ordMiddle class", "Salary: Upper Class" = "sal_ordUpper class")) |>
-  set_caption("OLS Regression Output")
-
-c_tab <- as_flextable(c_tab)
-
-c_tab <- theme_vader(c_tab)
-
+c_tab <- mockdat |>
+  lm(`Warmth/Competence Scale` ~ `Percentage Women` + `Salary`, data = _) |>
+  tbl_regression(intercept = TRUE, estimate_fun = label_style_sigfig(digits = 3)) |>
+  modify_header(label ~ "**Variable**") |>
+  modify_caption(caption = "<div style='color: white; font-weight: bold'> OLS Regression Coefficients</div>")
+  
 c_tab
 ```
 
